@@ -884,8 +884,8 @@ var app = {
 	    	
 	    	html = html + "</ons-list>";
     	} else {
-    		var html = "<ons-list><ons-list-header>PCs Stored</ons-list-header>";
-    		var html = html + "<ons-list-item><ons-list-item>Default</ons-list-item><div class='right'><ons-icon icon='md-delete'style='color:#AAA></ons-icon></div></ons-list-item>";
+    		var html = "<ons-list><ons-list-header>Forums Stored</ons-list-header>";
+    		var html = html + "<ons-list-item><ons-list-item>AtomJump Home</ons-list-item><div class='right'><ons-icon icon='md-settings' style='color:#AAA'></ons-icon>&nbsp;&nbsp;&nbsp;<ons-icon icon='md-delete' style='color:#AAA'></ons-icon></div></ons-list-item>";
     		html = html + "</ons-list>";
     	}
     	return html;

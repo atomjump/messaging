@@ -24,8 +24,8 @@
         <meta name="viewport" content="user-scalable=no, initial-scale=1, width=device-width" /> <!-- maximum-scale=1, minimum-scale=1 , height=device-height, target-densitydpi=high-dpi  ?? -->
         <meta http-equiv="Content-Security-Policy" content="default-src *; script-src 'self' 'unsafe-inline' 'unsafe-eval' *; style-src  'self' 'unsafe-inline' *">
 
-	<link rel="stylesheet" href="css/onsenui.css"/>
-	<link rel="stylesheet" href="css/onsen-css-components-purple-theme.css">
+		<link rel="stylesheet" href="css/onsenui.css"/>
+		<link rel="stylesheet" href="css/onsen-css-components-purple-theme.css">
     	
     	<link rel="stylesheet" type="text/css" href="css/ionicons/css/ionicons.css">
     	<link rel="stylesheet" type="text/css" href="css/material-design-iconic-font/css/material-design-iconic-font.css">
@@ -63,7 +63,7 @@
 	
 
         <link rel="stylesheet" type="text/css" href="css/index.css" />
-        <title>MedImage</title>
+        <title>AtomJump Messaging</title>
     </head>
     <body>
     	<style><item name="android:windowTranslucentStatus">true</item></style> <!-- Ensure clicking inside box scrolls down -->
@@ -76,17 +76,30 @@
 		    
 		
 	
+	        <div id="inner-popup">
+				<div onclick="app.bigButton();">
+					<img  src="icon-Small@3x.png"><span style="vertical-align: top;" class="big-text">AtomJump Forums</span>
+        		</div>
+				<br/><br/>
+        		
+        		
+        		
+        	<p style="text-align:center;">
+             <span class="big-text">Message About<br/></span><input id="about" type="text" size="9" class="resizedTextbox">
+            </p>	
+        		
+	        	
+			<ons-list>
+				<ons-list-header>Forums</ons-list-header>
+    			<ons-list-item onclick="window.open(encodeURI('http://www.google.com/'), '_system')">AtomJump Home</ons-list-item>
+    		</ons-list>
+	
+	
  
-        <p style="text-align:center;">
-             <span class="big-text" onclick="navigator.notification.alert('Enter a patient or image ID, which names the image. Put a # before the ID for a folder.', function(){}, 'Optional');">Image ID <small >(e.g. NHI) <ons-icon icon="ion-ios-help" size="20px" fixed-width="true"></small><br/></span><input id="id-entered" type="text" size="9" class="resizedTextbox">
-        </p>
-
- 		<div style="text-align:center;">
-            <span id="currentPC"  class="pc-text"></span>
-        </div>
-        <div class="logo" onclick="app.bigButton();">
-			<img  src="img/logo@2x.png" class="logo-img">
-        </div>
+        
+		
+ 		
+        
 
         <div style="text-align:center;">
             <span id="notify" class="notify-text"></span>
@@ -110,7 +123,7 @@
         		
         		<div id="settings"></div>
         		<p>
-        			<ons-button style="background-color: #7c5599; color: white;" modifier="large" onclick="app.newServer();">Add a New PC</ons-button>
+        			<ons-button style="background-color: #7c5599; color: white;" modifier="large" onclick="app.newServer();">Add a New Forum</ons-button>
 	        	</p>
 	        	
 				<p>

@@ -32,7 +32,7 @@
     <gap:plugin name="cordova-plugin-networkinterface" source="npm"/>
     <gap:plugin name="org.apache.cordova.Globalization" />
     <plugin source="git" spec="https://github.com/atomjump/cordova-plugin-dialogs.git" />
-
+    <gap:plugin name="org.apache.cordova.inappbrowser" />
     
     
     
