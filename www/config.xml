@@ -33,8 +33,7 @@
     <gap:plugin name="org.apache.cordova.Globalization" />
     <plugin source="git" spec="https://github.com/atomjump/cordova-plugin-dialogs.git" />
     <gap:plugin name="org.apache.cordova.inappbrowser" />
-    <plugin name="phonegap-plugin-push" source="npm" spec="~1.8.0">
-        <variable name="SENDER_ID" value="ajmessaging" />
+    <plugin name="phonegap-plugin-push" source="npm">
     </plugin>
     
     
