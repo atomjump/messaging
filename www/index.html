@@ -85,14 +85,15 @@
         		
         		
         	<p style="text-align:center;">
-             <span class="big-text">Message About<br/></span><input id="about" type="text" size="9" class="resizedTextbox">
+             <span class="big-text">Message About<br/></span>
+             		<form onsubmit="window.open(encodeURI('http://' + document.getElementById('about').value + '.atomjump.com/'), '_system')"><input id="about" type="text" size="9" class="resizedTextbox"></form>
             </p>	
         		
 	        	
 			<ons-list>
 				<ons-list-header>Forums</ons-list-header>
     			<ons-list-item onclick="window.open(encodeURI('https://atomjump.com/'), '_system')">atomjump@</ons-list-item>
-    			<ons-list-item onclick="window.open(encodeURI('https://hardpete.atomjump.com/'), '_system')">hardpete@</ons-list-item>
+    			<ons-list-item onclick="window.open(encodeURI('http://hardpete.atomjump.com/'), '_system')">hardpete@</ons-list-item>
     		</ons-list>
 	
 	
