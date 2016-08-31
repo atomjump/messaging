@@ -34,6 +34,7 @@
     <plugin source="git" spec="https://github.com/atomjump/cordova-plugin-dialogs.git" />
     <gap:plugin name="org.apache.cordova.inappbrowser" />
     <plugin name="phonegap-plugin-push" source="npm">
+        <param name="SENDER_ID" value="538233303966" />
     </plugin>
     
     
