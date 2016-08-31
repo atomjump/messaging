@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- config.xml reference: https://build.phonegap.com/docs/config-xml. Note: change id to com.phonegap.medimage or com.atomjumpbeta.medimage depending on build creating -->
+<!-- config.xml reference: https://build.phonegap.com/docs/config-xml. -->
 <widget xmlns     = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
         xmlns:android   = "http://schemas.android.com/apk/res/android"
-        id        = "com.phonegap.medimage"
-        version   = "1.2.8"
-        versionCode = "354">
+        id        = "com.atomjump.messaging"
+        version   = "0.0.1"
+        versionCode = "1">
 
         
     <!-- When ready add ios|winphone|wp8|android -->    
 
 
-    <name>MedImage</name>
-    <!-- For Beta, this should be Med Image, for release, it should be MedImage.. -->
+    <name>AtomJump Messaging</name>
 
 
     <description>
-        Copy a camera image to your PC.
+        Shortcuts to any AtomJump messaging page, and notifications of new messages.
     </description>
 
     <author href="http://atomjump.com" email="webmaster@atomjump.com">
