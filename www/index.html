@@ -77,18 +77,21 @@
 		
 	
 	        <div id="inner-popup">
-				<div onclick="app.bigButton();">
-					<span style="vertical-align: top;" class="big-text">AtomJump</span><br/><img  src="icon-Small@3x.png">
-        		</div>
 				
+			<span style="vertical-align: top;" class="big-text">AtomJump</span><br/><img  src="icon-Small@3x.png">
+        		
+			<div id="registration" class="blink">
+            	<p class="event waiting">Requesting Registration ID</p>
+            	<p class="event received">Registered</p>
+        	</div>	
         		
         		
-        		
-        	<p style="text-align:center;">
-             <span class="big-text">Message About<br/></span>
-             		<form onsubmit="window.open(encodeURI('http://' + document.getElementById('about').value + '.atomjump.com/'), '_system')"><input id="about" type="text" size="9" class="resizedTextbox"></form>
-            </p>	
-        		
+        	<form onsubmit="window.open(encodeURI('http://' + document.getElementById('about').value + '.atomjump.com/'), '_system')">	
+				<p style="text-align:center;">
+				     <span class="big-text">Message About<br/></span>
+					<input id="about" type="text" size="9" class="resizedTextbox">
+				</p>	
+        	</form>	
 	        	
 			<ons-list>
 				<ons-list-header>Forums</ons-list-header>
