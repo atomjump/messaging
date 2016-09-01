@@ -22,6 +22,7 @@ var centralPairingUrl = "https://atomjump.com/med-genid.php";
 var errorThis = {};  //Used as a global error handler
 var retryIfNeeded = [];	//A global pushable list with the repeat attempts
 var retryNum = 0;
+var userId = 3;			//TEMP - this should be recorded when we open the app
 
 
 
@@ -91,8 +92,8 @@ var app = {
                 // Save new registration ID
                 localStorage.setItem('registrationId', data.registrationId);
                 // Post registrationId to your app server as the value has changed
-                //TODO: post to server software Loop Server API
-                var url = "https://staging.atomjump.com/api/plugins/notifications/register.php?id=" + data.registrationId;
+                //Post to server software Loop Server API
+                var url = "https://staging.atomjump.com/api/plugins/notifications/register.php?id=" + data.registrationId + "&userid=" + userId;
                 alert('Setting server url:' +  url);
                 errorThis.get(url, function() {
                 	alert("Set the staging register db");
