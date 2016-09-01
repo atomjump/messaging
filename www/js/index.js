@@ -63,6 +63,8 @@ var app = {
     },
     
     setupPush: function() {
+    	errorThis = this;
+    	
         alert('calling push init');
         var push = PushNotification.init({
             "android": {
