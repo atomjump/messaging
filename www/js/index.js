@@ -95,8 +95,8 @@ var app = {
                 //Post to server software Loop Server API
                 var url = "https://staging.atomjump.com/api/plugins/notifications/register.php?id=" + data.registrationId + "&userid=" + userId;
                 alert('Setting server url:' +  url);
-                errorThis.get(url, function() {
-                	alert("Set the staging register db");
+                errorThis.get(url, function(url, resp) {
+                	alert("Set the staging register db resp:" + resp);
                 
                 });
             }
