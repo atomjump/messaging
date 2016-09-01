@@ -66,7 +66,6 @@ var app = {
     setupPush: function() {
     	errorThis = this;
     	
-        alert('calling push init');
         var push = PushNotification.init({
             "android": {
                 "senderID": "538233303966"
@@ -79,13 +78,10 @@ var app = {
             },
             "windows": {}
         });
-        alert('after init');
 
         push.on('registration', function(data) {
-            alert('registration event: ' + data.registrationId);
-
+            
             var oldRegId = localStorage.getItem('registrationId');
-            alert('old reg id = ' + oldRegId);
             if (oldRegId !== data.registrationId) {
                 
                 
@@ -94,10 +90,8 @@ var app = {
                 // Post registrationId to your app server as the value has changed
                 //Post to server software Loop Server API
                 var url = "https://staging.atomjump.com/api/plugins/notifications/register.php?id=" + data.registrationId + "&userid=" + userId;  //e.g. https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
-                alert('Setting server url:' +  url);
-                errorThis.get(url, function(url, resp) {
-                	alert("Set the staging register db resp:" + resp);
-                
+                 errorThis.get(url, function(url, resp) {
+                	navigator.notification.alert("Registered OK!"); 
                 });
             }
 
