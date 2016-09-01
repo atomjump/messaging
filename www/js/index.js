@@ -505,12 +505,12 @@ var app = {
 						localStorage.removeItem("defaultDir");		//Init it
 						localStorage.removeItem("currentRemoteServer");
 	   					localStorage.removeItem("currentWifiServer");
-						
+						localStorage.removeItem("registration");
 						
 						//Now refresh the current server display
     					document.getElementById("currentPC").innerHTML = "";
     		
-						alert("Cleared all saved PCs.");
+						alert("Cleared all saved forums.");
 		
 						errorThis.openSettings();
 						
