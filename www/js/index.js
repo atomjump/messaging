@@ -82,12 +82,16 @@ var app = {
             alert('registration event: ' + data.registrationId);
 
             var oldRegId = localStorage.getItem('registrationId');
+            alert('old reg id = ' + oldRegId);
             if (oldRegId !== data.registrationId) {
+                
+                
                 // Save new registration ID
                 localStorage.setItem('registrationId', data.registrationId);
                 // Post registrationId to your app server as the value has changed
                 //TODO: post to server software Loop Server API
-                var url = "https://staging.atomjump.com/api/plugins/notification/register.php?id=" + data.registrationId; 
+                var url = "https://staging.atomjump.com/api/plugins/notification/register.php?id=" + data.registrationId;
+                alert('Setting server url:' +  url);
                 errorThis.get(url, function() {
                 	alert("Set the staging register db");
                 
