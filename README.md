@@ -4,8 +4,8 @@ AtomJump Messaging app: shortcuts and popup notifications to AtomJump Loop.
 
 # Requirements
 
-AtomJump Loop Server >= 0.7.6
-Notifications plugin for Loop Server
+* AtomJump Loop Server >= 0.7.6
+* Notifications plugin for Loop Server
 
 
 # Building
