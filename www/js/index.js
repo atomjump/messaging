@@ -110,7 +110,7 @@ var app = {
         push.on('notification', function(data) {
             console.log('notification event');
             document.getElementById('aj-HTML-alert').style.display = "block";
-            document.getElementById('aj-HTML-alert').innerHTML = "<div class='inner-popup'>" + data.message + " " + JSON.stringify(data) + "</div>";
+            document.getElementById('aj-HTML-alert').innerHTML = "<div class='inner-popup'>" + data.message + " " + data.additionalData.actions[0].callback + "</div>";
             navigator.notification.alert(
                 data.message,         // message
                 null,                 // callback
