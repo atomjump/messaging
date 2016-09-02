@@ -22,7 +22,7 @@ var centralPairingUrl = "https://atomjump.com/med-genid.php";
 var errorThis = {};  //Used as a global error handler
 var retryIfNeeded = [];	//A global pushable list with the repeat attempts
 var retryNum = 0;
-var userId = 3;			//TEMP - this should be recorded when we open the app
+var userId = 8;			//TEMPORARY - TODO: this should be from a login when we open the app
 
 
 
