@@ -110,13 +110,14 @@ var app = {
         push.on('notification', function(data) {
             console.log('notification event');
             document.getElementById('aj-HTML-alert').style.display = "block";
-            document.getElementById('aj-HTML-alert').innerHTML = "<div class='inner-popup'>" + data.message + " <a href='javascript:' onclick='" + data.additionalData.actions[0].callback + "'>Visit Forum</a></div>";
-            navigator.notification.alert(
+            document.getElementById('aj-HTML-alert').innerHTML = "<div class='inner-popup'><ons-fab position=\"top right\" onclick=\"app.closeNotifications();\">     		<ons-icon icon=\"md-close\" ></ons-icon></ons-fab>" + data.message + " <a href='javascript:' onclick='" + data.additionalData.actions[0].callback + "'>Visit Forum</a></div>";
+            
+            /*navigator.notification.alert(
                 data.message,         // message
                 null,                 // callback
                 data.title,           // title
                 'Ok'                  // buttonName
-            );
+            );*/
        });
     },
     
@@ -929,6 +930,11 @@ var app = {
     closeSettings: function() {
     	//Close the settings screen
     	document.getElementById("settings-popup").style.display = "none";
+    },
+    
+    closeNotifications: function() {
+    	//Close the settings screen
+    	document.getElementById("aj-HTML-alert").style.display = "none";
     },
 
     listServers: function() {
