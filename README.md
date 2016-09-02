@@ -19,3 +19,4 @@ Use build.phonegap.com and add the repository URL.
 * Tidy up the display (ie. remove the registering etc.)
 * Choice of default forums to go to from the home-screen
 * Editing the settings for each forum so that you can opt in to receive messages, and specify which time to receive them (and the timezone)
+* Much of the code was from the medimage app. This is additional right now, so extra code should be removed. It is kept in here for code examples only.
