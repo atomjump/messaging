@@ -85,6 +85,20 @@ body {
 }
 
 
+#aj-HTML-alert {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 60%;
+	height: 60%;
+	padding:0px;
+	margin:20%;
+	background-color: #EEE;
+	z-index: 1002;
+}
+
+
+
 #settings-popup {
 	position: absolute;
 	top: 0px;
@@ -97,7 +111,7 @@ body {
 	z-index: 1000;
 }
 
-#inner-popup {
+.inner-popup {
 	padding:20px;
 }
 
