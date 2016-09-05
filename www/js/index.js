@@ -91,7 +91,7 @@ var app = {
 
         push.on('registration', function(data) {
             
-            alert("Registration received:" + JSON.stringify(data));		//TEMPORARY!!
+            alert("Registration received"); //:" + JSON.stringify(data));		//TEMPORARY!!
             var oldRegId = localStorage.getItem('registrationId');
             if (oldRegId !== data.registrationId) {
                 
