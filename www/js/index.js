@@ -48,7 +48,7 @@ var app = {
         
         if(userId) {
         	//Yep, we have a logged in user
-        	$('#login-popup').close();	
+        	$('#login-popup').hide();	
         
         }
         
