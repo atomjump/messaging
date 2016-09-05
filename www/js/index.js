@@ -44,14 +44,7 @@ var app = {
         //Set display name - TODO: check this is valid here
         //this.displayServerName();
         
-        userId = localStorage.getItem('loggedUser');
         
-        if(userId) {
-        	//Yep, we have a logged in user
-        	$('#login-popup').hide();	
-        	this.setupPush();
-        
-        }
         
         errorThis = this;
 
@@ -71,10 +64,19 @@ var app = {
           
           app.receivedEvent('deviceready');
           
+          
+          userId = localStorage.getItem('loggedUser');
+        
+          if(userId) {
+        	//Yep, we have a logged in user
+        	$('#login-popup').hide();	
+        	app.setupPush();
+        
+          }
     },
     
     setupPush: function() {
-    	errorThis = this;
+    	myThis = this;
     	
         var push = PushNotification.init({
             "android": {
@@ -167,8 +169,8 @@ var app = {
 						if(userId) {
 							localStorage.setItem("loggedUser",userId);
 							alert("Set item loggedUser");
-							errorThis.setupPush();		//register this phone
-							alert("setup push");
+							app.setupPush();		//register this phone
+							alert("setup push after");
 							$('#login-popup').hide();
 							alert("close popup");
 						
