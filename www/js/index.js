@@ -1081,7 +1081,7 @@ var app = {
 		//Ask for a name of the current Server:
 		navigator.notification.prompt(
 			'Please enter a name for this forum',  // message
-			this.saveForumName,                  // callback to invoke
+			app.saveForumName,                  // callback to invoke
 			'Forum Name',            // title
 			['Ok','Cancel'],             // buttonLabels
 			''                 // defaultText
@@ -1138,9 +1138,9 @@ var app = {
     		//results.input1 has the new forum name - assume it is for the current
     		//default server
     		
-    		errorThis.saveForum(results.input1);
+    		app.saveForum(results.input1);
     		
-    		errorThis.closeSettings();
+    		app.closeSettings();
     		return;
     	} else {
     		//Clicked on 'Exit'. Do nothing.
