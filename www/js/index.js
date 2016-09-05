@@ -1014,9 +1014,10 @@ var app = {
     listForums: function() {
     	var prepList = "";
     	
-    	alert("Listing forums");
+    	alert("Listing forums this:" + JSON.stringify(this));
 		var settings = this.getArrayLocalStorage("settings");
 	
+		alert("Got settings");
 		if(settings) {
 	
 			alert("Settings:" + JSON.stringify(settings));
