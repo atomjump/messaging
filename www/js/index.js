@@ -1166,8 +1166,6 @@ var app = {
     		
 			var prepList = "<ons-list-header>Forums</ons-list-header>";
     			
-    			<ons-list-item onclick="window.open(encodeURI('http://hardpete.atomjump.com/'), '_system')">hardpete@</ons-list-item>
-    		</ons-list>
     		
     		for(var cnt = 0; cnt< settings.length; cnt++) {
     			prepList = prepList + "<ons-list-item onclick=\"window.open(encodeURI('" + settings[cnt].url + "'), '_system')\">" + settings[cnt].forum + "@</ons-list-item>";
@@ -1190,7 +1188,7 @@ var app = {
    				"forum": newForumName,		//As input by the user
    				"api": api,
    				"rawForumHeader": rawForumHeader,
-   				"url" : "http://" + newForumName + ".atomjump.com";		//TODO make less atomjump.com
+   				"url" : "http://" + newForumName + ".atomjump.com"		//TODO make less atomjump.com
    			};
    			
    			
