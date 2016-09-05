@@ -162,7 +162,7 @@ var app = {
 						
 						if(userId) {
 							localStorage.setItem("loggedUser",userId);
-							this.setupPush();		//register this phone
+							errorThis.setupPush();		//register this phone
 							$('#login-popup').close();
 						
 						} else {
