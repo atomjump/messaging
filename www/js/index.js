@@ -42,12 +42,13 @@ var app = {
         this.bindEvents();  
         
         
+        
+        errorThis = this;
+        
         //Set display name - TODO: check this is valid here
         this.displayForumNames();
         
         
-        
-        errorThis = this;
 
     },
     // Bind Event Listeners
@@ -1013,7 +1014,7 @@ var app = {
     listForums: function() {
     
     	alert("Listing forums");
-		var settings = app.getArrayLocalStorage("settings");
+		var settings = errorThis.getArrayLocalStorage("settings");
 	
 		if(settings) {
 	
@@ -1083,7 +1084,7 @@ var app = {
 		//Ask for a name of the current Server:
 		navigator.notification.prompt(
 			'Please enter a name for this forum',  // message
-			app.saveForumName,                  // callback to invoke
+			errorThis.saveForumName,                  // callback to invoke
 			'Forum Name',            // title
 			['Ok','Cancel'],             // buttonLabels
 			''                 // defaultText
@@ -1140,9 +1141,9 @@ var app = {
     		//results.input1 has the new forum name - assume it is for the current
     		//default server
     		
-    		app.saveForum(results.input1);
+    		errorThis.saveForum(results.input1);
     		
-    		app.closeSettings();
+    		errorThis.closeSettings();
     		return;
     	} else {
     		//Clicked on 'Exit'. Do nothing.
@@ -1209,12 +1210,12 @@ var app = {
 
     		
     		//Save back to the persistent settings
-    		app.setArrayLocalStorage("settings", settings);
+    		errorThis.setArrayLocalStorage("settings", settings);
     		
     		alert("New settings saved as " + JSON.stringify(settings));
     		
     		//Reset the display with the new forum
-    		app.displayForumNames();
+    		errorThis.displayForumNames();
     		return;
     
     },
