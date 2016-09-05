@@ -1149,7 +1149,7 @@ var app = {
     
     displayForumNames: function() {
     	//Call this during initialisation on app startup
-    		var settings = errorThis.getArrayLocalStorage("settings");
+    		var settings = app.getArrayLocalStorage("settings");
     		
     		
 			var prepList = "<ons-list-header>Forums</ons-list-header>";
