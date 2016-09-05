@@ -43,12 +43,6 @@ var app = {
         
         
         //Set display name - TODO: check this is valid here
-        var settings = localStorage.getItem('settings');
-        if(!settings) {
-        	//Initialise for first time
-        	localStorage.setItem('settings', []);
-        
-        }
         this.displayForumNames();
         
         
@@ -1175,7 +1169,7 @@ var app = {
         			
    			alert("saving " + newForumName);
    		
-   			var settings = errorThis.getArrayLocalStorage("settings");
+   			var settings = app.getArrayLocalStorage("settings");
    			
    			alert("Settings retrieved");
    			
@@ -1210,12 +1204,12 @@ var app = {
 
     		
     		//Save back to the persistent settings
-    		errorThis.setArrayLocalStorage("settings", settings);
+    		app.setArrayLocalStorage("settings", settings);
     		
     		alert("New settings saved as " + JSON.stringify(settings));
     		
     		//Reset the display with the new forum
-    		errorThis.displayForumNames();
+    		app.displayForumNames();
     		return;
     
     },
