@@ -136,7 +136,7 @@
 					<input id="password" type="password" placeholder="Password" size="20" class="resizedTextbox">
 				</p>
         		<p>
-        			<ons-button style="background-color: #7c5599; color: white;" modifier="large" onclick="app.login();">Login</ons-button>
+        			<ons-button style="background-color: #7c5599; color: white;" modifier="large" onclick="app.login($('#user').val(), $('#password').val());">Login</ons-button>
 	        	</p>
 	        	
 				<p>

@@ -59,7 +59,7 @@ var app = {
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
-          app.setupPush();
+          
           app.receivedEvent('deviceready');
           
     },
@@ -138,6 +138,20 @@ var app = {
 			success    : function(response) {
 				//console.error(JSON.stringify(response));
 				alert('Logged in: ' + response);
+				switch(response)
+				{
+					case 'LOGGED_IN':
+						this.setupPush();		//register this phone
+						$('#login-popup').close();
+					break;
+					
+					default:
+						navigator.notification.alert("Sorry, that was the wrong email or password. Please try again.");
+					
+					break;
+					
+				
+				}
 			},
 			error      : function() {
 				//console.error("error");
