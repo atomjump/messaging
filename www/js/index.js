@@ -43,6 +43,12 @@ var app = {
         
         
         //Set display name - TODO: check this is valid here
+        var settings = localStorage.getItem('settings');
+        if(!settings) {
+        	//Initialise for first time
+        	localStorage.setItem('settings', []);
+        
+        }
         this.displayForumNames();
         
         
@@ -993,7 +999,7 @@ var app = {
 
     openSettings: function() {
     	//Open the settings screen
-    	var html = this.listServers();
+    	var html = this.listForums();
     	document.getElementById("settings").innerHTML = html;
     	
     	document.getElementById("settings-popup").style.display = "block";
@@ -1010,26 +1016,23 @@ var app = {
     	document.getElementById("aj-HTML-alert").style.display = "none";
     },
 
-    listServers: function() {
-    	//List the available servers
-    	var settings = this.getArrayLocalStorage("settings");
-    	
-    	
-    	if(settings) {
-	    	var html = "<ons-list><ons-list-header>Select a PC to use now:</ons-list-header>";
-	    	
-	    	//Convert the array into html
-	    	for(var cnt=0; cnt< settings.length; cnt++) {
-	    		html = html + "<ons-list-item><ons-list-item onclick='app.setServer(" + cnt + ");'>" + settings[cnt].name + "</ons-list-item><div class='right'><ons-icon icon='md-delete' onclick='app.deleteServer(" + cnt + ");'></ons-icon></div></ons-list-item>";
-	    	}
-	    	
-	    	html = html + "</ons-list>";
-    	} else {
-    		var html = "<ons-list><ons-list-header>Forums Stored</ons-list-header>";
-    		var html = html + "<ons-list-item><ons-list-item>AtomJump Home</ons-list-item><div class='right'><ons-icon icon='md-settings' style='color:#AAA'></ons-icon>&nbsp;&nbsp;&nbsp;<ons-icon icon='md-delete' style='color:#AAA'></ons-icon></div></ons-list-item>";
-    		html = html + "</ons-list>";
-    	}
-    	return html;
+    listForums: function() {
+    
+    
+		var settings = errorThis.getArrayLocalStorage("settings");
+	
+	
+		var prepList = "<ons-list-header>Forums</ons-list-header>";
+		
+	
+		for(var cnt = 0; cnt< settings.length; cnt++) {
+			prepList = prepList + "<ons-list-item onclick=\"window.open(encodeURI('" + settings[cnt].url + "'), '_system')\">" + settings[cnt].forum + "@</ons-list-item><div class='right'><ons-icon icon='md-delete' onclick='app.deleteForum(" + cnt + ");'></ons-icon></div></ons-list-item>";
+		
+		}
+    
+    
+ 
+    	return prepList;
     },
     
     
