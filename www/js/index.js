@@ -159,7 +159,7 @@ var app = {
 							}
 						
 						}
-						alert("Userid now:" + userId;
+						alert("Userid now:" + userId);
 						
 						if(userId) {
 							localStorage.setItem("loggedUser",userId);
