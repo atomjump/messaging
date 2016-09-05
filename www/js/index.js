@@ -22,8 +22,8 @@ var centralPairingUrl = "https://atomjump.com/med-genid.php";
 var errorThis = {};  //Used as a global error handler
 var retryIfNeeded = [];	//A global pushable list with the repeat attempts
 var retryNum = 0;
-var userId = 8;			//TEMPORARY - TODO: this should be from a login when we open the app
-var api = "https://atomjump.com/api/";
+var userId = null;			//From a login when we open the app
+var api = "https://staging.atomjump.com/api/";
 
 var apiId = "538233303966";
 
@@ -43,6 +43,14 @@ var app = {
         
         //Set display name - TODO: check this is valid here
         this.displayServerName();
+        
+        userId = localStorage.getItem('loggedUser');
+        
+        if(userId) {
+        	//Yep, we have a logged in user
+        	$('#login-popup').close();	
+        
+        }
         
         errorThis = this;
 
@@ -138,11 +146,29 @@ var app = {
 			success    : function(response) {
 				//console.error(JSON.stringify(response));
 				alert('Logged in: ' + response);
-				switch(response)
+				var res = response.split(",");
+				switch(res[0])
 				{
 					case 'LOGGED_IN':
-						this.setupPush();		//register this phone
-						$('#login-popup').close();
+						//Now request again and get the usercode of this user
+						if((res[1]) && (res[1] != 'RELOAD')) {
+							userId = res[1];
+						} else {
+							if(res[2]) {
+								userId = res[2];
+							}
+						
+						}
+						
+						if(userId) {
+							localStorage.setItem("loggedUser",userId);
+							this.setupPush();		//register this phone
+							$('#login-popup').close();
+						
+						} else {
+							navigator.notification.alert("Sorry, we detected a user, but this version of AtomJump Loop Server does not support app logins.");
+						}
+						
 					break;
 					
 					default:
