@@ -159,11 +159,15 @@ var app = {
 							}
 						
 						}
+						alert("Userid now:" + userId;
 						
 						if(userId) {
 							localStorage.setItem("loggedUser",userId);
+							alert("Set item loggedUser");
 							errorThis.setupPush();		//register this phone
+							alert("setup push");
 							$('#login-popup').close();
+							alert("close popup");
 						
 						} else {
 							navigator.notification.alert("Sorry, we detected a user, but this version of AtomJump Loop Server does not support app logins.");
