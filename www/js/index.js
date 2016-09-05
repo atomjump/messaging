@@ -1013,9 +1013,10 @@ var app = {
     listForums: function() {
     
     
-		var settings = errorThis.getArrayLocalStorage("settings");
+		var settings = app.getArrayLocalStorage("settings");
 	
 	
+		alert("Settings:" + JSON.stringify(settings));
 		var prepList = "<ons-list-header>Forums</ons-list-header>";
 		
 	
