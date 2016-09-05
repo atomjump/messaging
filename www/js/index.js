@@ -24,6 +24,7 @@ var retryIfNeeded = [];	//A global pushable list with the repeat attempts
 var retryNum = 0;
 var userId = null;			//From a login when we open the app
 var api = "https://staging.atomjump.com/api/";
+var rawForumHeader = "ajps_";
 
 var apiId = "538233303966";
 
@@ -42,7 +43,7 @@ var app = {
         
         
         //Set display name - TODO: check this is valid here
-        //this.displayServerName();
+        this.displayForumNames();
         
         
         
@@ -93,7 +94,6 @@ var app = {
 
         push.on('registration', function(data) {
             
-            alert("Registration received"); //:" + JSON.stringify(data));		//TEMPORARY!!
             var oldRegId = localStorage.getItem('registrationId');
             if (oldRegId !== data.registrationId) {
                 
@@ -150,7 +150,6 @@ var app = {
 			dataType   : 'jsonp',
 			success    : function(response) {
 				//console.error(JSON.stringify(response));
-				alert('Logged in: ' + response);
 				var res = response.split(",");
 				switch(res[0])
 				{
@@ -164,15 +163,11 @@ var app = {
 							}
 						
 						}
-						alert("Userid now:" + userId);
 						
 						if(userId) {
 							localStorage.setItem("loggedUser",userId);
-							alert("Set item loggedUser");
 							app.setupPush();		//register this phone
-							alert("setup push after");
 							$('#login-popup').hide();
-							alert("close popup");
 						
 						} else {
 							navigator.notification.alert("Sorry, we detected a user, but this version of AtomJump Loop Server does not support app logins.");
@@ -1078,24 +1073,18 @@ var app = {
     	
     },
     
-    newServer: function() {
-    	//Create a new server. 
+    newForum: function() {
+    	//Create a new forum. 
     	//This is actually effectively resetting, and we will allow the normal functions to input a new one
-    	localStorage.removeItem("usingServer");
-        
-        //Remove the current one
-       	localStorage.removeItem("currentRemoteServer");
-        localStorage.removeItem("currentWifiServer");
 
-		this.notify("Click above to activate.");			//Clear off old notifications
-        
+       
 		//Ask for a name of the current Server:
 		navigator.notification.prompt(
-			'Please enter a name for this PC',  // message
-			this.saveServerName,                  // callback to invoke
-			'PC Name',            // title
+			'Please enter a name for this forum',  // message
+			this.saveForumName,                  // callback to invoke
+			'Forum Name',            // title
 			['Ok','Cancel'],             // buttonLabels
-			'Main'                 // defaultText
+			''                 // defaultText
 		);
 	
 	
@@ -1149,16 +1138,16 @@ var app = {
     
 
     
-    saveServerName: function(results) {
+    saveForumName: function(results) {
     	//Save the server with a name - but since this is new,
     	//Get existing settings array
     	if(results.buttonIndex == 1) {
     		//Clicked on 'Ok'
     		
-    		localStorage.setItem("currentServerName", results.input1);
- 
-    		//Now refresh the current server display
-    		document.getElementById("currentPC").innerHTML = results.input1;
+    		//results.input1 has the new forum name - assume it is for the current
+    		//default server
+    		
+    		errorThis.saveForum(results.input1);
     		
     		errorThis.closeSettings();
     		return;
@@ -1170,51 +1159,38 @@ var app = {
      	
     },
     
-    displayServerName: function() {
+    displayForumNames: function() {
     	//Call this during initialisation on app startup
-    	var currentServerName = localStorage.getItem("currentServerName");
-    	
-    	if((currentServerName) && (currentServerName != null)) {
-    		//Now refresh the current server display
-    		document.getElementById("currentPC").innerHTML = currentServerName;
+    		var settings = errorThis.getArrayLocalStorage("settings");
     		
     		
+			var prepList = "<ons-list-header>Forums</ons-list-header>";
+    			
+    			<ons-list-item onclick="window.open(encodeURI('http://hardpete.atomjump.com/'), '_system')">hardpete@</ons-list-item>
+    		</ons-list>
     		
-    		
-    	} else {
-    	
-    		document.getElementById("currentPC").innerHTML = "";
-    	}
+    		for(var cnt = 0; cnt< settings.length; cnt++) {
+    			prepList = prepList + "<ons-list-item onclick=\"window.open(encodeURI('" + settings[cnt].url + "'), '_system')\">" + settings[cnt].forum + "@</ons-list-item>";
+    			
+    		}
     
-    
-    
+    		$('#forum-list').html(prepList);
     },
     
-    saveServer: function() {
+    saveForum: function(newForumName) {
         	//Run this after a successful upload
         	
-        	
-        	
-        	var currentServerName = localStorage.getItem("currentServerName");
-        	
-        	var currentRemoteServer = localStorage.getItem("currentRemoteServer");
-    		var currentWifiServer = localStorage.getItem("currentWifiServer");
-   			
-   			
-   			
-   			if((!currentServerName) ||(currentServerName == null)) currentServerName = "Default";
-   			if((!currentRemoteServer) ||(currentRemoteServer == null)) currentRemoteServer = "";
-   			if((!currentWifiServer) ||(currentWifiServer == null)) currentWifiServer = "";	
-   		
+        			
    			
    		
    			var settings = errorThis.getArrayLocalStorage("settings");
    			
    			//Create a new entry - which will be blank to being with
    			var newSetting = { 
-   				"name": currentServerName,		//As input by the user
-   				"currentRemoteServer": currentRemoteServer,
-   				"currentWifiServer": currentWifiServer
+   				"forum": newForumName,		//As input by the user
+   				"api": api,
+   				"rawForumHeader": rawForumHeader,
+   				"url" : "http://" + newForumName + ".atomjump.com";		//TODO make less atomjump.com
    			};
    			
    			
@@ -1227,7 +1203,7 @@ var app = {
    				//Check if we are writing over the existing entries
    				var writeOver = false;
    				for(cnt = 0; cnt< settings.length; cnt++) {
-   					if(settings[cnt].name == currentServerName) {
+   					if(settings[cnt].nanewForumName == newForumName) {
    						writeOver = true;
    						settings[cnt] = newSetting;
    					}
@@ -1242,7 +1218,8 @@ var app = {
     		//Save back to the persistent settings
     		errorThis.setArrayLocalStorage("settings", settings);
     		
-    		
+    		//Reset the display with the new forum
+    		errorThis.displayForumNames();
     		return;
     
     },
