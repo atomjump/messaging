@@ -166,7 +166,7 @@ var app = {
 							alert("Set item loggedUser");
 							errorThis.setupPush();		//register this phone
 							alert("setup push");
-							$('#login-popup').close();
+							$('#login-popup').hide();
 							alert("close popup");
 						
 						} else {
