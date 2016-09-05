@@ -42,13 +42,14 @@ var app = {
         
         
         //Set display name - TODO: check this is valid here
-        this.displayServerName();
+        //this.displayServerName();
         
         userId = localStorage.getItem('loggedUser');
         
         if(userId) {
         	//Yep, we have a logged in user
         	$('#login-popup').hide();	
+        	this.setupPush();
         
         }
         
@@ -90,6 +91,7 @@ var app = {
 
         push.on('registration', function(data) {
             
+            alert("Registration received:" + JSON.stringify(data));		//TEMPORARY!!
             var oldRegId = localStorage.getItem('registrationId');
             if (oldRegId !== data.registrationId) {
                 
@@ -136,6 +138,7 @@ var app = {
     login: function(user, pass)
     {
     	//Login to the remote Loop Server
+    	errorThis = this;
     	
     	$.ajax({
 			type       : "POST",
