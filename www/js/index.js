@@ -1012,9 +1012,10 @@ var app = {
     },
 
     listForums: function() {
-    
+    	var prepList = "";
+    	
     	alert("Listing forums");
-		var settings = errorThis.getArrayLocalStorage("settings");
+		var settings = this.getArrayLocalStorage("settings");
 	
 		if(settings) {
 	
