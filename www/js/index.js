@@ -1092,12 +1092,12 @@ var app = {
     	
     },
     
-    deleteServer: function(serverId) {
+    deleteForum: function(forumId) {
     	//Delete an existing server
-    	this.myServerId = serverId;
+    	this.myForumId = forumId;
     	
     	navigator.notification.confirm(
-	    		'Are you sure? This PC will be removed from memory.',  // message
+	    		'Are you sure? This forum will be removed.',  // message
 	    		function(buttonIndex) {
 	    			if(buttonIndex == 1) {
 						var settings = errorThis.getArrayLocalStorage("settings");
@@ -1107,19 +1107,10 @@ var app = {
 						} else {
 						
 							//Check if it is deleting the current entry
-							var deleteName = settings[errorThis.myServerId].name;
-							var currentServerName = localStorage.getItem("currentServerName");
-    	
-    						if((currentServerName) && (deleteName) && (currentServerName == deleteName)) {
-    							//Now refresh the current server display
-    							document.getElementById("currentPC").innerHTML = "";
-    							localStorage.removeItem("currentRemoteServer");
-    							localStorage.removeItem("currentWifiServer");
-    							localStorage.removeItem("currentServerName");
-    						}
-
+							var deleteName = settings[errorThis.myForumId].forum;
+							
 						
-							settings.splice(errorThis.myServerId, 1);  //Remove the entry entirely from array
+							settings.splice(errorThis.myForumId, 1);  //Remove the entry entirely from array
 			
 							errorThis.setArrayLocalStorage("settings", settings);
 						} 
@@ -1128,7 +1119,7 @@ var app = {
 					}
 	    		
 	    		},                  // callback to invoke
-	    		'Remove PC',            // title
+	    		'Remove Forum',            // title
 	    		['Ok','Cancel']             // buttonLabels
 		);
     	
@@ -1179,11 +1170,13 @@ var app = {
         	//Run this after a successful upload
         	
         			
-   			
+   			alert("saving " + newForumName);
    		
    			var settings = errorThis.getArrayLocalStorage("settings");
    			
-   			//Create a new entry - which will be blank to being with
+   			alert("Settings retrieved");
+   			
+   			//Create a new entry - which will be blank to begin with
    			var newSetting = { 
    				"forum": newForumName,		//As input by the user
    				"api": api,
@@ -1215,6 +1208,8 @@ var app = {
     		
     		//Save back to the persistent settings
     		errorThis.setArrayLocalStorage("settings", settings);
+    		
+    		alert("New settings saved as " + JSON.stringify(settings));
     		
     		//Reset the display with the new forum
     		errorThis.displayForumNames();
