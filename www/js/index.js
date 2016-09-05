@@ -23,8 +23,9 @@ var errorThis = {};  //Used as a global error handler
 var retryIfNeeded = [];	//A global pushable list with the repeat attempts
 var retryNum = 0;
 var userId = 8;			//TEMPORARY - TODO: this should be from a login when we open the app
+var api = "https://atomjump.com/api/";
 
-
+var apiId = "538233303966";
 
 
 
@@ -68,7 +69,7 @@ var app = {
     	
         var push = PushNotification.init({
             "android": {
-                "senderID": "538233303966"
+                "senderID": apiId
             },
             "browser": {},
             "ios": {
@@ -89,18 +90,20 @@ var app = {
                 localStorage.setItem('registrationId', data.registrationId);
                 // Post registrationId to your app server as the value has changed
                 //Post to server software Loop Server API
-                var url = "https://staging.atomjump.com/api/plugins/notifications/register.php?id=" + data.registrationId + "&userid=" + userId;  //e.g. https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
+                var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=" + userId;  //e.g. https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
                  errorThis.get(url, function(url, resp) {
                 	navigator.notification.alert("Registered OK!"); 
                 });
             }
 
-            var parentElement = document.getElementById('registration');
+            /*var parentElement = document.getElementById('registration');
             var listeningElement = parentElement.querySelector('.waiting');
-            var receivedElement = parentElement.querySelector('.received');
+            var receivedElement = parentElement.querySelector('.received');*/
 
+			/*
             listeningElement.setAttribute('style', 'display:none;');
             receivedElement.setAttribute('style', 'display:block;');
+            */
         });
 
         push.on('error', function(e) {
@@ -110,7 +113,7 @@ var app = {
         push.on('notification', function(data) {
             console.log('notification event');
             document.getElementById('aj-HTML-alert').style.display = "block";
-            document.getElementById('aj-HTML-alert').innerHTML = "<div class='inner-popup'><ons-fab position=\"top right\" onclick=\"app.closeNotifications();\">     		<ons-icon icon=\"md-close\" ></ons-icon></ons-fab>" + data.message + " <a href='javascript:' onclick='" + data.additionalData.actions[0].callback + "'>Visit Forum</a></div>";
+            document.getElementById('aj-HTML-alert').innerHTML = "<div class='inner-popup'><a style='float:right;' href='javascript:' onclick=\"app.closeNotifications();\">     		<ons-icon icon=\"md-close\" ></ons-icon></a>" + data.message + " <a href='javascript:' onclick='" + data.additionalData.actions[0].callback + "'>Visit Forum</a></div>";
             
             /*navigator.notification.alert(
                 data.message,         // message
@@ -121,8 +124,33 @@ var app = {
        });
     },
     
+    
+    login: function(user, pass)
+    {
+    	//Login to the remote Loop Server
+    	
+    	$.ajax({
+			type       : "POST",
+			url        : api + "confirm.php",
+			crossDomain: true,
+			data       : { 'email-opt': user, 'pd': pass },
+			dataType   : 'jsonp',
+			success    : function(response) {
+				//console.error(JSON.stringify(response));
+				alert('Logged in: ' + response);
+			},
+			error      : function() {
+				//console.error("error");
+				alert('Not connecting to Loop Server!');                  
+			}
+	   });     
+    	   
+    
+    },
+    
     // Update DOM on a Received Event
     receivedEvent: function(id) {
+        /*
         var parentElement = document.getElementById(id);
         var listeningElement = parentElement.querySelector('.listening');
         var receivedElement = parentElement.querySelector('.received');
@@ -130,6 +158,7 @@ var app = {
         listeningElement.setAttribute('style', 'display:none;');
         receivedElement.setAttribute('style', 'display:block;');
         console.log('Received Event: ' + id);
+        */
     },
 
     takePicture: function() {

@@ -29,6 +29,7 @@
     	
     	<link rel="stylesheet" type="text/css" href="css/ionicons/css/ionicons.css">
     	<link rel="stylesheet" type="text/css" href="css/material-design-iconic-font/css/material-design-iconic-font.css">
+    	<script   src="https://code.jquery.com/jquery-3.1.0.min.js"   integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s="   crossorigin="anonymous"></script>
     	<script src="js/onsenui.js"></script>
 	    <script>
 	      ons.ready(function() {
@@ -78,12 +79,14 @@
 	
 	        <div id="inner-popup">
 				
-			<span style="vertical-align: top;" class="big-text">AtomJump</span><br/><img  src="icon-Small@3x.png">
-        		
+			<span style="vertical-align: top; padding: 10px;" class="big-text">AtomJump</span><br/><img  src="icon-Small@3x.png" style="padding 10px;">
+        	
+        	<!--	
 			<div id="registration" class="blink">
             	<p class="event waiting">Requesting Registration ID</p>
             	<p class="event received">Registered</p>
-        	</div>	
+        	</div>
+            -->	
         		
         		
         	<form onsubmit="window.open(encodeURI('http://' + document.getElementById('about').value + '.atomjump.com/'), '_system')">	
@@ -116,6 +119,32 @@
         
 		<div id="aj-HTML-alert" style="display:none;">
         </div>
+        
+         <div id="login-popup" style="display:block;">
+        	<div class="inner-popup">
+        		
+        		<span class="big-text">Login</span><br/><br/>
+        		
+        		<!--<ons-fab position="top right" onclick="app.closeLogin();">
+		      		<ons-icon icon="md-close" ></ons-icon>
+		    	</ons-fab>-->
+        		
+        		
+        		<p style="text-align:center;">
+				    
+					<input id="user" type="text" placeholder="Email" size="20" class="resizedTextbox">
+					<input id="password" type="password" placeholder="Password" size="20" class="resizedTextbox">
+				</p>
+        		<p>
+        			<ons-button style="background-color: #7c5599; color: white;" modifier="large" onclick="app.login();">Login</ons-button>
+	        	</p>
+	        	
+				<p>
+					<a class="small-text" href="javascript:" onclick="">Forgotten Password?</a>
+				</p>
+			</div>
+        </div>
+        
         
         <div id="settings-popup" style="display:none;">
         	<div class="inner-popup">
