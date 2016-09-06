@@ -210,18 +210,15 @@ var app = {
 
 
 	clearPass: function() {
-		if($('#user').val() != '') {
 			
-			if($('#private-server').val() != '') {
-				   		errorThis.setAPI($('#private-server').val());
-			}
-			
-					
-			window.open(encodeURI(api + 'clear-pass.php?email=' + $('#user').val(), '_system'));
-		} else {
-			navigator.notification.alert("Please enter your email address.");
-		
+		if($('#private-server').val() != '') {
+					navigator.notification.alert("Warning: you will have to reset your password from the settings within the web address of your messaging.");
+return false;
 		}
+		
+		navigator.notification.alert("Note: please set your password within the website popup's settings. We will take you there now.");		
+		window.open(encodeURI('https://atomjump.com', '_system'));
+
 		return false;		
 	},
 
