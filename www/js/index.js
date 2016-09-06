@@ -440,7 +440,7 @@ var app = {
    			alert("About to save settings: " + JSON.stringify(newSetting));
    			
    		
-   			if((settings == null)|| (settings == '')) {
+   			if((settings == null)|| (settings == '')|| (!settings) || (typeof(settings) == 'undefined')) {
    				//Creating an array for the first time
    				var settings = [];
    				alert("Null settings");
