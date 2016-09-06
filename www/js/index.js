@@ -437,7 +437,7 @@ var app = {
    				"rawForumHeader": rawForumHeader,
    				"url" : "http://" + newForumName + ".atomjump.com"		//TODO make less atomjump.com
    			};
-   			
+   			alert("About to save settings: " + JSON.stringify(newSetting));
    			
    		
    			if((settings == null)|| (settings == '')) {
@@ -448,7 +448,7 @@ var app = {
    				//Check if we are writing over the existing entries
    				var writeOver = false;
    				for(cnt = 0; cnt< settings.length; cnt++) {
-   					if(settings[cnt].nanewForumName == newForumName) {
+   					if(settings[cnt].newForumName == newForumName) {
    						writeOver = true;
    						settings[cnt] = newSetting;
    					}
