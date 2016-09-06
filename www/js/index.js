@@ -463,19 +463,23 @@ var app = {
     		alert("About to save settings: " + JSON.stringify(settings));
     		
     		//Save back to the persistent settings
-    		errorThis.setArrayLocalStorage("settings", settings);
+    		this.setArrayLocalStorage("settings", settings);
     		
     		alert("New settings saved as " + JSON.stringify(settings));
     		
     		//Reset the display with the new forum
-    		errorThis.displayForumNames();
+    		this.displayForumNames();
     		return;
     
     },
     
     //Array storage for app permanent settings (see http://inflagrantedelicto.memoryspiral.com/2013/05/phonegap-saving-arrays-in-local-storage/)
     setArrayLocalStorage: function(mykey, myobj) {
-	    return localStorage.setItem(mykey, JSON.stringify(myobj));
+    	alert("Setting starts");
+    	var str = JSON.stringify(myobj);
+    	var ret = localStorage.setItem(mykey, str);
+	    alert("Set ok");
+	    return ret;
     },
     
     getArrayLocalStorage: function(mykey) {
