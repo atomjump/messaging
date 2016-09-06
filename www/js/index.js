@@ -141,8 +141,7 @@ var app = {
     login: function(user, pass)
     {
     	//Login to the remote Loop Server
-    	errorThis = this;
-    	
+   	
     	$.ajax({
 			type       : "POST",
 			url        : api + "confirm.php",
@@ -326,44 +325,7 @@ var app = {
     
     
     
-    setServer: function(serverId) {
-    	//Set the server to the input server id
-    	var settings = this.getArrayLocalStorage("settings");
-    
-    	var currentRemoteServer = settings[serverId].currentRemoteServer;			
-        var currentWifiServer = settings[serverId].currentWifiServer;	
- 
-        localStorage.removeItem("usingServer"); //reset the currently used server
-       
-        //Save the current server
-        localStorage.removeItem("defaultDir");
-        
-        //Remove if one of these doesn't exist, and use the other.
-        if((!currentWifiServer)||(currentWifiServer == null)||(currentWifiServer =="")) {
-        	localStorage.removeItem("currentWifiServer");
-        } else {
-        	localStorage.setItem("currentWifiServer", currentWifiServer);
-        }
-        
-        if((!currentRemoteServer)||(currentRemoteServer == null)||(currentRemoteServer == "")) {
-        	localStorage.removeItem("currentRemoteServer");
-        } else {
-        	localStorage.setItem("currentRemoteServer", currentRemoteServer);
-        }
-        
-        //Set the localstorage
-        localStorage.setItem("currentServerName", settings[serverId].name);
- 	
-    	
-    	navigator.notification.alert("Switched to: " +  settings[serverId].name, function() {}, "Changing PC");
-    	
-    	//Now refresh the current server display
-    	document.getElementById("currentPC").innerHTML = settings[serverId].name;
-    	
-    	this.closeSettings();
-    	return false;
-    	
-    },
+
     
     newForum: function() {
     	//Create a new forum. 
@@ -515,7 +477,13 @@ var app = {
     },
     
     getArrayLocalStorage: function(mykey) {
-	    return JSON.parse(localStorage.getItem(mykey));
+    	alert("Getting array local storage of " + mykey);
+    	var item = localStorage.getItem(mykey);
+    	alert("Got item");
+    	var retItem = JSON.parse(item);
+    	alert("Got retItem");
+    	
+	    return retItem;
     }
 
 
