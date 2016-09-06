@@ -424,11 +424,9 @@ var app = {
         	//Run this after a successful upload
         	
         			
-   			alert("saving " + newForumName);
    		
    			var settings = app.getArrayLocalStorage("settings");
    			
-   			alert("Settings retrieved");
    			
    			//Create a new entry - which will be blank to begin with
    			var newSetting = { 
@@ -437,13 +435,10 @@ var app = {
    				"rawForumHeader": rawForumHeader,
    				"url" : "http://" + newForumName + ".atomjump.com"		//TODO make less atomjump.com
    			};
-   			alert("About to save settings: " + JSON.stringify(newSetting));
    			
-   			alert("Settings = " + JSON.stringify(settings));
    			if((settings)&&(settings.length)) {
    				//Check if we are writing over the existing entries
    				var writeOver = false;
-   				alert("Length of settings:" + settings.length);
    				for(cnt = 0; cnt< settings.length; cnt++) {
    					if(settings[cnt].forum == newForumName) {
    						writeOver = true;
@@ -451,10 +446,8 @@ var app = {
    					}
    				}
    			
-   				alert("Writing over " + writeOver);
-   				if(writeOver == false) {
+    			if(writeOver == false) {
     				settings.push(newSetting);  //Save back to the array
-    				alert("Pushed newSetting");
     			}
    			
    			
@@ -462,18 +455,14 @@ var app = {
    			} else {
    				//Creating an array for the first time
    				var settings = [];
-   				alert("Null settings");
    				settings.push(newSetting);  //Save back to the array
-   				alert("Pushed newSetting");
    			} 
 
     		
-    		alert("About to save settings: " + JSON.stringify(settings) + " to app:" + JSON.stringify(app));
     		
     		//Save back to the persistent settings
     		app.setArrayLocalStorage("settings", settings);
     		
-    		alert("New settings saved as " + JSON.stringify(settings));
     		
     		//Reset the display with the new forum
     		app.displayForumNames();
@@ -483,20 +472,16 @@ var app = {
     
     //Array storage for app permanent settings (see http://inflagrantedelicto.memoryspiral.com/2013/05/phonegap-saving-arrays-in-local-storage/)
     setArrayLocalStorage: function(mykey, myobj) {
-    	alert("Setting starts");
     	var str = JSON.stringify(myobj);
     	var ret = localStorage.setItem(mykey, str);
-	    alert("Set ok");
 	    return ret;
     },
     
     getArrayLocalStorage: function(mykey) {
-    	alert("Getting array local storage of " + mykey);
+
     	var item = localStorage.getItem(mykey);
-    	alert("Got item");
     	if(item) {
     		var retItem = JSON.parse(item);
-    		alert("Got retItem");
     	} else {
     		var retItem = {};
     	}
