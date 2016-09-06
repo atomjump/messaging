@@ -17,15 +17,11 @@
  * under the License.
  */
 
-var deleteThisFile = {}; //Global object for image taken, to be deleted
-var centralPairingUrl = "https://atomjump.com/med-genid.php";
-var errorThis = {};  //Used as a global error handler
-var retryIfNeeded = [];	//A global pushable list with the repeat attempts
-var retryNum = 0;
-var userId = null;			//From a login when we open the app
-var api = "https://staging.atomjump.com/api/";
-var rawForumHeader = "ajps_";
 
+var errorThis = {};  //Used as a global error handler
+var userId = null;			//From a login when we open the app
+var api = "https://atomjump.com/api/";
+var rawForumHeader = "ajps_";
 var apiId = "538233303966";
 
 
@@ -65,6 +61,11 @@ var app = {
     onDeviceReady: function() {
           
           app.receivedEvent('deviceready');
+          var settingApi = localStorage.getItem("api");
+          if(settingApi) {
+          	 api = settingApi;
+          }
+          
           
           
           userId = localStorage.getItem('loggedUser');
@@ -130,9 +131,14 @@ var app = {
     },
     
     
-    login: function(user, pass)
+    login: function(user, pass, apiUrl)
     {
     	//Login to the remote Loop Server
+   	
+   		if(apiUrl) {
+   			api = apiUrl;
+   			localStorage.setItem("api",api);
+   		}
    	
     	$.ajax({
 			type       : "POST",
@@ -194,7 +200,7 @@ var app = {
 	clearPass: function() {
 		if($('#user').val() != '') {
 					
-			window.open(encodeURI(api + 'clear-pass.php?email=' + $('#user'), '_system'));
+			window.open(encodeURI(api + 'clear-pass.php?email=' + $('#user').val(), '_system'));
 		} else {
 			navigator.notification.alert("Please enter your email address.");
 		
