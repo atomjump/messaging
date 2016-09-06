@@ -105,19 +105,11 @@ var app = {
                 //Post to server software Loop Server API
                 var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=" + userId;  //e.g. https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
                  errorThis.get(url, function(url, resp) {
-                	navigator.notification.alert("Registered OK!"); 
+                	//Registered OK
                 });
             }
 
-            /*var parentElement = document.getElementById('registration');
-            var listeningElement = parentElement.querySelector('.waiting');
-            var receivedElement = parentElement.querySelector('.received');*/
-
-			/*
-            listeningElement.setAttribute('style', 'display:none;');
-            receivedElement.setAttribute('style', 'display:block;');
-            */
-            $('#registered').show();
+             $('#registered').show();
         });
 
         push.on('error', function(e) {
@@ -129,12 +121,7 @@ var app = {
             document.getElementById('aj-HTML-alert').style.display = "block";
             document.getElementById('aj-HTML-alert').innerHTML = "<div class='inner-popup'><a style='float:right;' href='javascript:' onclick=\"app.closeNotifications();\">     		<ons-icon icon=\"md-close\" ></ons-icon></a>" + data.message + " <a href='javascript:' onclick='" + data.additionalData.actions[0].callback + "'>Visit Forum</a></div>";
             
-            /*navigator.notification.alert(
-                data.message,         // message
-                null,                 // callback
-                data.title,           // title
-                'Ok'                  // buttonName
-            );*/
+           
        });
     },
     
@@ -195,15 +182,7 @@ var app = {
     
     // Update DOM on a Received Event
     receivedEvent: function(id) {
-        /*
-        var parentElement = document.getElementById(id);
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
-
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
-        console.log('Received Event: ' + id);
-        */
+ 
     },
 
 
@@ -248,12 +227,13 @@ var app = {
         var _this = this;
         
     		navigator.notification.confirm(
-	    		'Are you sure? All your saved PCs and other settings will be cleared.',  // message
+	    		'Are you sure? All your saved forums and other settings will be cleared.',  // message
 	    		function(buttonIndex) {
 	    			if(buttonIndex == 1) {
 						localStorage.clear();
 						
 						localStorage.removeItem("registration");
+						localStorage.removeItem("settings");
 						
     		
 						alert("Cleared all saved forums.");
@@ -270,6 +250,19 @@ var app = {
 		return false;
     },
     
+
+    logout: function() {
+        //We have connected to a server OK
+        var _this = this;
+        
+    			
+		localStorage.removeItem("registration");
+
+		$('#login-popup').show();
+
+        
+		return false;
+    },
 
 
 
@@ -305,7 +298,7 @@ var app = {
 	
 		if(settings) {
 	
-			var prepList = "<ons-list-header>Your Forums</ons-list-header>";
+			var prepList = "<ons-list-header>Your Shortcuts</ons-list-header>";
 		
 	
 			for(var cnt = 0; cnt< settings.length; cnt++) {
@@ -407,7 +400,7 @@ var app = {
     		var settings = app.getArrayLocalStorage("settings");
     		
     		
-			var prepList = "<ons-list-header>Your Forums</ons-list-header>";
+			var prepList = "<ons-list-header>Your Shortcuts</ons-list-header>";
     			
     		
     		for(var cnt = 0; cnt< settings.length; cnt++) {

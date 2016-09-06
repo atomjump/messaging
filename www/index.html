@@ -79,29 +79,27 @@
 	
 	        <div id="inner-popup">
 			
+			<p style="text-align:right;">	
+				<a class="small-text" href="javascript" onclick="return app.logout();">Log Out</a>
+			</p>
+			
 			<p style="text-align:center;">	
 				<span style="vertical-align: top; padding: 10px; padding-top:30px;" class="big-text">AtomJump</span><br/><img  src="icon-Small@3x.png" style="padding 10px;"><br/><span id='registered' style="display: none;"><small>Listening for Messages</small></span>
         	</p>
         	
-        	<!--	
-			<div id="registration" class="blink">
-            	<p class="event waiting">Requesting Registration ID</p>
-            	<p class="event received">Registered</p>
-        	</div>
-            -->	
+        	
         		
         		
         	<form onsubmit="window.open(encodeURI('http://' + document.getElementById('about').value + '.atomjump.com/'), '_system')">	
 				<p style="text-align:center;">
-				     <span class="big-text">Message About<br/></span>
+				     <span class="big-text">Message about<br/></span>
 					<input id="about" type="text" size="9" class="resizedTextbox">
 				</p>	
         	</form>	
 	        	
 			<ons-list id="forum-list">
-				<ons-list-header> Your Forums</ons-list-header>
-    			<!--<ons-list-item onclick="window.open(encodeURI('https://atomjump.com/'), '_system')">atomjump@</ons-list-item>
-    			<ons-list-item onclick="window.open(encodeURI('http://hardpete.atomjump.com/'), '_system')">hardpete@</ons-list-item>-->
+				<ons-list-header>Your Shortcuts</ons-list-header>
+    			
     		</ons-list>
 	
 	
