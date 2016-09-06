@@ -136,6 +136,10 @@ var app = {
     	//Login to the remote Loop Server
    	
    		if(apiUrl) {
+   		    //Add a trailing slash if it isn't there
+   		    if(apiUrl.slice(-1) != '/') {
+   		    	apiUrl = apiUrl + "/";
+   		    }
    			api = apiUrl;
    			localStorage.setItem("api",api);
    		}
