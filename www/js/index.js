@@ -300,23 +300,19 @@ var app = {
     listForums: function() {
     	var prepList = "";
     	
-    	alert("Listing forums this:" + JSON.stringify(errorThis));
-		var settings = errorThis.getArrayLocalStorage("settings");
+ 		var settings = errorThis.getArrayLocalStorage("settings");
 	
-		alert("Got settings");
 		if(settings) {
 	
-			alert("Settings:" + JSON.stringify(settings));
 			var prepList = "<ons-list-header>Forums</ons-list-header>";
 		
 	
 			for(var cnt = 0; cnt< settings.length; cnt++) {
-				prepList = prepList + "<ons-list-item onclick=\"window.open(encodeURI('" + settings[cnt].url + "'), '_system')\">" + settings[cnt].forum + "@</ons-list-item><div class='right'><ons-icon icon='md-delete' onclick='app.deleteForum(" + cnt + ");'></ons-icon></div></ons-list-item>";
+				prepList = prepList + "<ons-list-item onclick=\"window.open(encodeURI('" + settings[cnt].url + "'), '_system')\">" + settings[cnt].forum + "@ <div class='right'><ons-icon icon='md-delete' onclick='app.deleteForum(" + cnt + ");'></ons-icon></div></ons-list-item>";
 		
 			}
         } else {
-        	alert("No settings");
-        
+			//No settings        
         }
     
  
