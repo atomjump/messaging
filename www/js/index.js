@@ -130,12 +130,10 @@ var app = {
        });
     },
     
-    
-    login: function(user, pass, apiUrl)
+    setAPI: function(apiUrl)
     {
-    	//Login to the remote Loop Server
-   	
-   		if(apiUrl) {
+    
+    	if(apiUrl) {
    		    //Add a trailing slash if it isn't there
    		    if(apiUrl.slice(-1) != '/') {
    		    	apiUrl = apiUrl + "/";
@@ -143,6 +141,15 @@ var app = {
    			api = apiUrl;
    			localStorage.setItem("api",api);
    		}
+    
+    }
+    
+    
+    login: function(user, pass, apiUrl)
+    {
+    	//Login to the remote Loop Server
+   		errorThis.setAPI(apiUrl);
+   		
    	
     	$.ajax({
 			type       : "POST",
@@ -203,6 +210,11 @@ var app = {
 
 	clearPass: function() {
 		if($('#user').val() != '') {
+			
+			if($('#private-server').val() != '') {
+				   		errorThis.setAPI($('#private-server').val());
+			}
+			
 					
 			window.open(encodeURI(api + 'clear-pass.php?email=' + $('#user').val(), '_system'));
 		} else {
