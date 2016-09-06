@@ -460,6 +460,8 @@ var app = {
    			} 
 
     		
+    		alert("About to save settings: " + JSON.stringify(settings));
+    		
     		//Save back to the persistent settings
     		errorThis.setArrayLocalStorage("settings", settings);
     		
