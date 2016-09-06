@@ -145,7 +145,7 @@ var app = {
 				var res = response.split(",");
 				switch(res[0])
 				{
-					case 'LOGGED_IN':
+					default:
 						//Now request again and get the usercode of this user
 						if((res[1]) && (res[1] != 'RELOAD')) {
 							userId = res[1];
@@ -167,7 +167,8 @@ var app = {
 						
 					break;
 					
-					default:
+					
+					case 'INCORRECT_PASS':
 						navigator.notification.alert("Sorry, that was the wrong email or password. Please try again.");
 					
 					break;
@@ -191,9 +192,9 @@ var app = {
 
 
 	clearPass: function() {
-		if($('#email').val() != '') {
+		if($('#user').val() != '') {
 					
-			window.open(encodeURI(api + 'clear-pass.php?email=' + $('#email'), '_system'));
+			window.open(encodeURI(api + 'clear-pass.php?email=' + $('#user'), '_system'));
 		} else {
 			navigator.notification.alert("Please enter your email address.");
 		
