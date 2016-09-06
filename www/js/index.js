@@ -439,14 +439,8 @@ var app = {
    			};
    			alert("About to save settings: " + JSON.stringify(newSetting));
    			
-   		
-   			if((settings == null)|| (settings == '')|| (!settings) || (typeof(settings) == 'undefined')) {
-   				//Creating an array for the first time
-   				var settings = [];
-   				alert("Null settings");
-   				settings.push(newSetting);  //Save back to the array
-   				alert("Pushed newSetting");
-   			} else {
+   			alert("Settings = " + JSON.stringify(settings));
+   			if((settings)&&(settings.length)) {
    				//Check if we are writing over the existing entries
    				var writeOver = false;
    				alert("Length of settings:" + settings.length);
@@ -462,6 +456,15 @@ var app = {
     				settings.push(newSetting);  //Save back to the array
     				alert("Pushed newSetting");
     			}
+   			
+   			
+   			
+   			} else {
+   				//Creating an array for the first time
+   				var settings = [];
+   				alert("Null settings");
+   				settings.push(newSetting);  //Save back to the array
+   				alert("Pushed newSetting");
    			} 
 
     		
