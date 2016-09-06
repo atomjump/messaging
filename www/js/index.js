@@ -443,10 +443,13 @@ var app = {
    			if((settings == null)|| (settings == '')) {
    				//Creating an array for the first time
    				var settings = [];
+   				alert("Null settings");
    				settings.push(newSetting);  //Save back to the array
+   				alert("Pushed newSetting");
    			} else {
    				//Check if we are writing over the existing entries
    				var writeOver = false;
+   				alert("Length of settings:" + settings.length);
    				for(cnt = 0; cnt< settings.length; cnt++) {
    					if(settings[cnt].newForumName == newForumName) {
    						writeOver = true;
@@ -454,8 +457,10 @@ var app = {
    					}
    				}
    			
+   				alert("Writing over " + writeOver);
    				if(writeOver == false) {
     				settings.push(newSetting);  //Save back to the array
+    				alert("Pushed newSetting");
     			}
    			} 
 
