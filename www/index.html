@@ -31,10 +31,7 @@
     	<link rel="stylesheet" type="text/css" href="css/material-design-iconic-font/css/material-design-iconic-font.css">
     	<script   src="https://code.jquery.com/jquery-3.1.0.min.js"   integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s="   crossorigin="anonymous"></script>
     	
-    	<!-- For the dropdown autocomplete -->
-		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-		<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
-    	
+   	
     	
     	<script src="js/onsenui.js"></script>
 	    <script>
@@ -79,21 +76,7 @@ window.open(encodeURI('http://' + str + '.atomjump.com/?orig_query=' + encodeURI
 					}
 					return false;
 			}
-			
-			$(document).ready(function(){
-				
-				/* This doesn't work on an Android phone:
-				$( "#srch" ).autocomplete({
-						source: "https://atomjump.com/search-suggest.php",
-						minLength: 1,//search after one characters
-						select: function(event,ui){
-							//do something
-							$('#srch').val(ui.item.value);
-							newDomain("srch");
-						}
-				});
-				*/
-			});
+
 			
 			
 	      

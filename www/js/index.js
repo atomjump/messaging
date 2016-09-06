@@ -463,19 +463,19 @@ return false;
    			
    			
    			var origStr = newForumName;
-    		var str = origStr.replace(/\s+/g, '');
-			str = str.replace(/[^a-z0-9]/gi, '');
-			if(str == origStr) {
+    		var subdomain = origStr.replace(/\s+/g, '');
+			subdomain = subdomain.replace(/[^a-z0-9]/gi, '');
+			if(subdomain == origStr) {
 				//Straightforward redirect
-				var url = 'http://' + str + '.atomjump.com'
+				var url = 'http://' + subdomain + '.atomjump.com'
 			} else {
- 				var url = 'http://' + str + '.atomjump.com/?orig_query=' + encodeURIComponent(origStr));
+ 				var url = 'http://' + subdomain + '.atomjump.com/?orig_query=' + encodeURIComponent(origStr);
 						
 			}
    			
    			//Create a new entry - which will be blank to begin with
    			var newSetting = { 
-   				"forum": str,		//As input by the user
+   				"forum": subdomain,		//As input by the user
    				"api": api,
    				"rawForumHeader": rawForumHeader,
    				"url" : url		//TODO make less atomjump.com
@@ -490,7 +490,7 @@ return false;
    				//Check if we are writing over the existing entries
    				var writeOver = false;
    				for(cnt = 0; cnt< settings.length; cnt++) {
-   					if(settings[cnt].forum == newForumName) {
+   					if(settings[cnt].forum == subdomain) {
    						writeOver = true;
    						settings[cnt] = newSetting;
    					}
