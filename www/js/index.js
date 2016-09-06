@@ -426,7 +426,7 @@ var app = {
         			
    			alert("saving " + newForumName);
    		
-   			var settings = app.getArrayLocalStorage("settings");
+   			var settings = errorThis.getArrayLocalStorage("settings");
    			
    			alert("Settings retrieved");
    			
@@ -463,12 +463,12 @@ var app = {
     		alert("About to save settings: " + JSON.stringify(settings));
     		
     		//Save back to the persistent settings
-    		this.setArrayLocalStorage("settings", settings);
+    		errorThis.setArrayLocalStorage("settings", settings);
     		
     		alert("New settings saved as " + JSON.stringify(settings));
     		
     		//Reset the display with the new forum
-    		this.displayForumNames();
+    		errorThis.displayForumNames();
     		return;
     
     },
