@@ -451,7 +451,7 @@ var app = {
    				var writeOver = false;
    				alert("Length of settings:" + settings.length);
    				for(cnt = 0; cnt< settings.length; cnt++) {
-   					if(settings[cnt].newForumName == newForumName) {
+   					if(settings[cnt].forum == newForumName) {
    						writeOver = true;
    						settings[cnt] = newSetting;
    					}
