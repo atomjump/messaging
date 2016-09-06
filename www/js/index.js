@@ -480,9 +480,12 @@ var app = {
     	alert("Getting array local storage of " + mykey);
     	var item = localStorage.getItem(mykey);
     	alert("Got item");
-    	var retItem = JSON.parse(item);
-    	alert("Got retItem");
-    	
+    	if(item) {
+    		var retItem = JSON.parse(item);
+    		alert("Got retItem");
+    	} else {
+    		var retItem = {};
+    	}
 	    return retItem;
     }
 
