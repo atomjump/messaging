@@ -64,6 +64,7 @@ var app = {
           var settingApi = localStorage.getItem("api");
           if(settingApi) {
           	 api = settingApi;
+          	 $('#private-server').val(api);
           }
           
           
