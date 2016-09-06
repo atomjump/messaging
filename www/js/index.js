@@ -142,7 +142,7 @@ var app = {
    			localStorage.setItem("api",api);
    		}
     
-    }
+    },
     
     
     login: function(user, pass, apiUrl)
