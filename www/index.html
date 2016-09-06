@@ -59,6 +59,9 @@
 						document.getElementById('page').style.height = 100 + '%';//device  100% height
 					}, 100);
 			}
+			
+			
+			
 	      
 	    </script>
 	
@@ -80,7 +83,7 @@
 	        <div id="inner-popup">
 			
 			<p style="text-align:right;">	
-				<a class="small-text" href="javascript" onclick="return app.logout();">Log Out</a>
+				<a style="padding-right: 20px;" class="small-text" href="javascript" onclick="return app.logout();">Log Out</a>
 			</p>
 			
 			<p style="text-align:center;">	
@@ -119,19 +122,16 @@
 		<div id="aj-HTML-alert" style="display:none;">
         </div>
         
-         <div id="login-popup" style="display:block;">
+         <div id="login-popup" style="display:none;">
         	<div class="inner-popup">
         		
         		<span class="big-text">Login</span><br/><br/>
-        		
-        		<!--<ons-fab position="top right" onclick="app.closeLogin();">
-		      		<ons-icon icon="md-close" ></ons-icon>
-		    	</ons-fab>-->
+
         		
         		
         		<p style="text-align:center;">
 				    
-					<input id="user" type="text" placeholder="Email" size="20" class="resizedTextbox">
+					<input id="user" type="email" placeholder="Email" size="20" class="resizedTextbox">
 					<input id="password" type="password" placeholder="Password" size="20" class="resizedTextbox">
 				</p>
         		<p>
@@ -139,7 +139,7 @@
 	        	</p>
 	        	
 				<p>
-					<a class="small-text" href="javascript:" onclick="">Forgotten Password?</a>
+					<a class="small-text" href="javascript:" onclick="return clearPass();">Reset Password</a>
 				</p>
 			</div>
         </div>

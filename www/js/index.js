@@ -74,6 +74,10 @@ var app = {
         	$('#login-popup').hide();	
         	app.setupPush();
         
+          } else {
+            //No logged user - show the login page
+            $('#login-popup').show();
+          
           }
     },
     
@@ -186,6 +190,17 @@ var app = {
     },
 
 
+	clearPass: function() {
+		if($('#email').val() != '') {
+					
+			window.open(encodeURI(api + 'clear-pass.php?email=' + $('#email'), '_system'));
+		} else {
+			navigator.notification.alert("Please enter your email address.");
+		
+		}
+		return false;		
+	}
+
 
    get: function(url, cb) {
         var request = new XMLHttpRequest();
@@ -233,6 +248,7 @@ var app = {
 						localStorage.clear();
 						
 						localStorage.removeItem("registration");
+						localStorage.removeItem("loggedUser");
 						localStorage.removeItem("settings");
 						
     		
@@ -257,6 +273,7 @@ var app = {
         
     			
 		localStorage.removeItem("registration");
+		localStorage.removeItem("loggedUser");
 
 		$('#login-popup').show();
 
