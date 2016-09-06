@@ -309,7 +309,7 @@ var app = {
 		
 	
 			for(var cnt = 0; cnt< settings.length; cnt++) {
-				prepList = prepList + "<ons-list-item onclick=\"window.open(encodeURI('" + settings[cnt].url + "'), '_system')\">" + settings[cnt].forum + "@ <div class='right'><ons-icon icon='md-delete' onclick='app.deleteForum(" + cnt + ");'></ons-icon></div></ons-list-item>";
+				prepList = prepList + "<ons-list-item>" + settings[cnt].forum + "@ <div class='right'><ons-icon icon='md-delete' onclick='app.deleteForum(" + cnt + ");'></ons-icon></div></ons-list-item>";
 		
 			}
         } else {
@@ -419,11 +419,12 @@ var app = {
     },
     
     saveForum: function(newForumName) {
-        	//Run this after a successful upload
+        	
         	
         			
    		
    			var settings = app.getArrayLocalStorage("settings");
+   			
    			
    			
    			//Create a new entry - which will be blank to begin with
@@ -433,6 +434,11 @@ var app = {
    				"rawForumHeader": rawForumHeader,
    				"url" : "http://" + newForumName + ".atomjump.com"		//TODO make less atomjump.com
    			};
+   			
+   			//Special cases
+   			if(newForumName == 'atomjump') {
+   				newSetting.url = "https://atomjump.com";
+   			}
    			
    			if((settings)&&(settings.length)) {
    				//Check if we are writing over the existing entries
