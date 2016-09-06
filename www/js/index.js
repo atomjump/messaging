@@ -421,6 +421,9 @@ return false;
     		//results.input1 has the new forum name - assume it is for the current
     		//default server
     		
+    		
+    		
+    		
     		errorThis.saveForum(results.input1);
     		
     		errorThis.closeSettings();
@@ -458,12 +461,24 @@ return false;
    			
    			
    			
+   			
+   			var origStr = newForumName;
+    		var str = origStr.replace(/\s+/g, '');
+			str = str.replace(/[^a-z0-9]/gi, '');
+			if(str == origStr) {
+				//Straightforward redirect
+				var url = 'http://' + str + '.atomjump.com'
+			} else {
+ 				var url = 'http://' + str + '.atomjump.com/?orig_query=' + encodeURIComponent(origStr));
+						
+			}
+   			
    			//Create a new entry - which will be blank to begin with
    			var newSetting = { 
-   				"forum": newForumName,		//As input by the user
+   				"forum": str,		//As input by the user
    				"api": api,
    				"rawForumHeader": rawForumHeader,
-   				"url" : "http://" + newForumName + ".atomjump.com"		//TODO make less atomjump.com
+   				"url" : url		//TODO make less atomjump.com
    			};
    			
    			//Special cases

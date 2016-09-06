@@ -81,7 +81,8 @@ window.open(encodeURI('http://' + str + '.atomjump.com/?orig_query=' + encodeURI
 			}
 			
 			$(document).ready(function(){
-			
+				
+				/* This doesn't work on an Android phone:
 				$( "#srch" ).autocomplete({
 						source: "https://atomjump.com/search-suggest.php",
 						minLength: 1,//search after one characters
@@ -91,6 +92,7 @@ window.open(encodeURI('http://' + str + '.atomjump.com/?orig_query=' + encodeURI
 							newDomain("srch");
 						}
 				});
+				*/
 			});
 			
 			
