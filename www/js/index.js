@@ -125,7 +125,7 @@ var app = {
         push.on('notification', function(data) {
             console.log('notification event');
             document.getElementById('aj-HTML-alert').style.display = "block";
-            document.getElementById('aj-HTML-alert').innerHTML = "<div class='inner-popup'><a style='float:right;' href='javascript:' onclick=\"app.closeNotifications();\">     		<ons-icon icon=\"md-close\" ></ons-icon></a>" + data.message + " <a href='javascript:' onclick='" + data.additionalData.actions[0].callback + "'>Visit Forum</a></div>";
+            document.getElementById('aj-HTML-alert').innerHTML = "<div class='inner-popup'><ons-fab style='z-index: 1800;' position='top right'  onclick=\"app.closeNotifications();\"><ons-icon icon=\"md-close\" ></ons-icon></ons-fab>" + data.message + " <a href='javascript:' onclick='" + data.additionalData.actions[0].callback + "'>Visit Forum</a></div>";
             
            
        });
@@ -454,12 +454,8 @@ return false;
     
     saveForum: function(newForumName) {
         	
-        	
-        			
-   		
+      
    			var settings = app.getArrayLocalStorage("settings");
-   			
-   			
    			
    			
    			var origStr = newForumName;
