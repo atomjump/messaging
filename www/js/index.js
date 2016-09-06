@@ -117,6 +117,7 @@ var app = {
             listeningElement.setAttribute('style', 'display:none;');
             receivedElement.setAttribute('style', 'display:block;');
             */
+            $('#registered').show();
         });
 
         push.on('error', function(e) {
@@ -304,7 +305,7 @@ var app = {
 	
 		if(settings) {
 	
-			var prepList = "<ons-list-header>Forums</ons-list-header>";
+			var prepList = "<ons-list-header>Your Forums</ons-list-header>";
 		
 	
 			for(var cnt = 0; cnt< settings.length; cnt++) {
@@ -365,7 +366,8 @@ var app = {
 							errorThis.setArrayLocalStorage("settings", settings);
 						} 
 		
-						errorThis.openSettings();	//refresh
+						errorThis.openSettings();	//refresh settings page
+						errorThis.displayForumNames();		//refresh homepage
 					}
 	    		
 	    		},                  // callback to invoke
@@ -405,7 +407,7 @@ var app = {
     		var settings = app.getArrayLocalStorage("settings");
     		
     		
-			var prepList = "<ons-list-header>Forums</ons-list-header>";
+			var prepList = "<ons-list-header>Your Forums</ons-list-header>";
     			
     		
     		for(var cnt = 0; cnt< settings.length; cnt++) {
