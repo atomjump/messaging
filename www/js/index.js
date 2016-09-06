@@ -199,7 +199,7 @@ var app = {
 		
 		}
 		return false;		
-	}
+	},
 
 
    get: function(url, cb) {
