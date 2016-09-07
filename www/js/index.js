@@ -280,7 +280,10 @@ return false;
 						localStorage.removeItem("loggedUser");
 						localStorage.removeItem("settings");
 						localStorage.removeItem("api");
-						
+						$('#user').val('');
+						$('#password').val('');
+						$('#private-server').val('');
+						$('#registered').hide();
     		
 						alert("Cleared all saved forums and settings.");
 		
@@ -304,6 +307,9 @@ return false;
     			
 		localStorage.removeItem("registration");
 		localStorage.removeItem("loggedUser");
+		$('#user').val('');
+		$('#password').val('');
+		$('#registered').hide();
 
 		$('#login-popup').show();
 
