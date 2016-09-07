@@ -21,6 +21,7 @@
 var errorThis = {};  //Used as a global error handler
 var userId = null;			//From a login when we open the app
 var api = "https://atomjump.com/api/";
+var defaultApi = "https://atomjump.com/api/";		//when a blank is entered
 var rawForumHeader = "ajps_";
 var apiId = "538233303966";
 
@@ -112,10 +113,11 @@ var app = {
                 var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=" + userId;  //e.g. https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
                  errorThis.get(url, function(url, resp) {
                 	//Registered OK
+                	
                 });
             }
-
-             $('#registered').show();
+			$('#registered').show();
+             
         });
 
         push.on('error', function(e) {
@@ -127,9 +129,9 @@ var app = {
             document.getElementById('aj-HTML-alert').style.display = "block";
             
             
-            document.getElementById('aj-HTML-alert-inner').innerHTML = "<span style='vertical-align: top; padding: 10px; padding-top:30px;' class='big-text'>AtomJump Message</span><br/><img  src='icon-Small@3x.png' style='padding 10px;'><ons-fab style='z-index: 1800;' position='top right'  onclick=\"app.closeNotifications();\"><ons-icon icon=\"md-close\" ></ons-icon></ons-fab><p>" + data.message + "<br/><br/>" + data.additionalData.observeMessage + ": <a href='javascript:' onclick='window.open(\"" + data.additionalData.observeUrl + "\", \"_system\")'>the forum</a><br/><br/><a href='javascript:' onclick='window.open(\"" + data.additionalData.removeUrl + "\", \"_system\")'>" + data.additionalData.removeMessage + "</a><br/><br/>" + data.additionalData.forumMessage + ": " + data.additionalData.forumName  +"</p>";
+            document.getElementById('aj-HTML-alert-inner').innerHTML = "<span style='vertical-align: top; padding: 10px; padding-top:30px;' class='big-text'>AtomJump Message</span><br/><img  src='icon-Small@3x.png' style='padding 10px;'><ons-fab style='z-index: 1800;' position='top right'  onclick=\"app.closeNotifications();\"><ons-icon icon=\"md-close\" ></ons-icon></ons-fab><p>" + data.message + "<br/><br/>" + data.additionalData.observeMessage + ": <a href='javascript:' onclick='window.open(\"" + data.additionalData.observeUrl + "\", \"" + data.additionalData.forumName + "\")'>the forum</a><br/><br/><a href='javascript:' onclick='window.open(\"" + data.additionalData.removeUrl + "\", \"_system\")'>" + data.additionalData.removeMessage + "</a><br/><br/>" + data.additionalData.forumMessage + ": " + data.additionalData.forumName  +"</p>";
             
-           
+           //Old: target: _system on observe url. We are instead keeping the name of the actual page so that we can go back to that tab
        });
     },
     
@@ -142,6 +144,10 @@ var app = {
    		    	apiUrl = apiUrl + "/";
    		    }
    			api = apiUrl;
+   			localStorage.setItem("api",api);
+   		} else {
+   			//A blank apiUrl has been entered
+   			api = defaultApi;
    			localStorage.setItem("api",api);
    		}
     
@@ -273,11 +279,12 @@ return false;
 						localStorage.removeItem("registration");
 						localStorage.removeItem("loggedUser");
 						localStorage.removeItem("settings");
+						localStorage.removeItem("api");
 						
     		
-						alert("Cleared all saved forums.");
+						alert("Cleared all saved forums and settings.");
 		
-						errorThis.openSettings();
+						$('#login-popup').show();
 						
 					}
 	    		
@@ -476,7 +483,7 @@ return false;
    				"forum": subdomain,		//As input by the user
    				"api": api,
    				"rawForumHeader": rawForumHeader,
-   				"url" : url		//TODO make less atomjump.com
+   				"url" : url
    			};
    			
    			//Special cases
