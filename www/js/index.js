@@ -369,7 +369,7 @@ return false;
 		
 	
 			for(var cnt = 0; cnt< settings.length; cnt++) {
-				prepList = prepList + "<ons-list-item>" + settings[cnt].forum + " <div class='right'><ons-icon icon='md-delete' class='list__item__icon' onclick='app.deleteForum(" + cnt + ");'></ons-icon></div></ons-list-item>";
+				prepList = prepList + "<ons-list-item>" + errorThis.ellipse(settings[cnt].forum, 27) + " <div class='right'><ons-icon icon='md-delete' class='list__item__icon' onclick='app.deleteForum(" + cnt + ");'></ons-icon></div></ons-list-item>";
 		
 			}
         } else {
@@ -465,6 +465,19 @@ return false;
      	
     },
     
+    ellipse: function(str, max){
+    	//Chop out a string
+   		var newstr; 
+   		if(str.length > (max - 3)) { 
+   			var cutAt = max/2;
+   			newstr = str.substring(0,cutAt) + '...' str.substring(str.length - cutAt + 3);
+   		} else {
+   			newstr = str;
+   		} 
+    		
+    	return newstr;
+    },
+    
     displayForumNames: function() {
     	//Call this during initialisation on app startup
     		var settings = app.getArrayLocalStorage("settings");
@@ -474,7 +487,7 @@ return false;
     			
     		
     		for(var cnt = 0; cnt< settings.length; cnt++) {
-    			prepList = prepList + "<ons-list-item onclick=\"window.open(encodeURI('" + settings[cnt].url + "'), '_system')\">" + settings[cnt].forum + "</ons-list-item>";
+    			prepList = prepList + "<ons-list-item onclick=\"window.open(encodeURI('" + settings[cnt].url + "'), '_system')\">" + errorThis.ellipse(settings[cnt].forum, 27) + "</ons-list-item>";
     			
     		}
     
@@ -494,7 +507,8 @@ return false;
    			//Check if it is a url
    			if(origStr.substring(0,4) == "http") {
    				var url = origStr;
-   				var forumTitle = origStr;
+   				var forumTitle = origStr.replace("https://", "");		//Get rid of http visually
+   				forumTitle = forumTitle.replace("http://","");   				
    				var forumName = origStr;
    			} else {
    				//An atomjump.com subdomain
