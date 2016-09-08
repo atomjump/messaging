@@ -355,7 +355,7 @@ return false;
 		
 	
 			for(var cnt = 0; cnt< settings.length; cnt++) {
-				prepList = prepList + "<ons-list-item>" + settings[cnt].forum + "@ <div class='right'><ons-icon icon='md-delete' onclick='app.deleteForum(" + cnt + ");'></ons-icon></div></ons-list-item>";
+				prepList = prepList + "<ons-list-item>" + settings[cnt].forum + " <div class='right'><ons-icon icon='md-delete' onclick='app.deleteForum(" + cnt + ");'></ons-icon></div></ons-list-item>";
 		
 			}
         } else {
@@ -460,7 +460,7 @@ return false;
     			
     		
     		for(var cnt = 0; cnt< settings.length; cnt++) {
-    			prepList = prepList + "<ons-list-item onclick=\"window.open(encodeURI('" + settings[cnt].url + "'), '_system')\">" + settings[cnt].forum + "@</ons-list-item>";
+    			prepList = prepList + "<ons-list-item onclick=\"window.open(encodeURI('" + settings[cnt].url + "'), '_system')\">" + settings[cnt].forum + "</ons-list-item>";
     			
     		}
     
@@ -479,6 +479,7 @@ return false;
    			if(origStr.substring(0,4) == "http") {
    				var url = origStr;
    				var forumTitle = origStr;
+   				var forumName = origstr;
    			} else {
    				//An atomjump.com subdomain
 				var subdomain = origStr.replace(/\s+/g, '');  //remove spaces
@@ -491,7 +492,8 @@ return false;
 						
 				}
 				
-				var forumTitle = subdomain;
+				var forumTitle = subdomain + '@';
+				var forumName = subdomain;
 		    }
    			
    			//Create a new entry - which will be blank to begin with
@@ -499,6 +501,7 @@ return false;
    				"forum": forumTitle,		//As input by the user
    				"api": api,
    				"rawForumHeader": rawForumHeader,
+   				"rawForumName": forumName,
    				"url" : url
    			};
    			
