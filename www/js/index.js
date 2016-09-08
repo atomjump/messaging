@@ -514,7 +514,7 @@ return false;
    				//Check if we are writing over the existing entries
    				var writeOver = false;
    				for(cnt = 0; cnt< settings.length; cnt++) {
-   					if(settings[cnt].rawForumName && (settings[cnt].rawForumName == forumName)) {
+   					if((settings[cnt].rawForumName) && (settings[cnt].rawForumName == forumName)) {
    						writeOver = true;
    						settings[cnt] = newSetting;
    					}
