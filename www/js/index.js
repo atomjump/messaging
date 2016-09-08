@@ -467,6 +467,8 @@ return false;
     		$('#forum-list').html(prepList);
     },
     
+    
+    
     saveForum: function(newForumName) {
         	
       
@@ -505,6 +507,8 @@ return false;
    				"url" : url
    			};
    			
+   			alert("New setting:" + JSON.stringify(newSetting));
+   			
    			//Special cases
    			if(newForumName == 'atomjump') {
    				newSetting.url = "https://atomjump.com/?autostart=true";
@@ -518,7 +522,11 @@ return false;
    						writeOver = true;
    						settings[cnt] = newSetting;
    					}
+   					
+   					alert("to here 1 TESTING");
    				}
+   				
+   				alert("to here 2 TESTING");
    			
     			if(writeOver == false) {
     				settings.push(newSetting);  //Save back to the array
@@ -532,14 +540,17 @@ return false;
    				settings.push(newSetting);  //Save back to the array
    			} 
 
-    		
+    		alert("to here 3 TESTING");
     		
     		//Save back to the persistent settings
     		app.setArrayLocalStorage("settings", settings);
     		
+    		alert("to here 4 TESTING");
     		
     		//Reset the display with the new forum
     		app.displayForumNames();
+    		
+    		alert("to here 5 TESTING");
     		return;
     
     },
