@@ -283,6 +283,13 @@ return false;
 						$('#password').val('');
 						$('#private-server').val('');
 						$('#registered').hide();
+						
+						//Deregister on the database - by sending a blank id (which gets set as a null on the server). Disassociates phone from user.
+						var url = api + "plugins/notifications/register.php?id=&userid=" + userId;  //e.g. https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
+						_this.get(url, function(url, resp) {
+							//Registered OK
+			
+						});
     		
 						alert("Cleared all saved forums and settings.");
 		
@@ -310,6 +317,13 @@ return false;
 		$('#user').val('');
 		$('#password').val('');
 		$('#registered').hide();
+		
+		//Deregister on the database - by sending a blank id (which gets set as a null on the server). Disassociates phone from user.
+		var url = api + "plugins/notifications/register.php?id=&userid=" + userId;  //e.g. https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
+		this.get(url, function(url, resp) {
+			//Registered OK
+			
+		});
 
 		$('#login-popup').show();
 
