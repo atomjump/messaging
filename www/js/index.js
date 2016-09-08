@@ -287,6 +287,7 @@ return false;
     		
 						alert("Cleared all saved forums and settings.");
 		
+						$('#settings-popup').hide();
 						$('#login-popup').show();
 						
 					}
