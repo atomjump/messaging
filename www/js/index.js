@@ -129,13 +129,9 @@ var app = {
             document.getElementById('aj-HTML-alert').style.display = "block";
             
             
-            document.getElementById('aj-HTML-alert-inner').innerHTML = "<span style='vertical-align: top; padding: 10px; padding-top:30px;' class='big-text'>AtomJump Message</span><br/><img  src='icon-Small@3x.png' style='padding 10px;'><ons-fab style='z-index: 1800;' position='top right'  onclick=\"app.closeNotifications();\"><ons-icon icon=\"md-close\" ></ons-icon></ons-fab><p>" + data.message + "<br/><br/>" + data.additionalData.observeMessage + ": <a href='javascript:' onclick='ref = window.open(\"" + data.additionalData.observeUrl + "\", \"_system\");'>the forum</a><a href='javascript:' onclick='ref.show();'>the forum</a><br/><br/><a href='javascript:' onclick='window.open(\"" + data.additionalData.removeUrl + "\", \"_system\")'>" + data.additionalData.removeMessage + "</a><br/><br/>" + data.additionalData.forumMessage + ": " + data.additionalData.forumName  +"</p>";
+            document.getElementById('aj-HTML-alert-inner').innerHTML = "<span style='vertical-align: top; padding: 10px; padding-top:30px;' class='big-text'>AtomJump Message</span><br/><img  src='icon-Small@3x.png' style='padding 10px;'><ons-fab style='z-index: 1800;' position='top right'  onclick=\"app.closeNotifications();\"><ons-icon icon=\"md-close\" ></ons-icon></ons-fab><p>" + data.message + "<br/><br/>" + data.additionalData.observeMessage + ": <a href='javascript:' onclick='window.open(\"" + data.additionalData.observeUrl + "\", \"_system\");'>the forum</a><br/><br/><a href='javascript:' onclick='window.open(\"" + data.additionalData.removeUrl + "\", \"_system\")'>" + data.additionalData.removeMessage + "</a><br/><br/>" + data.additionalData.forumMessage + ": " + data.additionalData.forumName  +"</p>";
             
-           //Old: target: _system on observe url. We are instead keeping the name of the actual page so that we can go back to that tab
-           /*
-           
-           if((windowName) && (windowName.name)) { var useWindow = windowName.name; } else { var useWindow = \"_system\" }; windowName = 
-           */
+          
        });
     },
     
@@ -381,7 +377,7 @@ return false;
        
 		//Ask for a name of the current Server:
 		navigator.notification.prompt(
-			'Please enter a name for this forum',  // message
+			'Please enter a name or URL for this forum',  // message
 			errorThis.saveForumName,                  // callback to invoke
 			'Forum Name',            // title
 			['Ok','Cancel'],             // buttonLabels
@@ -478,19 +474,29 @@ return false;
    			
    			
    			var origStr = newForumName;
-    		var subdomain = origStr.replace(/\s+/g, '');
-			subdomain = subdomain.replace(/[^a-z0-9]/gi, '');
-			if(subdomain == origStr) {
-				//Straightforward redirect
-				var url = 'http://' + subdomain + '.atomjump.com'
-			} else {
- 				var url = 'http://' + subdomain + '.atomjump.com/?orig_query=' + encodeURIComponent(origStr);
+   			
+   			//Check if it is a url
+   			if(origStr.substring(0,4) == "http") {
+   				var url = origStr;
+   				var forumTitle = origStr;
+   			} else {
+   				//An atomjump.com subdomain
+				var subdomain = origStr.replace(/\s+/g, '');  //remove spaces
+				subdomain = subdomain.replace(/[^a-z0-9]/gi, '');	//keep letters and numbers only
+				if(subdomain == origStr) {
+					//Straightforward redirect
+					var url = 'http://' + subdomain + '.atomjump.com/?autostart=true'
+				} else {
+					var url = 'http://' + subdomain + '.atomjump.com/?orig_query=' + encodeURIComponent(origStr + '&autostart=true');
 						
-			}
+				}
+				
+				var forumTitle = subdomain;
+		    }
    			
    			//Create a new entry - which will be blank to begin with
    			var newSetting = { 
-   				"forum": subdomain,		//As input by the user
+   				"forum": forumTitle,		//As input by the user
    				"api": api,
    				"rawForumHeader": rawForumHeader,
    				"url" : url
@@ -498,7 +504,7 @@ return false;
    			
    			//Special cases
    			if(newForumName == 'atomjump') {
-   				newSetting.url = "https://atomjump.com";
+   				newSetting.url = "https://atomjump.com/?autostart=true";
    			}
    			
    			if((settings)&&(settings.length)) {
