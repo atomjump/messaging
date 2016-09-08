@@ -470,7 +470,8 @@ return false;
    		var newstr; 
    		if(str.length > (max - 3)) { 
    			var cutAt = max/2;
-   			newstr = str.substring(0,cutAt) + '...' str.substring(str.length - cutAt + 3);
+   			var cutOffEnd = str.length - cutAt + 3;
+   			newstr = str.substring(0,cutAt) + '...' + str.substring(cutOffEnd);
    		} else {
    			newstr = str;
    		} 
