@@ -9,9 +9,6 @@
         versionCode = "1">
 
         
-    <!-- When ready add ios|winphone|wp8|android -->    
-
-
     <name>AtomJump Messaging</name>
 
 
@@ -19,15 +16,15 @@
         Shortcuts to any AtomJump messaging page, and notifications of new messages.
     </description>
 
-    <author href="http://atomjump.com" email="webmaster@atomjump.com">
+    <author href="https://atomjump.com" email="webmaster@atomjump.com">
         AtomJump
     </author>
 
 
 	<!-- Only when testing on staging -->
-    <gap:config-file platform="android" parent="/manifest">
+    <!--<gap:config-file platform="android" parent="/manifest">
   		<application android:debuggable="true" />
-	</gap:config-file>
+	</gap:config-file>-->
 	<!-- End of testing on staging -->
 	
     <gap:plugin name="org.apache.cordova.core.camera" />
