@@ -115,7 +115,7 @@ window.open(encodeURI('http://' + str + '.atomjump.com/?orig_query=' + encodeURI
         	</form>	
 	        	
 			<ons-list id="forum-list" modifier="chevron">
-				<ons-list-header>Your Shortcuts</ons-list-header>
+				<ons-list-header>Your Shortcuts <span class="small-text" onclick="navigator.notification.alert('These are frequently used messaging forums, which you can add in the settings page. Note: you will need to login independently within your browser to see the correct messages.', function(){}, 'New Account');"><small><ons-icon icon="ion-ios-help" size="20px" fixed-width="true"></small></span></ons-list-header>
     			
     		</ons-list>
 	
@@ -143,7 +143,7 @@ window.open(encodeURI('http://' + str + '.atomjump.com/?orig_query=' + encodeURI
         	<div class="inner-popup">
         		
         		<span class="big-text">AtomJump Messaging</span><br/>
-        		<span class="small-text" onclick="navigator.notification.alert('Please enter your new account email and password in the same boxes.', function(){}, 'New Account');">New Account <small><ons-icon icon="ion-ios-help" size="20px" fixed-width="true"></small><br/></span>
+        		<span class="small-text" onclick="navigator.notification.alert('Please enter your new account email and password in the same boxes. Note: you will need to login within your browser also.', function(){}, 'New Account');">New Account <small><ons-icon icon="ion-ios-help" size="20px" fixed-width="true"></small><br/></span>
        
         		<br/>
 
