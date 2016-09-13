@@ -115,7 +115,7 @@ var app = {
                 	//Registered OK
                 	
                 });
-            }
+            } 
 			$('#registered').show();
              
         });
@@ -275,7 +275,7 @@ return false;
 	    			if(buttonIndex == 1) {
 						localStorage.clear();
 						
-						localStorage.removeItem("registration");
+						localStorage.removeItem("registrationId");
 						localStorage.removeItem("loggedUser");
 						localStorage.removeItem("settings");
 						localStorage.removeItem("api");
@@ -312,7 +312,7 @@ return false;
         var _this = this;
         
     			
-		localStorage.removeItem("registration");
+		localStorage.removeItem("registrationId");
 		localStorage.removeItem("loggedUser");
 		$('#user').val('');
 		$('#password').val('');
