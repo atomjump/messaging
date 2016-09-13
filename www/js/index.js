@@ -138,7 +138,7 @@ var app = {
     setAPI: function(apiUrl)
     {
     
-    	if(apiUrl) {
+    	if((apiUrl)&&(apiUrl != "")) {
    		    //Add a trailing slash if it isn't there
    		    if(apiUrl.slice(-1) != '/') {
    		    	apiUrl = apiUrl + "/";
