@@ -129,9 +129,9 @@ var app = {
             document.getElementById('aj-HTML-alert').style.display = "block";
             
             
-            if(data.additionalData.image) {
+            if(data.image) {
             
-            	var insertImage = "<img width=\"200\" src=\"" + data.additionalData.image + "\"><br/><br/>";
+            	var insertImage = "<img width='200' src='" + data.image + "'><br/><br/>";
             } else {
             	var insertImage = "";
             }
