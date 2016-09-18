@@ -138,6 +138,10 @@ var app = {
             
             document.getElementById('aj-HTML-alert-inner').innerHTML = "<span style='vertical-align: top; padding: 10px; padding-top:30px;' class='big-text'>AtomJump Message</span><br/><img  src='icon-Small@3x.png' style='padding 10px;'><ons-fab style='z-index: 1800;' position='top right'  onclick=\"app.closeNotifications();\"><ons-icon icon=\"md-close\" ></ons-icon></ons-fab><p>" + data.message + insertImage + "<br/><br/>" + data.additionalData.observeMessage + ": <a href='javascript:' onclick='window.open(\"" + data.additionalData.observeUrl + "\", \"_system\");'>the forum</a><br/><br/><a href='javascript:' onclick='window.open(\"" + data.additionalData.removeUrl + "\", \"_system\")'>" + data.additionalData.removeMessage + "</a><br/><br/>" + data.additionalData.forumMessage + ": " + data.additionalData.forumName  +"</p>";
             
+            
+            push.finish(function() {
+				console.log("processing of push data is finished");
+			});
           
        });
     },
