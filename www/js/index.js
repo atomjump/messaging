@@ -87,18 +87,26 @@ var app = {
     setupPush: function() {
     	alert("Inside setup push");
   	
-        var push = window.PushNotification.init({
-            "android": {
-                "senderID": apiId
-            },
-            "browser": {},
-            "ios": {
-                "sound": true,
-                "vibration": true,
-                "badge": true
-            },
-            "windows": {}
-        });
+  		if(typeof(PushNotification) == 'undefined') { //TESTING IN
+			alert("PushNotification does not exist sorry");
+			return;					
+		} else {
+  	
+  	
+			var push = PushNotification.init({
+				"android": {
+					"senderID": apiId
+				},
+				"browser": {},
+				"ios": {
+					"sound": true,
+					"vibration": true,
+					"badge": true
+				},
+				"windows": {}
+			});
+
+		}
         
         alert("After pushNotification.init");		//TESTING IN
         
