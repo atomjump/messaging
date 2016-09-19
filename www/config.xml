@@ -7,12 +7,13 @@
     <author email="webmaster@atomjump.com" href="https://atomjump.com">
         AtomJump
     </author>
-    <gap:plugin name="org.apache.cordova.core.camera" />
     <gap:plugin name="org.apache.cordova.file-transfer" source="npm" />
     <gap:plugin name="cordova-plugin-whitelist" source="npm" />
     <gap:plugin name="cordova-plugin-networkinterface" source="npm" />
     <gap:plugin name="org.apache.cordova.Globalization" />
     <plugin source="git" spec="https://github.com/atomjump/cordova-plugin-dialogs.git" />
+    <plugin source="git" spec="https://git-wip-us.apache.org/repos/asf/cordova-plugin-device.git" /><!-- Experimental -->
+    
     <gap:plugin name="org.apache.cordova.inappbrowser" />
     <plugin name="phonegap-plugin-push" source="npm">
         <param name="SENDER_ID" value="538233303966" />
@@ -21,9 +22,6 @@
         <preference name="permissions" value="none" />
         <preference name="orientation" value="portrait" />
         <preference name="fullscreen" value="false" />
-        <uses-permission android:name="android.permission.CAMERA" />
-        <uses-feature android:name="android.hardware.camera" />
-        <uses-feature android:name="android.hardware.camera.autofocus" />
         <icon height="128" src="icon.png" width="128" />
     </platform>
     <platform name="ios">
@@ -58,5 +56,5 @@
     <access origin="*" />
     <allow-intent href="*" />
     <allow-navigation href="*" />
-    <engine name="ios" spec="~4.1.1" />
+    <!--<engine name="ios" spec="~4.1.1" />-->
 </widget>

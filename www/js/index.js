@@ -110,7 +110,8 @@ var app = {
                 localStorage.setItem('registrationId', data.registrationId);
                 // Post registrationId to your app server as the value has changed
                 //Post to server software Loop Server API
-                var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=" + userId;  //e.g. https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
+                
+                var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=" + userId + "&devicetype=" + device.platform;  //e.g. https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
                  errorThis.get(url, function(url, resp) {
                 	//Registered OK
                 	
