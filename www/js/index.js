@@ -85,8 +85,8 @@ var app = {
     },
     
     setupPush: function() {
-    	myThis = this;
-    	
+    	alert("Inside setup push");
+  	
         var push = PushNotification.init({
             "android": {
                 "senderID": apiId
@@ -131,6 +131,8 @@ var app = {
 
         push.on('notification', function(data) {
             console.log('notification event');
+            alert("Notification, data=" + JSON.stringify(data));
+            
             document.getElementById('aj-HTML-alert').style.display = "block";
             
             
@@ -203,9 +205,14 @@ var app = {
 						if(userId) {
 							localStorage.setItem("loggedUser",userId);
 							
-							alert("Set local storage OK, about to try push to register phone");   //TESTING IN
+							alert("Set local storage OK, about to try push to register phone.");   //TESTING IN
+							if(!app.setupPush) { //TESTING IN
+								alert("App.setupPush() does not exist sorry");
+								
+							} else {
 							
-							app.setupPush();		//register this phone
+								app.setupPush();		//register this phone
+							}
 							$('#login-popup').hide();
 						
 						} else {
