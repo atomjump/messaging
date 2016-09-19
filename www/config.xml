@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.atomjump.messaging" version="0.1.4" versionCode="7" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget id="com.atomjump.messaging" version="0.1.5" versionCode="8" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>AtomJump Messaging</name>
     <description>
         Shortcuts to any AtomJump messaging page, and notifications of new messages.
@@ -15,6 +15,7 @@
     <plugin source="git" spec="https://git-wip-us.apache.org/repos/asf/cordova-plugin-device.git" /><!-- Experimental -->
     
     <gap:plugin name="org.apache.cordova.inappbrowser" />
+    <preference name="android-build-tool" value="gradle" />
     <plugin name="phonegap-plugin-push" source="npm">
         <param name="SENDER_ID" value="538233303966" />
     </plugin>
