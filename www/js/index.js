@@ -87,7 +87,7 @@ var app = {
     setupPush: function() {
     	alert("Inside setup push");
   	
-        var push = PushNotification.init({
+        var push = window.PushNotification.init({
             "android": {
                 "senderID": apiId
             },

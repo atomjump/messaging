@@ -56,5 +56,5 @@
     <access origin="*" />
     <allow-intent href="*" />
     <allow-navigation href="*" />
-    <!--<engine name="ios" spec="~4.1.1" />-->
+    <engine name="ios" spec="~4.1.1" />
 </widget>
