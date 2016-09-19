@@ -399,7 +399,8 @@ return false;
     newForum: function() {
     	//Create a new forum. 
     	//This is actually effectively resetting, and we will allow the normal functions to input a new one
-		alert("Testing this is working!");		//TESTING IN ONLY!  PLEASE REMOVE
+
+       
        
 		//Ask for a name of the current Server:
 		navigator.notification.prompt(
@@ -409,8 +410,6 @@ return false;
 			['Ok','Cancel'],             // buttonLabels
 			''                 // defaultText
 		);
-	
-	
 
     	
     },
