@@ -99,8 +99,12 @@ var app = {
             },
             "windows": {}
         });
-
+        
+        alert("After pushNotification.init");		//TESTING IN
+        
         push.on('registration', function(data) {
+            
+            alert("Registration:" + JSON.stringify(data));			//TESTING IN
             
             var oldRegId = localStorage.getItem('registrationId');
             if (oldRegId !== data.registrationId) {
@@ -179,7 +183,7 @@ var app = {
 			data       : { 'email-opt': user, 'pd': pass },
 			dataType   : 'jsonp',
 			success    : function(response) {
-				//console.error(JSON.stringify(response));
+				alert("Login response:" + JSON.stringify(response));  //TESTING IN
 				var res = response.split(",");
 				switch(res[0])
 				{
@@ -194,8 +198,13 @@ var app = {
 						
 						}
 						
+						alert("User id=" + userId);   //TESTING IN
+						
 						if(userId) {
 							localStorage.setItem("loggedUser",userId);
+							
+							alert("Set local storage OK, about to try push to register phone");   //TESTING IN
+							
 							app.setupPush();		//register this phone
 							$('#login-popup').hide();
 						
