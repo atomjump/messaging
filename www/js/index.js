@@ -141,7 +141,6 @@ var app = {
             var finalData = {};
             
             
-            alert("Data:" + JSON.stringify(data));
             
             document.getElementById('aj-HTML-alert').style.display = "block";
             if(device.platform == 'iOS') {
@@ -172,7 +171,6 @@ var app = {
             
             }
             
-            alert("Final data:" + JSON.stringify(finalData));
             
             
             
