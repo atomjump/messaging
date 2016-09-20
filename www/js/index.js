@@ -85,22 +85,33 @@ var app = {
     },
     
     setupPush: function() {
-    	myThis = this;
-    	
-        var push = PushNotification.init({
-            "android": {
-                "senderID": apiId
-            },
-            "browser": {},
-            "ios": {
-                "sound": true,
-                "vibration": true,
-                "badge": true
-            },
-            "windows": {}
-        });
+  	
+  		if(typeof(PushNotification) == 'undefined') { 
+			alert("PushNotification does not exist sorry");
+			return;					
+		} else {
+  	
+  	
+			var push = PushNotification.init({
+				"android": {
+					"senderID": apiId
+				},
+				"browser": {},
+				"ios": {
+				    "alert": true,
+					"sound": true,
+					"vibration": true
+				},
+				"windows": {}
+			});
+			
+			//Perhaps also?: ,	"badge": true
 
+		}
+        
+        
         push.on('registration', function(data) {
+            
             
             var oldRegId = localStorage.getItem('registrationId');
             if (oldRegId !== data.registrationId) {
@@ -110,7 +121,8 @@ var app = {
                 localStorage.setItem('registrationId', data.registrationId);
                 // Post registrationId to your app server as the value has changed
                 //Post to server software Loop Server API
-                var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=" + userId;  //e.g. https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
+                
+                var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=" + userId + "&devicetype=" + device.platform;  //e.g. https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
                  errorThis.get(url, function(url, resp) {
                 	//Registered OK
                 	
@@ -126,18 +138,59 @@ var app = {
 
         push.on('notification', function(data) {
             console.log('notification event');
+            var finalData = {};
+            
+             
+            //See https://github.com/phonegap/phonegap-plugin-push/blob/master/docs/API.md
             document.getElementById('aj-HTML-alert').style.display = "block";
+            if(device.platform == 'iOS') {
+            	if(data.additionalData.data.image) {
+            		finalData.image = data.additionalData.data.image;
+            		finalData.message = data.message.replace("[image]", ""); 	//Remove any mention of an [image] from the message, because we are going to show it.
+            	} else {
+            		//No image - the message is to be displayed as-is
+            		finalData.message =  data.message;
+            	}
+            	finalData.observeMessage = data.additionalData.data.observeMessage;
+            	finalData.observeUrl = data.additionalData.data.observeUrl;
+            	finalData.removeMessage = data.additionalData.data.removeMessage;
+            	finalData.removeUrl = data.additionalData.data.removeUrl;
+            	finalData.forumMessage = data.additionalData.data.forumMessage;
+            	finalData.forumName = data.additionalData.data.forumName;
+            	
+            } else {
+            	//Android has a slightly different format
+            	if(data.image) {
+             		finalData.image = data.image;
+             		
+             	}
+            	finalData.message =  data.message;
+            	finalData.observeMessage = data.additionalData.observeMessage;
+            	finalData.observeUrl = data.additionalData.observeUrl;
+            	finalData.removeMessage = data.additionalData.removeMessage;
+            	finalData.removeUrl = data.additionalData.removeUrl;
+            	finalData.forumMessage = data.additionalData.forumMessage;
+            	finalData.forumName = data.additionalData.forumName;
+              
+            
+            }
             
             
-            if(data.image) {
             
-            	var insertImage = "<img width='200' src='" + data.image + "'><br/><br/>";
+            
+            if(finalData.image) {
+            
+            	var insertImage = "<img width='200' src='" + finalData.image + "'><br/><br/>";
             } else {
             	var insertImage = "";
             }
             
-            document.getElementById('aj-HTML-alert-inner').innerHTML = "<span style='vertical-align: top; padding: 10px; padding-top:30px;' class='big-text'>AtomJump Message</span><br/><img  src='icon-Small@3x.png' style='padding 10px;'><ons-fab style='z-index: 1800;' position='top right'  onclick=\"app.closeNotifications();\"><ons-icon icon=\"md-close\" ></ons-icon></ons-fab><p>" + data.message + insertImage + "<br/><br/>" + data.additionalData.observeMessage + ": <a href='javascript:' onclick='window.open(\"" + data.additionalData.observeUrl + "\", \"_system\");'>the forum</a><br/><br/><a href='javascript:' onclick='window.open(\"" + data.additionalData.removeUrl + "\", \"_system\")'>" + data.additionalData.removeMessage + "</a><br/><br/>" + data.additionalData.forumMessage + ": " + data.additionalData.forumName  +"</p>";
+            document.getElementById('aj-HTML-alert-inner').innerHTML = "<span style='vertical-align: top; padding: 10px; padding-top:30px;' class='big-text'>AtomJump Message</span><br/><img  src='icon-Small@3x.png' style='padding 10px;'><ons-fab style='z-index: 1800;' position='top right'  onclick=\"app.closeNotifications();\"><ons-icon icon=\"md-close\" ></ons-icon></ons-fab><p>" + finalData.message + insertImage + "<br/><br/>" + finalData.observeMessage + ": <a href='javascript:' onclick='window.open(\"" + finalData.observeUrl + "\", \"_system\");'>the forum</a><br/><br/><a href='javascript:' onclick='window.open(\"" + finalData.removeUrl + "\", \"_system\")'>" + finalData.removeMessage + "</a><br/><br/>" + finalData.forumMessage + ": " + finalData.forumName  + "</p>";
             
+            
+            push.finish(function() {
+				console.log("processing of push data is finished");
+			});
           
        });
     },
@@ -174,7 +227,6 @@ var app = {
 			data       : { 'email-opt': user, 'pd': pass },
 			dataType   : 'jsonp',
 			success    : function(response) {
-				//console.error(JSON.stringify(response));
 				var res = response.split(",");
 				switch(res[0])
 				{
@@ -189,8 +241,10 @@ var app = {
 						
 						}
 						
+						
 						if(userId) {
 							localStorage.setItem("loggedUser",userId);
+														
 							app.setupPush();		//register this phone
 							$('#login-popup').hide();
 						
@@ -210,7 +264,6 @@ var app = {
 				}
 			},
 			error      : function() {
-				//console.error("error");
 				alert('Not connecting to Loop Server!');                  
 			}
 	   });     
@@ -396,6 +449,7 @@ return false;
     	//This is actually effectively resetting, and we will allow the normal functions to input a new one
 
        
+       
 		//Ask for a name of the current Server:
 		navigator.notification.prompt(
 			'Please enter a name or URL for this forum',  // message
@@ -404,8 +458,6 @@ return false;
 			['Ok','Cancel'],             // buttonLabels
 			''                 // defaultText
 		);
-	
-	
 
     	
     },

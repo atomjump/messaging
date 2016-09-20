@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.atomjump.messaging" version="0.1.0" versionCode="3" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget id="com.atomjump.messaging" version="0.1.15" versionCode="18" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>AtomJump Messaging</name>
     <description>
         Shortcuts to any AtomJump messaging page, and notifications of new messages.
@@ -7,53 +7,83 @@
     <author email="webmaster@atomjump.com" href="https://atomjump.com">
         AtomJump
     </author>
-    <gap:plugin name="org.apache.cordova.core.camera" />
     <gap:plugin name="org.apache.cordova.file-transfer" source="npm" />
     <gap:plugin name="cordova-plugin-whitelist" source="npm" />
     <gap:plugin name="cordova-plugin-networkinterface" source="npm" />
-    <gap:plugin name="org.apache.cordova.Globalization" />
+    <plugin source="git" spec="https://github.com/apache/cordova-plugin-globalization.git" />
     <plugin source="git" spec="https://github.com/atomjump/cordova-plugin-dialogs.git" />
-    <gap:plugin name="org.apache.cordova.inappbrowser" />
-    <plugin name="phonegap-plugin-push" source="npm">
-        <param name="SENDER_ID" value="538233303966" />
-    </plugin>
+    <plugin source="git" spec="https://git-wip-us.apache.org/repos/asf/cordova-plugin-device.git" /><!-- Experimental -->
+    
+    <gap:plugin name="org.apache.cordova.inappbrowser" source="npm"/>
+    <preference name="android-build-tool" value="gradle" />
+    
     <platform name="android">
         <preference name="permissions" value="none" />
         <preference name="orientation" value="portrait" />
         <preference name="fullscreen" value="false" />
-        <uses-permission android:name="android.permission.CAMERA" />
-        <uses-feature android:name="android.hardware.camera" />
-        <uses-feature android:name="android.hardware.camera.autofocus" />
         <icon height="128" src="icon.png" width="128" />
+        <plugin name="phonegap-plugin-push" source="npm">
+        	<param name="SENDER_ID" value="538233303966" />
+    	</plugin>
+        
     </platform>
     <platform name="ios">
-        <preference name="phonegap-version" value="cli-5.2.0" />
         <preference name="permissions" value="none" />
         <preference name="orientation" value="portrait" />
         <gap:config-file mode="add" parent="ITSAppUsesNonExemptEncryption" platform="ios">
             <false />
         </gap:config-file>
-        <icon height="128" src="icon.png" width="128" />
-        <icon height="180" platform="ios" src="icon-60@3x.png" width="180" />
-        <icon height="57" platform="ios" src="icon-57.png" width="57" />
-        <icon height="114" platform="ios" src="icon-57@2x.png" width="114" />
-        <icon height="60" platform="ios" src="icon-60.png" width="60" />
-        <icon height="120" platform="ios" src="icon-60@2x.png" width="120" />
-        <icon height="76" platform="ios" src="icon-76.png" width="76" />
-        <icon height="152" platform="ios" src="icon-76@2x.png" width="152" />
-        <icon height="29" platform="ios" src="icon-small.png" width="29" />
-        <icon height="58" platform="ios" src="icon-small@2x.png" width="58" />
-        <icon height="40" platform="ios" src="icon-40.png" width="40" />
-        <icon height="80" platform="ios" src="icon-40@2x.png" width="80" />
-        <icon height="57" platform="ios" src="icon.png" width="57" />
-        <icon height="114" platform="ios" src="icon@2x.png" width="114" />
-        <icon height="72" platform="ios" src="icon-72.png" width="72" />
-        <icon height="144" platform="ios" src="icon-72@2x.png" width="144" />
-        <icon height="29" platform="ios" src="icon-small.png" width="29" />
-        <icon height="58" platform="ios" src="icon-small@2x.png" width="58" />
-        <icon height="50" platform="ios" src="icon-50.png" width="50" />
-        <icon height="100" platform="ios" src="icon-50@2x.png" width="100" />
-        <splash height="1136" platform="ios" src="img/splash-568h@2x.png" width="640" />
+        <plugin name="phonegap-plugin-push" source="npm" />
+ 
+        
+        <icon src="icon.png" width="128" height="128" />
+        <!-- iPhone 6 / 6+ -->
+		<icon src="icon-60@3x.png" platform="ios" width="180" height="180" />
+
+
+		<!--   -->
+		<icon src="icon-57.png" platform="ios" width="57" height="57" />
+		<icon src="icon-57@2x.png" platform="ios" width="114" height="114" />
+	
+		<!-- iPhone / iPod Touch  -->
+		<icon src="icon-60.png" platform="ios" width="60" height="60" />
+		<icon src="icon-60@2x.png" platform="ios" width="120" height="120" />
+	
+		<!-- iPad -->
+		<icon src="icon-76.png" platform="ios" width="76" height="76" />
+		<icon src="icon-76@2x.png" platform="ios" width="152" height="152" />
+	
+		<!-- Settings Icon -->
+		<icon src="icon-small.png" platform="ios" width="29" height="29" />
+		<icon src="icon-small@2x.png" platform="ios" width="58" height="58" />
+	
+		<!-- Spotlight Icon -->
+		<icon src="icon-40.png" platform="ios" width="40" height="40" />
+		<icon src="icon-40@2x.png" platform="ios" width="80" height="80" />
+		<icon src="icon.png" platform="ios" width="57" height="57" />
+		<icon src="icon@2x.png" platform="ios" width="114" height="114" />
+
+		<!-- iPad -->
+		<icon src="icon-72.png" platform="ios" width="72" height="72" />
+		<icon src="icon-72@2x.png" platform="ios" width="144" height="144" />
+
+		<!-- iPhone Spotlight and Settings Icon -->
+		<icon src="icon-small.png" platform="ios" width="29" height="29" />
+		<icon src="icon-small@2x.png" platform="ios" width="58" height="58" />
+
+		<!-- iPad Spotlight and Settings Icon -->
+		<icon src="icon-50.png" platform="ios" width="50" height="50" />
+		<icon src="icon-50@2x.png" platform="ios" width="100" height="100" />
+
+		<splash src="img/splash-568h@2x.png" platform="ios" width="640" height="1136" />
+
+		<splash src="Default.png" platform="ios" width="320" height="480" />
+		<splash src="Default-Portrait.png" platform="ios" width="768" height="1024" />
+		<splash src="Default-Landscape.png" platform="ios" width="1024" height="768" />
+
+
+        
+        
     </platform>
     <access origin="*" />
     <allow-intent href="*" />
