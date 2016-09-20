@@ -140,15 +140,17 @@ var app = {
             console.log('notification event');
             var finalData = {};
             
-            alert(JSON.stringify(data));  //TEMP REMOVE ME
-            
+             
             //See https://github.com/phonegap/phonegap-plugin-push/blob/master/docs/API.md
             document.getElementById('aj-HTML-alert').style.display = "block";
             if(device.platform == 'iOS') {
             	if(data.additionalData.data.image) {
             		finalData.image = data.additionalData.data.image;
+            		finalData.message = data.message.replace("[image]", ""); 	//Remove any mention of an [image] from the message, because we are going to show it.
+            	} else {
+            		//No image - the message is to be displayed as-is
+            		finalData.message =  data.message;
             	}
-            	finalData.message =  data.additionalData.alert;
             	finalData.observeMessage = data.additionalData.data.observeMessage;
             	finalData.observeUrl = data.additionalData.data.observeUrl;
             	finalData.removeMessage = data.additionalData.data.removeMessage;
@@ -160,6 +162,7 @@ var app = {
             	//Android has a slightly different format
             	if(data.image) {
              		finalData.image = data.image;
+             		
              	}
             	finalData.message =  data.message;
             	finalData.observeMessage = data.additionalData.observeMessage;
