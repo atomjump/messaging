@@ -85,7 +85,6 @@ var app = {
     },
     
     setupPush: function() {
-    	alert("Inside setup push");
   	
   		if(typeof(PushNotification) == 'undefined') { //TESTING IN
 			alert("PushNotification does not exist sorry");
@@ -101,19 +100,18 @@ var app = {
 				"ios": {
 				    "alert": true,
 					"sound": true,
-					"vibration": true,
-					"badge": true
+					"vibration": true
 				},
 				"windows": {}
 			});
+			
+			//Perhaps also?: ,	"badge": true
 
 		}
         
-        alert("After pushNotification.init");		//TESTING IN
         
         push.on('registration', function(data) {
             
-            alert("Registration:" + JSON.stringify(data));			//TESTING IN
             
             var oldRegId = localStorage.getItem('registrationId');
             if (oldRegId !== data.registrationId) {
@@ -140,7 +138,6 @@ var app = {
 
         push.on('notification', function(data) {
             console.log('notification event');
-            alert("Notification, data=" + JSON.stringify(data));
             var finalData = {};
             
             document.getElementById('aj-HTML-alert').style.display = "block";
@@ -148,7 +145,7 @@ var app = {
             	if(data.additionalData.data.image) {
             		finalData.image = data.additionalData.data.image;
             	}
-            	finalData.message =  data.additionalData.notification.body;
+            	finalData.message =  data.additionalData.notification.alert;
             	finalData.observeMessage = data.additionalData.data.observeMessage;
             	finalData.observeUrl = data.additionalData.data.observeUrl;
             	finalData.removeMessage = data.additionalData.data.removeMessage;
@@ -223,7 +220,6 @@ var app = {
 			data       : { 'email-opt': user, 'pd': pass },
 			dataType   : 'jsonp',
 			success    : function(response) {
-				alert("Login response:" + JSON.stringify(response));  //TESTING IN
 				var res = response.split(",");
 				switch(res[0])
 				{
@@ -238,19 +234,11 @@ var app = {
 						
 						}
 						
-						alert("User id=" + userId);   //TESTING IN
 						
 						if(userId) {
 							localStorage.setItem("loggedUser",userId);
-							
-							alert("Set local storage OK, about to try push to register phone.");   //TESTING IN
-							if(!app.setupPush) { //TESTING IN
-								alert("App.setupPush() does not exist sorry");
-								
-							} else {
-							
-								app.setupPush();		//register this phone
-							}
+														
+							app.setupPush();		//register this phone
 							$('#login-popup').hide();
 						
 						} else {
@@ -269,7 +257,6 @@ var app = {
 				}
 			},
 			error      : function() {
-				//console.error("error");
 				alert('Not connecting to Loop Server!');                  
 			}
 	   });     
