@@ -140,18 +140,47 @@ var app = {
         push.on('notification', function(data) {
             console.log('notification event');
             alert("Notification, data=" + JSON.stringify(data));
+            var finalData = {};
             
             document.getElementById('aj-HTML-alert').style.display = "block";
+            if(device.platform == 'iOS') {
+            	if(data.additionalData.data.image) {
+            		finalData.image = data.additionalData.data.image;
+            	}
+            	finalData.message =  data.additionalData.notification.body;
+            	finalData.observeMessage = data.additionalData.data.observeMessage;
+            	finalData.observeUrl = data.additionalData.data.observeUrl;
+            	finalData.removeMessage = data.additionalData.data.removeMessage;
+            	finalData.removeUrl = data.additionalData.data.removeUrl;
+            	finalData.forumMessage = data.additionalData.data.forumMessage;
+            	finalData.forumName = data.additionalData.data.forumName;
+            	
+            } else {
+            	//Android has a slightly different format
+            	if(data.image) {
+             		finalData.image = data.image;
+             	}
+            	finalData.message =  data.message;
+            	finalData.observeMessage = data.additionalData.observeMessage;
+            	finalData.observeUrl = data.additionalData.observeUrl;
+            	finalData.removeMessage = data.additionalData.data.removeMessage;
+            	finalData.removeUrl = data.additionalData.removeUrl;
+            	finalData.forumMessage = data.additionalData.forumMessage;
+            	finalData.forumName = data.additionalData.forumName;
+              
+            
+            }
             
             
-            if(data.image) {
             
-            	var insertImage = "<img width='200' src='" + data.image + "'><br/><br/>";
+            if(finalData.image) {
+            
+            	var insertImage = "<img width='200' src='" + finalData.image + "'><br/><br/>";
             } else {
             	var insertImage = "";
             }
             
-            document.getElementById('aj-HTML-alert-inner').innerHTML = "<span style='vertical-align: top; padding: 10px; padding-top:30px;' class='big-text'>AtomJump Message</span><br/><img  src='icon-Small@3x.png' style='padding 10px;'><ons-fab style='z-index: 1800;' position='top right'  onclick=\"app.closeNotifications();\"><ons-icon icon=\"md-close\" ></ons-icon></ons-fab><p>" + data.message + insertImage + "<br/><br/>" + data.additionalData.observeMessage + ": <a href='javascript:' onclick='window.open(\"" + data.additionalData.observeUrl + "\", \"_system\");'>the forum</a><br/><br/><a href='javascript:' onclick='window.open(\"" + data.additionalData.removeUrl + "\", \"_system\")'>" + data.additionalData.removeMessage + "</a><br/><br/>" + data.additionalData.forumMessage + ": " + data.additionalData.forumName  +"</p>";
+            document.getElementById('aj-HTML-alert-inner').innerHTML = "<span style='vertical-align: top; padding: 10px; padding-top:30px;' class='big-text'>AtomJump Message</span><br/><img  src='icon-Small@3x.png' style='padding 10px;'><ons-fab style='z-index: 1800;' position='top right'  onclick=\"app.closeNotifications();\"><ons-icon icon=\"md-close\" ></ons-icon></ons-fab><p>" + finalData.message + insertImage + "<br/><br/>" + finalData.observeMessage + ": <a href='javascript:' onclick='window.open(\"" + finalData.observeUrl + "\", \"_system\");'>the forum</a><br/><br/><a href='javascript:' onclick='window.open(\"" + finalData.removeUrl + "\", \"_system\")'>" + finalData.removeMessage + "</a><br/><br/>" + finalData.forumMessage + ": " + finalData.forumName  +"</p>";
             
             
             push.finish(function() {
