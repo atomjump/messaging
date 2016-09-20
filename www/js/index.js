@@ -99,6 +99,7 @@ var app = {
 				},
 				"browser": {},
 				"ios": {
+				    "alert": true,
 					"sound": true,
 					"vibration": true,
 					"badge": true
