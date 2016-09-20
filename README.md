@@ -1,3 +1,5 @@
+<img src="https://atomjump.com/images/logo80.png">
+
 # messaging
 AtomJump Messaging app: shortcuts and popup notifications to AtomJump Loop.
 
