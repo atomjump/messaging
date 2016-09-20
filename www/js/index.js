@@ -141,13 +141,13 @@ var app = {
             var finalData = {};
             
             
-            
+            //See https://github.com/phonegap/phonegap-plugin-push/blob/master/docs/API.md
             document.getElementById('aj-HTML-alert').style.display = "block";
             if(device.platform == 'iOS') {
             	if(data.additionalData.data.image) {
             		finalData.image = data.additionalData.data.image;
             	}
-            	finalData.message =  data.additionalData.notification.alert;
+            	finalData.message =  data.additionalData.alert;
             	finalData.observeMessage = data.additionalData.data.observeMessage;
             	finalData.observeUrl = data.additionalData.data.observeUrl;
             	finalData.removeMessage = data.additionalData.data.removeMessage;
