@@ -140,6 +140,9 @@ var app = {
             console.log('notification event');
             var finalData = {};
             
+            
+            alert("Data:" + JSON.stringify(data));
+            
             document.getElementById('aj-HTML-alert').style.display = "block";
             if(device.platform == 'iOS') {
             	if(data.additionalData.data.image) {
