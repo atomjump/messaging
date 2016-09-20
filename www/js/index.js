@@ -140,6 +140,7 @@ var app = {
             console.log('notification event');
             var finalData = {};
             
+            alert(JSON.stringify(data));  //TEMP REMOVE ME
             
             //See https://github.com/phonegap/phonegap-plugin-push/blob/master/docs/API.md
             document.getElementById('aj-HTML-alert').style.display = "block";
