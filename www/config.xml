@@ -28,7 +28,7 @@
         
     </platform>
     <platform name="ios">
-        <preference name="phonegap-version" value="cli-5.2.0" />
+        <!--<preference name="phonegap-version" value="cli-5.2.0" />-->
         <preference name="permissions" value="none" />
         <preference name="orientation" value="portrait" />
         <gap:config-file mode="add" parent="ITSAppUsesNonExemptEncryption" platform="ios">
