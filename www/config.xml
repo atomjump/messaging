@@ -10,7 +10,8 @@
     <gap:plugin name="org.apache.cordova.file-transfer" source="npm" />
     <gap:plugin name="cordova-plugin-whitelist" source="npm" />
     <gap:plugin name="cordova-plugin-networkinterface" source="npm" />
-    <gap:plugin name="org.apache.cordova.Globalization" />
+    <!--Old way: <gap:plugin name="org.apache.cordova.Globalization" /> -->
+    <plugin source="git" spec="https://github.com/apache/cordova-plugin-globalization.git" />
     <plugin source="git" spec="https://github.com/atomjump/cordova-plugin-dialogs.git" />
     <plugin source="git" spec="https://git-wip-us.apache.org/repos/asf/cordova-plugin-device.git" /><!-- Experimental -->
     
