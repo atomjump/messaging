@@ -75,11 +75,12 @@
 		<icon src="icon-50.png" platform="ios" width="50" height="50" />
 		<icon src="icon-50@2x.png" platform="ios" width="100" height="100" />
 
+		<splash src="img/splash-568h@2x.png" platform="ios" width="640" height="1136" />
+
 		<splash src="Default.png" platform="ios" width="320" height="480" />
 		<splash src="Default-Portrait.png" platform="ios" width="768" height="1024" />
 		<splash src="Default-Landscape.png" platform="ios" width="1024" height="768" />
 
-		<splash src="img/splash-568h@2x.png" platform="ios" width="640" height="1136" />
 
         
         
