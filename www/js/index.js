@@ -278,13 +278,19 @@ var app = {
 
 
 	clearPass: function() {
-			
-		if($('#private-server').val() != '') {
-					navigator.notification.alert("Warning: you will have to reset your password from the 'settings' link at the bottom of a popup, from within the web address of your messaging.");
-return false;
-		}
 		
-		navigator.notification.alert("Note: please reset your password within the website popup's settings (Settings/More/Password/Reset) in your desktop or phone browser from https://atomjump.com");		
+	   	$.ajax({
+			type       : "POST",
+			url        : api + "clear-pass-phone.php",
+			crossDomain: true,
+			data       : { 'email': $('#user').val() },
+			success    : function(response) {
+				navigator.notification.alert(response);
+			},
+			error      : function() {
+				alert('Not connecting to Loop Server!');                  
+			}
+	   });     	
 
 		return false;		
 	},
