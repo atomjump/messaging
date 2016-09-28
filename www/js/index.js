@@ -593,10 +593,10 @@ var app = {
     			
     		
     		for(var cnt = 0; cnt< settings.length; cnt++) {
-    			prepList = prepList + "<ons-list-item onclick=\"app.warningBrowserOpen('gotoforum', function() { window.open(encodeURI('" + settings[cnt].url + "'), '_system') });\">" + errorThis.ellipse(settings[cnt].forum, 27) + "</ons-list-item>";
+    			prepList = prepList + "<ons-list-item onclick=\"app.warningBrowserOpen('gotoforum', function() { window.open(encodeURI('" + settings[cnt].url + "'), '_system'); });\">" + errorThis.ellipse(settings[cnt].forum, 27) + "</ons-list-item>";
     			
     		}
-    
+    		alert(prepList);		//TEMP IN REMOVE ME
     		$('#forum-list').html(prepList);
     },
     
