@@ -334,9 +334,7 @@ var app = {
     		//We haven't done this before
     		var count = 0; 
     	}
-    	
-    	count = 0;	//TEMP TESTING REMOVE ME
-    	
+    	   	
     	localStorage.setItem(place, count);
     	
     	switch(place)
