@@ -161,7 +161,7 @@ window.open(encodeURI('http://' + str + '.atomjump.com/?orig_query=' + encodeURI
 	        	</p>
 	        	
 				<p>
-					<a class="small-text" href="javascript:" onclick="return app.clearPass();">Reset Password</a>
+					<a class="small-text" href="javascript:" onclick="return app.clearPass($('#user').val(), $('#private-server').val());">Reset Password</a>
 				</p>
 				<p>
 					<a class="small-text" href="javascript:" onclick="$('#private-server').show(); return false;">Private Server</a>

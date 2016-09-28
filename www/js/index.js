@@ -176,7 +176,14 @@ var app = {
             }
             
             
-            
+            if(finalData.forumName) {
+            	//Remove 'ajps_', the standard atomjump.com header from the name of the forum
+            	if(finalData.forumName.substring(0, rawForumHeader.length) == rawForumHeader) {
+            		finalData.forumName = finalData.forumName.substring(rawForumHeader.length);
+            	
+            	}
+            	
+            }
             
             if(finalData.image) {
             
@@ -185,7 +192,9 @@ var app = {
             	var insertImage = "";
             }
             
-            document.getElementById('aj-HTML-alert-inner').innerHTML = "<span style='vertical-align: top; padding: 10px; padding-top:30px;' class='big-text'>AtomJump Message</span><br/><img  src='icon-Small@3x.png' style='padding 10px;'><ons-fab style='z-index: 1800;' position='top right'  onclick=\"app.closeNotifications();\"><ons-icon icon=\"md-close\" ></ons-icon></ons-fab><p>" + finalData.message + insertImage + "<br/><br/>" + finalData.observeMessage + ": <a href='javascript:' onclick='window.open(\"" + finalData.observeUrl + "\", \"_system\");'>the forum</a><br/><br/><a href='javascript:' onclick='window.open(\"" + finalData.removeUrl + "\", \"_system\")'>" + finalData.removeMessage + "</a><br/><br/>" + finalData.forumMessage + ": " + finalData.forumName  + "</p>";
+            document.getElementById('aj-HTML-alert-inner').innerHTML = "<span style='vertical-align: top; padding: 10px; padding-top:30px;' class='big-text'>AtomJump Message</span><br/><img  src='icon-Small@3x.png' style='padding 10px;'><ons-fab style='z-index: 1800;' position='top right'  onclick=\"app.closeNotifications();\"><ons-icon icon=\"md-close\" ></ons-icon></ons-fab><p><b>" + finalData.message + insertImage + "</b><br/><br/>" + finalData.observeMessage + ": <a href='javascript:' onclick='app.warningBrowserOpen(\"gotoforum\", function() { window.open(\"" + finalData.observeUrl + "\", \"_system\"); });'>the forum</a><br/><br/>" + finalData.forumMessage + ": " + finalData.forumName  + "<br/><br/><small>Click the cross to continue.</small></p>";
+            
+            //Can add a remove link with: <br/><br/><a href='javascript:' onclick='window.open(\"" + finalData.removeUrl + "\", \"_system\")'>" + finalData.removeMessage + "</a>
             
             
             push.finish(function() {
@@ -277,14 +286,22 @@ var app = {
     },
 
 
-	clearPass: function() {
-			
-		if($('#private-server').val() != '') {
-					navigator.notification.alert("Warning: you will have to reset your password from the 'settings' link at the bottom of a popup, from within the web address of your messaging.");
-return false;
-		}
+	clearPass: function(email, apiUrl) {
 		
-		navigator.notification.alert("Note: please reset your password within the website popup's settings (Settings/More/Password/Reset) in your desktop or phone browser from https://atomjump.com");		
+		errorThis.setAPI(apiUrl);
+		
+	   	$.ajax({
+			type       : "POST",
+			url        : api + "clear-pass-phone.php",
+			crossDomain: true,
+			data       : { 'email': email },
+			success    : function(response) {
+				navigator.notification.alert(response);
+			},
+			error      : function() {
+				alert('Not connecting to Loop Server!');                  
+			}
+	   });     	
 
 		return false;		
 	},
@@ -313,6 +330,45 @@ return false;
         //Set the user message
         document.getElementById("notify").innerHTML = msg;
     },
+    
+    
+    
+    
+    warningBrowserOpen: function(place, cb) {
+    	//This function will include a warning message a certain number of times until
+    	var item = localStorage.getItem(place);
+    	if(item) {
+    		var count = parseInt(item) + 1;
+    	} else {
+    		//We haven't done this before
+    		var count = 0; 
+    	}
+    	   	
+    	localStorage.setItem(place, count);
+    	
+    	switch(place)
+    	{
+    	
+    		case 'gotoforum':
+    			if(count < 2) {
+    			
+    				navigator.notification.alert("You will need to enter your personal email and password on the first occasion, under 'Settings', 'more', and then click 'Save Settings'. Note: your phone number is not needed as your app replaces SMS notifications. Note: This message will only display twice.",    
+						cb,         					// callback
+						'Opening Message Forum',        // title
+						'OK'                  		// buttonName
+					);
+    			} else {
+    				cb();
+    				
+    			}
+    		break;
+    		
+    	}
+    	
+    	
+    
+    
+    },
 
 
 
@@ -339,6 +395,7 @@ return false;
 						localStorage.removeItem("loggedUser");
 						localStorage.removeItem("settings");
 						localStorage.removeItem("api");
+						localStorage.removeItem("gotoforum");
 						$('#user').val('');
 						$('#password').val('');
 						$('#private-server').val('');
@@ -547,10 +604,10 @@ return false;
     			
     		
     		for(var cnt = 0; cnt< settings.length; cnt++) {
-    			prepList = prepList + "<ons-list-item onclick=\"window.open(encodeURI('" + settings[cnt].url + "'), '_system')\">" + errorThis.ellipse(settings[cnt].forum, 27) + "</ons-list-item>";
+    		
+    			prepList = prepList + "<ons-list-item onclick=\"app.warningBrowserOpen('gotoforum', function() { window.open(encodeURI('" + settings[cnt].url + "'), '_system'); });\">" + errorThis.ellipse(settings[cnt].forum, 27) + "</ons-list-item>";
     			
     		}
-    
     		$('#forum-list').html(prepList);
     },
     
