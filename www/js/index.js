@@ -345,7 +345,7 @@ var app = {
     		case 'gotoforum':
     			if(count < 2) {
     			
-    				navigator.notification.alert("You will need to enter your personal email and password on this first occasion, under settings, 'more', and then click 'Save Settings', to see your personal messages and post messages as yourself. Note: your phone number is not needed as your app replaces SMS notifications. Note: This message will only display twice."    
+    				navigator.notification.alert("You will need to enter your personal email and password on this first occasion, under settings, 'more', and then click 'Save Settings', to see your personal messages and post messages as yourself. Note: your phone number is not needed as your app replaces SMS notifications. Note: This message will only display twice.",    
 						cb,         					// callback
 						'Opening Message Forum',        // title
 						'OK'                  		// buttonName
@@ -593,10 +593,10 @@ var app = {
     			
     		
     		for(var cnt = 0; cnt< settings.length; cnt++) {
+    		
     			prepList = prepList + "<ons-list-item onclick=\"app.warningBrowserOpen('gotoforum', function() { window.open(encodeURI('" + settings[cnt].url + "'), '_system'); });\">" + errorThis.ellipse(settings[cnt].forum, 27) + "</ons-list-item>";
     			
     		}
-    		alert(prepList);		//TEMP IN REMOVE ME
     		$('#forum-list').html(prepList);
     },
     
