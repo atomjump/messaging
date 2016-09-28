@@ -277,13 +277,15 @@ var app = {
     },
 
 
-	clearPass: function() {
+	clearPass: function(email, apiUrl) {
+		
+		errorThis.setAPI(apiUrl);
 		
 	   	$.ajax({
 			type       : "POST",
 			url        : api + "clear-pass-phone.php",
 			crossDomain: true,
-			data       : { 'email': $('#user').val() },
+			data       : { 'email': email },
 			success    : function(response) {
 				navigator.notification.alert(response);
 			},
