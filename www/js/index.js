@@ -329,7 +329,7 @@ var app = {
     	//This function will include a warning message a certain number of times until
     	var item = localStorage.getItem(place);
     	if(item) {
-    		var count = intVal(item) + 1;
+    		var count = parseInt(item) + 1;
     	} else {
     		//We haven't done this before
     		var count = 0; 
@@ -350,6 +350,8 @@ var app = {
     		break;
     		
     	}
+    	
+    	return false;
     
     
     },
