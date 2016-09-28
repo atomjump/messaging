@@ -185,7 +185,7 @@ var app = {
             	var insertImage = "";
             }
             
-            document.getElementById('aj-HTML-alert-inner').innerHTML = "<span style='vertical-align: top; padding: 10px; padding-top:30px;' class='big-text'>AtomJump Message</span><br/><img  src='icon-Small@3x.png' style='padding 10px;'><ons-fab style='z-index: 1800;' position='top right'  onclick=\"app.closeNotifications();\"><ons-icon icon=\"md-close\" ></ons-icon></ons-fab><p>" + finalData.message + insertImage + "<br/><br/>" + finalData.observeMessage + ": <a href='javascript:' onclick='app.warningBrowserOpen(\"gotoforum\"); window.open(\"" + finalData.observeUrl + "\", \"_system\");'>the forum</a><br/><br/><a href='javascript:' onclick='window.open(\"" + finalData.removeUrl + "\", \"_system\")'>" + finalData.removeMessage + "</a><br/><br/>" + finalData.forumMessage + ": " + finalData.forumName  + "</p>";
+            document.getElementById('aj-HTML-alert-inner').innerHTML = "<span style='vertical-align: top; padding: 10px; padding-top:30px;' class='big-text'>AtomJump Message</span><br/><img  src='icon-Small@3x.png' style='padding 10px;'><ons-fab style='z-index: 1800;' position='top right'  onclick=\"app.closeNotifications();\"><ons-icon icon=\"md-close\" ></ons-icon></ons-fab><p>" + finalData.message + insertImage + "<br/><br/>" + finalData.observeMessage + ": <a href='javascript:' onclick='app.warningBrowserOpen(\"gotoforum\", function() { window.open(\"" + finalData.observeUrl + "\", \"_system\"); });'>the forum</a><br/><br/><a href='javascript:' onclick='window.open(\"" + finalData.removeUrl + "\", \"_system\")'>" + finalData.removeMessage + "</a><br/><br/>" + finalData.forumMessage + ": " + finalData.forumName  + "</p>";
             
             
             push.finish(function() {
@@ -325,11 +325,9 @@ var app = {
     
     
     
-    warningBrowserOpen: function(place) {
+    warningBrowserOpen: function(place, cb) {
     	//This function will include a warning message a certain number of times until
-    	alert('Checking browser open:' + place);
     	var item = localStorage.getItem(place);
-    	alert('Got item');
     	if(item) {
     		var count = parseInt(item) + 1;
     	} else {
@@ -337,23 +335,27 @@ var app = {
     		var count = 0; 
     	}
     	
-    	alert('Current count=' + count);
+    	count = 0;	//TEMP TESTING REMOVE ME
+    	
     	localStorage.setItem(place, count);
-    	alert('Set storage');
     	
     	switch(place)
     	{
     	
     		case 'gotoforum':
-    			if(count <= 2) {
+    			if(count < 2) {
     			
-    				navigator.notification.alert("You will need to enter your personal email and password on this first occasion, under settings and 'more', and then save, to see your personal messages and post messages as yourself. Note: You do not need a phone number as that is to receive SMS notifications, and your app replaces this. Note: This message will only display twice.");
+    				navigator.notification.alert("You will need to enter your personal email and password on this first occasion, under settings, 'more', and then click 'Save Settings', to see your personal messages and post messages as yourself. Note: your phone number is not needed as your app replaces SMS notifications. Note: This message will only display twice."    
+						cb,         					// callback
+						'Opening Message Forum',        // title
+						'OK'                  		// buttonName
+					);
     			}
     		break;
     		
     	}
     	
-    	return false;
+    	
     
     
     },
@@ -591,7 +593,7 @@ var app = {
     			
     		
     		for(var cnt = 0; cnt< settings.length; cnt++) {
-    			prepList = prepList + "<ons-list-item onclick=\"app.warningBrowserOpen('gotoforum'); window.open(encodeURI('" + settings[cnt].url + "'), '_system')\">" + errorThis.ellipse(settings[cnt].forum, 27) + "</ons-list-item>";
+    			prepList = prepList + "<ons-list-item onclick=\"app.warningBrowserOpen('gotoforum', function() { window.open(encodeURI('" + settings[cnt].url + "'), '_system') });\">" + errorThis.ellipse(settings[cnt].forum, 27) + "</ons-list-item>";
     			
     		}
     
