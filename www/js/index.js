@@ -383,6 +383,7 @@ var app = {
 						localStorage.removeItem("loggedUser");
 						localStorage.removeItem("settings");
 						localStorage.removeItem("api");
+						localStorage.removeItem("gotoforum");
 						$('#user').val('');
 						$('#password').val('');
 						$('#private-server').val('');
