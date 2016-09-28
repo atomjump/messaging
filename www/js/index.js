@@ -185,7 +185,9 @@ var app = {
             	var insertImage = "";
             }
             
-            document.getElementById('aj-HTML-alert-inner').innerHTML = "<span style='vertical-align: top; padding: 10px; padding-top:30px;' class='big-text'>AtomJump Message</span><br/><img  src='icon-Small@3x.png' style='padding 10px;'><ons-fab style='z-index: 1800;' position='top right'  onclick=\"app.closeNotifications();\"><ons-icon icon=\"md-close\" ></ons-icon></ons-fab><p>" + finalData.message + insertImage + "<br/><br/>" + finalData.observeMessage + ": <a href='javascript:' onclick='app.warningBrowserOpen(\"gotoforum\", function() { window.open(\"" + finalData.observeUrl + "\", \"_system\"); });'>the forum</a><br/><br/><a href='javascript:' onclick='window.open(\"" + finalData.removeUrl + "\", \"_system\")'>" + finalData.removeMessage + "</a><br/><br/>" + finalData.forumMessage + ": " + finalData.forumName  + "</p>";
+            document.getElementById('aj-HTML-alert-inner').innerHTML = "<span style='vertical-align: top; padding: 10px; padding-top:30px;' class='big-text'>AtomJump Message</span><br/><img  src='icon-Small@3x.png' style='padding 10px;'><ons-fab style='z-index: 1800;' position='top right'  onclick=\"app.closeNotifications();\"><ons-icon icon=\"md-close\" ></ons-icon></ons-fab><p>" + finalData.message + insertImage + "<br/><br/>" + finalData.observeMessage + ": <a href='javascript:' onclick='app.warningBrowserOpen(\"gotoforum\", function() { window.open(\"" + finalData.observeUrl + "\", \"_system\"); });'>the forum</a><br/><br/>" + finalData.forumMessage + ": " + finalData.forumName  + "<br/><br/><small>Click the cross to continue.</small></p>";
+            
+            //Can add a remove link with: <br/><br/><a href='javascript:' onclick='window.open(\"" + finalData.removeUrl + "\", \"_system\")'>" + finalData.removeMessage + "</a>
             
             
             push.finish(function() {
