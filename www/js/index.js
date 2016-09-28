@@ -348,6 +348,9 @@ var app = {
 						'Opening Message Forum',        // title
 						'OK'                  		// buttonName
 					);
+    			} else {
+    				cb();
+    				
     			}
     		break;
     		
