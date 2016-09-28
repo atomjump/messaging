@@ -176,7 +176,14 @@ var app = {
             }
             
             
-            
+            if(finalData.forumName) {
+            	//Remove 'ajps_', the standard atomjump.com header from the name of the forum
+            	if(finalData.forumName.substring(0, rawForumHeader.length) == rawForumHeader) {
+            		finalData.forumName = finalData.forumName.substring(rawForumHeader.length);
+            	
+            	}
+            	
+            }
             
             if(finalData.image) {
             
