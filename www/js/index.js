@@ -345,7 +345,7 @@ var app = {
     		case 'gotoforum':
     			if(count < 2) {
     			
-    				navigator.notification.alert("You will need to enter your personal email and password on this first occasion, under settings, 'more', and then click 'Save Settings', to see your personal messages and post messages as yourself. Note: your phone number is not needed as your app replaces SMS notifications. Note: This message will only display twice.",    
+    				navigator.notification.alert("You will need to enter your personal email and password on the first occasion, under 'Settings', 'more', and then click 'Save Settings'. Note: your phone number is not needed as your app replaces SMS notifications. Note: This message will only display twice.",    
 						cb,         					// callback
 						'Opening Message Forum',        // title
 						'OK'                  		// buttonName
