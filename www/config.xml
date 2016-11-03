@@ -22,7 +22,7 @@
         <preference name="orientation" value="portrait" />
         <preference name="fullscreen" value="false" />
         <icon height="128" src="icon.png" width="128" />
-        <plugin name="phonegap-plugin-push" source="npm">
+        <plugin name="phonegap-plugin-push" source="npm" version="1.8.4">
         	<param name="SENDER_ID" value="538233303966" />
     	</plugin>
         
