@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.atomjump.messaging" version="0.1.17" versionCode="20" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget id="com.atomjump.messaging" version="0.1.18" versionCode="21" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>AtomJump Messaging</name>
     <description>
         Shortcuts to any AtomJump messaging page, and notifications of new messages.
@@ -75,12 +75,29 @@
 		<icon src="icon-50.png" platform="ios" width="50" height="50" />
 		<icon src="icon-50@2x.png" platform="ios" width="100" height="100" />
 
-		<splash src="img/splash-568h@2x.png" platform="ios" width="640" height="1136" />
 
 		<splash src="Default.png" platform="ios" width="320" height="480" />
 		<splash src="Default-Portrait.png" platform="ios" width="768" height="1024" />
 		<splash src="Default-Landscape.png" platform="ios" width="1024" height="768" />
 
+		<!--<splash src="img/splash-568h@2x.png" platform="ios" width="640" height="1136" />-->
+
+		<splash src="img/Default-1242@3x~iphone6s-landscape_2208x1242.png" platform="ios" width="2208" height="1242"/>
+		<splash src="img/Default-1242@3x~iphone6s-portrait_1242x2208.png" platform="ios" width="1242" height="2208"/>
+		<splash src="img/Default-568h@2x~iphone_640x1136.png" platform="ios" width="640" height="1136"/>
+		<splash src="img/Default-750@2x~iphone6-landscape_1334x750.png" platform="ios" width="1334" height="750"/>
+		<splash src="img/Default-750@2x~iphone6-portrait_750x1334.png" platform="ios" width="750" height="1334"/>
+		<splash src="img/Default-Landscape@2x~ipad_2048x1496.png" platform="ios" width="2048" height="1496"/>
+		<splash src="img/Default-Landscape@2x~ipad_2048x1536.png" platform="ios" width="2048" height="1536"/>
+		<splash src="img/Default-Landscape~ipad_1024x748.png" platform="ios" width="1024"  height="748"/>
+		<splash src="img/Default-Landscape~ipad_1024x768.png" platform="ios" width="1024"  height="768"/>
+		<splash src="img/Default-Portrait@2x~ipad_1536x2008.png" platform="ios" width="1536" height="2008"/>
+		<splash src="img/Default-Portrait@2x~ipad_1536x2048.png" platform="ios" width="1536" height="2048"/>
+		<splash src="img/Default-Portrait~ipad_768x1024.png" platform="ios" width="768" height="1024"/>
+		<splash src="img/Default.png" platform="ios" width="768" height="1004"/>
+		<splash src="img/Default@2x~iphone_640x960.png" platform="ios" width="640" height="960"/>
+		<splash src="img/Default~ipad.png" platform="ios" width="1536" height="2008"/>
+		<splash src="img/Default~iphone.png" platform="ios" width="320" height="480"/>
 
         
         
