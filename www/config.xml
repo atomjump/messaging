@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.atomjump.messaging" version="0.1.19" versionCode="22" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget id="com.atomjump.messaging" version="0.1.20" versionCode="23" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>AtomJump Messaging</name>
     <description>
         Shortcuts to any AtomJump messaging page, and notifications of new messages.
@@ -33,7 +33,7 @@
         <gap:config-file mode="add" parent="ITSAppUsesNonExemptEncryption" platform="ios">
             <false />
         </gap:config-file>
-        <plugin name="phonegap-plugin-push" source="npm" />
+        <plugin name="phonegap-plugin-push" source="npm" version="1.8.4" />
  
         
         <icon src="icon.png" width="128" height="128" />
@@ -79,8 +79,6 @@
 		<splash src="Default.png" platform="ios" width="320" height="480" />
 		<splash src="Default-Portrait.png" platform="ios" width="768" height="1024" />
 		<splash src="Default-Landscape.png" platform="ios" width="1024" height="768" />
-
-		<!--<splash src="img/splash-568h@2x.png" platform="ios" width="640" height="1136" />-->
 
 		<splash src="img/Default-1242@3x~iphone6s-landscape_2208x1242.png" platform="ios" width="2208" height="1242"/>
 		<splash src="img/Default-1242@3x~iphone6s-portrait_1242x2208.png" platform="ios" width="1242" height="2208"/>
