@@ -12,7 +12,7 @@
     <gap:plugin name="cordova-plugin-networkinterface" source="npm" />
     <plugin source="git" spec="https://github.com/apache/cordova-plugin-globalization.git" />
     <plugin source="git" spec="https://github.com/atomjump/cordova-plugin-dialogs.git" />
-    <plugin source="git" spec="https://git-wip-us.apache.org/repos/asf/cordova-plugin-device.git" /><!-- Experimental -->
+    <plugin source="git" spec="https://git-wip-us.apache.org/repos/asf/cordova-plugin-device.git" />
     
     <gap:plugin name="org.apache.cordova.inappbrowser" source="npm"/>
     <preference name="android-build-tool" value="gradle" />
