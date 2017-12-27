@@ -632,9 +632,9 @@ var app = {
 				subdomain = subdomain.replace(/[^a-z0-9]/gi, '');	//keep letters and numbers only
 				if(subdomain == origStr) {
 					//Straightforward redirect
-					var url = 'http://' + subdomain + '.atomjump.com/?autostart=true'
+					var url = 'https://' + subdomain + '.atomjump.com/?autostart=true'
 				} else {
-					var url = 'http://' + subdomain + '.atomjump.com/?orig_query=' + encodeURIComponent(origStr + '&autostart=true');
+					var url = 'https://' + subdomain + '.atomjump.com/?orig_query=' + encodeURIComponent(origStr + '&autostart=true');
 						
 				}
 				

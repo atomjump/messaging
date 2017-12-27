@@ -68,9 +68,9 @@
 					str = str.replace(/[^a-z0-9]/gi, '');
 					if(str == origStr) {
 						//Straightforward redirect
-						window.open(encodeURI('http://' + str + '.atomjump.com?autostart=true'), '_system');
+						window.open(encodeURI('https://' + str + '.atomjump.com?autostart=true'), '_system');
 					} else {
-window.open(encodeURI('http://' + str + '.atomjump.com/?orig_query=' + encodeURIComponent(origStr)) + '&autostart=true', '_system');
+window.open(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + encodeURIComponent(origStr)) + '&autostart=true', '_system');
 						
 					}
 					return false;
