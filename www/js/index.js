@@ -25,7 +25,6 @@ var defaultApi = "https://atomjump.com/api/";		//when a blank is entered
 var rawForumHeader = "ajps_";
 var apiId = "538233303966";
 
-//Test comment
 
 
 
