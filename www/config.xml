@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.atomjump.messaging" version="0.1.22" versionCode="25" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget id="com.atomjump.messaging" version="0.1.23" versionCode="26" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>AtomJump Messaging</name>
     <description>
         Shortcuts to any AtomJump messaging page, and notifications of new messages.
@@ -100,7 +100,9 @@
 		<splash src="img/Default~ipad.png" platform="ios" width="1536" height="2008"/>
 		<splash src="img/Default~iphone.png" platform="ios" width="320" height="480"/>
 
-        
+        <!-- iPad Appstore Icon -->
+		<icon src="messaging-appstore-icon-1024.png" platform="ios" width="1024" height="1024" />
+		<preference name="phonegap-version" value="cli-7.1.0" /> <!-- Note: this is for the 1024 appstore icon. We need to keep this up-to-date if the phonegap version updates -->
         
     </platform>
     <access origin="*" />
