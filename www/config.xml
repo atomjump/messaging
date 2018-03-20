@@ -16,6 +16,8 @@
     <plugin name="cordova-plugin-file-transfer" spec="~1.6.1" />
     <plugin source="git" spec="https://github.com/apache/cordova-plugin-inappbrowser.git" />
     
+    <preference name='phonegap-version' value='cli-7.0.1' />
+    
     <preference name="android-build-tool" value="gradle" />
     
     <platform name="android">
