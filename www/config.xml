@@ -25,6 +25,24 @@
         <preference name="orientation" value="portrait" />
         <preference name="fullscreen" value="false" />
         <icon height="128" src="res/icon.png" width="128" />
+              
+          <!--
+            ldpi    : 36x36 px
+            mdpi    : 48x48 px
+            hdpi    : 72x72 px
+            xhdpi   : 96x96 px
+            xxhdpi  : 144x144 px
+            xxxhdpi : 192x192 px
+        -->
+        <icon src="res/mipmap/ldpi.png" density="ldpi" />
+        <icon src="res/mipmap/mdpi.png" density="mdpi" />
+        <icon src="res/mipmap/hdpi.png" density="hdpi" />
+        <icon src="res/mipmap/xhdpi.png" density="xhdpi" />
+        <icon src="res/mipmap/xxhdpi.png" density="xxhdpi" />
+        <icon src="res/mipmap/xxxhdpi.png" density="xxxhdpi" />
+         
+        
+        
         <plugin name="phonegap-plugin-push" source="npm" version="1.8.4">
         	<param name="SENDER_ID" value="538233303966" />
     	</plugin>
