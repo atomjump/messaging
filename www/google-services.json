@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "550021164323",
+    "firebase_url": "https://atomjump-messaging-dc509.firebaseio.com",
+    "project_id": "atomjump-messaging-dc509",
+    "storage_bucket": "atomjump-messaging-dc509.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:550021164323:android:544cb43e58ee084c",
+        "android_client_info": {
+          "package_name": "com.atomjump.messaging"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "550021164323-c9ic6h5s9vgeq71s1bk061an67unjo52.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvwBzPhlvYn1-o_BdhJBloEVcfdP_FVH8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
