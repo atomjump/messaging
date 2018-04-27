@@ -46,6 +46,8 @@
         <plugin name="phonegap-plugin-push" source="npm" spec="~2.0.0">
         	<param name="SENDER_ID" value="538233303966" />
     	</plugin>
+    	
+    	<resource-file src="google-services.json" target="google-services.json" />
         
     </platform>
     <platform name="ios">
