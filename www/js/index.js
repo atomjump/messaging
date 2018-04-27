@@ -120,16 +120,11 @@ var app = {
                 localStorage.setItem('registrationId', data.registrationId);
                 // Post registrationId to your app server as the value has changed
                 //Post to server software Loop Server API
-                
-                alert("Registration Token:" + data.registrationId);
-                
+                               
                 
                 var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=" + userId + "&devicetype=" + device.platform;  //e.g. https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
                  errorThis.get(url, function(url, resp) {
                 	//Registered OK
-                	
-                	
-                	alert("On registration resp:" + JSON.stringify(resp));				//TESTING
                 	
                 });
             } 
@@ -142,7 +137,6 @@ var app = {
         });
 
         push.on('notification', function(data) {
-           	alert("On notification");				//TESTING
            
             console.log('notification event');
             var finalData = {};
@@ -204,8 +198,7 @@ var app = {
             document.getElementById('aj-HTML-alert-inner').innerHTML = newHTML;
             
             
-            alert(JSON.stringify(finalData));				//TESTING
-            
+
             push.finish(function() {
 				console.log("processing of push data is finished");
 			});
