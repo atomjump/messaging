@@ -43,7 +43,7 @@
          
         
         
-        <plugin name="phonegap-plugin-push" source="npm">
+        <plugin name="phonegap-plugin-push" source="npm" spec="~2.0.0">
         	<param name="SENDER_ID" value="538233303966" />
     	</plugin>
         
@@ -54,7 +54,7 @@
         <gap:config-file mode="add" parent="ITSAppUsesNonExemptEncryption" platform="ios">
             <false />
         </gap:config-file>
-        <plugin name="phonegap-plugin-push" source="npm" />
+        <plugin name="phonegap-plugin-push" source="npm" spec="~2.0.0" />
  
         
         <icon src="icon.png" width="128" height="128" />
