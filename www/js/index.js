@@ -92,10 +92,10 @@ var app = {
   	
   	
 			var push = PushNotification.init({
-				"android": {
-					"senderID": apiId
-				},
-				"browser": {},
+				"android": {},
+      			"browser": {
+        			"pushServiceURL": 'http://push.api.phonegap.com/v1/push'
+      			},
 				"ios": {
 				    "alert": true,
 					"sound": true,
