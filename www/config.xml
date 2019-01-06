@@ -14,7 +14,8 @@
     
     <plugin source="git" spec="https://github.com/apache/cordova-plugin-globalization.git" />
     <plugin name="cordova-plugin-file-transfer" spec="~1.6.1" />
-    <plugin source="git" spec="https://github.com/apache/cordova-plugin-inappbrowser.git" />
+   <!--<plugin source="git" spec="https://github.com/apache/cordova-plugin-inappbrowser.git" />-->
+    <gap:plugin name="cordova-plugin-inappbrowser" source="npm"/>
     
     <preference name='phonegap-version' value='cli-7.0.1' />
     
