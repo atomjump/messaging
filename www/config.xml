@@ -44,8 +44,8 @@
         <icon src="res/mipmap/xxxhdpi.png" density="xxxhdpi" />
          
         
-        
-        <plugin name="phonegap-plugin-push" source="npm" spec="~2.0.0">
+        <!--<plugin name="phonegap-plugin-push" source="npm" spec="~2.0.0">-->
+        <plugin name="phonegap-plugin-push" source="npm">
         	<param name="SENDER_ID" value="538233303966" />
     	</plugin>
     	
