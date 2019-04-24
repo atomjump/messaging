@@ -17,7 +17,8 @@
    <!--<plugin source="git" spec="https://github.com/apache/cordova-plugin-inappbrowser.git" />-->
     <gap:plugin name="cordova-plugin-inappbrowser" source="npm"/>
     
-    <preference name='phonegap-version' value='cli-7.0.1' />
+    <preference name='phonegap-version' value='cli-8.1.1' />
+	<preference name='pgb-builder-version' value='2' />
     
     <preference name="android-build-tool" value="gradle" />
     
