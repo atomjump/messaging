@@ -48,7 +48,7 @@
         	<param name="SENDER_ID" value="538233303966" />
     	</plugin>
     	
-    	<resource-file src="google-services.json" target="google-services.json" />
+    	<resource-file src="google-services.json" target="app/google-services.json" />
         
     </platform>
     <platform name="ios">
