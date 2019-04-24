@@ -65,7 +65,7 @@
 			function newDomain(input) {
 					origStr = document.getElementById(input).value;
 					str = origStr.replace(/\s+/g, '');
-					str = str.replace(/[^a-z0-9]/gi, '');
+					str = str.replace(/[^a-z0-9\-]/gi, '');
 					if(str == origStr) {
 						//Straightforward redirect
 						window.open(encodeURI('https://' + str + '.atomjump.com?autostart=true'), '_system');
