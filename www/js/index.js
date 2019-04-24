@@ -632,7 +632,7 @@ var app = {
    			} else {
    				//An atomjump.com subdomain
 				var subdomain = origStr.replace(/\s+/g, '');  //remove spaces
-				subdomain = subdomain.replace(/[^a-z0-9-]/gi, '');	//keep letters and numbers only (and hyphens)
+				subdomain = subdomain.replace(/[^a-z0-9\-]/gi, '');	//keep letters and numbers only (and hyphens)
 				if(subdomain == origStr) {
 					//Straightforward redirect
 					var url = 'https://' + subdomain + '.atomjump.com/?autostart=true'
