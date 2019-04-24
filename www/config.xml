@@ -44,9 +44,7 @@
         <icon src="res/mipmap/xxxhdpi.png" density="xxxhdpi" />
          
         
-        <resource-file src="google-services.json" target="www/google-services.json" />
-        <!--<plugin name="phonegap-plugin-push" source="npm" spec="~2.0.0">-->
-        <plugin name="phonegap-plugin-push" source="npm">
+         <plugin name="phonegap-plugin-push" source="npm" spec="~2.0.0">
         	<param name="SENDER_ID" value="538233303966" />
     	</plugin>
     	
