@@ -142,29 +142,65 @@ window.open(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + encodeUR
         	<div class="inner-popup">
         		
         		<span class="big-text">AtomJump Messaging</span><br/>
-        		<span class="small-text" onclick="navigator.notification.alert('Please enter your new account email and password in the same boxes. Note: you will need to login within your browser also.', function(){}, 'New Account');">New Account <small><ons-icon icon="ion-ios-help" size="20px" fixed-width="true"></small><br/></span>
-       
-        		<br/>
+        		
+        		
+        		<ons-list>
+        		 <ons-list-header>Please Choose:</ons-list-header>
+					<ons-list-item expandable>
+					  <b>(Option 1)</b>&nbsp;&nbsp;<br/>
+					  <div class="expandable-content">
+					  		<p style="text-align:center;">
+					  		<ons-button style="background-color: #7c5599; color: white;" modifier="large--cta" onclick="app.register(defaultApi);">Pair with AtomJump.com</ons-button>
+					  		</p>
+					  	</div>
+					</ons-list-item>
+					<ons-list-item expandable >
+					  <span style="width :100%;" onclick="$(this).parent().find('.expandable-content').slideToggle()"><b>(Option 2)</b>&nbsp;&nbsp;Pair with a Private Server</span>
+					  <div class="expandable-content" style="display: none; width: 100%;">
+					  	<p style="text-align:center;"><input style="padding:5px;" id="pair-private-server" type="url" placeholder="Private Server URL" size="26" class="resizedTextbox"><br/><br/>
+					  		<ons-button style="background-color: #7c5599; color: white;" modifier="large--cta" onclick="app.register($('#pair-private-server').val());">Pair with a Private Server</ons-button>
+					  	</p>
+					  </div>
+					</ons-list-item>
+					<ons-list-item expandable>
+					  
+					   <span style="width:100%;" onclick="$(this).parent().find('.expandable-content').slideToggle()"><b>(Option 3)</b>&nbsp;&nbsp;Login with the App</span>
+					  
+					  <div class="expandable-content" style="display: none; width: 100%;">
+					  	
+					  	<div id="login">
+					  		<br/>
+							<span class="small-text" onclick="navigator.notification.alert('Please enter your new account email and password in the same boxes. Note: you will need to login within your browser also.', function(){}, 'New Account');">New Account <small><ons-icon icon="ion-ios-help" size="20px" fixed-width="true"></small><br/></span>
+	   
+							<br/>
 
-        		
-        		
-        		<p style="text-align:center;">
-				    
-					<input style="padding:5px;" id="user" type="email" placeholder="Email" size="20" class="resizedTextbox">
-					<input style="padding:5px;" id="password" type="password" placeholder="Password" size="20" class="resizedTextbox">
+				
+				
+							<p style="text-align:center;">
 					
-					<input style="padding:5px; display: none;" id="private-server" type="url" placeholder="Loop Server URL" size="26" class="resizedTextbox">
-				</p>
-        		<p>
-        			<ons-button style="background-color: #7c5599; color: white;" modifier="large" onclick="app.login($('#user').val(), $('#password').val(), $('#private-server').val());">Login</ons-button>
-	        	</p>
-	        	
-				<p>
-					<a class="small-text" href="javascript:" onclick="return app.clearPass($('#user').val(), $('#private-server').val());">Reset Password</a>
-				</p>
-				<p>
-					<a class="small-text" href="javascript:" onclick="$('#private-server').show(); return false;">Private Server</a>
-				</p>
+								<input style="padding:5px;" id="user" type="email" placeholder="Email" size="20" class="resizedTextbox">
+								<input style="padding:5px;" id="password" type="password" placeholder="Password" size="20" class="resizedTextbox">
+					
+								<input style="padding:5px; display: none;" id="private-server" type="url" placeholder="Private Server URL" size="26" class="resizedTextbox">
+							</p>
+							<p>
+								<ons-button style="background-color: #7c5599; color: white;" modifier="large" onclick="app.login($('#user').val(), $('#password').val(), $('#private-server').val());">Login</ons-button>
+							</p>
+				
+							<p>
+								<a class="small-text" href="javascript:" onclick="return app.clearPass($('#user').val(), $('#private-server').val());">Reset Password</a>
+							</p>
+							<p>
+								<a class="small-text" href="javascript:" onclick="$('#private-server').show(); return false;">Private Server</a>
+							</p>
+						</div>
+				
+						</div>
+					</ons-list-item>
+        		 </ons-list>
+        		<br/>
+        		
+        		
 			</div>
         </div>
         

@@ -224,6 +224,34 @@ var app = {
     
     },
     
+   
+    register: function(apiUrl)
+    {
+    	//Registerd to the remote Loop Server
+   		errorThis.setAPI(apiUrl); 
+   		
+   		var id = localStorage.getItem('registrationId');
+   		
+   		if(id) {
+   		
+			var device = {
+				"platform": "Android"
+		
+			}
+			if(device) {
+				var platform = device.platform;
+			} else {
+				var platform = "Android";
+			}
+		
+			var url = api + "plugins/notifications/register.php?id=" + id + "&devicetype=" + platform;
+		
+			window.open(encodeURI(url), '_system');
+		} else {
+		
+		}
+   		   		
+   	},  
     
     login: function(user, pass, apiUrl)
     {
