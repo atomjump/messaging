@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.atomjump.messaging" version="0.2.2" versionCode="29" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget id="com.atomjump.messaging" version="0.3.0" versionCode="30" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>AtomJump Messaging</name>
     <description>
         Shortcuts to any AtomJump messaging page, and notifications of new messages.
@@ -8,7 +8,7 @@
         AtomJump
     </author>
     <gap:plugin name="cordova-plugin-whitelist" source="npm" />
-    <gap:plugin name="cordova-plugin-networkinterface" source="npm" />
+    <gap:plugin name="cordova-plugin-networkinterface" source="npm" spec="~2.0.0" />
     <gap:plugin name="cordova-plugin-device" source="npm"/>
     <plugin name="cordova-plugin-dialogs" source="npm" spec="~1.3.1" />
     
@@ -17,8 +17,9 @@
    <!--<plugin source="git" spec="https://github.com/apache/cordova-plugin-inappbrowser.git" />-->
     <gap:plugin name="cordova-plugin-inappbrowser" source="npm"/>
     
-    <preference name='phonegap-version' value='cli-8.1.1' />
-    <preference name='pgb-builder-version' value='2' />
+    <preference name='phonegap-version' value='cli-9.0.0' />
+	<preference name='pgb-builder-version' value='2' />
+	<preference name="android-targetSdkVersion" value="28" />
    
     <preference name="android-build-tool" value="gradle" />
     
