@@ -112,6 +112,7 @@ var app = {
         
         push.on('registration', function(data) {
             
+             alert("Registration"); 			//TESTING
             
             var oldRegId = localStorage.getItem('registrationId');
             if (oldRegId !== data.registrationId) {
@@ -127,7 +128,8 @@ var app = {
                 if(singleClick == true) {
                 	//Have tapped a single server pairing - will not have a known userid
                 	//so we need to let the browser use it's own cookies.
-                	
+                	var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=&devicetype=" + device.platform;
+                	window.open(url, '_system');
                 } else {
                 
                  	//Otherwise login with the known logged userId
@@ -254,6 +256,7 @@ var app = {
 			}
 		
 			var url = api + "plugins/notifications/register.php?id=" + id + "&devicetype=" + platform;
+			alert("URL about to try opening:" + url);		//TESTING
 		
 			window.open(url, '_system');
 			
@@ -263,10 +266,12 @@ var app = {
          	 if(settingApi) {
           		 api = settingApi;
           	 	$('#private-server').val(api);
-         	 }  
+         	 } 
+         	 
+         	 alert("No ID registered"); 			//TESTING
          	 
          	singleClick = true;      
-        	app.setupPush();
+        	errorThis.setupPush();
 		}
    		   		
    	},  
