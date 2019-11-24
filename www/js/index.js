@@ -24,6 +24,7 @@ var api = "https://atomjump.com/api/";
 var defaultApi = "https://atomjump.com/api/";		//when a blank is entered
 var rawForumHeader = "ajps_";
 var apiId = "538233303966";
+var singleClick = false;
 
 
 
@@ -120,13 +121,22 @@ var app = {
                 localStorage.setItem('registrationId', data.registrationId);
                 // Post registrationId to your app server as the value has changed
                 //Post to server software Loop Server API
-                               
                 
-                var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=" + userId + "&devicetype=" + device.platform;  //e.g. https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
-                 errorThis.get(url, function(url, resp) {
-                	//Registered OK
+                
+                //Now open the browser, if the button has been set
+                if(singleClick == true) {
+                	//Have tapped a single server pairing - will not have a known userid
+                	//so we need to let the browser use it's own cookies.
                 	
-                });
+                } else {
+                
+                 	//Otherwise login with the known logged userId
+               	 	var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=" + userId + "&devicetype=" + device.platform;  //e.g. https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
+					 errorThis.get(url, function(url, resp) {
+						//Registered OK
+					
+					});
+				}
             } 
 			$('#registered').show();
              
@@ -236,7 +246,6 @@ var app = {
    		
 			var device = {
 				"platform": "Android"
-		
 			}
 			if(device) {
 				var platform = device.platform;
@@ -246,9 +255,18 @@ var app = {
 		
 			var url = api + "plugins/notifications/register.php?id=" + id + "&devicetype=" + platform;
 		
-			window.open(encodeURI(url), '_system');
+			window.open(url, '_system');
+			
 		} else {
-		
+			 
+			 var settingApi = localStorage.getItem("api");
+         	 if(settingApi) {
+          		 api = settingApi;
+          	 	$('#private-server').val(api);
+         	 }  
+         	 
+         	singleClick = true;      
+        	app.setupPush();
 		}
    		   		
    	},  
