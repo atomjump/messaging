@@ -14,8 +14,9 @@
     
     <plugin name="cordova-plugin-globalization" spec="1.0.5" />
     <plugin name="cordova-plugin-file-transfer" spec="~1.6.1" />
-   <!--<plugin source="git" spec="https://github.com/apache/cordova-plugin-inappbrowser.git" />-->
     <gap:plugin name="cordova-plugin-inappbrowser" source="npm"/>
+    
+    <preference name="AndroidPersistentFileLocation" value="Compatibility" />
     
     <preference name='phonegap-version' value='cli-9.0.0' />
 	<preference name='pgb-builder-version' value='2' />
