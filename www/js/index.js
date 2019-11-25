@@ -257,6 +257,7 @@ var app = {
 			var url = api + "plugins/notifications/register.php?id=" + id + "&devicetype=" + platform;
 
 			window.open(url, '_system');
+			$('#login-popup').hide();
 			
 		} else {
 			 
@@ -268,6 +269,7 @@ var app = {
          	          	 
          	singleClick = true;      
         	errorThis.setupPush();
+        	$('#login-popup').hide();
 		}
    		   		
    	},  
@@ -485,11 +487,20 @@ var app = {
 		$('#registered').hide();
 		
 		//Deregister on the database - by sending a blank id (which gets set as a null on the server). Disassociates phone from user.
-		var url = api + "plugins/notifications/register.php?id=&userid=" + userId;  //e.g. https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
-		this.get(url, function(url, resp) {
-			//Registered OK
+		if(!userId) {
+			//Deregister from remote server connection in a browser
+			var url = api + "plugins/notifications/register.php?id=" + id;
+
+			window.open(url, '_system');
 			
-		});
+		} else {
+			
+			var url = api + "plugins/notifications/register.php?id=&userid=" + userId;  //e.g. https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
+			this.get(url, function(url, resp) {
+				//Registered OK
+			
+			});
+		}
 
 		$('#login-popup').show();
 
