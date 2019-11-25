@@ -147,7 +147,7 @@ window.open(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + encodeUR
         		<ons-list>
         		 <ons-list-header>Please Choose:</ons-list-header>
 					<ons-list-item expandable>
-					  <b>(Option 1)</b>&nbsp;&nbsp;<br/>
+					  <span style="width :100%;" onclick="$('.expandable-content').hide(); $(this).parent().find('.expandable-content').slideToggle();">&nbsp;&nbsp;Pair with AtomJump.com</span>
 					  <div class="expandable-content" style="width: 100%;">
 					  		<p style="text-align:center;">
 					  		<ons-button style="background-color: #7c5599; color: white;" modifier="large--cta" onclick="app.register(defaultApi);">Pair with AtomJump.com</ons-button>
@@ -155,7 +155,7 @@ window.open(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + encodeUR
 					  	</div>
 					</ons-list-item>
 					<ons-list-item expandable >
-					  <span style="width :100%;" onclick="$(this).parent().find('.expandable-content').slideToggle()"><b>(Option 2)</b>&nbsp;&nbsp;Pair with a Private Server</span>
+					  <span style="width :100%;" onclick="$('.expandable-content').hide(); $(this).parent().find('.expandable-content').slideToggle();"><b>(Or)</b>&nbsp;&nbsp;Pair with a Private Server</span>
 					  <div class="expandable-content" style="display: none; width: 100%;">
 					  	<p style="text-align:center;"><input style="padding:5px;" id="pair-private-server" type="url" placeholder="Private Server URL" size="26" class="resizedTextbox"><br/><br/>
 					  		<ons-button style="background-color: #7c5599; color: white;" modifier="large--cta" onclick="app.register($('#pair-private-server').val());">Pair with a Private Server</ons-button>
@@ -164,7 +164,7 @@ window.open(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + encodeUR
 					</ons-list-item>
 					<ons-list-item expandable>
 					  
-					   <span style="width:100%;" onclick="$(this).parent().find('.expandable-content').slideToggle()"><b>(Option 3)</b>&nbsp;&nbsp;Login with the App</span>
+					   <span style="width:100%;" onclick="$('.expandable-content').hide(); $(this).parent().find('.expandable-content').slideToggle()"><b>(Or)</b>&nbsp;&nbsp;Login with the App</span>
 					  
 					  <div class="expandable-content" style="display: none; width: 100%;">
 					  	
