@@ -464,11 +464,13 @@ var app = {
 						$('#registered').hide();
 						
 						//Deregister on the database - by sending a blank id (which gets set as a null on the server). Disassociates phone from user.
-						var url = api + "plugins/notifications/register.php?id=&userid=" + userId;  //e.g. https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
-						_this.get(url, function(url, resp) {
-							//Registered OK
+						if(userId) {
+							var url = api + "plugins/notifications/register.php?id=&userid=" + userId;  //e.g. https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
+							_this.get(url, function(url, resp) {
+								//Registered OK
 			
-						});
+							});
+						}
     		
 						alert("Cleared all saved forums and settings.");
 		
@@ -500,7 +502,7 @@ var app = {
 		if(api) {
 		
 			//Deregister on the database - by sending a blank id (which gets set as a null on the server). Disassociates phone from user.
-			if(userId && (userId != "")) {
+			if((userId) && (userId != "")) {
 				//We are logged in within the app
 				var url = api + "plugins/notifications/register.php?id=&userid=" + userId;  //e.g. https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
 				this.get(url, function(url, resp) {
@@ -509,7 +511,7 @@ var app = {
 				});
 		
 			} else {
-				//We are registered only on the server
+				//We are registered only on the server, which knows our userid as a session value
 				//Deregister from remote server connection in a browser
 				var url = api + "plugins/notifications/register.php?id=" + id;
 
