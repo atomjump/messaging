@@ -470,6 +470,12 @@ var app = {
 								//Registered OK
 			
 							});
+						} else {
+								//Deregister from remote server connection in a browser
+								var url = api + "plugins/notifications/register.php?id=";
+
+								window.open(url, '_system');
+						
 						}
     		
 						alert("Cleared all saved forums and settings.");
@@ -502,18 +508,20 @@ var app = {
 		if(api) {
 		
 			//Deregister on the database - by sending a blank id (which gets set as a null on the server). Disassociates phone from user.
-			if((userId) && (userId != "")) {
-				//We are logged in within the app
+			if(userId) {
+				//We are logged in within the app as a user
 				var url = api + "plugins/notifications/register.php?id=&userid=" + userId;  //e.g. https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
 				this.get(url, function(url, resp) {
 					//Registered OK
 			
 				});
+				
+				userId = null;
 		
 			} else {
 				//We are registered only on the server, which knows our userid as a session value
 				//Deregister from remote server connection in a browser
-				var url = api + "plugins/notifications/register.php?id=" + id;
+				var url = api + "plugins/notifications/register.php?id=";
 
 				window.open(url, '_system');
 			
