@@ -307,7 +307,7 @@ var app = {
 							$('#login-popup').hide();
 						
 						} else {
-							navigator.notification.alert("Sorry, we detected a user, but this version of AtomJump Loop Server does not support app logins.");
+							navigator.notification.alert("Sorry, we detected a user, but this version of AtomJump Messaging Server does not support app logins.");
 						}
 						
 					break;
@@ -322,7 +322,7 @@ var app = {
 				}
 			},
 			error      : function() {
-				alert('Not connecting to Loop Server!');                  
+				navigator.notification.alert('Sorry, we cannot connect to your AtomJump Messaging Server. Please try again later.');                  
 			}
 	   });     
     	   
@@ -348,7 +348,7 @@ var app = {
 				navigator.notification.alert(response);
 			},
 			error      : function() {
-				alert('Not connecting to Loop Server!');                  
+				navigator.notification.alert('Sorry we cannot connect to your AtomJump Messaging Server. Please try again later.');                  
 			}
 	   });     	
 
@@ -401,7 +401,7 @@ var app = {
     		case 'gotoforum':
     			if(count < 2) {
     			
-    				navigator.notification.alert("You will need to enter your personal email and password on the first occasion, under 'Settings', 'more', and then click 'Save Settings'. Note: your phone number is not needed as your app replaces SMS notifications. Note: This message will only display twice.",    
+    				navigator.notification.alert("You will need to enter your personal email and password on the first occasion, under 'Settings', 'more', and then click 'Save Settings'. Note: This message will only display twice.",    
 						cb,         					// callback
 						'Opening Message Forum',        // title
 						'OK'                  		// buttonName
