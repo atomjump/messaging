@@ -66,6 +66,7 @@ var app = {
           if(settingApi) {
           	 api = settingApi;
           	 $('#private-server').val(api);
+          	 $('#pair-private-server').val(api);
           }
           
           
@@ -257,6 +258,14 @@ var app = {
 			var url = api + "plugins/notifications/register.php?id=" + id + "&devicetype=" + platform;
 
 			window.open(url, '_system');
+			
+			var settingApi = localStorage.getItem("api");
+         	 if(settingApi) {
+          		 api = settingApi;
+          	 	$('#private-server').val(api);
+          	 	$('#pair-private-server').val(api);
+         	 } 
+			
 			$('#login-popup').hide();
 			
 		} else {
@@ -265,6 +274,7 @@ var app = {
          	 if(settingApi) {
           		 api = settingApi;
           	 	$('#private-server').val(api);
+          	 	$('#pair-private-server').val(api);
          	 } 
          	          	 
          	singleClick = true;      
@@ -450,6 +460,7 @@ var app = {
 						$('#user').val('');
 						$('#password').val('');
 						$('#private-server').val('');
+						$('#pair-private-server').val('');
 						$('#registered').hide();
 						
 						//Deregister on the database - by sending a blank id (which gets set as a null on the server). Disassociates phone from user.
@@ -486,25 +497,32 @@ var app = {
 		$('#password').val('');
 		$('#registered').hide();
 		
-		//Deregister on the database - by sending a blank id (which gets set as a null on the server). Disassociates phone from user.
-		if(userId && (userId != "")) {
-			//We are logged in within the app
-			var url = api + "plugins/notifications/register.php?id=&userid=" + userId;  //e.g. https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
-			this.get(url, function(url, resp) {
-				//Registered OK
-			
-			});
+		if(api) {
 		
-		} else {
-			//We are registered only on the server
-			//Deregister from remote server connection in a browser
-			var url = api + "plugins/notifications/register.php?id=" + id;
-
-			window.open(url, '_system');
+			//Deregister on the database - by sending a blank id (which gets set as a null on the server). Disassociates phone from user.
+			if(userId && (userId != "")) {
+				//We are logged in within the app
+				var url = api + "plugins/notifications/register.php?id=&userid=" + userId;  //e.g. https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
+				this.get(url, function(url, resp) {
+					//Registered OK
 			
-		}
+				});
+		
+			} else {
+				//We are registered only on the server
+				//Deregister from remote server connection in a browser
+				var url = api + "plugins/notifications/register.php?id=" + id;
 
-		$('#login-popup').show();
+				window.open(url, '_system');
+			
+			}
+
+			$('#login-popup').show();
+		} else {
+			alert("Sorry, we do not appear to be logged in.");
+			$('#login-popup').show();
+		
+		}
 
         
 		return false;
