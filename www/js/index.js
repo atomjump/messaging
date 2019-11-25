@@ -112,8 +112,7 @@ var app = {
         
         push.on('registration', function(data) {
             
-             alert("Registration"); 			//TESTING
-            
+           
             var oldRegId = localStorage.getItem('registrationId');
             if (oldRegId !== data.registrationId) {
                 
@@ -256,8 +255,7 @@ var app = {
 			}
 		
 			var url = api + "plugins/notifications/register.php?id=" + id + "&devicetype=" + platform;
-			alert("URL about to try opening:" + url);		//TESTING
-		
+
 			window.open(url, '_system');
 			
 		} else {
@@ -267,9 +265,7 @@ var app = {
           		 api = settingApi;
           	 	$('#private-server').val(api);
          	 } 
-         	 
-         	 alert("No ID registered"); 			//TESTING
-         	 
+         	          	 
          	singleClick = true;      
         	errorThis.setupPush();
 		}
