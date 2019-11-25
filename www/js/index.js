@@ -479,7 +479,7 @@ var app = {
         //We have connected to a server OK
         var _this = this;
         
-    			
+    	userId = localStorage.getItem("loggedUser");
 		localStorage.removeItem("registrationId");
 		localStorage.removeItem("loggedUser");
 		$('#user').val('');
@@ -487,19 +487,21 @@ var app = {
 		$('#registered').hide();
 		
 		//Deregister on the database - by sending a blank id (which gets set as a null on the server). Disassociates phone from user.
-		if(!userId) {
-			//Deregister from remote server connection in a browser
-			var url = api + "plugins/notifications/register.php?id=" + id;
-
-			window.open(url, '_system');
-			
-		} else {
-			
+		if(userId && (userId != "")) {
+			//We are logged in within the app
 			var url = api + "plugins/notifications/register.php?id=&userid=" + userId;  //e.g. https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
 			this.get(url, function(url, resp) {
 				//Registered OK
 			
 			});
+		
+		} else {
+			//We are registered only on the server
+			//Deregister from remote server connection in a browser
+			var url = api + "plugins/notifications/register.php?id=" + id;
+
+			window.open(url, '_system');
+			
 		}
 
 		$('#login-popup').show();
