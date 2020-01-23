@@ -115,6 +115,7 @@ var app = {
             
            
             var oldRegId = localStorage.getItem('registrationId');
+            $('#registered').show();
             if (oldRegId !== data.registrationId) {
                 
                 
@@ -140,7 +141,7 @@ var app = {
 					});
 				}
             } 
-			$('#registered').show();
+			
              
         });
 
