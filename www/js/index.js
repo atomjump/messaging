@@ -87,7 +87,6 @@ var app = {
           var oldRegId = localStorage.getItem('registrationId');
           
           if(oldRegId) {
-          		$('#registered').show();
           		$('#login-popup').hide();	
         		app.setupPush();
           }
@@ -298,54 +297,59 @@ var app = {
     	//Login to the remote Loop Server
    		errorThis.setAPI(apiUrl);
    		
+   		if(user) {
    	
-    	$.ajax({
-			type       : "POST",
-			url        : api + "confirm.php",
-			crossDomain: true,
-			data       : { 'email-opt': user, 'pd': pass },
-			dataType   : 'jsonp',
-			success    : function(response) {
-				var res = response.split(",");
-				switch(res[0])
-				{
-					default:
-						//Now request again and get the usercode of this user
-						if((res[1]) && (res[1] != 'RELOAD')) {
-							userId = res[1];
-						} else {
-							if(res[2]) {
-								userId = res[2];
+			$.ajax({
+				type       : "POST",
+				url        : api + "confirm.php",
+				crossDomain: true,
+				data       : { 'email-opt': user, 'pd': pass },
+				dataType   : 'jsonp',
+				success    : function(response) {
+					var res = response.split(",");
+					switch(res[0])
+					{
+						default:
+							//Now request again and get the usercode of this user
+							if((res[1]) && (res[1] != 'RELOAD')) {
+								userId = res[1];
+							} else {
+								if(res[2]) {
+									userId = res[2];
+								}
+						
 							}
 						
-						}
 						
-						
-						if(userId) {
-							localStorage.setItem("loggedUser",userId);
+							if(userId) {
+								localStorage.setItem("loggedUser",userId);
 														
-							app.setupPush();		//register this phone
-							$('#login-popup').hide();
+								app.setupPush();		//register this phone
+								$('#login-popup').hide();
 						
-						} else {
-							navigator.notification.alert("Sorry, we detected a user, but this version of AtomJump Messaging Server does not support app logins.");
-						}
+							} else {
+								navigator.notification.alert("Sorry, we detected a user, but this version of AtomJump Messaging Server does not support app logins.");
+							}
 						
-					break;
+						break;
 					
 					
-					case 'INCORRECT_PASS':
-						navigator.notification.alert("Sorry, that was the wrong email or password. Please try again.");
+						case 'INCORRECT_PASS':
+							navigator.notification.alert("Sorry, that was the wrong email or password. Please try again.");
 					
-					break;
+						break;
 					
 				
+					}
+				},
+				error      : function() {
+					navigator.notification.alert('Sorry, we cannot connect to your AtomJump Messaging Server. Please try again later.');                  
 				}
-			},
-			error      : function() {
-				navigator.notification.alert('Sorry, we cannot connect to your AtomJump Messaging Server. Please try again later.');                  
-			}
-	   });     
+		   });  
+		} else {
+			navigator.notification.alert('Sorry, please enter an email address.');  
+		
+		}   
     	   
     
     },
