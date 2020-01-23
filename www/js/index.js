@@ -83,6 +83,14 @@ var app = {
             $('#login-popup').show();
           
           }
+          
+          var oldRegId = localStorage.getItem('registrationId');
+          
+          if(oldRegId) {
+          		$('#registered').show();
+          		$('#login-popup').hide();	
+        		app.setupPush();
+          }
     },
     
     setupPush: function() {
