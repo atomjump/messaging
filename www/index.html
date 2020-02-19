@@ -258,12 +258,12 @@ window.open(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + encodeUR
   
 					});
 				});*/
-            	 var aTags = ["Test", "Shubham", "Sachin", "Android", "Windows", "Himalaya", "Bahubali", "Win", "Game"];
+            	 /*var aTags = ["Test", "Shubham", "Sachin", "Android", "Windows", "Himalaya", "Bahubali", "Win", "Game"];
            
             	jQuery( "#srch" ).autocomplete({
       					source: aTags
-    			});
-		     	/*jQuery( "#srch" ).autocomplete({
+    			});*/
+		     	jQuery( "#srch" ).autocomplete({
 		     		source: "https://atomjump.com/search-suggest.php",
 					minLength: 1,//search after one characters
 					select: function(event,ui){
@@ -279,9 +279,8 @@ window.open(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + encodeUR
 							newDomain("doma");
 				        }
 					}
-				});*/
+				});
 				
-				alert("After Autocomplete");
 			});   
             
             
