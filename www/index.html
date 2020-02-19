@@ -247,17 +247,19 @@ window.open(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + encodeUR
  				//source: "https://atomjump.com/search-suggest.php",
             
            		 var aTags = ["Test", "Shubham", "Sachin", "Android", "Windows", "Himalaya", "Bahubali", "Win", "Game"];
-				alert("In here");		//TESTING
-            
-            	jQuery( "#srch" ).keydown(function() {
+           
+            	/*jQuery( "#srch" ).keydown(function() {
   					alert( "Handler for search .keydown() called." );
   					jQuery.get( "https://atomjump.com/search-suggest.php", function( data ) {
   						alert( "Load was performed." );
   						alert( JSON.stringify(data) );
   
 					});
-				});
+				});*/
             
+            	jQuery( "#srch" ).autocomplete({
+      					source: aTags
+    			});
 		     	/*jQuery( "#srch" ).autocomplete({
 		     		source: aTags,
 					minLength: 1,//search after one characters
