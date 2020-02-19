@@ -37,6 +37,7 @@
  	    <script>
 	      ons.ready(function() {
 	        // Init code here
+	        app.initialize();		//Was at end of script, below
 	      });
 	      
 	      // This event fires when the keyboard will hide
@@ -108,11 +109,11 @@ window.open(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + encodeUR
         	
         		
         		
-        	<form onsubmit="return newDomain('srch');">	
+        	<!--<form onsubmit="return newDomain('srch');">	-->
 				<p style="text-align:center;">
-					<input id="srch" name="orig_query" placeholder="Message about.." type="text" size="9" class="resizedTextbox">
+					<input id="srch" name="orig_query"  type="text" size="9" class="resizedTextbox"><!--placeholder="Message about.." -->
 				</p>	
-        	</form>	
+        	<!--</form>	-->
 	        	
 			<ons-list id="forum-list" modifier="chevron">
 				<ons-list-header>Your Shortcuts <span class="small-text" onclick="navigator.notification.alert('These are frequently used messaging forums, which you can add in the settings page. Note: you will need to login independently within your browser to see the correct messages.', function(){}, 'New Account');"><small><ons-icon icon="ion-ios-help" size="20px" fixed-width="true"></small></span></ons-list-header>
@@ -233,7 +234,7 @@ window.open(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + encodeUR
         <!--<script type="text/javascript" src="phonegap.js"></script>-->
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript">
-            app.initialize();
+            
             
             
             function createPrivateGroup(domain)
@@ -242,8 +243,7 @@ window.open(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + encodeUR
 			   window.location.href = "mailto:webmaster@atomjump.com?subject=Request a private group '" + domain + ".atomjump.com'&body=Hi all,%0d%0a%0d%0a(Note to sender - please CC all the intended members of this group, and change the password below. If you want your chat page to have your own background image, please attach a jpg photo at least 1200 pixels wide).%0d%0a%0d%0aThis is a request to AtomJump for us to form a private live discussion group at%0d%0a%0d%0ahttps://" + domain + ".atomjump.com%0d%0a%0d%0aGroup password: changeme%0d%0a%0d%0aWe won't need to download anything, but there is an app which can be used to get group notifications, if we want them.%0d%0a%0d%0aAtomJump will get back to us once they have verified this request, which is typically within 24 hours.%0d%0a%0d%0aThanks";       
 			}
 			
-			 var aTags = ["Test", "Shubham", "Sachin", "Android", "Windows", "Himalaya", "Bahubali", "Win", "Game"];
-           
+			
 			
            jQuery(document).ready(function(){
  				
@@ -258,11 +258,12 @@ window.open(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + encodeUR
   
 					});
 				});*/
-            
-            	/*jQuery( "#srch" ).autocomplete({
+            	 var aTags = ["Test", "Shubham", "Sachin", "Android", "Windows", "Himalaya", "Bahubali", "Win", "Game"];
+           
+            	jQuery( "#srch" ).autocomplete({
       					source: aTags
-    			});*/
-		     	jQuery( "#srch" ).autocomplete({
+    			});
+		     	/*jQuery( "#srch" ).autocomplete({
 		     		source: "https://atomjump.com/search-suggest.php",
 					minLength: 1,//search after one characters
 					select: function(event,ui){
@@ -278,7 +279,7 @@ window.open(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + encodeUR
 							newDomain("doma");
 				        }
 					}
-				});
+				});*/
 				
 				alert("After Autocomplete");
 			});   
