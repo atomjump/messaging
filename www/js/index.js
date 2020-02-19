@@ -736,7 +736,7 @@ var app = {
 				subdomain = subdomain.replace(/[^a-z0-9\-]/gi, '');	//keep letters and numbers only (and hyphens)
 				if(subdomain == origStr) {
 					//Straightforward redirect
-					var url = 'https://' + subdomain + '.atomjump.com/?autostart=true'
+					var url = 'https://' + subdomain + '.atomjump.com/go/';
 				} else {
 					var url = 'https://' + subdomain + '.atomjump.com/?orig_query=' + encodeURIComponent(origStr + '&autostart=true');
 						
@@ -758,7 +758,7 @@ var app = {
    			
    			//Special cases
    			if(newForumName == 'atomjump') {
-   				newSetting.url = "https://atomjump.com/?autostart=true";
+   				newSetting.url = "https://atomjump.com/go/";
    			}
    			
    			if((settings)&&(settings.length)) {
