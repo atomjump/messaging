@@ -28,6 +28,7 @@
     	
     	<link rel="stylesheet" type="text/css" href="css/ionicons/css/ionicons.css">
     	<link rel="stylesheet" type="text/css" href="css/material-design-iconic-font/css/material-design-iconic-font.css">
+    	<link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
     	<script src="js/jquery-ui.js" crossorigin="anonymous"></script>
     	<script src="js/jquery-3.4.0.js" crossorigin="anonymous"></script>
     	
@@ -242,12 +243,14 @@ window.open(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + encodeUR
 			   window.location.href = "mailto:webmaster@atomjump.com?subject=Request a private group '" + domain + ".atomjump.com'&body=Hi all,%0d%0a%0d%0a(Note to sender - please CC all the intended members of this group, and change the password below. If you want your chat page to have your own background image, please attach a jpg photo at least 1200 pixels wide).%0d%0a%0d%0aThis is a request to AtomJump for us to form a private live discussion group at%0d%0a%0d%0ahttps://" + domain + ".atomjump.com%0d%0a%0d%0aGroup password: changeme%0d%0a%0d%0aWe won't need to download anything, but there is an app which can be used to get group notifications, if we want them.%0d%0a%0d%0aAtomJump will get back to us once they have verified this request, which is typically within 24 hours.%0d%0a%0d%0aThanks";       
 			}
 			
+			 var aTags = ["Test", "Shubham", "Sachin", "Android", "Windows", "Himalaya", "Bahubali", "Win", "Game"];
+           
+			
            jQuery(document).ready(function(){
  				
  				//source: "https://atomjump.com/search-suggest.php",
             
-           		 var aTags = ["Test", "Shubham", "Sachin", "Android", "Windows", "Himalaya", "Bahubali", "Win", "Game"];
-           
+           		
             	/*jQuery( "#srch" ).keydown(function() {
   					alert( "Handler for search .keydown() called." );
   					jQuery.get( "https://atomjump.com/search-suggest.php", function( data ) {
