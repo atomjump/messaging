@@ -612,7 +612,7 @@ var app = {
        
 		//Ask for a name of the current Server:
 		navigator.notification.prompt(
-			'Please enter a name or URL for this forum',  // message
+			'Please enter the AtomJump.com name, e.g. \'london\', or URL for your forum',  // message
 			errorThis.saveForumName,                  // callback to invoke
 			'Forum Name',            // title
 			['Ok','Cancel'],             // buttonLabels
