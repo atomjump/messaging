@@ -111,7 +111,7 @@ window.open(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + encodeUR
         		
         	<!--<form onsubmit="return newDomain('srch');">	-->
 				<p style="text-align:center;">
-					<input id="srch" name="orig_query"  type="text" size="9" class="resizedTextbox"><!--placeholder="Message about.." -->
+					<input id="srch" name="orig_query"  type="text" size="9" class="resizedTextbox" placeholder="Message about..">
 				</p>	
         	<!--</form>	-->
 	        	
@@ -275,8 +275,8 @@ window.open(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + encodeUR
 				          	createPrivateGroup(myId);
 				        } else {
 				          	//Run the domain in the browser
-							jQuery('#doma').val(ui.item.value);
-							newDomain("doma");
+							jQuery('#srch').val(ui.item.value);
+							newDomain("srch");
 				        }
 					}
 				});
