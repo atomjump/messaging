@@ -240,29 +240,13 @@ window.open(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + encodeUR
             function createPrivateGroup(domain)
 			{
 			   domain = domain.toLowerCase();
-			   window.location.href = "mailto:webmaster@atomjump.com?subject=Request a private group '" + domain + ".atomjump.com'&body=Hi all,%0d%0a%0d%0a(Note to sender - please CC all the intended members of this group, and change the password below. If you want your chat page to have your own background image, please attach a jpg photo at least 1200 pixels wide).%0d%0a%0d%0aThis is a request to AtomJump for us to form a private live discussion group at%0d%0a%0d%0ahttps://" + domain + ".atomjump.com%0d%0a%0d%0aGroup password: changeme%0d%0a%0d%0aWe won't need to download anything, but there is an app which can be used to get group notifications, if we want them.%0d%0a%0d%0aAtomJump will get back to us once they have verified this request, which is typically within 24 hours.%0d%0a%0d%0aThanks";       
+			   window.location.href = "mailto:webmaster@atomjump.com?subject=Request a private group '" + domain + ".atomjump.com'&body=Hi all,%0d%0a\n%0d%0a\n(Note to sender - please CC all the intended members of this group, and change the password below. If you want your chat page to have your own background image, please attach a jpg photo at least 1200 pixels wide).%0d%0a%0d%0aThis is a request to AtomJump for us to form a private live discussion group at%0d%0a%0d%0ahttps://" + domain + ".atomjump.com%0d%0a%0d%0aGroup password: changeme%0d%0a%0d%0aWe won't need to download anything, but there is an app which can be used to get group notifications, if we want them.%0d%0a%0d%0aAtomJump will get back to us once they have verified this request, which is typically within 24 hours.%0d%0a%0d%0aThere is a nominal cost per year, see https://atomjump.com/wp/introduction/%0d%0a%0d%0aThanks";       
 			}
 			
 			
 			
            jQuery(document).ready(function(){
  				
- 				//source: "https://atomjump.com/search-suggest.php",
-            
-           		
-            	/*jQuery( "#srch" ).keydown(function() {
-  					alert( "Handler for search .keydown() called." );
-  					jQuery.get( "https://atomjump.com/search-suggest.php", function( data ) {
-  						alert( "Load was performed." );
-  						alert( JSON.stringify(data) );
-  
-					});
-				});*/
-            	 /*var aTags = ["Test", "Shubham", "Sachin", "Android", "Windows", "Himalaya", "Bahubali", "Win", "Game"];
-           
-            	jQuery( "#srch" ).autocomplete({
-      					source: aTags
-    			});*/
 		     	jQuery( "#srch" ).autocomplete({
 		     		source: "https://atomjump.com/search-suggest.php",
 					minLength: 1,//search after one characters
@@ -271,7 +255,7 @@ window.open(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + encodeUR
 				        var myId = ui.item.id;
 				        if (typeof myId === 'string' || myId instanceof String) {  
 				          	//Special case - create a private group
-				          	jQuery('#srch').val(myId);  
+				          	jQuery('#srch').val(ui.item.value); 
 				          	createPrivateGroup(myId);
 				        } else {
 				          	//Run the domain in the browser
