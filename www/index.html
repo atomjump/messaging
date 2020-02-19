@@ -77,6 +77,16 @@ window.open(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + encodeUR
 					}
 					return false;
 			}
+			
+			if(/Android [4-6]/.test(navigator.appVersion)){
+			   window.addEventListener("resize", function(){
+				  if(document.activeElement.tagName=="INPUT"){
+					 window.setTimeout(function(){
+						document.activeElement.scrollIntoViewIfNeeded();
+					 },0);
+				  }
+			   })
+			}
 
 			var ref;
 	    </script>
@@ -255,7 +265,7 @@ window.open(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + encodeUR
 				        var myId = ui.item.id;
 				        if (typeof myId === 'string' || myId instanceof String) {  
 				          	//Special case - create a private group
-				          	jQuery('#srch').val(ui.item.value); 
+				          	jQuery('#srch').val(""); 
 				          	createPrivateGroup(myId);
 				        } else {
 				          	//Run the domain in the browser
