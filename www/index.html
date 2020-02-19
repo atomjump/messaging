@@ -243,10 +243,14 @@ window.open(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + encodeUR
 			}
 			
            jQuery(document).ready(function(){
- 
+ 				
+ 				//source: "https://atomjump.com/search-suggest.php",
+            
+           		 var aTags = ["Test", "Shubham", "Sachin", "Android", "Windows", "Himalaya", "Bahubali", "Win", "Game"];
+
             
 		     	jQuery( "#srch" ).autocomplete({
-					source: "https://atomjump.com/search-suggest.php",
+		     		source: aTags,
 					minLength: 1,//search after one characters
 					select: function(event,ui){
 						//do something
