@@ -261,11 +261,11 @@ window.open(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + encodeUR
 					});
 				});*/
             
-            	jQuery( "#srch" ).autocomplete({
+            	/*jQuery( "#srch" ).autocomplete({
       					source: aTags
-    			});
-		     	/*jQuery( "#srch" ).autocomplete({
-		     		source: aTags,
+    			});*/
+		     	jQuery( "#srch" ).autocomplete({
+		     		source: "https://atomjump.com/search-suggest.php",
 					minLength: 1,//search after one characters
 					select: function(event,ui){
 						//do something
@@ -280,7 +280,7 @@ window.open(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + encodeUR
 							newDomain("doma");
 				        }
 					}
-				}); */
+				});
 			});   
             
             
