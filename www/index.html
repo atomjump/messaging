@@ -84,19 +84,6 @@ window.open(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + encodeUR
 					return false;
 			}
 			
-			// Possible option for Android
-			//if(/Android [4-6]/.test(navigator.appVersion)){
-			/*   window.addEventListener("resize", function(){
-			   	  alert("Resized. tag:" + document.activeElement.tagName);
-				  if(document.activeElement.tagName=="INPUT"){
-					 window.setTimeout(function(){
-					 	alert(JSON.stringify(jQuery("#totop").offset()));
-					 	alert("Top:" + jQuery("#totop").offset().top);
-						jQuery('html, body').animate({scrollTop: jQuery("#totop").offset().top}, 1000);
-					 },0);
-				  }
-			   })*/
-			//}
 
 			var ref;
 	    </script>
@@ -129,11 +116,9 @@ window.open(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + encodeUR
         	
         		
         		
-        	<!--<form onsubmit="return newDomain('srch');">	-->
-				<p id="totop" style="text-align:center;">
-					<input id="srch" name="orig_query"  type="text" size="9" class="resizedTextbox" placeholder="Message about..">
-				</p>	
-        	<!--</form>	-->
+			<p id="totop" style="text-align:center; margin-top: 6px;">
+				<input id="srch" name="orig_query"  type="text" size="9" class="resizedTextbox" placeholder="Message about..">
+			</p>	
 	        	
 			<ons-list id="forum-list" modifier="chevron">
 				<ons-list-header>Your Shortcuts <span class="small-text" onclick="navigator.notification.alert('These are frequently used messaging forums, which you can add in the settings page. Note: you will need to login independently within your browser to see the correct messages.', function(){}, 'New Account');"><small><ons-icon icon="ion-ios-help" size="20px" fixed-width="true"></small></span></ons-list-header>
