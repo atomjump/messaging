@@ -80,16 +80,16 @@ window.open(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + encodeUR
 			
 			// Possible option for Android
 			//if(/Android [4-6]/.test(navigator.appVersion)){
-			   window.addEventListener("resize", function(){
+			/*   window.addEventListener("resize", function(){
 			   	  alert("Resized. tag:" + document.activeElement.tagName);
 				  if(document.activeElement.tagName=="INPUT"){
 					 window.setTimeout(function(){
 					 	alert(JSON.stringify(jQuery("#totop").offset()));
 					 	alert("Top:" + jQuery("#totop").offset().top);
-						jQuery('html, body').animate({scrollTop: jQuery("#totop").offset().top - 50}, 1000);
+						jQuery('html, body').animate({scrollTop: jQuery("#totop").offset().top}, 1000);
 					 },0);
 				  }
-			   })
+			   })*/
 			//}
 
 			var ref;
@@ -251,11 +251,7 @@ window.open(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + encodeUR
             
             
             
-            function createPrivateGroup(domain)
-			{
-			   domain = domain.toLowerCase();
-			   window.location.href = "mailto:webmaster@atomjump.com?subject=Request a private group '" + domain + ".atomjump.com'&body=Hi all,%0D%0A%0D%0A(Note to sender - please CC all the intended members of this group, and change the password below. If you want your chat page to have your own background image, please attach a jpg photo at least 1200 pixels wide).%0D%0A%0D%0AThis is a request to AtomJump for us to form a private live discussion group at%0D%0A%0D%0Ahttps://" + domain + ".atomjump.com%0D%0A%0D%0AGroup password: changeme%0D%0A%0D%0AWe won't need to download anything, but there is an app which can be used to get group notifications, if we want them.%0D%0A%0D%0AAtomJump will get back to us once they have verified this request, which is typically within 24 hours.%0D%0A%0D%0AThere is a nominal cost per year, see https://atomjump.com/wp/introduction/%0D%0A%0D%0AThanks";       
-			}
+ 
 			
 			
 			
@@ -264,13 +260,13 @@ window.open(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + encodeUR
 		     	jQuery( "#srch" ).autocomplete({
 		     		source: "https://atomjump.com/search-suggest.php",
 					minLength: 1,//search after one characters
+					position: { my: "left bottom", at: "left top", collision: "flip" },
 					select: function(event,ui){
 						//do something
 				        var myId = ui.item.id;
 				        if (typeof myId === 'string' || myId instanceof String) {  
 				          	//Special case - create a private group
 				          	jQuery('#srch').val(" "); 
-				          	//createPrivateGroup(myId);
 				          	var domain = myId.toLowerCase();
 				          	//Straightforward redirect
 								window.open(encodeURI('https://atomjump.com/wp/introduction/?prefdomain=' + domain + '#private'), '_system');
