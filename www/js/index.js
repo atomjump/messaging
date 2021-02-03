@@ -45,10 +45,8 @@ var app = {
         //Set display name - TODO: check this is valid here
         this.displayForumNames();
         
-        //This is an array of the messages that have popped up
-        this.currentNotifications = [];
-        
-        //This is an array of unique forums. We can keep track of a count of messages
+      
+        //This is an array of unique forums. We can keep track of a count of new messages
         //from each forum too.
         this.currentForums = [];
 
@@ -153,7 +151,6 @@ var app = {
 			var insertImage = "";
 		}
 		
-		//This is not necessary at this stage: errorThis.currentNotifications.push(finalData);
 		
 		//Create a unique page based on the observeUrl 
 		//Check if there is an existing observeUrl
@@ -208,7 +205,6 @@ var app = {
 
 		}
 		
-		//TESTINGalert("Array of forums: " + JSON.stringify(errorThis.currentForums));
 		if(foundNum > 0) {
 			var forumWord = "forums";
 			if(foundNum == 1) {
