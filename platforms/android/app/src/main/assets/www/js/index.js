@@ -158,13 +158,17 @@ var app = {
 		//Create a unique page based on the observeUrl 
 		//Check if there is an existing observeUrl
 		var foundExisting = false;
+		var foundNum = 0;
 		var containerElement = 'aj-HTML-alert-0';
 		var displayElement = 'aj-HTML-alert-inner-0';
 		var displayMessageCnt = "";
+		var keepListening = "Tap the cross to keep listening.";		//Default message at the bottom
+		
 		for(var cnt = 0; cnt < errorThis.currentForums.length; cnt++) {
 			if(errorThis.currentForums[cnt].url == finalData.observeUrl) {
 				//Found an existing entry - add one more message to the count
 				foundExisting = true;
+				foundNum = cnt;
 				var msgCnt = errorThis.currentForums[cnt].count;
 				var msgWord = "messages";
 				if(msgCnt == 1) msgWord = "message";
@@ -177,9 +181,11 @@ var app = {
 	    }
 	    
 	    if(foundExisting == false) {
+	    	//Create a new forum
 	    	var forumCnt = errorThis.currentForums.length + 1;
 	    	containerElement = 'aj-HTML-alert-' + forumCnt;
 	    	displayElement = 'aj-HTML-alert-inner-' + forumCnt;
+	    	foundNum = 1;
 	    	
 	    	var newEntry = {
 					"url": finalData.observeUrl,
@@ -188,7 +194,6 @@ var app = {
 					"count": 1
 			};
 			errorThis.currentForums.push(newEntry);
-			
 			//Insert the visual element into the HTML container
 			/*<div id="aj-HTML-alert-0" class="aj-HTML-alert" style="display:none;">
 				<div id="aj-HTML-alert-inner-0" class="inner-popup"></div>
@@ -204,9 +209,16 @@ var app = {
 		}
 		
 		//TESTINGalert("Array of forums: " + JSON.stringify(errorThis.currentForums));
+		if(foundNum > 0) {
+			var forumWord = "forums";
+			if(foundNum == 1) {
+				forumWord = "forum";
+			} 
+			
+			keepListening = "Tap the cross to see messages on " +  foundNum + " other " + forumWord + ".";
+		}
 		
-		
-		var newHTML = "<span style='vertical-align: top; padding: 10px; padding-top:30px;' class='big-text'>AtomJump Message</span><br/><img  src='icon-Small@3x.png' style='padding 10px;'><ons-fab style='z-index: 1800;' position='top right'  onclick=\"app.closeNotifications('" + containerElement + "');\"><ons-icon icon=\"md-close\" ></ons-icon></ons-fab><p><b>" + finalData.message + insertImage + "</b>" + displayMessageCnt + "<br/><br/><ons-button style=\"background-color: #cc99cc; color: white;\" href='javascript:' onclick='app.warningBrowserOpen(\"gotoforum\", function() { window.open(\"" + finalData.observeUrl + "\", \"_system\"); });'>Open the Forum&nbsp;&nbsp;<ons-icon style=\"color: white;\" icon=\"ion-ios-copy-outline\" size=\"24px\"></ons-icon></ons-button><br/><br/>" + finalData.forumMessage + ": " + finalData.forumName  + "<br/><br/><small>Tap the cross to keep listening.</small></p>";
+		var newHTML = "<span style='vertical-align: top; padding: 10px; padding-top:30px;' class='big-text'>AtomJump Message</span><br/><img  src='icon-Small@3x.png' style='padding 10px;'><ons-fab style='z-index: 1800;' position='top right'  onclick=\"app.closeNotifications('" + containerElement + "');\"><ons-icon icon=\"md-close\" ></ons-icon></ons-fab><p><b>" + finalData.message + insertImage + "</b>" + displayMessageCnt + "<br/><br/><ons-button style=\"background-color: #cc99cc; color: white;\" href='javascript:' onclick='app.warningBrowserOpen(\"gotoforum\", function() { window.open(\"" + finalData.observeUrl + "\", \"_system\"); });'>Open the Forum&nbsp;&nbsp;<ons-icon style=\"color: white;\" icon=\"ion-ios-copy-outline\" size=\"24px\"></ons-icon></ons-button><br/><br/>" + finalData.forumMessage + ": " + finalData.forumName  + "<br/><br/><small>" + keepListening + "</small></p>";
 		
 		
 	
@@ -642,10 +654,7 @@ var app = {
     },
     
     closeNotifications: function(closeElement) {
-    	//Close the particular forum URL element
-    	//TESTINGalert("Array of forums: " + JSON.stringify(errorThis.currentForums) + "  Closing element:" + closeElement);
-    	//document.getElementById("aj-HTML-alert-container").removeChild(closeElement);
-    	
+    	//Remove the particular forum URL element
     	var myobj = document.getElementById(closeElement);
     	myobj.remove();
     	
@@ -655,9 +664,6 @@ var app = {
     			errorThis.currentForums.splice(cnt,1);		//Remove this forum from the array
     		}
     	}
-    	
-    
-    	
     },
 
     listForums: function() {
