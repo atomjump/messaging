@@ -92,6 +92,88 @@ window.open(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + encodeUR
 					return false;
 			}
 			
+			
+			  
+ 		   function testPopups() {
+ 		   		var data = {
+ 		   			"message": "Hi a test message",
+ 		   			"additionalData": {
+ 		   				"observeMessage": "",
+ 		   				"observeUrl": "https://test.atomjump.com",
+ 		   				"removeMessage": "",
+ 		   				"removeUrl": "",
+ 		   				"forumMessage": "Forum message",
+						"forumName": "Test Forum"
+ 		   			}
+ 		   		
+ 		   		};
+ 		   		
+ 		   		app.onNotificationEvent(data);
+ 		   		
+ 		   		var data = {
+ 		   			"message": "Hi a 2nd test message",
+ 		   			"additionalData": {
+ 		   				"observeMessage": "",
+ 		   				"observeUrl": "https://test2.atomjump.com",
+ 		   				"removeMessage": "",
+ 		   				"removeUrl": "",
+ 		   				"forumMessage": "Forum message",
+						"forumName": "Test Forum 2"
+ 		   			}
+ 		   		
+ 		   		};
+ 		   		
+ 		   		app.onNotificationEvent(data);
+ 		   		
+ 		   			var data = {
+ 		   			"message": "Hi a 2nd test message on Forum 2",
+ 		   			"additionalData": {
+ 		   				"observeMessage": "",
+ 		   				"observeUrl": "https://test2.atomjump.com",
+ 		   				"removeMessage": "",
+ 		   				"removeUrl": "",
+ 		   				"forumMessage": "Forum message",
+						"forumName": "Test Forum 2"
+ 		   			}
+ 		   		
+ 		   		};
+ 		   		
+ 		   		app.onNotificationEvent(data);
+ 		   		
+ 		   		
+ 		   			var data = {
+ 		   			"message": "Hi a 3rd test message on Forum 2",
+ 		   			"additionalData": {
+ 		   				"observeMessage": "",
+ 		   				"observeUrl": "https://test2.atomjump.com",
+ 		   				"removeMessage": "",
+ 		   				"removeUrl": "",
+ 		   				"forumMessage": "Forum message",
+						"forumName": "Test Forum 2"
+ 		   			}
+ 		   		
+ 		   		};
+ 		   		
+ 		   		app.onNotificationEvent(data);
+ 		   		
+ 		   		
+ 		   		var data = {
+ 		   			"message": "Hi a test message on forum 1",
+ 		   			"additionalData": {
+ 		   				"observeMessage": "",
+ 		   				"observeUrl": "https://test.atomjump.com",
+ 		   				"removeMessage": "",
+ 		   				"removeUrl": "",
+ 		   				"forumMessage": "Forum message",
+						"forumName": "Test Forum"
+ 		   			}
+ 		   		
+ 		   		};
+ 		   		
+ 		   		app.onNotificationEvent(data);
+ 		   		
+ 		   }
+			
 
 			var ref;
 	    </script>
@@ -125,8 +207,11 @@ window.open(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + encodeUR
         		
         		
 			<p id="totop" style="text-align:center; margin-top: 10px; padding-top:10px;">
-				<input id="srch" name="orig_query" type="text" size="9" class="resizedTextbox" placeholder="Message about..">
+				<input id="srch" name="orig_query" type="text" size="9" class="resizedTextbox" placeholder="Message about.."><a href="javascript:" onclick="testPopups();">TEST POPUP</a>
 			</p>	
+			
+			
+			
 	        	
 			<ons-list id="forum-list" modifier="chevron">
 				<ons-list-header>Your Shortcuts <span class="small-text" onclick="navigator.notification.alert('These are frequently used messaging forums, which you can add in the settings page. Note: you will need to login independently within your browser to see the correct messages.', function(){}, 'New Account');"><small><ons-icon icon="ion-ios-help" size="20px" fixed-width="true"></small></span></ons-list-header>
@@ -148,9 +233,7 @@ window.open(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + encodeUR
         <br/>
        
         
-		<div id="aj-HTML-alert" style="display:none;">
-			<div id="aj-HTML-alert-inner" class="inner-popup">
-			</div>
+		<div id="aj-HTML-alert-container">
         </div>
         
          <div id="login-popup" style="display:none;">
@@ -249,10 +332,7 @@ window.open(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + encodeUR
         <script type="text/javascript">
             
             
-            
- 
-			
-			
+          		
 			
            jQuery(document).ready(function(){
  				

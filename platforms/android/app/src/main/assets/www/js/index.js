@@ -45,7 +45,12 @@ var app = {
         //Set display name - TODO: check this is valid here
         this.displayForumNames();
         
+        //This is an array of the messages that have popped up
+        this.currentNotifications = [];
         
+        //This is an array of unique forums. We can keep track of a count of messages
+        //from each forum too.
+        this.currentForums = [];
 
     },
     // Bind Event Listeners
@@ -91,6 +96,126 @@ var app = {
         		app.setupPush();
           }
     },
+    
+    onNotificationEvent: function(data) {
+		console.log('notification event');
+		var finalData = {};
+		
+		 
+		//See https://github.com/phonegap/phonegap-plugin-push/blob/master/docs/API.md
+		//OLD:document.getElementById('aj-HTML-alert').style.display = "block";
+		if(device.platform == 'iOS') {
+			if(data.additionalData.data.image) {
+				finalData.image = data.additionalData.data.image;
+				finalData.message = data.message.replace("[image]", ""); 	//Remove any mention of an [image] from the message, because we are going to show it.
+			} else {
+				//No image - the message is to be displayed as-is
+				finalData.message =  data.message;
+			}
+			finalData.observeMessage = data.additionalData.data.observeMessage;
+			finalData.observeUrl = data.additionalData.data.observeUrl;
+			finalData.removeMessage = data.additionalData.data.removeMessage;
+			finalData.removeUrl = data.additionalData.data.removeUrl;
+			finalData.forumMessage = data.additionalData.data.forumMessage;
+			finalData.forumName = data.additionalData.data.forumName;
+			
+		} else {
+			//Android has a slightly different format
+			if(data.image) {
+				finalData.image = data.image;
+				
+			}
+			finalData.message =  data.message;
+			finalData.observeMessage = data.additionalData.observeMessage;
+			finalData.observeUrl = data.additionalData.observeUrl;
+			finalData.removeMessage = data.additionalData.removeMessage;
+			finalData.removeUrl = data.additionalData.removeUrl;
+			finalData.forumMessage = data.additionalData.forumMessage;
+			finalData.forumName = data.additionalData.forumName;
+		  
+		
+		}
+		
+		
+		if(finalData.forumName) {
+			//Remove 'ajps_', the standard atomjump.com header from the name of the forum
+			if(finalData.forumName.substring(0, rawForumHeader.length) == rawForumHeader) {
+				finalData.forumName = finalData.forumName.substring(rawForumHeader.length);
+			
+			}
+			
+		}
+		
+		if(finalData.image) {
+		
+			var insertImage = "<img width='200' src='" + finalData.image + "'><br/><br/>";
+		} else {
+			var insertImage = "";
+		}
+		
+		//This is not necessary at this stage: errorThis.currentNotifications.push(finalData);
+		
+		//Create a unique page based on the observeUrl 
+		//Check if there is an existing observeUrl
+		var foundExisting = false;
+		var containerElement = 'aj-HTML-alert-0';
+		var displayElement = 'aj-HTML-alert-inner-0';
+		var displayMessageCnt = "";
+		for(var cnt = 0; cnt < errorThis.currentForums.length; cnt++) {
+			if(errorThis.currentForums[cnt].url == finalData.observeUrl) {
+				//Found an existing entry - add one more message to the count
+				foundExisting = true;
+				var msgCnt = errorThis.currentForums[cnt].count;
+				var msgWord = "messages";
+				if(msgCnt == 1) msgWord = "message";
+				displayMessageCnt = "<br/><br/>+" + errorThis.currentForums[cnt].count + " other " + msgWord + "</br>";
+				errorThis.currentForums[cnt].count ++;
+				containerElement = errorThis.currentForums[cnt].containerElement;
+				displayElement = errorThis.currentForums[cnt].displayElement;
+				
+			}
+	    }
+	    
+	    if(foundExisting == false) {
+	    	var forumCnt = errorThis.currentForums.length + 1;
+	    	containerElement = 'aj-HTML-alert-' + forumCnt;
+	    	displayElement = 'aj-HTML-alert-inner-' + forumCnt;
+	    	
+	    	var newEntry = {
+					"url": finalData.observeUrl,
+					"containerElement": containerElement,
+					"displayElement": displayElement,
+					"count": 1
+			};
+			errorThis.currentForums.push(newEntry);
+			
+			//Insert the visual element into the HTML container
+			/*<div id="aj-HTML-alert-0" class="aj-HTML-alert" style="display:none;">
+				<div id="aj-HTML-alert-inner-0" class="inner-popup"></div>
+			</div>*/
+			
+    		var newElement = document.createElement("div");
+    		 newElement.id = containerElement;
+    		 newElement.style.display = "none";
+    		 newElement.classList.add("aj-HTML-alert");
+   			 newElement.innerHTML = "<div id=\"" + displayElement + "\" class=\"inner-popup\"></div>";
+    		document.getElementById("aj-HTML-alert-container").appendChild(newElement);
+
+		}
+		
+		//TESTINGalert("Array of forums: " + JSON.stringify(errorThis.currentForums));
+		
+		
+		var newHTML = "<span style='vertical-align: top; padding: 10px; padding-top:30px;' class='big-text'>AtomJump Message</span><br/><img  src='icon-Small@3x.png' style='padding 10px;'><ons-fab style='z-index: 1800;' position='top right'  onclick=\"app.closeNotifications('" + containerElement + "');\"><ons-icon icon=\"md-close\" ></ons-icon></ons-fab><p><b>" + finalData.message + insertImage + "</b>" + displayMessageCnt + "<br/><br/><ons-button style=\"background-color: #cc99cc; color: white;\" href='javascript:' onclick='app.warningBrowserOpen(\"gotoforum\", function() { window.open(\"" + finalData.observeUrl + "\", \"_system\"); });'>Open the Forum&nbsp;&nbsp;<ons-icon style=\"color: white;\" icon=\"ion-ios-copy-outline\" size=\"24px\"></ons-icon></ons-button><br/><br/>" + finalData.forumMessage + ": " + finalData.forumName  + "<br/><br/><small>Tap the cross to keep listening.</small></p>";
+		
+		
+	
+		
+		document.getElementById(displayElement).innerHTML = newHTML;
+		document.getElementById(containerElement).style.display = "block";   
+    
+    },
+    
     
     setupPush: function() {
   	
@@ -158,65 +283,8 @@ var app = {
 
         push.on('notification', function(data) {
            
-            console.log('notification event');
-            var finalData = {};
-            
-             
-            //See https://github.com/phonegap/phonegap-plugin-push/blob/master/docs/API.md
-            document.getElementById('aj-HTML-alert').style.display = "block";
-            if(device.platform == 'iOS') {
-            	if(data.additionalData.data.image) {
-            		finalData.image = data.additionalData.data.image;
-            		finalData.message = data.message.replace("[image]", ""); 	//Remove any mention of an [image] from the message, because we are going to show it.
-            	} else {
-            		//No image - the message is to be displayed as-is
-            		finalData.message =  data.message;
-            	}
-            	finalData.observeMessage = data.additionalData.data.observeMessage;
-            	finalData.observeUrl = data.additionalData.data.observeUrl;
-            	finalData.removeMessage = data.additionalData.data.removeMessage;
-            	finalData.removeUrl = data.additionalData.data.removeUrl;
-            	finalData.forumMessage = data.additionalData.data.forumMessage;
-            	finalData.forumName = data.additionalData.data.forumName;
-            	
-            } else {
-            	//Android has a slightly different format
-            	if(data.image) {
-             		finalData.image = data.image;
-             		
-             	}
-            	finalData.message =  data.message;
-            	finalData.observeMessage = data.additionalData.observeMessage;
-            	finalData.observeUrl = data.additionalData.observeUrl;
-            	finalData.removeMessage = data.additionalData.removeMessage;
-            	finalData.removeUrl = data.additionalData.removeUrl;
-            	finalData.forumMessage = data.additionalData.forumMessage;
-            	finalData.forumName = data.additionalData.forumName;
-              
-            
-            }
-            
-            
-            if(finalData.forumName) {
-            	//Remove 'ajps_', the standard atomjump.com header from the name of the forum
-            	if(finalData.forumName.substring(0, rawForumHeader.length) == rawForumHeader) {
-            		finalData.forumName = finalData.forumName.substring(rawForumHeader.length);
-            	
-            	}
-            	
-            }
-            
-            if(finalData.image) {
-            
-            	var insertImage = "<img width='200' src='" + finalData.image + "'><br/><br/>";
-            } else {
-            	var insertImage = "";
-            }
-            
-            var newHTML = "<span style='vertical-align: top; padding: 10px; padding-top:30px;' class='big-text'>AtomJump Message</span><br/><img  src='icon-Small@3x.png' style='padding 10px;'><ons-fab style='z-index: 1800;' position='top right'  onclick=\"app.closeNotifications();\"><ons-icon icon=\"md-close\" ></ons-icon></ons-fab><p><b>" + finalData.message + insertImage + "</b><br/><br/><ons-button style=\"background-color: #cc99cc; color: white;\" href='javascript:' onclick='app.warningBrowserOpen(\"gotoforum\", function() { window.open(\"" + finalData.observeUrl + "\", \"_system\"); });'>Open the Forum&nbsp;&nbsp;<ons-icon style=\"color: white;\" icon=\"ion-ios-copy-outline\" size=\"24px\"></ons-icon></ons-button><br/><br/>" + finalData.forumMessage + ": " + finalData.forumName  + "<br/><br/><small>Tap the cross to keep listening.</small></p>";
-            
-            document.getElementById('aj-HTML-alert-inner').innerHTML = newHTML;
-            
+            app.onNotificationEvent(data);
+ 
             
 
             push.finish(function() {
@@ -573,9 +641,23 @@ var app = {
     	document.getElementById("settings-popup").style.display = "none";
     },
     
-    closeNotifications: function() {
-    	//Close the settings screen
-    	document.getElementById("aj-HTML-alert").style.display = "none";
+    closeNotifications: function(closeElement) {
+    	//Close the particular forum URL element
+    	//TESTINGalert("Array of forums: " + JSON.stringify(errorThis.currentForums) + "  Closing element:" + closeElement);
+    	//document.getElementById("aj-HTML-alert-container").removeChild(closeElement);
+    	
+    	var myobj = document.getElementById(closeElement);
+    	myobj.remove();
+    	
+    	//Remove this element from the array of current forums open
+    	for(var cnt = 0; cnt< errorThis.currentForums.length; cnt++) {
+    		if(errorThis.currentForums[cnt].containerElement == closeElement) {
+    			errorThis.currentForums.splice(cnt,1);		//Remove this forum from the array
+    		}
+    	}
+    	
+    
+    	
     },
 
     listForums: function() {
