@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="cordova-plugin-cleartext" version="1.0.0" 
+    xmlns="http://apache.org/cordova/ns/plugins/1.0" 
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>CordovaPluginsCleartext</name>
+    <author>JiaWei</author>
+    <license>Apache 2.0 License</license>
+    <keywords>cleartext,usesCleartextTraffic,android9</keywords>
+    <js-module name="CordovaPluginsCleartext" src="www/CordovaPluginsCleartext.js">
+        <clobbers target="cordova.plugins.CordovaPluginsCleartext" />
+    </js-module>
+    <platform name="android">
+        <config-file parent="/*" target="res/xml/config.xml">
+            <feature name="CordovaPluginsCleartext">
+                <param name="android-package" value="cordova.plugins.cleartext" />
+            </feature>
+        </config-file>
+        <config-file parent="/*" target="AndroidManifest.xml"></config-file>
+        <source-file src="src/android/CordovaPluginsCleartext.java" target-dir="src/cordova/plugins/cleartext" />
+        <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
+            <application android:usesCleartextTraffic="true" />
+        </edit-config>
+    </platform>
+</plugin>

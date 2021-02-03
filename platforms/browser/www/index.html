@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, width=device-width" />
+		<meta http-equiv="Content-Security-Policy" content="default-src https://atomjump.com data: gap: https://ssl.gstatic.com  'unsafe-inline' *;  style-src 'self' 'unsafe-inline' 'unsafe-eval' *; media-src *; img-src 'self' data: content: *;">
+		<link rel="stylesheet" href="css/onsenui.css"/>
+		<link rel="stylesheet" href="css/onsen-css-components-purple-theme.css">
+    	
+    	<link rel="stylesheet" type="text/css" href="css/ionicons/css/ionicons.css">
+    	<link rel="stylesheet" type="text/css" href="css/material-design-iconic-font/css/material-design-iconic-font.css">
+    	<link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
+    	<script src="js/onsenui.js"></script> 
+    	<script src="js/jquery-3.4.0.js"></script>
+    	<script src="js/jquery-ui.js"></script><!-- Note, this must come after the jquery -->
+    	
+    	<style>
+    		.ui-widget {
+  				font-family: Verdana,Arial,sans-serif;
+  				font-size: 9px;
+			}
+			
+			  .ui-autocomplete {
+				max-height: 228px;
+				width: 280px;
+				overflow-y: auto;
+				/* prevent horizontal scrollbar */
+				overflow-x: hidden;
+			  }
+    	</style>
+   	
+ 	    <script>
+	      ons.ready(function() {
+	        // Init code here
+	        app.initialize();		//Was at end of script, below
+	      });
+	      
+	      // This event fires when the keyboard will hide
+			window.addEventListener('native.keyboardshow', keyboardShowHandler);
+
+
+
+			function keyboardShowHandler(e){
+				//$("body").addClass("keyboardOn");
+				var deviceHeight = window.innerHeight;
+				var keyboardHeight = e.keyboardHeight;
+				var deviceHeightAdjusted = deviceHeight - keyboardHeight;//device height adjusted
+				deviceHeightAdjusted = deviceHeightAdjusted < 0 ? (deviceHeightAdjusted * -1) : deviceHeightAdjusted;//only positive number
+				document.getElementById('page').style.height = deviceHeightAdjusted + 'px';//set page height
+				document.getElementById('page').setAttribute('keyBoardHeight', keyboardHeight);//save keyboard height
+			}
+
+			// This event fires when the keyboard will show
+			window.addEventListener('native.keyboardhide', keyboardHideHandler);
+
+			function keyboardHideHandler(e){
+				   setTimeout(function () {
+						document.getElementById('page').style.height = 100 + '%';//device  100% height
+					}, 100);
+			}
+			
+			function newDomain(input) {
+					origStr = document.getElementById(input).value;
+					str = origStr.replace(/\s+/g, '');
+					str = str.replace(/[^a-z0-9\-]/gi, '');
+					if(str == origStr) {
+						//Straightforward redirect
+						window.open(encodeURI('https://' + str + '.atomjump.com/go/'), '_system');
+					} else {
+window.open(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + encodeURIComponent(origStr)) + '&autostart=true', '_system');
+						
+					}
+					return false;
+			}
+			
+
+			var ref;
+	    </script>
+	
+
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <title>AtomJump Messaging</title>
+    </head>
+    <body>
+    	<style><item name="android:windowTranslucentStatus">true</item></style> <!-- Ensure clicking inside box scrolls down -->
+    	<ons-navigator>
+         <ons-page>
+	        
+		    <ons-fab style="z-index: 800;" position="bottom right" onclick="app.openSettings();">
+		      <ons-icon icon="md-menu" ></ons-icon>
+		    </ons-fab>
+		    
+		
+	
+	        <div id="inner-popup">
+			
+			<p style="text-align:right;">	
+				<span style="padding-right: 20px;"><ons-button style="background-color: #cc99cc; color: white;" href="javascript" onclick="return app.logout();">Log Out</ons-button></span>
+			</p>
+			
+			<p style="text-align:center;">	
+				<span style="vertical-align: top; padding: 10px; padding-top:30px;" class="big-text">AtomJump</span><br/><a href="javascript:" onclick="window.open(encodeURI('https://atomjump.com/'), '_system')"><img  src="icon-Small@3x.png" style="padding 10px;"></a><br/><span id='registered' style="display: none;"><small>Listening for Messages</small></span>
+        	</p>
+        	
+        	
+        		
+        		
+			<p id="totop" style="text-align:center; margin-top: 10px; padding-top:10px;">
+				<input id="srch" name="orig_query" type="text" size="9" class="resizedTextbox" placeholder="Message about..">
+			</p>	
+	        	
+			<ons-list id="forum-list" modifier="chevron">
+				<ons-list-header>Your Shortcuts <span class="small-text" onclick="navigator.notification.alert('These are frequently used messaging forums, which you can add in the settings page. Note: you will need to login independently within your browser to see the correct messages.', function(){}, 'New Account');"><small><ons-icon icon="ion-ios-help" size="20px" fixed-width="true"></small></span></ons-list-header>
+    			
+    		</ons-list>
+	
+	
+ 
+        
+		
+ 		
+        
+
+        <div style="text-align:center;">
+            <span id="notify" class="notify-text"></span>
+            &nbsp;<span id="status" class="notify-text"></span>
+        </div>
+        
+        <br/>
+       
+        
+		<div id="aj-HTML-alert" style="display:none;">
+			<div id="aj-HTML-alert-inner" class="inner-popup">
+			</div>
+        </div>
+        
+         <div id="login-popup" style="display:none;">
+        	<div class="inner-popup">
+        		
+        		<span class="big-text" >AtomJump Messaging</span><br/>
+        		
+        		
+        		<ons-list style="padding-top: 20px;">
+        		 <ons-list-header>Please Choose:</ons-list-header>
+					<ons-list-item expandable>
+					  <span style="width :100%;" onclick="$('.expandable-content').hide(); $(this).parent().find('.expandable-content').slideToggle();">&nbsp;&nbsp;Pair with AtomJump.com</span>
+					  <div class="expandable-content" style="width: 100%;">
+					  		<p style="text-align:center;">
+					  		<ons-button style="background-color: #7c5599; color: white;" modifier="large--cta" onclick="app.register(defaultApi);">Pair with AtomJump.com</ons-button>
+					  		</p>
+					  	</div>
+					</ons-list-item>
+					<ons-list-item expandable >
+					  <span style="width :100%;" onclick="$('.expandable-content').hide(); $(this).parent().find('.expandable-content').slideToggle();"><b>(Or)</b>&nbsp;&nbsp;Pair with a Private Server</span>
+					  <div class="expandable-content" style="display: none; width: 100%;">
+					  	<p style="text-align:center;"><input style="padding:5px;" id="pair-private-server" type="url" placeholder="Paste In Here" size="26" class="resizedTextbox"><br/><br/>
+					  		<ons-button style="background-color: #7c5599; color: white;" modifier="large--cta" onclick="app.register($('#pair-private-server').val());">Pair with a Private Server</ons-button>
+					  	</p>
+					  </div>
+					</ons-list-item>
+					<ons-list-item expandable>
+					  
+					   <span style="width:100%;" onclick="$('.expandable-content').hide(); $(this).parent().find('.expandable-content').slideToggle()"><b>(Or)</b>&nbsp;&nbsp;Login to the App</span>
+					  
+					  <div class="expandable-content" style="display: none; width: 100%;">
+					  	
+					  	<div id="login">
+					  		<br/>
+							<span class="small-text" onclick="navigator.notification.alert('Please enter your new account email and password in the same boxes. Note: you will need to login within your browser also.', function(){}, 'New Account');">New Account <small><ons-icon icon="ion-ios-help" size="20px" fixed-width="true"></small><br/></span>
+	   
+							<br/>
+
+				
+				
+							<p style="text-align:center;">
+					
+								<input style="padding:5px;" id="user" type="email" placeholder="Email" size="20" class="resizedTextbox">
+								<input style="padding:5px;" id="password" type="password" placeholder="Password" size="20" class="resizedTextbox">
+					
+								<input style="padding:5px; display: none;" id="private-server" type="url" placeholder="Private Server URL" size="26" class="resizedTextbox">
+							</p>
+							<p>
+								<ons-button style="background-color: #7c5599; color: white;" modifier="large" onclick="app.login($('#user').val(), $('#password').val(), $('#private-server').val());">Login</ons-button>
+							</p>
+				
+							<p>
+								<a class="small-text" href="javascript:" onclick="return app.clearPass($('#user').val(), $('#private-server').val());">Reset Password</a>
+							</p>
+							<p>
+								<a class="small-text" href="javascript:" onclick="$('#private-server').show(); return false;">Private Server</a>
+							</p>
+						</div>
+				
+						</div>
+					</ons-list-item>
+        		 </ons-list>
+        		<br/>
+        		
+        		
+			</div>
+        </div>
+        
+        
+        <div id="settings-popup" style="display:none;">
+        	<div class="inner-popup">
+        		
+        		<span class="big-text">Settings</span><br/><br/>
+        		
+        		<ons-fab position="top right" onclick="app.closeSettings();">
+		      		<ons-icon icon="md-close" ></ons-icon>
+		    	</ons-fab>
+        		
+        		
+        		<div id="settings"></div>
+        		<p>
+        			<ons-button style="background-color: #7c5599; color: white;" modifier="large" onclick="app.newForum();">Add a New Forum</ons-button>
+	        	</p>
+	        	
+				<p>
+					<a class="small-text" href="javascript" onclick="return app.factoryReset();">Reset Factory Settings</a>
+				</p>
+			</div>
+        </div>
+        
+
+        
+        <script type="text/javascript" src="cordova.js"></script>
+        <!--<script type="text/javascript" src="phonegap.js"></script>-->
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript">
+            
+            
+            
+ 
+			
+			
+			
+           jQuery(document).ready(function(){
+ 				
+		     	jQuery( "#srch" ).autocomplete({
+		     		source: "https://atomjump.com/search-suggest.php",
+					minLength: 1,//search after one characters
+					position: { my: "left bottom", at: "left top", collision: "flip" },
+					select: function(event,ui){
+						//do something
+				        var myId = ui.item.id;
+				        if (typeof myId === 'string' || myId instanceof String) {  
+				          	//Special case - create a private group
+				          	jQuery('#srch').val(" "); 
+				          	var domain = myId.toLowerCase();
+				          	//Straightforward redirect
+								window.open(encodeURI('https://atomjump.com/wp/introduction/?prefdomain=' + domain + '#private'), '_system');
+							return false;
+				        } else {
+				          	//Run the domain in the browser
+							jQuery('#srch').val(ui.item.value);
+							newDomain("srch");
+				        }
+					}
+				});
+				
+			});   
+            
+            
+        </script>
+          
+          
+     </ons-page>
+     
+     
+    </ons-navigator>  
+    </body>
+</html>

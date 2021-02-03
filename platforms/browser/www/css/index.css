@@ -1,0 +1,243 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+* {
+    -webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+}
+
+body {
+    -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
+    -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
+    -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
+    background-color:#FFFFFF;
+    background-attachment:fixed;
+    font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
+    font-size:12px;
+    /*height:100%;*/
+    margin:0px;
+    padding:0px;
+    width:100%;
+}
+
+.logo {
+	position: relative; 
+	width: 300px; 
+	height:300px;
+	margin-left: auto; 
+	margin-right: auto;
+	z-index: 10;
+}
+
+.logo-img {
+    width:100%;
+    height: 100%;
+}
+
+
+
+
+/* Portrait layout (default) */
+.app {
+    
+    position:absolute;             /* position in the center of the screen */
+    left:0%;
+    top:200px;
+    text-align:center;
+    padding:0px 0px 0px 0px;     /* image height is 200px (bottom 20px are overlapped with text) */
+    margin:-65px 0px 0px 0px;  /* offset vertical: half of image height and text area height */
+                                   /* offset horizontal: half of text area width */
+}
+
+
+.big-text {
+    font-size: 120%;
+    color: #892f83;
+}
+
+.pc-text {
+	font-size: 110%;
+	color:#a1459b;
+}
+
+.small-text {
+    font-size: 90%;
+    color: #CCC;
+}
+
+.notify-text {
+    font-size: 100%;
+    color: #888;
+}
+
+
+#aj-HTML-alert {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	padding:0px;
+	margin:0px 0px 0px 0px;
+	background-color: #EEE;
+	z-index: 1002;
+}
+
+#login-popup {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 130%;
+	padding:0px;
+	margin:0px 0px 0px 0px;
+	background-color: #EEE;
+	z-index: 900;
+}
+
+
+
+#settings-popup {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	padding:0px;
+	margin:0px 0px 0px 0px;
+	background-color: #EEE;
+	z-index: 1000;
+}
+
+.inner-popup {
+	padding:20px;
+}
+
+ul {
+    	list-style-type: none;
+}
+
+li {
+	width: 100%;
+	font-size: 200%;
+	background-color: #DDD;
+	border-bottom: 1px solid #888;
+	
+}
+
+.resizedTextbox {
+    width: 80%;
+    max-width: 280px;
+    height: 60px;
+    font-size: 160%;
+    margin: 0px;
+    padding: 4px;
+    border-width:thin;
+}
+
+.big-button {
+	
+	 text-decoration:none; 
+	 text-align:center; 
+	 padding:43px 100px; 
+	 border:solid 1px #004F72; 
+	 -webkit-border-radius:4px;
+	 -moz-border-radius:4px; 
+	 border-radius: 4px; 
+	 font:18px Arial, Helvetica, sans-serif; 
+	 font-weight:bold; 
+	 color:#ede5ff; 
+	 background-color:#b5a0db; 
+	 background-image: -moz-linear-gradient(top, #b5a0db 0%, #d1bfde 100%); 
+	 background-image: -webkit-linear-gradient(top, #b5a0db 0%, #d1bfde 100%); 
+	 background-image: -o-linear-gradient(top, #b5a0db 0%, #d1bfde 100%); 
+	 background-image: -ms-linear-gradient(top, #b5a0db 0% ,#d1bfde 100%); 
+	 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d1bfde', endColorstr='#d1bfde',GradientType=0 ); 
+	 background-image: linear-gradient(top, #b5a0db 0% ,#d1bfde 100%);   
+	 -webkit-box-shadow:0px 0px 2px #bababa, inset 0px 0px 1px #ffffff; 
+	 -moz-box-shadow: 0px 0px 2px #bababa,  inset 0px 0px 1px #ffffff;  
+	 box-shadow:0px 0px 2px #bababa, inset 0px 0px 1px #ffffff;  
+	 
+	 
+}
+
+
+@media screen and (max-aspect-ratio: 9/16) and (max-height:667px) {
+
+
+    
+    
+    body {
+        -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
+        -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
+        -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
+        background-color:#FFFFFF;
+        background-attachment:fixed;
+        font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
+        font-size:12px;
+        /*height:100%;*/
+        margin:0px;
+        padding:0px;
+        width:100%;
+    }
+    
+    .resizedTextbox {
+       width: 80%;
+       height: 60px;
+       font-size: 200%;
+       margin: 0px;
+       padding: 0px;
+       border-width:thin;
+    }
+}
+
+
+.event {
+    border-radius:4px;
+    -webkit-border-radius:4px;
+    color:#FFFFFF;
+    font-size:12px;
+    margin:0px 30px;
+    padding:2px 0px;
+}
+
+.event.waiting {
+    background-color:#333333;
+    display:block;
+}
+
+.event.received {
+    background-color:#4B946A;
+    display:none;
+}
+
+@keyframes fade {
+    from { opacity: 1.0; }
+    50% { opacity: 0.4; }
+    to { opacity: 1.0; }
+}
+
+@-webkit-keyframes fade {
+    from { opacity: 1.0; }
+    50% { opacity: 0.4; }
+    to { opacity: 1.0; }
+}
+
+.blink {
+    animation:fade 3000ms infinite;
+    -webkit-animation:fade 3000ms infinite;
+}

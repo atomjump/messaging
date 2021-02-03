@@ -1,0 +1,70 @@
+{
+  "_from": "cordova-plugin-networkinterface@~2.0.0",
+  "_id": "cordova-plugin-networkinterface@2.0.0",
+  "_inBundle": false,
+  "_integrity": "sha512-cvKkzUxhDhU1EYjFsj1wSYXBnK2qoop/7GiDenGPGR9JFHTYgi55HoJFxxBEaiPxH0uiKd97Bc/mw7ywdemjJQ==",
+  "_location": "/cordova-plugin-networkinterface",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "cordova-plugin-networkinterface@~2.0.0",
+    "name": "cordova-plugin-networkinterface",
+    "escapedName": "cordova-plugin-networkinterface",
+    "rawSpec": "~2.0.0",
+    "saveSpec": null,
+    "fetchSpec": "~2.0.0"
+  },
+  "_requiredBy": [
+    "#DEV:/",
+    "#USER"
+  ],
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-networkinterface/-/cordova-plugin-networkinterface-2.0.0.tgz",
+  "_shasum": "b26871b75a788c8bdfa1cfcf7a8d67584bfeca59",
+  "_spec": "cordova-plugin-networkinterface@~2.0.0",
+  "_where": "/Users/apple/projects/public/messaging-cordova",
+  "author": {
+    "name": "Samer Albahra, tombolaLtd"
+  },
+  "bugs": {
+    "url": "https://github.com/salbahra/cordova-plugin-networkinterface/issues"
+  },
+  "bundleDependencies": false,
+  "cordova": {
+    "id": "cordova-plugin-networkinterface",
+    "platforms": [
+      "ios",
+      "android",
+      "browser",
+      "windows"
+    ]
+  },
+  "deprecated": false,
+  "description": "This plugin allows your application to retrieve the local wifi address and http proxy information.",
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=3.1.0"
+    }
+  ],
+  "homepage": "https://github.com/salbahra/cordova-plugin-networkinterface#readme",
+  "keywords": [
+    "local",
+    "ip",
+    "wifi",
+    "network",
+    "proxy",
+    "ecosystem:cordova",
+    "cordova-ios",
+    "cordova-android",
+    "cordova-browser",
+    "cordova-windows"
+  ],
+  "license": "MIT",
+  "name": "cordova-plugin-networkinterface",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/salbahra/cordova-plugin-networkinterface.git"
+  },
+  "version": "2.0.0"
+}
