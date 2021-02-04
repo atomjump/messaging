@@ -7,37 +7,46 @@
     "files": {}
   },
   "installed_plugins": {
-    "cordova-plugin-whitelist": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
-    },
-    "cordova-plugin-networkinterface": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
+    "cordova-plugin-cleartext": {
+      "PACKAGE_NAME": "com.atomjump.messaging"
     },
     "cordova-plugin-device": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
+      "PACKAGE_NAME": "com.atomjump.messaging"
     },
     "cordova-plugin-dialogs": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
-    },
-    "cordova-plugin-globalization": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
+      "PACKAGE_NAME": "com.atomjump.messaging"
     },
     "cordova-plugin-file-transfer": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
+      "PACKAGE_NAME": "com.atomjump.messaging"
+    },
+    "cordova-plugin-globalization": {
+      "PACKAGE_NAME": "com.atomjump.messaging"
     },
     "cordova-plugin-inappbrowser": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
+      "PACKAGE_NAME": "com.atomjump.messaging"
     },
-    "cordova-plugin-cleartext": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
+    "cordova-plugin-networkinterface": {
+      "PACKAGE_NAME": "com.atomjump.messaging"
+    },
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "com.atomjump.messaging"
+    },
+    "phonegap-plugin-push": {
+      "PACKAGE_NAME": "com.atomjump.messaging"
     }
   },
   "dependent_plugins": {
     "cordova-plugin-compat": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
+      "PACKAGE_NAME": "com.atomjump.messaging"
     },
     "cordova-plugin-file": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
+      "PACKAGE_NAME": "com.atomjump.messaging"
+    },
+    "cordova-support-google-services": {
+      "PACKAGE_NAME": "com.atomjump.messaging"
+    },
+    "phonegap-plugin-multidex": {
+      "PACKAGE_NAME": "com.atomjump.messaging"
     }
   }
 }

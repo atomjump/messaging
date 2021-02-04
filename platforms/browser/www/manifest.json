@@ -1,11 +1,1 @@
-{
-  "background_color": "#FFF",
-  "display": "standalone",
-  "name": "HelloCordova",
-  "short_name": "HelloCordova",
-  "version": "io.cordova.hellocordova",
-  "description": "A sample Apache Cordova application that responds to the deviceready event.",
-  "author": "Apache Cordova Team",
-  "icons": [],
-  "start_url": "index.html"
-}
+{"background_color":"#FFF","display":"standalone","name":"AtomJump Messaging","short_name":"AtomJump Messaging","version":"com.atomjump.messaging","description":"Shortcuts to any AtomJump messaging page, and notifications of new messages.","author":"AtomJump Foundation","icons":[],"start_url":"index.html","gcm_sender_id":"996231231186"}

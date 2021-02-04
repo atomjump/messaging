@@ -45,10 +45,8 @@ var app = {
         //Set display name - TODO: check this is valid here
         this.displayForumNames();
         
-        //This is an array of the messages that have popped up
-        this.currentNotifications = [];
-        
-        //This is an array of unique forums. We can keep track of a count of messages
+      
+        //This is an array of unique forums. We can keep track of a count of new messages
         //from each forum too.
         this.currentForums = [];
 
@@ -153,7 +151,6 @@ var app = {
 			var insertImage = "";
 		}
 		
-		//This is not necessary at this stage: errorThis.currentNotifications.push(finalData);
 		
 		//Create a unique page based on the observeUrl 
 		//Check if there is an existing observeUrl
@@ -164,16 +161,18 @@ var app = {
 		var displayMessageCnt = "";
 		var keepListening = "Tap the cross to keep listening.";		//Default message at the bottom
 		
+	
+		
 		for(var cnt = 0; cnt < errorThis.currentForums.length; cnt++) {
 			if(errorThis.currentForums[cnt].url == finalData.observeUrl) {
 				//Found an existing entry - add one more message to the count
 				foundExisting = true;
 				foundNum = cnt;
-				var msgCnt = errorThis.currentForums[cnt].count;
+				var msgCnt = errorThis.currentForums[cnt].msgCnt;
 				var msgWord = "messages";
 				if(msgCnt == 1) msgWord = "message";
-				displayMessageCnt = "<br/><br/>+" + errorThis.currentForums[cnt].count + " other " + msgWord + "</br>";
-				errorThis.currentForums[cnt].count ++;
+				displayMessageCnt = "<br/><br/>+" + msgCnt + " other " + msgWord + "</br>";
+				errorThis.currentForums[cnt].msgCnt = errorThis.currentForums[cnt].msgCnt + 1;
 				containerElement = errorThis.currentForums[cnt].containerElement;
 				displayElement = errorThis.currentForums[cnt].displayElement;
 				
@@ -182,16 +181,18 @@ var app = {
 	    
 	    if(foundExisting == false) {
 	    	//Create a new forum
-	    	var forumCnt = errorThis.currentForums.length + 1;
+	    	
+	    	var forumCnt = errorThis.currentForums.length;
+	    	foundNum = forumCnt;
 	    	containerElement = 'aj-HTML-alert-' + forumCnt;
 	    	displayElement = 'aj-HTML-alert-inner-' + forumCnt;
-	    	foundNum = 1;
+	    	
 	    	
 	    	var newEntry = {
 					"url": finalData.observeUrl,
 					"containerElement": containerElement,
 					"displayElement": displayElement,
-					"count": 1
+					"msgCnt": 1
 			};
 			errorThis.currentForums.push(newEntry);
 			//Insert the visual element into the HTML container
@@ -208,7 +209,6 @@ var app = {
 
 		}
 		
-		//TESTINGalert("Array of forums: " + JSON.stringify(errorThis.currentForums));
 		if(foundNum > 0) {
 			var forumWord = "forums";
 			if(foundNum == 1) {

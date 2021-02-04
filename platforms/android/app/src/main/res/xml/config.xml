@@ -1,20 +1,13 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.cordova.hellocordova" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <feature name="Whitelist">
-        <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
-        <param name="onload" value="true" />
-    </feature>
-    <feature name="networkinterface">
-        <param name="android-package" value="com.albahra.plugin.networkinterface.networkinterface" />
+<widget id="com.atomjump.messaging" version="0.4.3" versionCode="43" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <feature name="CordovaPluginsCleartext">
+        <param name="android-package" value="cordova.plugins.cleartext" />
     </feature>
     <feature name="Device">
         <param name="android-package" value="org.apache.cordova.device.Device" />
     </feature>
     <feature name="Notification">
         <param name="android-package" value="org.apache.cordova.dialogs.Notification" />
-    </feature>
-    <feature name="Globalization">
-        <param name="android-package" value="org.apache.cordova.globalization.Globalization" />
     </feature>
     <feature name="File">
         <param name="android-package" value="org.apache.cordova.file.FileUtils" />
@@ -24,18 +17,28 @@
     <feature name="FileTransfer">
         <param name="android-package" value="org.apache.cordova.filetransfer.FileTransfer" />
     </feature>
+    <feature name="Globalization">
+        <param name="android-package" value="org.apache.cordova.globalization.Globalization" />
+    </feature>
     <feature name="InAppBrowser">
         <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser" />
     </feature>
-    <feature name="CordovaPluginsCleartext">
-        <param name="android-package" value="cordova.plugins.cleartext" />
+    <feature name="networkinterface">
+        <param name="android-package" value="com.albahra.plugin.networkinterface.networkinterface" />
     </feature>
-    <name>HelloCordova</name>
+    <feature name="Whitelist">
+        <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="PushNotification">
+        <param name="android-package" value="com.adobe.phonegap.push.PushPlugin" />
+    </feature>
+    <name>AtomJump Messaging</name>
     <description>
-        A sample Apache Cordova application that responds to the deviceready event.
+        Shortcuts to any AtomJump messaging page, and notifications of new messages.
     </description>
-    <author email="dev@cordova.apache.org" href="http://cordova.io">
-        Apache Cordova Team
+    <author email="webmaster@atomjump.com" href="http://atomjump.org">
+        AtomJump Foundation
     </author>
     <content src="index.html" />
     <access origin="*" />
@@ -46,5 +49,17 @@
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
     <allow-intent href="market:*" />
+    <icon height="128" src="www/res/icon.png" width="128" />
+    <icon density="ldpi" src="www/res/mipmap/ldpi.png" />
+    <icon density="mdpi" src="www/res/mipmap/mdpi.png" />
+    <icon density="hdpi" src="www/res/mipmap/hdpi.png" />
+    <icon density="xhdpi" src="www/res/mipmap/xhdpi.png" />
+    <icon density="xxhdpi" src="www/res/mipmap/xxhdpi.png" />
+    <icon density="xxxhdpi" src="www/res/mipmap/xxxhdpi.png" />
+    <resource-file src="google-services.json" target="app/google-services.json" />
     <preference name="loglevel" value="DEBUG" />
+    <preference name="AndroidPersistentFileLocation" value="Compatibility" />
+    <preference name="permissions" value="none" />
+    <preference name="orientation" value="portrait" />
+    <preference name="fullscreen" value="false" />
 </widget>

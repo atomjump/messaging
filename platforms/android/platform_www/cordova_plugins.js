@@ -1,11 +1,11 @@
 cordova.define('cordova/plugin_list', function(require, exports, module) {
   module.exports = [
     {
-      "id": "cordova-plugin-networkinterface.networkinterface",
-      "file": "plugins/cordova-plugin-networkinterface/www/networkinterface.js",
-      "pluginId": "cordova-plugin-networkinterface",
+      "id": "cordova-plugin-cleartext.CordovaPluginsCleartext",
+      "file": "plugins/cordova-plugin-cleartext/www/CordovaPluginsCleartext.js",
+      "pluginId": "cordova-plugin-cleartext",
       "clobbers": [
-        "window.networkinterface"
+        "cordova.plugins.CordovaPluginsCleartext"
       ]
     },
     {
@@ -30,22 +30,6 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
       "pluginId": "cordova-plugin-dialogs",
       "merges": [
         "navigator.notification"
-      ]
-    },
-    {
-      "id": "cordova-plugin-globalization.GlobalizationError",
-      "file": "plugins/cordova-plugin-globalization/www/GlobalizationError.js",
-      "pluginId": "cordova-plugin-globalization",
-      "clobbers": [
-        "window.GlobalizationError"
-      ]
-    },
-    {
-      "id": "cordova-plugin-globalization.globalization",
-      "file": "plugins/cordova-plugin-globalization/www/globalization.js",
-      "pluginId": "cordova-plugin-globalization",
-      "clobbers": [
-        "navigator.globalization"
       ]
     },
     {
@@ -238,6 +222,22 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
       ]
     },
     {
+      "id": "cordova-plugin-globalization.GlobalizationError",
+      "file": "plugins/cordova-plugin-globalization/www/GlobalizationError.js",
+      "pluginId": "cordova-plugin-globalization",
+      "clobbers": [
+        "window.GlobalizationError"
+      ]
+    },
+    {
+      "id": "cordova-plugin-globalization.globalization",
+      "file": "plugins/cordova-plugin-globalization/www/globalization.js",
+      "pluginId": "cordova-plugin-globalization",
+      "clobbers": [
+        "navigator.globalization"
+      ]
+    },
+    {
       "id": "cordova-plugin-inappbrowser.inappbrowser",
       "file": "plugins/cordova-plugin-inappbrowser/www/inappbrowser.js",
       "pluginId": "cordova-plugin-inappbrowser",
@@ -246,23 +246,34 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
       ]
     },
     {
-      "id": "cordova-plugin-cleartext.CordovaPluginsCleartext",
-      "file": "plugins/cordova-plugin-cleartext/www/CordovaPluginsCleartext.js",
-      "pluginId": "cordova-plugin-cleartext",
+      "id": "cordova-plugin-networkinterface.networkinterface",
+      "file": "plugins/cordova-plugin-networkinterface/www/networkinterface.js",
+      "pluginId": "cordova-plugin-networkinterface",
       "clobbers": [
-        "cordova.plugins.CordovaPluginsCleartext"
+        "window.networkinterface"
+      ]
+    },
+    {
+      "id": "phonegap-plugin-push.PushNotification",
+      "file": "plugins/phonegap-plugin-push/www/push.js",
+      "pluginId": "phonegap-plugin-push",
+      "clobbers": [
+        "PushNotification"
       ]
     }
   ];
   module.exports.metadata = {
-    "cordova-plugin-whitelist": "1.3.4",
-    "cordova-plugin-networkinterface": "2.0.0",
+    "cordova-plugin-cleartext": "1.0.0",
     "cordova-plugin-device": "2.0.3",
     "cordova-plugin-dialogs": "1.3.1",
-    "cordova-plugin-globalization": "1.0.5",
     "cordova-plugin-file": "4.3.3",
     "cordova-plugin-file-transfer": "1.6.3",
+    "cordova-plugin-globalization": "1.0.5",
     "cordova-plugin-inappbrowser": "4.1.0",
-    "cordova-plugin-cleartext": "1.0.0"
+    "cordova-plugin-networkinterface": "2.0.0",
+    "cordova-plugin-whitelist": "1.3.4",
+    "cordova-support-google-services": "1.3.2",
+    "phonegap-plugin-multidex": "1.0.0",
+    "phonegap-plugin-push": "2.3.0"
   };
 });

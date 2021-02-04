@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.cordova.hellocordova" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>HelloCordova</name>
+<widget id="com.atomjump.messaging" version="0.4.4" versionCode="44" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>AtomJump Messaging</name>
     <description>
-        A sample Apache Cordova application that responds to the deviceready event.
+        Shortcuts to any AtomJump messaging page, and notifications of new messages.
     </description>
-    <author email="dev@cordova.apache.org" href="http://cordova.io">
-        Apache Cordova Team
+    <author email="webmaster@atomjump.com" href="http://atomjump.org">
+        AtomJump Foundation
     </author>
     <content src="index.html" />
     <access origin="*" />
@@ -15,8 +15,51 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
+    
+    
+    
+    <preference name="AndroidPersistentFileLocation" value="Compatibility" />
+    
+    <!--<preference name='phonegap-version' value='cli-9.0.0' />
+	<preference name='pgb-builder-version' value='2' />-->
+	<!--<preference name="android-targetSdkVersion" value="29" />-->
+   
+    <!--<preference name="android-build-tool" value="gradle" />-->
+    
+    
     <platform name="android">
         <allow-intent href="market:*" />
+       
+        <preference name="permissions" value="none" />
+        <preference name="orientation" value="portrait" />
+        <preference name="fullscreen" value="false" />
+        <icon height="128" src="www/res/icon.png" width="128" />
+              
+          <!--
+            ldpi    : 36x36 px
+            mdpi    : 48x48 px
+            hdpi    : 72x72 px
+            xhdpi   : 96x96 px
+            xxhdpi  : 144x144 px
+            xxxhdpi : 192x192 px
+        -->
+        <icon src="www/res/mipmap/ldpi.png" density="ldpi" />
+        <icon src="www/res/mipmap/mdpi.png" density="mdpi" />
+        <icon src="www/res/mipmap/hdpi.png" density="hdpi" />
+        <icon src="www/res/mipmap/xhdpi.png" density="xhdpi" />
+        <icon src="www/res/mipmap/xxhdpi.png" density="xxhdpi" />
+        <icon src="www/res/mipmap/xxxhdpi.png" density="xxxhdpi" />
+         
+        
+        <!-- <plugin name="phonegap-plugin-push" source="npm" spec="~2.2.3">
+        	<param name="SENDER_ID" value="538233303966" />
+    	</plugin>-->
+    	
+    	<resource-file src="google-services.json" target="app/google-services.json" />
+    	
+    	<!--<config-file parent="/manifest" mode="merge">
+		  <application android:usesCleartextTraffic="true" />
+		</config-file>  -->
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />

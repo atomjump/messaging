@@ -95,7 +95,7 @@ window.open(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + encodeUR
 			
 			  
  		   function testPopups() {
- 		   		var data = {
+ 		   		/*var data = {
  		   			"message": "Hi a test message",
  		   			"additionalData": {
  		   				"observeMessage": "",
@@ -108,10 +108,10 @@ window.open(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + encodeUR
  		   		
  		   		};
  		   		
- 		   		app.onNotificationEvent(data);
+ 		   		app.onNotificationEvent(data);*/
  		   		
  		   		var data = {
- 		   			"message": "Hi a 2nd test message",
+ 		   			"message": "Hi a 1st test message on Forum 2",
  		   			"additionalData": {
  		   				"observeMessage": "",
  		   				"observeUrl": "https://test2.atomjump.com",
@@ -122,10 +122,9 @@ window.open(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + encodeUR
  		   			}
  		   		
  		   		};
- 		   		
  		   		app.onNotificationEvent(data);
  		   		
- 		   			var data = {
+ 		   		var data = {
  		   			"message": "Hi a 2nd test message on Forum 2",
  		   			"additionalData": {
  		   				"observeMessage": "",
@@ -136,12 +135,14 @@ window.open(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + encodeUR
 						"forumName": "Test Forum 2"
  		   			}
  		   		
- 		   		};
- 		   		
+ 		   		}; 	
  		   		app.onNotificationEvent(data);
  		   		
  		   		
- 		   			var data = {
+ 		   		
+ 		   		
+ 		   		
+ 		   		var data = {
  		   			"message": "Hi a 3rd test message on Forum 2",
  		   			"additionalData": {
  		   				"observeMessage": "",
@@ -152,11 +153,10 @@ window.open(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + encodeUR
 						"forumName": "Test Forum 2"
  		   			}
  		   		
- 		   		};
- 		   		
+ 		   		}; 		   		
  		   		app.onNotificationEvent(data);
  		   		
- 		   		
+ 		   		/*
  		   		var data = {
  		   			"message": "Hi a test message on forum 1",
  		   			"additionalData": {
@@ -170,9 +170,9 @@ window.open(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + encodeUR
  		   		
  		   		};
  		   		
- 		   		app.onNotificationEvent(data);
+ 		   		app.onNotificationEvent(data);*/
  		   		
- 		   }
+ 		   }   
 			
 
 			var ref;
@@ -207,7 +207,7 @@ window.open(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + encodeUR
         		
         		
 			<p id="totop" style="text-align:center; margin-top: 10px; padding-top:10px;">
-				<input id="srch" name="orig_query" type="text" size="9" class="resizedTextbox" placeholder="Message about.."><a href="javascript:" onclick="testPopups();">TEST POPUP</a>
+				<input id="srch" name="orig_query" type="text" size="9" class="resizedTextbox" placeholder="Message about.."><!--<a href="javascript:" onclick="testPopups();">TEST POPUP</a>-->
 			</p>	
 			
 			
