@@ -165,16 +165,30 @@ var app = {
 		
 		for(var cnt = 0; cnt < errorThis.currentForums.length; cnt++) {
 			if(errorThis.currentForums[cnt].url == finalData.observeUrl) {
-				//Found an existing entry - add one more message to the count
+				//Yes, a new message for the same forum
+				
 				foundExisting = true;
-				foundNum = cnt;
-				var msgCnt = errorThis.currentForums[cnt].msgCnt;
-				var msgWord = "messages";
-				if(msgCnt == 1) msgWord = "message";
-				displayMessageCnt = "<br/><br/>+" + msgCnt + " other " + msgWord + "</br>";
-				errorThis.currentForums[cnt].msgCnt = errorThis.currentForums[cnt].msgCnt + 1;
-				containerElement = errorThis.currentForums[cnt].containerElement;
-				displayElement = errorThis.currentForums[cnt].displayElement;
+				
+				//Prevent duplicates for the count
+				if(finalData.message != errorThis.currentForums[cnt].lastMsg) {
+					
+					//Found an existing entry - add one more message to the count
+					
+					foundNum = cnt;
+					var msgCnt = errorThis.currentForums[cnt].msgCnt;
+					var msgWord = "messages";
+					if(msgCnt == 1) msgWord = "message";
+					displayMessageCnt = "<br/><br/>+" + msgCnt + " other " + msgWord + "</br>";
+					errorThis.currentForums[cnt].msgCnt = errorThis.currentForums[cnt].msgCnt + 1;
+					errorThis.currentForums[cnt].lastMsg = finalData.message;		//Prevent future duplicates
+					
+					containerElement = errorThis.currentForums[cnt].containerElement;
+					displayElement = errorThis.currentForums[cnt].displayElement;
+				} else {
+					return;	//Exit the display early on a duplicate. There is no need to update the message display
+				}
+				
+				
 				
 			}
 	    }
@@ -192,7 +206,8 @@ var app = {
 					"url": finalData.observeUrl,
 					"containerElement": containerElement,
 					"displayElement": displayElement,
-					"msgCnt": 1
+					"msgCnt": 1,
+					"lastMsg": finalData.message
 			};
 			errorThis.currentForums.push(newEntry);
 			//Insert the visual element into the HTML container
