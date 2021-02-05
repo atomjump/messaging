@@ -159,7 +159,7 @@ var app = {
 		var containerElement = 'aj-HTML-alert-0';
 		var displayElement = 'aj-HTML-alert-inner-0';
 		var displayMessageCnt = "";
-		var keepListening = "Tap the cross to keep listening.";		//Default message at the bottom
+		var keepListening = "Close this page to keep listening.";		//Default message at the bottom
 		
 	
 		
@@ -230,7 +230,11 @@ var app = {
 				forumWord = "forum";
 			} 
 			
-			keepListening = "Tap the cross to see messages on " +  foundNum + " other " + forumWord + ".";
+			keepListening = "<a style=\"color: #888888;\" href=\"javascript:\" onclick=\"app.closeNotifications('" + containerElement + "');\">Close this page</a> to see messages on " + foundNum + " other " + forumWord + ".";
+		} else {
+			keepListening = "<a style=\"color: #888888;\" href=\"javascript:\" onclick=\"app.closeNotifications('" + containerElement + "');\">Close this page</a> to keep listening.";		//Default message at the bottom
+		
+		
 		}
 		
 		var newHTML = "<span style='vertical-align: top; padding: 10px; padding-top:30px;' class='big-text'>AtomJump Message</span><br/><img  src='icon-Small@3x.png' style='padding 10px;'><ons-fab style='z-index: 1800;' position='top right'  onclick=\"app.closeNotifications('" + containerElement + "');\"><ons-icon icon=\"md-close\" ></ons-icon></ons-fab><p><b>" + finalData.message + insertImage + "</b>" + displayMessageCnt + "<br/><br/><ons-button style=\"background-color: #cc99cc; color: white;\" href='javascript:' onclick='app.warningBrowserOpen(\"gotoforum\", function() { window.open(\"" + finalData.observeUrl + "\", \"_system\"); });'>Open the Forum&nbsp;&nbsp;<ons-icon style=\"color: white;\" icon=\"ion-ios-copy-outline\" size=\"24px\"></ons-icon></ons-button><br/><br/>" + finalData.forumMessage + ": " + finalData.forumName  + "<br/><br/><small>" + keepListening + "</small></p>";

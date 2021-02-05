@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.atomjump.messaging" 
-		version="0.3.9" 
-		versionCode="39" 
+<widget id="org.atomjump.messaging" 
+		version="0.4.4" 
+		versionCode="44" 
 		xmlns="http://www.w3.org/ns/widgets" 
 		xmlns:android="http://schemas.android.com/apk/res/android" 
 		xmlns:gap="http://phonegap.com/ns/1.0">
@@ -10,7 +10,7 @@
     <description>
         Shortcuts to any AtomJump messaging page, and notifications of new messages.
     </description>
-    <author email="webmaster@atomjump.com" href="https://atomjump.com">
+    <author email="webmaster@atomjump.com" href="http://atomjump.org">
         AtomJump
     </author>
     <gap:plugin name="cordova-plugin-whitelist" source="npm" />

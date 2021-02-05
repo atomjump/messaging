@@ -25,15 +25,42 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
+          "other_platform_oauth_client": [
+            {
+              "client_id": "550021164323-c9ic6h5s9vgeq71s1bk061an67unjo52.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:550021164323:android:0bcaf705b6d20e99723096",
+        "android_client_info": {
+          "package_name": "org.atomjump.messaging"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "550021164323-c9ic6h5s9vgeq71s1bk061an67unjo52.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvwBzPhlvYn1-o_BdhJBloEVcfdP_FVH8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "550021164323-c9ic6h5s9vgeq71s1bk061an67unjo52.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
