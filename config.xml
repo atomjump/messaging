@@ -1,5 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="org.atomjump.messaging" version="0.4.4" versionCode="44" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="org.atomjump.messaging" 
+		version="0.4.5" 
+		versionCode="45" 
+		xmlns="http://www.w3.org/ns/widgets" 
+		xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>AtomJump Messaging</name>
     <description>
         Shortcuts to any AtomJump messaging page, and notifications of new messages.
@@ -52,6 +56,23 @@
         <icon src="www/res/mipmap/xxhdpi.png" density="xxhdpi" />
         <icon src="www/res/mipmap/xxxhdpi.png" density="xxxhdpi" />
          
+         
+ 
+		<!-- Portrait -->        
+	    <splash src="res/screen/android/splash-port-hdpi.png" density="hdpi"/>
+		<splash src="res/screen/android/splash-port-ldpi.png" density="ldpi"/>
+		<splash src="res/screen/android/splash-port-mdpi.png" density="mdpi"/>
+		<splash src="res/screen/android/splash-port-xhdpi.png" density="xhdpi"/>
+		<splash src="res/screen/android/splash-port-xxhdpi.png" density="xxhdpi"/>
+
+		<!-- Landscape -->
+		<splash src="res/screen/android/splash-land-hdpi.png" density="land-hdpi" />
+		<splash src="res/screen/android/splash-land-ldpi.png" density="land-ldpi" />
+		<splash src="res/screen/android/splash-land-mdpi.png" density="land-mdpi" />
+		<splash src="res/screen/android/splash-land-xhdpi.png" density="land-xhdpi" />
+		<splash src="res/screen/android/splash-land-xxhdpi.png" density="land-xxhdpi" />
+		<splash src="res/screen/android/splash-land-xxxhdpi.png" density="land-xxxhdpi" />
+       
         
         <!-- <plugin name="phonegap-plugin-push" source="npm" spec="~2.2.3">
         	<param name="SENDER_ID" value="538233303966" />
