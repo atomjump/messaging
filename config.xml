@@ -19,9 +19,7 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
-    
-    
-    
+	<allow-navigation href="*"/>
     
     
     <!--<preference name='phonegap-version' value='cli-9.0.0' />
