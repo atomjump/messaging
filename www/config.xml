@@ -86,6 +86,7 @@
         
     </platform>
     <platform name="ios">
+    	<preference name="target-device" value="universal" />
         <preference name="permissions" value="none" />
         <preference name="orientation" value="portrait" />
         <gap:config-file mode="add" parent="ITSAppUsesNonExemptEncryption" platform="ios">
