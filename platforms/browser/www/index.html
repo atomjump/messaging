@@ -378,6 +378,30 @@ window.open(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + encodeUR
 							jQuery('#srch').val(ui.item.value);
 							newDomain("srch");
 				        }
+					},
+					response: function( event, ui ) {
+						//Will be called on every select, but if there is no data - then fill with our own.
+						if(ui) {
+							if(ui.item) {
+								if(ui.item.id) {
+									var myId = ui.item.id;
+								} else {
+									
+								}
+							} else {
+								//Have got no response so far from the network.
+								searchedTerm = jQuery('#srch').val();
+								ui.content.push(
+									{label:"Arts", value:"arts"},
+									{label:"Animation", value:"animation"},
+									{label:"Anime", value:"anime"},
+									{label: searchedTerm, value: searchedTerm},
+									{label:"Create a PRIVATE room '" + searchedTerm + "'", value:searchedTerm, id:searchedTerm}
+								  );
+							}
+						} else {
+						}
+					
 					}
 				});
 				
