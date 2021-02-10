@@ -126,7 +126,7 @@
 
 		<!-- iPad -->
 		<icon src="www/icon-72.png" platform="ios" width="72" height="72" />
-		<icon src="www/www/icon-72@2x.png" platform="ios" width="144" height="144" />
+		<icon src="www/icon-72@2x.png" platform="ios" width="144" height="144" />
 
 		<!-- iPhone Spotlight and Settings Icon -->
 		<icon src="www/icon-small.png" platform="ios" width="29" height="29" />
