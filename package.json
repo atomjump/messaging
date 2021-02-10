@@ -1,5 +1,5 @@
 {
-  "name": "org.atomjump.messaging",
+  "name": "com.atomjump.messaging",
   "displayName": "AtomJump Messaging",
   "version": "0.4.5",
   "description": "Shortcuts to any AtomJump messaging page, and notifications of new messages.",
