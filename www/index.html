@@ -86,9 +86,9 @@
 					str = str.replace(/[^a-z0-9\-]/gi, '');
 					if(str == origStr) {
 						//Straightforward redirect
-						window.open(encodeURI('https://' + str + '.atomjump.com/go/'), '_system');
+						errorThis.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/go/'), '_system');
 					} else {
-window.open(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + encodeURIComponent(origStr)) + '&autostart=true', '_system');
+errorThis.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + encodeURIComponent(origStr)) + '&autostart=true', '_system');
 						
 					}
 					return false;
@@ -222,7 +222,7 @@ window.open(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + encodeUR
 			</p>
 			
 			<p style="text-align:center;">	
-				<span style="vertical-align: top; padding: 10px; padding-top:30px;" class="big-text">AtomJump</span><br/><a href="javascript:" onclick="window.open(encodeURI('https://atomjump.com/'), '_system')"><img  src="icon-Small@3x.png" style="padding 10px;"></a><br/><span id='registered' style="display: none;"><small>Listening for Messages</small></span>
+				<span style="vertical-align: top; padding: 10px; padding-top:30px;" class="big-text">AtomJump</span><br/><a href="javascript:" onclick="app.myWindowOpen(encodeURI('https://atomjump.com/'), '_system')"><img  src="icon-Small@3x.png" style="padding 10px;"></a><br/><span id='registered' style="display: none;"><small>Listening for Messages</small></span>
         	</p>
         	
         	
@@ -230,7 +230,7 @@ window.open(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + encodeUR
         		
 			<p id="totop" style="text-align:center; margin-top: 10px; padding-top:10px;">
 				<input id="srch" name="orig_query" type="text" size="9" class="resizedTextbox" placeholder="Message about.."><!--<a href="javascript:" onclick="testPopups();">TEST POPUP</a>-->
-				<a href="javascript:" onclick="cordova.InAppBrowser.open('https://atomjump.com', '_system');">TEST LINK</a>
+				<!--<a href="javascript:" onclick="cordova.InAppBrowser.open('https://atomjump.com', '_system');">TEST LINK</a>-->
 			</p>	
 			
 			
@@ -371,7 +371,7 @@ window.open(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + encodeUR
 				          	jQuery('#srch').val(" "); 
 				          	var domain = myId.toLowerCase();
 				          	//Straightforward redirect
-								window.open(encodeURI('https://atomjump.com/wp/introduction/?prefdomain=' + domain + '#private'), '_system');
+								app.myWindowOpen(encodeURI('https://atomjump.com/wp/introduction/?prefdomain=' + domain + '#private'), '_system');
 							return false;
 				        } else {
 				          	//Run the domain in the browser
