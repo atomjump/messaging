@@ -19,8 +19,12 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
-	<allow-navigation href="*"/>
+    <allow-intent href="https://atomjump.com/*" />
+    <allow-intent href="http://atomjump.com/*" />
+    <allow-intent href="http://atomjump.org/*" />
     
+    
+	<allow-navigation href="*"/>
     
     <!--<preference name='phonegap-version' value='cli-9.0.0' />
 	<preference name='pgb-builder-version' value='2' />-->
