@@ -13,15 +13,15 @@
     </author>
     <content src="index.html" />
     <access origin="*" />
-    <allow-intent href="http://*/*" />
+    <!--<allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
-    <allow-intent href="geo:*" />
-    <allow-intent href="https://atomjump.com/*" />
+    <allow-intent href="geo:*" />-->
+    <!--<allow-intent href="https://atomjump.com/*" />
     <allow-intent href="http://atomjump.com/*" />
-    <allow-intent href="http://atomjump.org/*" />
+    <allow-intent href="http://atomjump.org/*" />-->
     
     
 	<allow-navigation href="*"/>
