@@ -552,7 +552,7 @@ var app = {
 		cordova.InAppBrowser.open(url, style, options);
 	
 	
-	}
+	},
 
 
 
