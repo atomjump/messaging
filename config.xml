@@ -13,25 +13,11 @@
     </author>
     <content src="index.html" />
     <access origin="*" />
-    <!--<allow-intent href="http://*/*" />
-    <allow-intent href="https://*/*" />
-    <allow-intent href="tel:*" />
-    <allow-intent href="sms:*" />
-    <allow-intent href="mailto:*" />
-    <allow-intent href="geo:*" />-->
-    <!--<allow-intent href="https://atomjump.com/*" />
-    <allow-intent href="http://atomjump.com/*" />
-    <allow-intent href="http://atomjump.org/*" />-->
     
     
 	<allow-navigation href="*"/>
     
-    <!--<preference name='phonegap-version' value='cli-9.0.0' />
-	<preference name='pgb-builder-version' value='2' />-->
-	<!--<preference name="android-targetSdkVersion" value="29" />-->
-   
-    <!--<preference name="android-build-tool" value="gradle" />-->
-    
+  
     
     <platform name="android">
         <allow-intent href="market:*" />
