@@ -17,7 +17,8 @@ https://src.atomjump.com/atomjump/loop-server
 
 # Building
 
-Use build.phonegap.com and add the repository URL.
+Use Apache Cordova.
+The 'master' branch is for Android phones, while the 'corova-ios' branch is for iPhones. There are subtle differences (e.g. com.atomjump.messaging for iOS vs org.atomjump.messaging for Android), but care should be taken to keep shared code changes reflected across, as much as possible, between the two code-bases.
 
 
 # TODO
