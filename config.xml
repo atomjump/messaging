@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.atomjump.messaging" 
-		version="0.5.1" 
-		versionCode="51" 
+		version="0.5.2" 
+		versionCode="52" 
 		xmlns="http://www.w3.org/ns/widgets" 
 		xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>AtomJump Messaging</name>
