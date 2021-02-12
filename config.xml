@@ -19,17 +19,7 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
-    
-    
-    
-    
-    
-    <!--<preference name='phonegap-version' value='cli-9.0.0' />
-	<preference name='pgb-builder-version' value='2' />-->
-	<!--<preference name="android-targetSdkVersion" value="29" />-->
    
-    <!--<preference name="android-build-tool" value="gradle" />-->
-    
     
     <platform name="android">
         <allow-intent href="market:*" />
@@ -73,16 +63,9 @@
 		<splash src="res/screen/android/splash-land-xxhdpi.png" density="land-xxhdpi" />
 		<splash src="res/screen/android/splash-land-xxxhdpi.png" density="land-xxxhdpi" />
        
-        
-        <!-- <plugin name="phonegap-plugin-push" source="npm" spec="~2.2.3">
-        	<param name="SENDER_ID" value="538233303966" />
-    	</plugin>-->
     	
     	<resource-file src="google-services.json" target="app/google-services.json" />
     	
-    	<!--<config-file parent="/manifest" mode="merge">
-		  <application android:usesCleartextTraffic="true" />
-		</config-file>  -->
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />
