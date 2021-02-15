@@ -258,8 +258,12 @@ var app = {
 		
 		
 	
+		alert("Display element=" + displayElement + " to be set to " + newHTML);
 		
 		document.getElementById(displayElement).innerHTML = newHTML;
+		
+		alert("Container element=" + containerElement);
+		
 		document.getElementById(containerElement).style.display = "block";   
     
     
