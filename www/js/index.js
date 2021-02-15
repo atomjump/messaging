@@ -98,24 +98,34 @@ var app = {
     onNotificationEvent: function(data) {
 		console.log('notification event');
 		var finalData = {};
-		
+		errorThis = this;
 		 
 		//See https://github.com/phonegap/phonegap-plugin-push/blob/master/docs/API.md
-		//OLD:document.getElementById('aj-HTML-alert').style.display = "block";
-		if(device.platform == 'iOS') {
-			if(data.additionalData.data.image) {
+		var platform = errorThis.getPlatform();
+		if(platform == 'iOS') {
+			if(data.additionalData && data.additionalData.data && data.additionalData.data.image) {
 				finalData.image = data.additionalData.data.image;
+				if(data.message) {
 				finalData.message = data.message.replace("[image]", ""); 	//Remove any mention of an [image] from the message, because we are going to show it.
 			} else {
+					finalData.message = "";
+				}
+			} else {
 				//No image - the message is to be displayed as-is
-				finalData.message =  data.message;
+				if(data.message) {
+					finalData.message =  data.message;
+				} else {
+					finalData.message = "";
+				}
 			}
-			finalData.observeMessage = data.additionalData.data.observeMessage;
-			finalData.observeUrl = data.additionalData.data.observeUrl;
-			finalData.removeMessage = data.additionalData.data.removeMessage;
-			finalData.removeUrl = data.additionalData.data.removeUrl;
-			finalData.forumMessage = data.additionalData.data.forumMessage;
-			finalData.forumName = data.additionalData.data.forumName;
+			if(data.additionalData && data.additionalData.data) {
+				finalData.observeMessage = data.additionalData.data.observeMessage;
+				finalData.observeUrl = data.additionalData.data.observeUrl;
+				finalData.removeMessage = data.additionalData.data.removeMessage;
+				finalData.removeUrl = data.additionalData.data.removeUrl;
+				finalData.forumMessage = data.additionalData.data.forumMessage;
+				finalData.forumName = data.additionalData.data.forumName;
+			}
 			
 		} else {
 			//Android has a slightly different format
@@ -124,15 +134,19 @@ var app = {
 				
 			}
 			finalData.message =  data.message;
-			finalData.observeMessage = data.additionalData.observeMessage;
-			finalData.observeUrl = data.additionalData.observeUrl;
-			finalData.removeMessage = data.additionalData.removeMessage;
-			finalData.removeUrl = data.additionalData.removeUrl;
-			finalData.forumMessage = data.additionalData.forumMessage;
-			finalData.forumName = data.additionalData.forumName;
+			
+			if(data.additionalData) {
+				finalData.observeMessage = data.additionalData.observeMessage;
+				finalData.observeUrl = data.additionalData.observeUrl;
+				finalData.removeMessage = data.additionalData.removeMessage;
+				finalData.removeUrl = data.additionalData.removeUrl;
+				finalData.forumMessage = data.additionalData.forumMessage;
+				finalData.forumName = data.additionalData.forumName;
+			}
 		  
 		
 		}
+		
 		
 		
 		if(finalData.forumName) {
@@ -162,7 +176,6 @@ var app = {
 		var keepListening = "Close this page to keep listening.";		//Default message at the bottom
 		
 	
-		
 		for(var cnt = 0; cnt < errorThis.currentForums.length; cnt++) {
 			if(errorThis.currentForums[cnt].url == finalData.observeUrl) {
 				//Yes, a new message for the same forum
@@ -193,6 +206,8 @@ var app = {
 			}
 	    }
 	    
+	    
+	    
 	    if(foundExisting == false) {
 	    	//Create a new forum
 	    	
@@ -215,6 +230,8 @@ var app = {
 				<div id="aj-HTML-alert-inner-0" class="inner-popup"></div>
 			</div>*/
 			
+			
+			
     		var newElement = document.createElement("div");
     		 newElement.id = containerElement;
     		 newElement.style.display = "none";
@@ -222,7 +239,9 @@ var app = {
    			 newElement.innerHTML = "<div id=\"" + displayElement + "\" class=\"inner-popup\"></div>";
     		document.getElementById("aj-HTML-alert-container").appendChild(newElement);
 
+			
 		}
+		
 		
 		if(foundNum > 0) {
 			var forumWord = "forums";
@@ -237,13 +256,13 @@ var app = {
 		
 		}
 		
-		var newHTML = "<span style='vertical-align: top; padding: 10px; padding-top:30px;' class='big-text'>AtomJump Message</span><br/><img  src='icon-Small@3x.png' style='padding 10px;'><ons-fab style='z-index: 1800;' position='top right'  onclick=\"app.closeNotifications('" + containerElement + "');\"><ons-icon icon=\"md-close\" ></ons-icon></ons-fab><p><b>" + finalData.message + insertImage + "</b>" + displayMessageCnt + "<br/><br/><ons-button style=\"background-color: #cc99cc; color: white;\" href='javascript:' onclick='app.warningBrowserOpen(\"gotoforum\", function() { window.open(\"" + finalData.observeUrl + "\", \"_system\"); });'>Open the Forum&nbsp;&nbsp;<ons-icon style=\"color: white;\" icon=\"ion-ios-copy-outline\" size=\"24px\"></ons-icon></ons-button><br/><br/>" + finalData.forumMessage + ": " + finalData.forumName  + "<br/><br/><small>" + keepListening + "</small></p>";
 		
-		
+		var newHTML = "<span style='vertical-align: top; padding: 10px; padding-top:30px;' class='big-text'>AtomJump Message</span><br/><img  src='icon-Small@3x.png' style='padding 10px;'><ons-fab style='z-index: 1800;' position='top right'  onclick=\"app.closeNotifications('" + containerElement + "');\"><ons-icon icon=\"md-close\" ></ons-icon></ons-fab><p><b>" + finalData.message + insertImage + "</b>" + displayMessageCnt + "<br/><br/><ons-button style=\"background-color: #cc99cc; color: white;\" href='javascript:' onclick='app.warningBrowserOpen(\"gotoforum\", function() { app.myWindowOpen(\"" + finalData.observeUrl + "\", \"_system\"); });'>Open the Forum&nbsp;&nbsp;<ons-icon style=\"color: white;\" icon=\"ion-ios-copy-outline\" size=\"24px\"></ons-icon></ons-button><br/><br/>" + finalData.forumMessage + ": " + finalData.forumName  + "<br/><br/><small>" + keepListening + "</small></p>";
 	
 		
 		document.getElementById(displayElement).innerHTML = newHTML;
 		document.getElementById(containerElement).style.display = "block";   
+    
     
     },
     
@@ -292,12 +311,19 @@ var app = {
                 if(singleClick == true) {
                 	//Have tapped a single server pairing - will not have a known userid
                 	//so we need to let the browser use it's own cookies.
-                	var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=&devicetype=" + device.platform;
-                	window.open(url, '_system');
+                	
+                	//Confirm device.platform if it is blank.
+                	var phonePlatform = errorThis.getPlatform();
+                	
+                	
+                	var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=&devicetype=" + phonePlatform;
+                	errorThis.myWindowOpen(url, '_system');
                 } else {
                 
                  	//Otherwise login with the known logged userId
-               	 	var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=" + userId + "&devicetype=" + device.platform;  //e.g. https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
+                 	var phonePlatform = errorThis.getPlatform();
+                 	
+               	 	var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform;  //e.g. https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
 					 errorThis.get(url, function(url, resp) {
 						//Registered OK
 					
@@ -325,6 +351,19 @@ var app = {
        });
     },
     
+    
+    getPlatform: function()
+    {		
+    	var platform = "Android";			//Default on the cordova-ios branch
+		
+		if(device && device.platform) {
+			platform = device.platform;
+		}
+		
+		return platform;
+    },
+    
+    
     setAPI: function(apiUrl)
     {
     
@@ -346,25 +385,19 @@ var app = {
    
     register: function(apiUrl)
     {
-    	//Registerd to the remote Loop Server
+    	//Register to the remote Loop Server
    		errorThis.setAPI(apiUrl); 
    		
    		var id = localStorage.getItem('registrationId');
    		
    		if(id) {
    		
-			var device = {
-				"platform": "Android"
-			}
-			if(device) {
-				var platform = device.platform;
-			} else {
-				var platform = "Android";
-			}
+			var phonePlatform = errorThis.getPlatform();
+			var platform = phonePlatform;
 		
 			var url = api + "plugins/notifications/register.php?id=" + id + "&devicetype=" + platform;
 
-			window.open(url, '_system');
+			errorThis.myWindowOpen(url, '_system');
 			
 			var settingApi = localStorage.getItem("api");
          	 if(settingApi) {
@@ -547,7 +580,12 @@ var app = {
 
 	
 			
+	myWindowOpen: function(url, style, options) {
+		//Recommend using style = '_system' for Safari browser
+		cordova.InAppBrowser.open(url, style, options);
 
+
+	},
 
 
 
@@ -586,7 +624,7 @@ var app = {
 								//Deregister from remote server connection in a browser
 								var url = api + "plugins/notifications/register.php?id=";
 
-								window.open(url, '_system');
+								myWindowOpen(url, '_system');
 						
 						}
     		
@@ -635,7 +673,7 @@ var app = {
 				//Deregister from remote server connection in a browser
 				var url = api + "plugins/notifications/register.php?id=";
 
-				window.open(url, '_system');
+				_this.myWindowOpen(url, '_system');
 			
 			}
 
@@ -815,7 +853,7 @@ var app = {
     		
     		for(var cnt = 0; cnt< settings.length; cnt++) {
     		
-    			prepList = prepList + "<ons-list-item onclick=\"app.warningBrowserOpen('gotoforum', function() { window.open(encodeURI('" + settings[cnt].url + "'), '_system'); });\">" + errorThis.ellipse(settings[cnt].forum, 27) + "</ons-list-item>";
+    			prepList = prepList + "<ons-list-item onclick=\"app.warningBrowserOpen('gotoforum', function() { app.myWindowOpen(encodeURI('" + settings[cnt].url + "'), '_system'); });\">" + errorThis.ellipse(settings[cnt].forum, 27) + "</ons-list-item>";
     			
     		}
     		$('#forum-list').html(prepList);
