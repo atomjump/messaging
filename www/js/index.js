@@ -346,7 +346,7 @@ var app = {
    
     register: function(apiUrl)
     {
-    	//Registerd to the remote Loop Server
+    	//Register to the remote Loop Server
    		errorThis.setAPI(apiUrl); 
    		
    		var id = localStorage.getItem('registrationId');

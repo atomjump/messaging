@@ -82,7 +82,7 @@
         <gap:config-file mode="add" parent="ITSAppUsesNonExemptEncryption" platform="ios">
             <false />
         </gap:config-file>
-        <plugin name="phonegap-plugin-push" source="npm" spec="~2.0.0" />
+        <plugin name="cordova-plugin-push" source="npm" spec="~2.0.0" />
  
         
 
