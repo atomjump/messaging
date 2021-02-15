@@ -100,12 +100,14 @@ errorThis.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query='
  		   		var data = {
  		   			"message": "Hi a test message",
  		   			"additionalData": {
- 		   				"observeMessage": "",
- 		   				"observeUrl": "https://test.atomjump.com",
- 		   				"removeMessage": "",
- 		   				"removeUrl": "",
- 		   				"forumMessage": "Forum message",
-						"forumName": "Test Forum"
+ 		   				"data" {
+							"observeMessage": "",
+							"observeUrl": "https://test.atomjump.com",
+							"removeMessage": "",
+							"removeUrl": "",
+							"forumMessage": "Forum message",
+							"forumName": "Test Forum"
+						}
  		   			}
  		   		
  		   		};
@@ -116,12 +118,14 @@ errorThis.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query='
  		   		var data = {
  		   			"message": "Hi a 1st test message on Forum 2",
  		   			"additionalData": {
- 		   				"observeMessage": "",
- 		   				"observeUrl": "https://test2.atomjump.com",
- 		   				"removeMessage": "",
- 		   				"removeUrl": "",
- 		   				"forumMessage": "Forum message",
-						"forumName": "Test Forum 2"
+							"data" {
+							"observeMessage": "",
+							"observeUrl": "https://test2.atomjump.com",
+							"removeMessage": "",
+							"removeUrl": "",
+							"forumMessage": "Forum message",
+							"forumName": "Test Forum 2"
+						}
  		   			}
  		   		
  		   		};
@@ -130,14 +134,16 @@ errorThis.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query='
  		   		//A test duplicate
  		   		var data = {
  		   			"message": "Hi a 1st test message on Forum 2",
- 		   			"additionalData": {
- 		   				"observeMessage": "",
- 		   				"observeUrl": "https://test2.atomjump.com",
- 		   				"removeMessage": "",
- 		   				"removeUrl": "",
- 		   				"forumMessage": "Forum message",
-						"forumName": "Test Forum 2"
- 		   			}
+ 		   			"data" {
+						"additionalData": {
+							"observeMessage": "",
+							"observeUrl": "https://test2.atomjump.com",
+							"removeMessage": "",
+							"removeUrl": "",
+							"forumMessage": "Forum message",
+							"forumName": "Test Forum 2"
+						}
+					}
  		   		
  		   		};
  		   		app.onNotificationEvent(data);
@@ -146,12 +152,14 @@ errorThis.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query='
  		   		var data = {
  		   			"message": "Hi a 2nd test message on Forum 2",
  		   			"additionalData": {
- 		   				"observeMessage": "",
- 		   				"observeUrl": "https://test2.atomjump.com",
- 		   				"removeMessage": "",
- 		   				"removeUrl": "",
- 		   				"forumMessage": "Forum message",
-						"forumName": "Test Forum 2"
+ 		   				"data" {
+							"observeMessage": "",
+							"observeUrl": "https://test2.atomjump.com",
+							"removeMessage": "",
+							"removeUrl": "",
+							"forumMessage": "Forum message",
+							"forumName": "Test Forum 2"
+						}
  		   			}
  		   		
  		   		}; 	
@@ -166,12 +174,14 @@ errorThis.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query='
  		   		var data = {
  		   			"message": "Hi a 3rd test message on Forum 2",
  		   			"additionalData": {
- 		   				"observeMessage": "",
- 		   				"observeUrl": "https://test2.atomjump.com",
- 		   				"removeMessage": "",
- 		   				"removeUrl": "",
- 		   				"forumMessage": "Forum message",
-						"forumName": "Test Forum 2"
+ 		   				"data" {
+							"observeMessage": "",
+							"observeUrl": "https://test2.atomjump.com",
+							"removeMessage": "",
+							"removeUrl": "",
+							"forumMessage": "Forum message",
+							"forumName": "Test Forum 2"
+						}
  		   			}
  		   		
  		   		}; 		   		
@@ -181,12 +191,14 @@ errorThis.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query='
  		   		var data = {
  		   			"message": "Hi a test message on forum 1",
  		   			"additionalData": {
- 		   				"observeMessage": "",
- 		   				"observeUrl": "https://test.atomjump.com",
- 		   				"removeMessage": "",
- 		   				"removeUrl": "",
- 		   				"forumMessage": "Forum message",
-						"forumName": "Test Forum"
+ 		   				"data" {
+							"observeMessage": "",
+							"observeUrl": "https://test.atomjump.com",
+							"removeMessage": "",
+							"removeUrl": "",
+							"forumMessage": "Forum message",
+							"forumName": "Test Forum"
+						}
  		   			}
  		   		
  		   		};
