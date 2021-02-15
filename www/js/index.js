@@ -102,6 +102,7 @@ var app = {
 		 
 		//See https://github.com/phonegap/phonegap-plugin-push/blob/master/docs/API.md
 		var platform = errorThis.getPlatform();
+		alert("in here 1");			//TESTING
 		if(platform == 'iOS') {
 			if(data.additionalData && data.additionalData.data && data.additionalData.data.image) {
 				finalData.image = data.additionalData.data.image;
@@ -148,6 +149,8 @@ var app = {
 		}
 		
 		
+		alert("in here 2");		//TESTING
+		
 		if(finalData.forumName) {
 			//Remove 'ajps_', the standard atomjump.com header from the name of the forum
 			if(finalData.forumName.substring(0, rawForumHeader.length) == rawForumHeader) {
@@ -174,7 +177,7 @@ var app = {
 		var displayMessageCnt = "";
 		var keepListening = "Close this page to keep listening.";		//Default message at the bottom
 		
-	
+		alert("in here 3");		//TESTING
 		
 		for(var cnt = 0; cnt < errorThis.currentForums.length; cnt++) {
 			if(errorThis.currentForums[cnt].url == finalData.observeUrl) {
@@ -206,6 +209,8 @@ var app = {
 			}
 	    }
 	    
+	    alert("in here 4");		//TESTING
+	    
 	    if(foundExisting == false) {
 	    	//Create a new forum
 	    	
@@ -228,13 +233,18 @@ var app = {
 				<div id="aj-HTML-alert-inner-0" class="inner-popup"></div>
 			</div>*/
 			
+			
+			alert("About to append");		//TESTING
+			
     		var newElement = document.createElement("div");
     		 newElement.id = containerElement;
     		 newElement.style.display = "none";
     		 newElement.classList.add("aj-HTML-alert");
    			 newElement.innerHTML = "<div id=\"" + displayElement + "\" class=\"inner-popup\"></div>";
     		document.getElementById("aj-HTML-alert-container").appendChild(newElement);
-
+			
+			alert("Finished appending");		//TESTING
+			
 		}
 		
 		if(foundNum > 0) {
@@ -250,6 +260,8 @@ var app = {
 		
 		}
 		
+		alert("Before newHTML");		//TESTING
+		
 		var newHTML = "<span style='vertical-align: top; padding: 10px; padding-top:30px;' class='big-text'>AtomJump Message</span><br/><img  src='icon-Small@3x.png' style='padding 10px;'><ons-fab style='z-index: 1800;' position='top right'  onclick=\"app.closeNotifications('" + containerElement + "');\"><ons-icon icon=\"md-close\" ></ons-icon></ons-fab><p><b>" + finalData.message + insertImage + "</b>" + displayMessageCnt + "<br/><br/><ons-button style=\"background-color: #cc99cc; color: white;\" href='javascript:' onclick='app.warningBrowserOpen(\"gotoforum\", function() { app.myWindowOpen(\"" + finalData.observeUrl + "\", \"_system\"); });'>Open the Forum&nbsp;&nbsp;<ons-icon style=\"color: white;\" icon=\"ion-ios-copy-outline\" size=\"24px\"></ons-icon></ons-button><br/><br/>" + finalData.forumMessage + ": " + finalData.forumName  + "<br/><br/><small>" + keepListening + "</small></p>";
 		
 		
@@ -257,6 +269,8 @@ var app = {
 		
 		document.getElementById(displayElement).innerHTML = newHTML;
 		document.getElementById(containerElement).style.display = "block";   
+    
+    	alert("Written newHTML");		//TESTING
     
     },
     
