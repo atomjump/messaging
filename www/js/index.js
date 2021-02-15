@@ -261,7 +261,7 @@ var app = {
 		
 		
 	
-		
+		alert("Adding " + newHTML);
 		document.getElementById(displayElement).innerHTML = newHTML;		
 		document.getElementById(containerElement).style.display = "block";   
     
