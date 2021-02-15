@@ -365,7 +365,7 @@ var app = {
     	var platform = "Android";			//Default
     	if(!device) {
     		//Default unknown platform
-    		device = {
+    		var device = {
     			"platform":""
     		};    	
     	}
