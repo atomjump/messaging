@@ -119,6 +119,7 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 			</p>
 			
 			<p style="text-align:center;">	
+				<br/>
 				<span style="vertical-align: top; padding: 10px; padding-top:30px;" class="big-text">AtomJump</span><br/><a href="javascript:" onclick="app.myWindowOpen(encodeURI('https://atomjump.com/'), '_system')"><img  src="icon-Small@3x.png" style="padding 10px;"></a><br/><span id='registered' style="display: none;"><small>Listening for Messages</small></span>
         	</p>
         	
@@ -286,12 +287,15 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 							} else {
 								//Have got no response so far from the network.
 								searchedTerm = jQuery('#srch').val();
-								ui.content.push(
-									{label:"Arts", value:"arts"},
-									{label:"Animation", value:"animation"},
-									{label:"Anime", value:"anime"},
-									{label: searchedTerm, value: searchedTerm}									
-								  );  //Can remove this line for iOS builds to remove commercial angle: ,{label:"Create a PRIVATE room '" + searchedTerm + "'", value:searchedTerm, id:searchedTerm}
+								
+								if(ui.content && ui.content.length <= 0) {
+									ui.content.push(
+										{label:"Arts", value:"arts"},
+										{label:"Animation", value:"animation"},
+										{label:"Anime", value:"anime"},
+										{label: searchedTerm, value: searchedTerm}									
+									  );  //Can remove this line for iOS builds to remove commercial angle: ,{label:"Create a PRIVATE room '" + searchedTerm + "'", value:searchedTerm, id:searchedTerm}
+								}
 							}
 						} else {
 						}
