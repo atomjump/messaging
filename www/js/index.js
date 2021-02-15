@@ -103,19 +103,29 @@ var app = {
 		//See https://github.com/phonegap/phonegap-plugin-push/blob/master/docs/API.md
 		var platform = errorThis.getPlatform();
 		if(platform == 'iOS') {
-			if(data.additionalData.data.image) {
+			if(data.additionalData && data.additionalData.data && data.additionalData.data.image) {
 				finalData.image = data.additionalData.data.image;
-				finalData.message = data.message.replace("[image]", ""); 	//Remove any mention of an [image] from the message, because we are going to show it.
+				if(data.message) {
+					finalData.message = data.message.replace("[image]", ""); 	//Remove any mention of an [image] from the message, because we are going to show it.
+				} else {
+					finalData.message = "";
+				}
 			} else {
 				//No image - the message is to be displayed as-is
-				finalData.message =  data.message;
+				if(data.message) {
+					finalData.message =  data.message;
+				} else {
+					finalData.message = "";
+				}
 			}
-			finalData.observeMessage = data.additionalData.data.observeMessage;
-			finalData.observeUrl = data.additionalData.data.observeUrl;
-			finalData.removeMessage = data.additionalData.data.removeMessage;
-			finalData.removeUrl = data.additionalData.data.removeUrl;
-			finalData.forumMessage = data.additionalData.data.forumMessage;
-			finalData.forumName = data.additionalData.data.forumName;
+			if(data.additionalData && data.additionalData.data) {
+				finalData.observeMessage = data.additionalData.data.observeMessage;
+				finalData.observeUrl = data.additionalData.data.observeUrl;
+				finalData.removeMessage = data.additionalData.data.removeMessage;
+				finalData.removeUrl = data.additionalData.data.removeUrl;
+				finalData.forumMessage = data.additionalData.data.forumMessage;
+				finalData.forumName = data.additionalData.data.forumName;
+			}
 			
 		} else {
 			//Android has a slightly different format
@@ -124,12 +134,15 @@ var app = {
 				
 			}
 			finalData.message =  data.message;
-			finalData.observeMessage = data.additionalData.observeMessage;
-			finalData.observeUrl = data.additionalData.observeUrl;
-			finalData.removeMessage = data.additionalData.removeMessage;
-			finalData.removeUrl = data.additionalData.removeUrl;
-			finalData.forumMessage = data.additionalData.forumMessage;
-			finalData.forumName = data.additionalData.forumName;
+			
+			if(data.additionalData) {
+				finalData.observeMessage = data.additionalData.observeMessage;
+				finalData.observeUrl = data.additionalData.observeUrl;
+				finalData.removeMessage = data.additionalData.removeMessage;
+				finalData.removeUrl = data.additionalData.removeUrl;
+				finalData.forumMessage = data.additionalData.forumMessage;
+				finalData.forumName = data.additionalData.forumName;
+			}
 		  
 		
 		}
