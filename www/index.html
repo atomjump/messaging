@@ -93,121 +93,6 @@ errorThis.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query='
 					}
 					return false;
 			}
-			
-			
-			  function testPopups() {
- 		   		
- 		   		var data = {
- 		   			"message": "Hi a test message",
- 		   			"additionalData": {
- 		   				"data": {
-							"observeMessage": "",
-							"observeUrl": "https://test.atomjump.com",
-							"removeMessage": "",
-							"removeUrl": "",
-							"forumMessage": "Forum message",
-							"forumName": "Test Forum"
-						}
- 		   			}
- 		   		
- 		   		};
- 		   		
- 		   		app.onNotificationEvent(data);
- 		   		
- 		   		
- 		   		var data = {
- 		   			"message": "Hi a 1st test message on Forum 2",
- 		   			"additionalData": {
-						"data": {
-							"observeMessage": "",
-							"observeUrl": "https://test2.atomjump.com",
-							"removeMessage": "",
-							"removeUrl": "",
-							"forumMessage": "Forum message",
-							"forumName": "Test Forum 2"
-						}
- 		   			}
- 		   		
- 		   		};
- 		   		app.onNotificationEvent(data);
- 		   		
- 		   		//A test duplicate
- 		   		var data = {
- 		   			"message": "Hi a 1st test message on Forum 2",
-					"additionalData": {
-						"data": {
-							"observeMessage": "",
-							"observeUrl": "https://test2.atomjump.com",
-							"removeMessage": "",
-							"removeUrl": "",
-							"forumMessage": "Forum message",
-							"forumName": "Test Forum 2"
-						}
-					}
- 		   		
- 		   		};
- 		   		app.onNotificationEvent(data);
- 		   		
- 		   		
- 		   		var data = {
- 		   			"message": "Hi a 2nd test message on Forum 2",
- 		   			"additionalData": {
- 		   				"data": {
-							"observeMessage": "",
-							"observeUrl": "https://test2.atomjump.com",
-							"removeMessage": "",
-							"removeUrl": "",
-							"forumMessage": "Forum message",
-							"forumName": "Test Forum 2"
-						}
- 		   			}
- 		   		
- 		   		}; 	
- 		   		app.onNotificationEvent(data);
- 		   		
- 		   		
- 		   		
- 		   		
- 		   		
- 		   		
- 		   		
- 		   		var data = {
- 		   			"message": "Hi a 3rd test message on Forum 2",
- 		   			"additionalData": {
- 		   				"data": {
-							"observeMessage": "",
-							"observeUrl": "https://test2.atomjump.com",
-							"removeMessage": "",
-							"removeUrl": "",
-							"forumMessage": "Forum message",
-							"forumName": "Test Forum 2"
-						}
- 		   			}
- 		   		
- 		   		}; 		   		
- 		   		app.onNotificationEvent(data);
- 		   		
- 		   		
- 		   		var data = {
- 		   			"message": "Hi a test message on forum 1",
- 		   			"additionalData": {
- 		   				"data": {
-							"observeMessage": "",
-							"observeUrl": "https://test.atomjump.com",
-							"removeMessage": "",
-							"removeUrl": "",
-							"forumMessage": "Forum message",
-							"forumName": "Test Forum"
-						}
- 		   			}
- 		   		
- 		   		};
- 		   		
- 		   		app.onNotificationEvent(data);
- 		   		
- 		   }     
- 
-			
 
 			var ref;
 	    </script>
@@ -241,7 +126,7 @@ errorThis.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query='
         		
         		
 			<p id="totop" style="text-align:center; margin-top: 10px; padding-top:10px;">
-				<input id="srch" name="orig_query" type="text" size="9" class="resizedTextbox" placeholder="Message about.."><a href="javascript:" onclick="testPopups();">TEST POPUP</a>
+				<input id="srch" name="orig_query" type="text" size="9" class="resizedTextbox" placeholder="Message about..">
 			</p>	
 			
 			
