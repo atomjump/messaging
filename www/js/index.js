@@ -98,7 +98,7 @@ var app = {
     onNotificationEvent: function(data) {
 		console.log('notification event');
 		var finalData = {};
-		
+		errorThis = this;
 		 
 		//See https://github.com/phonegap/phonegap-plugin-push/blob/master/docs/API.md
 		var platform = errorThis.getPlatform();
