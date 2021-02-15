@@ -74,7 +74,7 @@
 		<splash src="res/screen/android/splash-land-xxxhdpi.png" density="land-xxxhdpi" />
 
 
-         <plugin name="phonegap-plugin-push" source="npm" spec="~2.2.3">
+         <plugin name="cordova-plugin-push" source="npm" spec="~1.0.3">
         	<param name="SENDER_ID" value="538233303966" />
     	</plugin>
     	
