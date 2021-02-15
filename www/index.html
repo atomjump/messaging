@@ -22,7 +22,9 @@
         <meta charset="utf-8" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="viewport" content="user-scalable=no, initial-scale=1, width=device-width" />
-		<meta http-equiv="Content-Security-Policy" content="default-src https://atomjump.com data: gap: https://ssl.gstatic.com  'unsafe-inline' *;  style-src 'self' 'unsafe-inline' 'unsafe-eval' *; media-src *; img-src 'self' data: content: *;">
+		<meta http-equiv="Content-Security-Policy" content="default-src https://atomjump.com data: gap: https://ssl.gstatic.com  'unsafe-inline' *;  style-src 'self' 'unsafe-inline' 'unsafe-eval' *; media-src *; img-src 'self' data: content: *; connect-src https://atomjump.com">
+		
+
 		<link rel="stylesheet" href="css/onsenui.css"/>
 		<link rel="stylesheet" href="css/onsen-css-components-purple-theme.css">
     	
@@ -84,9 +86,9 @@
 					str = str.replace(/[^a-z0-9\-]/gi, '');
 					if(str == origStr) {
 						//Straightforward redirect
-						window.open(encodeURI('https://' + str + '.atomjump.com/go/'), '_system');
+						app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/go/'), '_system');
 					} else {
-window.open(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + encodeURIComponent(origStr)) + '&autostart=true', '_system');
+app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + encodeURIComponent(origStr)) + '&autostart=true', '_system');
 						
 					}
 					return false;
@@ -118,7 +120,7 @@ window.open(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + encodeUR
 			</p>
 			
 			<p style="text-align:center;">	
-				<span style="vertical-align: top; padding: 10px; padding-top:30px;" class="big-text">AtomJump</span><br/><a href="javascript:" onclick="window.open(encodeURI('https://atomjump.com/'), '_system')"><img  src="icon-Small@3x.png" style="padding 10px;"></a><br/><span id='registered' style="display: none;"><small>Listening for Messages</small></span>
+				<span style="vertical-align: top; padding: 10px; padding-top:30px;" class="big-text">AtomJump</span><br/><a href="javascript:" onclick="app.myWindowOpen(encodeURI('https://atomjump.com/'), '_system')"><img  src="icon-Small@3x.png" style="padding 10px;"></a><br/><span id='registered' style="display: none;"><small>Listening for Messages</small></span>
         	</p>
         	
         	
@@ -265,13 +267,36 @@ window.open(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + encodeUR
 				          	jQuery('#srch').val(" "); 
 				          	var domain = myId.toLowerCase();
 				          	//Straightforward redirect
-								window.open(encodeURI('https://atomjump.com/wp/introduction/?prefdomain=' + domain + '#private'), '_system');
+								app.myWindowOpen(encodeURI('https://atomjump.com/wp/introduction/?prefdomain=' + domain + '#private'), '_system');
 							return false;
 				        } else {
 				          	//Run the domain in the browser
 							jQuery('#srch').val(ui.item.value);
 							newDomain("srch");
 				        }
+					},
+					response: function( event, ui ) {
+						//Will be called on every select, but if there is no data - then fill with our own.
+						if(ui) {
+							if(ui.item) {
+								if(ui.item.id) {
+									var myId = ui.item.id;
+								} else {
+									
+								}
+							} else {
+								//Have got no response so far from the network.
+								searchedTerm = jQuery('#srch').val();
+								ui.content.push(
+									{label:"Arts", value:"arts"},
+									{label:"Animation", value:"animation"},
+									{label:"Anime", value:"anime"},
+									{label: searchedTerm, value: searchedTerm},{label:"Create a PRIVATE room '" + searchedTerm + "'", value:searchedTerm, id:searchedTerm}									
+								  );  //Can remove this line for iOS builds to remove commercial angle: ,{label:"Create a PRIVATE room '" + searchedTerm + "'", value:searchedTerm, id:searchedTerm}
+							}
+						} else {
+						}
+					
 					}
 				});
 				
