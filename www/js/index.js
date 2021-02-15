@@ -101,8 +101,8 @@ var app = {
 		
 		 
 		//See https://github.com/phonegap/phonegap-plugin-push/blob/master/docs/API.md
-		//OLD:document.getElementById('aj-HTML-alert').style.display = "block";
-		if(device.platform == 'iOS') {
+		var platform = errorThis.getPlatform();
+		if(platform == 'iOS') {
 			if(data.additionalData.data.image) {
 				finalData.image = data.additionalData.data.image;
 				finalData.message = data.message.replace("[image]", ""); 	//Remove any mention of an [image] from the message, because we are going to show it.
@@ -292,12 +292,19 @@ var app = {
                 if(singleClick == true) {
                 	//Have tapped a single server pairing - will not have a known userid
                 	//so we need to let the browser use it's own cookies.
-                	var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=&devicetype=" + device.platform;
+                	
+                	//Confirm device.platform if it is blank.
+                	var phonePlatform = errorThis.getPlatform();
+                	
+                	
+                	var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=&devicetype=" + phonePlatform;
                 	errorThis.myWindowOpen(url, '_system');
                 } else {
                 
                  	//Otherwise login with the known logged userId
-               	 	var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=" + userId + "&devicetype=" + device.platform;  //e.g. https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
+                 	var phonePlatform = errorThis.getPlatform();
+                 	
+               	 	var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform;  //e.g. https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
 					 errorThis.get(url, function(url, resp) {
 						//Registered OK
 					
@@ -325,6 +332,32 @@ var app = {
        });
     },
     
+    
+    getPlatform: function()
+    {		
+    	var platform = "Android";			//Default
+    	if(!device) {
+    		//Default unknown platform
+    		device = {
+    			"platform":""
+    		};    	
+    	}
+		if(device.platform == "") {
+				var confirmOS = confirm("Sorry, we could not auto-detect what type of phone you have. Please tap 'OK' if you have an Apple phone, or 'Cancel' if you have an Android, or other type of phone.");                		
+				if(confirmOS == true) {
+					platform = "iOS";	
+				} else {
+					platform = "Android";
+				}
+		} else {
+			platform = device.platform; 		//https://apache.googlesource.com/cordova-docs/+/refs/tags/2.3.0rc2/docs/en/2.3.0rc2/cordova/device/device.platform.md
+		}
+		
+		
+		return platform;
+    },
+    
+    
     setAPI: function(apiUrl)
     {
     
@@ -351,16 +384,10 @@ var app = {
    		
    		var id = localStorage.getItem('registrationId');
    		
-   		if(id) {
-   		
-			var device = {
-				"platform": "Android"
-			}
-			if(device) {
-				var platform = device.platform;
-			} else {
-				var platform = "Android";
-			}
+   		if(id) {	
+			
+			var phonePlatform = errorThis.getPlatform();
+			var platform = phonePlatform;
 		
 			var url = api + "plugins/notifications/register.php?id=" + id + "&devicetype=" + platform;
 
