@@ -206,6 +206,8 @@ var app = {
 			}
 	    }
 	    
+	    alert("Testing 1");
+	    
 	    
 	    if(foundExisting == false) {
 	    	//Create a new forum
@@ -241,6 +243,8 @@ var app = {
 			
 		}
 		
+		 alert("Testing 2");
+		
 		if(foundNum > 0) {
 			var forumWord = "forums";
 			if(foundNum == 1) {
@@ -253,6 +257,8 @@ var app = {
 		
 		
 		}
+		
+		 alert("Testing 3");
 		
 		var newHTML = "<span style='vertical-align: top; padding: 10px; padding-top:30px;' class='big-text'>AtomJump Message</span><br/><img  src='icon-Small@3x.png' style='padding 10px;'><ons-fab style='z-index: 1800;' position='top right'  onclick=\"app.closeNotifications('" + containerElement + "');\"><ons-icon icon=\"md-close\" ></ons-icon></ons-fab><p><b>" + finalData.message + insertImage + "</b>" + displayMessageCnt + "<br/><br/><ons-button style=\"background-color: #cc99cc; color: white;\" href='javascript:' onclick='app.warningBrowserOpen(\"gotoforum\", function() { app.myWindowOpen(\"" + finalData.observeUrl + "\", \"_system\"); });'>Open the Forum&nbsp;&nbsp;<ons-icon style=\"color: white;\" icon=\"ion-ios-copy-outline\" size=\"24px\"></ons-icon></ons-button><br/><br/>" + finalData.forumMessage + ": " + finalData.forumName  + "<br/><br/><small>" + keepListening + "</small></p>";
 		
