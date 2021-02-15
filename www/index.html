@@ -119,7 +119,7 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 				<span style="padding-right: 20px;"><ons-button style="background-color: #cc99cc; color: white;" href="javascript" onclick="return app.logout();">Log Out</ons-button></span>
 			</p>
 			
-			<p style="text-align:center;">	
+			<p style="text-align:center; margin-top:70px;">	
 				<span style="vertical-align: top; padding: 10px; padding-top:30px;" class="big-text">AtomJump</span><br/><a href="javascript:" onclick="app.myWindowOpen(encodeURI('https://atomjump.com/'), '_system')"><img  src="icon-Small@3x.png" style="padding 10px;"></a><br/><span id='registered' style="display: none;"><small>Listening for Messages</small></span>
         	</p>
         	
@@ -287,12 +287,14 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 							} else {
 								//Have got no response so far from the network.
 								searchedTerm = jQuery('#srch').val();
-								ui.content.push(
-									{label:"Arts", value:"arts"},
-									{label:"Animation", value:"animation"},
-									{label:"Anime", value:"anime"},
-									{label: searchedTerm, value: searchedTerm},{label:"Create a PRIVATE room '" + searchedTerm + "'", value:searchedTerm, id:searchedTerm}									
+								if(ui.content && ui.content.length <= 0) {
+									ui.content.push(
+										{label:"Arts", value:"arts"},
+										{label:"Animation", value:"animation"},
+										{label:"Anime", value:"anime"},
+										{label: searchedTerm, value: searchedTerm},{label:"Create a PRIVATE room '" + searchedTerm + "'", value:searchedTerm, id:searchedTerm}																	
 								  );  //Can remove this line for iOS builds to remove commercial angle: ,{label:"Create a PRIVATE room '" + searchedTerm + "'", value:searchedTerm, id:searchedTerm}
+								}
 							}
 						} else {
 						}
