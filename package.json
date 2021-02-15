@@ -24,11 +24,11 @@
     "cordova-plugin-file-transfer": "^1.6.3",
     "cordova-plugin-globalization": "^1.0.5",
     "cordova-plugin-inappbrowser": "^4.1.0",
-    "cordova-plugin-networkinterface": "^2.0.0",
-    "cordova-plugin-whitelist": "^1.3.4",
-    "cordova-support-google-services": "^1.3.2",
     "cordova-plugin-multidex": "^0.1.4",
-    "cordova-plugin-push": "^2.0.0"
+    "cordova-plugin-networkinterface": "^2.0.0",
+    "cordova-plugin-push": "^1.0.3",
+    "cordova-plugin-whitelist": "^1.3.4",
+    "cordova-support-google-services": "^1.3.2"
   },
   "cordova": {
     "plugins": {
