@@ -354,24 +354,7 @@ var app = {
     
     getPlatform: function()
     {		
-    	var platform = "Android";			//Default
-    	if(!device) {
-    		//Default unknown platform
-    		var device = {
-    			"platform":""
-    		};    	
-    	}
-		if(device.platform == "") {
-				var confirmOS = confirm("Sorry, we could not auto-detect what type of phone you have. Please tap 'OK' if you have an Apple phone, or 'Cancel' if you have an Android, or other type of phone.");                		
-				if(confirmOS == true) {
-					platform = "iOS";	
-				} else {
-					platform = "Android";
-				}
-		} else {
-			platform = device.platform; 		//https://apache.googlesource.com/cordova-docs/+/refs/tags/2.3.0rc2/docs/en/2.3.0rc2/cordova/device/device.platform.md
-		}
-		
+    	var platform = "iOS";			//Default on the cordova-ios branch
 		
 		return platform;
     },
