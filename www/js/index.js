@@ -25,6 +25,7 @@ var defaultApi = "https://atomjump.com/api/";		//when a blank is entered
 var rawForumHeader = "ajps_";
 var apiId = "538233303966";
 var singleClick = false;
+var pull = false;				//Switch to true if notifications are coming via a pull method (AtomJump's own), rather than push
 
 
 
@@ -78,8 +79,10 @@ var app = {
         
           if(userId) {
         	//Yep, we have a logged in user
-        	$('#login-popup').hide();	
-        	app.setupPush();
+        	$('#login-popup').hide();
+        	alert("TESTING 1: " + JSON.stringify(api));	
+        	app.setupPull();
+        	return;		
         
           } else {
             //No logged user - show the login page
@@ -91,7 +94,8 @@ var app = {
           
           if(oldRegId) {
           		$('#login-popup').hide();	
-        		app.setupPush();
+          		alert("TESTING 2: " + JSON.stringify(api));	
+        		app.setupPull();
           }
     },
     
@@ -292,6 +296,7 @@ var app = {
     
     setupPull: function() {
     
+    	errorThis = this;
     	//Pull from an AtomJump notification system
     	//Works in a similar fashion to setupPush() below, but is cross-platform
     	//and is based on regular polling of a URL for new messages.
@@ -301,81 +306,114 @@ var app = {
     		return;    		
     	} else {
     	
-    		/*Example 	
-    	
-			Step 1. App requests a registration event
-	
-			Pair from this PHP script e.g:
-			http://this.ajmessaging.url/api/plugins/notifications/genid.php?country=NZ
-	
-			which will return e.g.
-			2z2H HMEcfQQCufJmRPMX4C https://medimage-nz1.atomjump.com New%20Zealand 
-	
-	
-			If any other software needs it, we can request in the next couple of hours:
-	
-			https://medimage-pair.atomjump.com/med-genid.php?compare=2z2H
-	
-			which returns the pool server write script e.g.
-			https://medimage-nz1.atomjump.com/write/HMEcfQQCufJmRPMX4C
-			*/
-    	
-    	
-    	    var oldRegId = localStorage.getItem('registrationId');
-            $('#registered').show();
-            if (!oldRegId) {
-    			//We need to generate a new registrationId
-    	
-    			var url = api + "plugins/notifications/genid.php?country=Default";		//Can potentially extend to some country code info here from the cordova API, or user input?
-    		
-				errorThis.get(url, function(url, resp) {
-					//Registered OK
+    		//Check the server if we have pull available
+    		var url = api + "plugins/notifications/check-pull.php";    		
+			errorThis.get(url, function(url, resp) {
+				if(!resp) {
+					//Use push instead.
+					errorThis.setupPush();
+					return;
+				}
+				if(resp) {
+					if(resp == "true") {
+						//TODO: allow user to choose in some circumstances
+						
+						//Use pull
+						
+						/*Example 	
 		
-					//resp will now be e.g. "2z2H HMEcfQQCufJmRPMX4C https://medimage-nz1.atomjump.com New%20Zealand"
-					var items = resp.split(" ");
-					var phonePlatform = "AtomJump";		//This is cross-platform
-					var registrationId = items[2] + "/write/" + items[1];
+						Step 1. App requests a registration event
+	
+						Pair from this PHP script e.g:
+						http://this.ajmessaging.url/api/plugins/notifications/genid.php?country=NZ
+	
+						which will return e.g.
+						2z2H HMEcfQQCufJmRPMX4C https://medimage-nz1.atomjump.com New%20Zealand 
+	
+	
+						If any other software needs it, we can request in the next couple of hours:
+	
+						https://medimage-pair.atomjump.com/med-genid.php?compare=2z2H
+	
+						which returns the pool server write script e.g.
+						https://medimage-nz1.atomjump.com/write/HMEcfQQCufJmRPMX4C
+						*/
+						pull = true;		//Set the global pull
+		
+						var oldRegId = localStorage.getItem('registrationId');
+						$('#registered').show();
+						if (!oldRegId) {
+							//We need to generate a new registrationId
+		
+							var url = api + "plugins/notifications/genid.php?country=Default";		//Can potentially extend to some country code info here from the cordova API, or user input?
+			
+							errorThis.get(url, function(url, resp) {
+								//Registered OK
+		
+								//resp will now be e.g. "2z2H HMEcfQQCufJmRPMX4C https://medimage-nz1.atomjump.com New%20Zealand"
+								var items = resp.split(" ");
+								var phonePlatform = "AtomJump";		//This is cross-platform
+								var registrationId = items[2] + "/write/" + items[1];
 				
-					//Registration id will now be e.g. https://medimage-nz1.atomjump.com/write/HMEcfQQCufJmRPMX4C
-					//which is what our server will post new message .json files too.
+								//Registration id will now be e.g. https://medimage-nz1.atomjump.com/write/HMEcfQQCufJmRPMX4C
+								//which is what our server will post new message .json files too.
 				
-					var pollingURL = items[2] + "/read/" + items[1];
-					//The pollingURL is what we will continue to check on
+								var pollingURL = items[2] + "/read/" + items[1];
+								//The pollingURL is what we will continue to check on
 				
-					//Start up regular checks
-					localStorage.setItem('pollingURL', pollingURL);
-					errorThis.startPolling(readURL);
+								//Start up regular checks
+								localStorage.setItem('pollingURL', pollingURL);
+								errorThis.startPolling(readURL);
 				
 				   
 
 				
 				
-					// Save the new registration ID on the phone
-					localStorage.setItem('registrationId', registrationId);
-					// Post registrationId to your app server as the value has changed
-					//Post to server software Loop Server API
+								// Save the new registration ID on the phone
+								localStorage.setItem('registrationId', registrationId);
+								// Post registrationId to your app server as the value has changed
+								//Post to server software Loop Server API
 				
 			
-					//Now open the browser, if the button has been set
-					if(singleClick == true) {
-						//Have tapped a single server pairing - will not have a known userid
-						//so we need to let the browser use it's own cookies.
-						var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=&devicetype=" + phonePlatform;
-						errorThis.myWindowOpen(url, '_system');
-					} else {
+								//Now open the browser, if the button has been set
+								if(singleClick == true) {
+									//Have tapped a single server pairing - will not have a known userid
+									//so we need to let the browser use it's own cookies.
+									var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=&devicetype=" + phonePlatform;
+									errorThis.myWindowOpen(url, '_system');
+								} else {
 			
-						//Otherwise login with the known logged userId
-						var phonePlatform = errorThis.getPlatform();
+									//Otherwise login with the known logged userId
+									var phonePlatform = errorThis.getPlatform();
 				
-						var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform;  //e.g. https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
-						 errorThis.get(url, function(url, resp) {
-							//Registered OK
+									var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform;  //e.g. https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
+									 errorThis.get(url, function(url, resp) {
+										//Registered OK
 				
-						});
-					}
+									});
+								}
 		
-				});		//End of get
-			}
+							});		//End of get
+						}
+						
+						
+						
+						
+						
+						
+						
+						
+					
+					} else {
+						//Default to push instead
+						errorThis.setupPush();
+						return;
+					}
+				
+				}
+			});
+    	
+    		
     	}
     },
     
@@ -472,6 +510,11 @@ var app = {
 			platform = device.platform;
 		}
 		
+		if(pull == true) {
+			//Switch over to the cross-platform AtomJump platform
+			platform = "AtomJump";	
+		}
+		
 		return platform;
     },
     
@@ -503,7 +546,7 @@ var app = {
    		var id = localStorage.getItem('registrationId');
    		
    		if(id) {
-   		
+   			//Already have a registrationId
 			var phonePlatform = errorThis.getPlatform();
 			var platform = phonePlatform;
 		
@@ -521,7 +564,7 @@ var app = {
 			$('#login-popup').hide();
 			
 		} else {
-			 
+			 //Need to setup a registration
 			 var settingApi = localStorage.getItem("api");
          	 if(settingApi) {
           		 api = settingApi;
@@ -530,7 +573,8 @@ var app = {
          	 } 
          	          	 
          	singleClick = true;      
-        	errorThis.setupPush();
+         	alert("TESTING 3: " + JSON.stringify(api));	
+        	errorThis.setupPull();
         	$('#login-popup').hide();
 		}
    		   		
@@ -567,8 +611,9 @@ var app = {
 						
 							if(userId) {
 								localStorage.setItem("loggedUser",userId);
-														
-								app.setupPush();		//register this phone
+											
+								alert("TESTING 4: " + JSON.stringify(api));							
+								app.setupPull();		//register this phone
 								$('#login-popup').hide();
 						
 							} else {
