@@ -267,6 +267,118 @@ var app = {
     },
     
     
+    poll: function( )
+	{
+		 var url = localStorage.getItem('pollingURL');		//Can potentially extend to some country code info here from the cordova API, or user input?
+	  	//this will repeat every 15 seconds
+	  	if(url) {
+	  		errorThis.get(url, function(url, resp) {
+	  			//Resp could be a .json message file
+	  			//TODO: parse JSON.
+	  			//TODO: do a self notification alert if we're in the background. See https://github.com/katzer/cordova-plugin-local-notifications
+	  			//Call onNotificationEvent(parsedJSON);
+	  		});
+	  	}
+	},
+    
+    startPolling: function() {
+    	//Regular timed interval checks on the 'pollingURL' localStorage item, every 15 seconds.
+   
+    		
+    	setInterval(errorThis.poll, 15000);
+		
+		
+    },
+    
+    setupPull: function() {
+    
+    	//Pull from an AtomJump notification system
+    	//Works in a similar fashion to setupPush() below, but is cross-platform
+    	//and is based on regular polling of a URL for new messages.
+    	
+    	if(!api) {
+    		alert("Sorry, you will need to be signed in to a server before starting to listen.");
+    		return;    		
+    	} else {
+    	
+    		/*Example 	
+    	
+			Step 1. App requests a registration event
+	
+			Pair from this PHP script e.g:
+			http://this.ajmessaging.url/api/plugins/notifications/genid.php?country=NZ
+	
+			which will return e.g.
+			2z2H HMEcfQQCufJmRPMX4C https://medimage-nz1.atomjump.com New%20Zealand 
+	
+	
+			If any other software needs it, we can request in the next couple of hours:
+	
+			https://medimage-pair.atomjump.com/med-genid.php?compare=2z2H
+	
+			which returns the pool server write script e.g.
+			https://medimage-nz1.atomjump.com/write/HMEcfQQCufJmRPMX4C
+			*/
+    	
+    	
+    	    var oldRegId = localStorage.getItem('registrationId');
+            $('#registered').show();
+            if (!oldRegId) {
+    			//We need to generate a new registrationId
+    	
+    			var url = api + "plugins/notifications/genid.php?country=Default";		//Can potentially extend to some country code info here from the cordova API, or user input?
+    		
+				errorThis.get(url, function(url, resp) {
+					//Registered OK
+		
+					//resp will now be e.g. "2z2H HMEcfQQCufJmRPMX4C https://medimage-nz1.atomjump.com New%20Zealand"
+					var items = resp.split(" ");
+					var phonePlatform = "AtomJump";		//This is cross-platform
+					var registrationId = items[2] + "/write/" + items[1];
+				
+					//Registration id will now be e.g. https://medimage-nz1.atomjump.com/write/HMEcfQQCufJmRPMX4C
+					//which is what our server will post new message .json files too.
+				
+					var pollingURL = items[2] + "/read/" + items[1];
+					//The pollingURL is what we will continue to check on
+				
+					//Start up regular checks
+					localStorage.setItem('pollingURL', pollingURL);
+					errorThis.startPolling(readURL);
+				
+				   
+
+				
+				
+					// Save the new registration ID on the phone
+					localStorage.setItem('registrationId', registrationId);
+					// Post registrationId to your app server as the value has changed
+					//Post to server software Loop Server API
+				
+			
+					//Now open the browser, if the button has been set
+					if(singleClick == true) {
+						//Have tapped a single server pairing - will not have a known userid
+						//so we need to let the browser use it's own cookies.
+						var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=&devicetype=" + phonePlatform;
+						errorThis.myWindowOpen(url, '_system');
+					} else {
+			
+						//Otherwise login with the known logged userId
+						var phonePlatform = errorThis.getPlatform();
+				
+						var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform;  //e.g. https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
+						 errorThis.get(url, function(url, resp) {
+							//Registered OK
+				
+						});
+					}
+		
+				});		//End of get
+			}
+    	}
+    },
+    
     setupPush: function() {
   	
   		if(typeof(PushNotification) == 'undefined') { 
