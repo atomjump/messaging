@@ -278,9 +278,20 @@ var app = {
 	  	if(url) {
 	  		errorThis.get(url, function(url, resp) {
 	  			//Resp could be a .json message file
-	  			//TODO: parse JSON.
-	  			//TODO: do a self notification alert if we're in the background. See https://github.com/katzer/cordova-plugin-local-notifications
+	  			
 	  			//Call onNotificationEvent(parsedJSON);
+	  			if(resp != "none") {
+	  				try {
+	  					var msg = JSON.parse(resp);
+	  					errorThis.onNotificationEvent(msg);
+	  					
+	  					//TODO: do a self notification alert if we're in the background. See https://github.com/katzer/cordova-plugin-local-notifications
+	  					
+	  				} catch(err) {
+	  					alert("Sorry your message had an error in it. Contents: " + resp);
+	  				
+	  				}	  				
+	  			}
 	  		});
 	  	}
 	},
@@ -309,7 +320,6 @@ var app = {
     		//Check the server if we have pull available
     		var url = api + "plugins/notifications/check-pull.php";    		
 			errorThis.get(url, function(url, resp) {
-				resp = "true"; //TESTING
 			
 				if(!resp) {
 					//Use push instead.
@@ -351,12 +361,13 @@ var app = {
 			
 							errorThis.get(url, function(url, resp) {
 								//Registered OK
+								alert("TESTING registration response:" + resp);		//TESTING
 		
 								//resp will now be e.g. "2z2H HMEcfQQCufJmRPMX4C https://medimage-nz1.atomjump.com New%20Zealand"
 								var items = resp.split(" ");
 								var phonePlatform = "AtomJump";		//This is cross-platform
-								var registrationId = items[2] + "/api/photo/#" + items[1];
-				
+								var registrationId = encodeURIComponent(items[2] + "/api/photo/#" + items[1]);
+								alert("TESTING RegistrationID:" + registrationId);	//TESTING
 								//Registration id will now be e.g. https://medimage-nz1.atomjump.com/write/HMEcfQQCufJmRPMX4C
 								//which is what our server will post new message .json files too.
 				
@@ -365,7 +376,7 @@ var app = {
 				
 								//Start up regular checks
 								localStorage.setItem('pollingURL', pollingURL);
-								errorThis.startPolling(readURL);
+								errorThis.startPolling(pollingURL);
 				
 				   
 
@@ -397,7 +408,12 @@ var app = {
 		
 							});		//End of get
 						}
+						else {
 						
+							//Start polling
+							var pollingURL = localStorage.getItem('pollingURL');
+							errorThis.startPolling(pollingURL);
+						}
 						
 						
 						
