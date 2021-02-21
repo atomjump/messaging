@@ -309,6 +309,8 @@ var app = {
     		//Check the server if we have pull available
     		var url = api + "plugins/notifications/check-pull.php";    		
 			errorThis.get(url, function(url, resp) {
+				resp = "true"; //TESTING
+			
 				if(!resp) {
 					//Use push instead.
 					errorThis.setupPush();
@@ -353,7 +355,7 @@ var app = {
 								//resp will now be e.g. "2z2H HMEcfQQCufJmRPMX4C https://medimage-nz1.atomjump.com New%20Zealand"
 								var items = resp.split(" ");
 								var phonePlatform = "AtomJump";		//This is cross-platform
-								var registrationId = items[2] + "/write/" + items[1];
+								var registrationId = items[2] + "/api/photo/#" + items[1];
 				
 								//Registration id will now be e.g. https://medimage-nz1.atomjump.com/write/HMEcfQQCufJmRPMX4C
 								//which is what our server will post new message .json files too.
