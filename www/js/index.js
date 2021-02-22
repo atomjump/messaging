@@ -83,7 +83,6 @@ var app = {
           if(userId) {
         	//Yep, we have a logged in user
         	$('#login-popup').hide();
-        	alert("TESTING 1: " + JSON.stringify(api));	
         	app.setupPull();
         	return;		
         
@@ -97,8 +96,7 @@ var app = {
           
           if(oldRegId) {
           		$('#login-popup').hide();	
-          		alert("TESTING 2: " + JSON.stringify(api));	
-        		app.setupPull();
+         		app.setupPull();
           }
     },
     
@@ -136,7 +134,6 @@ var app = {
 			
 		} else {
 			//Android has a slightly different format
-			//TESTINGalert("Data : " + JSON.stringify(data) + "  Msg: " + data.message);
 			if(data.image) {
 				finalData.image = data.image;
 				
@@ -286,9 +283,7 @@ var app = {
 	  			//Call onNotificationEvent(parsedJSON);
 	  			if(resp != "none") {
 	  				try {
-	  					//TESTINGalert(resp);
 	  					var msg = JSON.parse(resp);
-	  					//TESTINGalert("Parsed: " + JSON.stringify(msg));
 	  					var data = msg.data;
 	  					errorThis.onNotificationEvent(data);
 	  					
@@ -316,7 +311,7 @@ var app = {
     	if(this.pollingCaller) {
     		clearInterval(this.pollingCaller);
     	}    	
-    }
+    },
     
     setupPull: function() {
     
@@ -374,13 +369,10 @@ var app = {
 			
 							errorThis.get(url, function(url, resp) {
 								//Registered OK
-								alert("TESTING registration response:" + resp);		//TESTING
-		
 								//resp will now be e.g. "2z2H HMEcfQQCufJmRPMX4C https://medimage-nz1.atomjump.com New%20Zealand"
 								var items = resp.split(" ");
 								var phonePlatform = "AtomJump";		//This is cross-platform
 								var registrationId = encodeURIComponent(items[2] + "/api/photo/#" + items[1]);
-								alert("TESTING RegistrationID:" + registrationId);	//TESTING
 								//Registration id will now be e.g. https://medimage-nz1.atomjump.com/api/photo/#HMEcfQQCufJmRPMX4C
 								//which is what our server will post new message .json files too.
 				
@@ -604,7 +596,6 @@ var app = {
          	 } 
          	          	 
          	singleClick = true;      
-         	alert("TESTING 3: " + JSON.stringify(api));	
         	errorThis.setupPull();
         	$('#login-popup').hide();
 		}
@@ -643,7 +634,6 @@ var app = {
 							if(userId) {
 								localStorage.setItem("loggedUser",userId);
 											
-								alert("TESTING 4: " + JSON.stringify(api));							
 								app.setupPull();		//register this phone
 								$('#login-popup').hide();
 						
