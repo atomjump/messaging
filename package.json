@@ -28,7 +28,8 @@
     "cordova-plugin-networkinterface": "^2.0.0",
     "cordova-plugin-pushplugin": "^2.6.3",
     "cordova-plugin-whitelist": "^1.3.4",
-    "cordova-support-google-services": "^1.3.2"
+    "cordova-support-google-services": "^1.3.2",
+    "cordova-plugin-local-notification": "^0.9.0"
   },
   "cordova": {
     "plugins": {
@@ -39,7 +40,8 @@
       "cordova-plugin-globalization": {},
       "cordova-plugin-file-transfer": {},
       "cordova-plugin-inappbrowser": {},
-      "cordova-plugin-cleartext": {}
+      "cordova-plugin-cleartext": {},
+      "cordova-plugin-local-notification": {}
     },
     "platforms": [
       "browser",

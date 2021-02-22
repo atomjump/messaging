@@ -288,6 +288,11 @@ var app = {
 	  					errorThis.onNotificationEvent(data);
 	  					
 	  					//TODO: do a self notification alert if we're in the background. See https://github.com/katzer/cordova-plugin-local-notifications
+	  					cordova.plugins.notification.local.schedule({
+							title: 'My first notification',
+							text: 'Thats pretty easy...',
+							foreground: true
+						});
 	  					
 	  				} catch(err) {
 	  					alert("Sorry your message had an error in it. Contents: " + resp);
