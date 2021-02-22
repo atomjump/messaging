@@ -50,6 +50,9 @@ var app = {
         //This is an array of unique forums. We can keep track of a count of new messages
         //from each forum too.
         this.currentForums = [];
+        
+        //The timer to call a pull request
+        this.pollingCaller = null;
 
     },
     // Bind Event Listeners
@@ -133,7 +136,7 @@ var app = {
 			
 		} else {
 			//Android has a slightly different format
-			alert("Data : " + JSON.stringify(data) + "  Msg: " + data.message);
+			//TESTINGalert("Data : " + JSON.stringify(data) + "  Msg: " + data.message);
 			if(data.image) {
 				finalData.image = data.image;
 				
@@ -304,10 +307,16 @@ var app = {
     	//Regular timed interval checks on the 'pollingURL' localStorage item, every 15 seconds.
    
     		
-    	setInterval(errorThis.poll, 15000);
+    	this.pollingCaller = setInterval(errorThis.poll, 15000);
 		
 		
     },
+    
+    stopPolling: function() {
+    	if(this.pollingCaller) {
+    		clearInterval(this.pollingCaller);
+    	}    	
+    }
     
     setupPull: function() {
     
@@ -835,6 +844,8 @@ var app = {
 		$('#registered').hide();
 		
 		if(api) {
+			//Stop any pull polling
+			_this.stopPolling();
 		
 			//Deregister on the database - by sending a blank id (which gets set as a null on the server). Disassociates phone from user.
 			if(userId) {
