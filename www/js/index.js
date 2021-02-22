@@ -133,6 +133,7 @@ var app = {
 			
 		} else {
 			//Android has a slightly different format
+			alert("Data : " + JSON.stringify(data) + "  Msg: " + data.message);
 			if(data.image) {
 				finalData.image = data.image;
 				
@@ -282,8 +283,11 @@ var app = {
 	  			//Call onNotificationEvent(parsedJSON);
 	  			if(resp != "none") {
 	  				try {
+	  					//TESTINGalert(resp);
 	  					var msg = JSON.parse(resp);
-	  					errorThis.onNotificationEvent(msg);
+	  					//TESTINGalert("Parsed: " + JSON.stringify(msg));
+	  					var data = msg.data;
+	  					errorThis.onNotificationEvent(data);
 	  					
 	  					//TODO: do a self notification alert if we're in the background. See https://github.com/katzer/cordova-plugin-local-notifications
 	  					
@@ -368,7 +372,7 @@ var app = {
 								var phonePlatform = "AtomJump";		//This is cross-platform
 								var registrationId = encodeURIComponent(items[2] + "/api/photo/#" + items[1]);
 								alert("TESTING RegistrationID:" + registrationId);	//TESTING
-								//Registration id will now be e.g. https://medimage-nz1.atomjump.com/write/HMEcfQQCufJmRPMX4C
+								//Registration id will now be e.g. https://medimage-nz1.atomjump.com/api/photo/#HMEcfQQCufJmRPMX4C
 								//which is what our server will post new message .json files too.
 				
 								var pollingURL = items[2] + "/read/" + items[1];
