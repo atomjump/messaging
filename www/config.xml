@@ -1,9 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<<<<<<< HEAD
 <widget id="com.atomjump.messaging" 
-=======
-<widget id="org.atomjump.messaging" 
->>>>>>> atomjump
 		version="0.5.4" 
 		versionCode="54" 
 		xmlns="http://www.w3.org/ns/widgets" 
