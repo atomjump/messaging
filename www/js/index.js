@@ -287,12 +287,14 @@ var app = {
 	  					var data = msg.data;
 	  					errorThis.onNotificationEvent(data);
 	  					
-	  					//TODO: do a self notification alert if we're in the background. See https://github.com/katzer/cordova-plugin-local-notifications
-	  					cordova.plugins.notification.local.schedule({
-							title: 'My first notification',
-							text: 'Thats pretty easy...',
-							foreground: true
-						});
+	  					//Do a self notification alert if we're in the background. See https://github.com/katzer/cordova-plugin-local-notifications
+	  					if(cordova && cordova.plugins && cordova.plugins.notification && cordova.plugins.notification.local) {
+							cordova.plugins.notification.local.schedule({
+								title: data.message,
+								text: data.additionalData.forumName,
+								foreground: true
+							});
+						}
 	  					
 	  				} catch(err) {
 	  					alert("Sorry your message had an error in it. Contents: " + resp);
@@ -331,16 +333,14 @@ var app = {
     	} else {
     	
     		//Check the server if we have pull available
-    		var url = api + "plugins/notifications/check-pull.php";    		
-			errorThis.get(url, function(url, resp) {
-			
-				if(!resp) {
-					//Use push instead.
-					errorThis.setupPush();
-					return;
-				}
-				if(resp) {
-					if(resp == "true") {
+			$.ajax({
+				type       : "POST",
+				url        : api + "plugins/notifications/check-pull.php",
+				dataType: 'jsonp', // Notice! JSONP <-- P (lowercase)
+				crossDomain: true,
+				success    : function(resp) {
+					
+					if(resp && resp.response == "true") {
 						//TODO: allow user to choose in some circumstances
 						
 						//Use pull
@@ -425,20 +425,19 @@ var app = {
 							errorThis.startPolling(pollingURL);
 						}
 						
-						
-						
-						
-						
-						
-						
+								
 					
 					} else {
-						//Default to push instead
-						errorThis.setupPush();
-						return;
+						//Use push instead.
+						errorThis.setupPush();					
 					}
-				
+				},
+				error      : function() {
+					//Use push instead.
+					errorThis.setupPush();
+					return;        
 				}
+			
 			});
     	
     		
