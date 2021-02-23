@@ -25,6 +25,7 @@ var defaultApi = "https://atomjump.com/api/";		//when a blank is entered
 var rawForumHeader = "ajps_";
 var apiId = "538233303966";
 var singleClick = false;
+var pull = false;				//Switch to true if notifications are coming via a pull method (AtomJump's own), rather than push
 
 
 
@@ -49,6 +50,9 @@ var app = {
         //This is an array of unique forums. We can keep track of a count of new messages
         //from each forum too.
         this.currentForums = [];
+        
+        //The timer to call a pull request
+        this.pollingCaller = null;
 
     },
     // Bind Event Listeners
@@ -78,8 +82,9 @@ var app = {
         
           if(userId) {
         	//Yep, we have a logged in user
-        	$('#login-popup').hide();	
-        	app.setupPush();
+        	$('#login-popup').hide();
+        	app.setupPull();
+        	return;		
         
           } else {
             //No logged user - show the login page
@@ -91,7 +96,7 @@ var app = {
           
           if(oldRegId) {
           		$('#login-popup').hide();	
-        		app.setupPush();
+         		app.setupPull();
           }
     },
     
@@ -108,6 +113,10 @@ var app = {
 				if(data.message) {
 					finalData.message = data.message.replace("[image]", ""); 	//Remove any mention of an [image] from the message, because we are going to show it.
 				} else {
+					finalData.message = "";
+				}
+
+			} else {
 					finalData.message = "";
 				}
 			} else {
@@ -175,7 +184,6 @@ var app = {
 		var displayMessageCnt = "";
 		var keepListening = "Close this page to keep listening.";		//Default message at the bottom
 		
-		
 		for(var cnt = 0; cnt < errorThis.currentForums.length; cnt++) {
 			if(errorThis.currentForums[cnt].url == finalData.observeUrl) {
 				//Yes, a new message for the same forum
@@ -239,7 +247,6 @@ var app = {
    			 newElement.innerHTML = "<div id=\"" + displayElement + "\" class=\"inner-popup\"></div>";
     		document.getElementById("aj-HTML-alert-container").appendChild(newElement);
 			
-			
 		}
 		
 		
@@ -259,13 +266,199 @@ var app = {
 		
 		var newHTML = "<span style='vertical-align: top; padding: 10px; padding-top:30px;' class='big-text'>AtomJump Message</span><br/><img  src='icon-Small@3x.png' style='padding 10px;'><ons-fab style='z-index: 1800;' position='top right'  onclick=\"app.closeNotifications('" + containerElement + "');\"><ons-icon icon=\"md-close\" ></ons-icon></ons-fab><p><b>" + finalData.message + insertImage + "</b>" + displayMessageCnt + "<br/><br/><ons-button style=\"background-color: #cc99cc; color: white;\" href='javascript:' onclick='app.warningBrowserOpen(\"gotoforum\", function() { app.myWindowOpen(\"" + finalData.observeUrl + "\", \"_system\"); });'>Open the Forum&nbsp;&nbsp;<ons-icon style=\"color: white;\" icon=\"ion-ios-copy-outline\" size=\"24px\"></ons-icon></ons-button><br/><br/>" + finalData.forumMessage + ": " + finalData.forumName  + "<br/><br/><small>" + keepListening + "</small></p>";
 		
-		
 		document.getElementById(displayElement).innerHTML = newHTML;		
 		document.getElementById(containerElement).style.display = "block";   
     
     
     },
     
+    
+    poll: function( )
+	{
+		 var url = localStorage.getItem('pollingURL');		//Can potentially extend to some country code info here from the cordova API, or user input?
+	  	//this will repeat every 15 seconds
+	  	if(url) {
+	  		try {
+				errorThis.get(url, function(url, resp) {
+					//Resp could be a .json message file
+				
+				
+					$('#registered').html("<small>Listening for Messages</small>");
+				
+					//Call onNotificationEvent(parsedJSON);
+					if(resp != "none") {
+						try {
+							var msg = JSON.parse(resp);
+							var data = msg.data;
+							errorThis.onNotificationEvent(data);
+						
+							//Do a self notification alert if we're in the background. See https://github.com/katzer/cordova-plugin-local-notifications
+							if(cordova && cordova.plugins && cordova.plugins.notification && cordova.plugins.notification.local) {
+								cordova.plugins.notification.local.schedule({
+									title: data.additionalData.title,
+									text: data.message,
+									foreground: true
+								});
+							}
+						
+						} catch(err) {
+							//Show that there is a problem listening to messages.
+							$('#registered').html("<small style='color:#8F3850;'>Waiting for a Connection..</small>");
+							$('#registered').show();
+						}	  				
+					}
+				});
+			} catch(err) {
+				//Show that there is a problem listening to messages.
+				$('#registered').html("<small style='color:#8F3850;'>Waiting for a Connection..</small>");
+				$('#registered').show();
+			
+			}
+	  	}
+	},
+    
+    startPolling: function() {
+    	//Regular timed interval checks on the 'pollingURL' localStorage item, every 15 seconds.
+   		$('#registered').html("<small>Listening for Messages</small>");
+		$('#registered').show();
+    		
+    	this.pollingCaller = setInterval(errorThis.poll, 30000);
+		
+		
+    },
+    
+    stopPolling: function() {
+    	if(this.pollingCaller) {
+    		clearInterval(this.pollingCaller);
+    	}    	
+    },
+    
+    setupPull: function() {
+    
+    	errorThis = this;
+    	//Pull from an AtomJump notification system
+    	//Works in a similar fashion to setupPush() below, but is cross-platform
+    	//and is based on regular polling of a URL for new messages.
+    	
+    	if(!api) {
+    		alert("Sorry, you will need to be signed in to a server before starting to listen.");
+    		return;    		
+    	} else {
+    	
+    		//Check the server if we have pull available
+			$.ajax({
+				type       : "POST",
+				url        : api + "plugins/notifications/check-pull.php",
+				dataType: 'jsonp', // Notice! JSONP <-- P (lowercase)
+				crossDomain: true,
+				success    : function(resp) {
+					
+					if(resp && resp.response == "true") {
+						//TODO: allow user to choose in some circumstances
+						
+						//Use pull
+						
+						/*Example 	
+		
+						Step 1. App requests a registration event
+	
+						Pair from this PHP script e.g:
+						http://this.ajmessaging.url/api/plugins/notifications/genid.php?country=NZ
+	
+						which will return e.g.
+						2z2H HMEcfQQCufJmRPMX4C https://medimage-nz1.atomjump.com New%20Zealand 
+	
+	
+						If any other software needs it, we can request in the next couple of hours:
+	
+						https://medimage-pair.atomjump.com/med-genid.php?compare=2z2H
+	
+						which returns the pool server write script e.g.
+						https://medimage-nz1.atomjump.com/write/HMEcfQQCufJmRPMX4C
+						*/
+						pull = true;		//Set the global pull
+		
+						var oldRegId = localStorage.getItem('registrationId');
+						
+						if (!oldRegId) {
+							//We need to generate a new registrationId
+		
+							var url = api + "plugins/notifications/genid.php?country=Default";		//Can potentially extend to some country code info here from the cordova API, or user input?
+			
+							errorThis.get(url, function(url, resp) {
+								//Registered OK
+								//resp will now be e.g. "2z2H HMEcfQQCufJmRPMX4C https://medimage-nz1.atomjump.com New%20Zealand"
+								var items = resp.split(" ");
+								var phonePlatform = "AtomJump";		//This is cross-platform
+								var registrationId = encodeURIComponent(items[2] + "/api/photo/#" + items[1]);
+								//Registration id will now be e.g. https://medimage-nz1.atomjump.com/api/photo/#HMEcfQQCufJmRPMX4C
+								//which is what our server will post new message .json files too.
+				
+								var pollingURL = items[2] + "/read/" + items[1];
+								//The pollingURL is what we will continue to check on
+				
+								//Start up regular checks
+								localStorage.setItem('pollingURL', pollingURL);
+								errorThis.startPolling(pollingURL);
+				
+				   
+								$('#registered').html("<small>Listening for Messages</small>");
+								$('#registered').show();
+				
+				
+								// Save the new registration ID on the phone
+								localStorage.setItem('registrationId', registrationId);
+								// Post registrationId to your app server as the value has changed
+								//Post to server software Loop Server API
+				
+								
+			
+								//Now open the browser, if the button has been set
+								if(singleClick == true) {
+									//Have tapped a single server pairing - will not have a known userid
+									//so we need to let the browser use it's own cookies.
+									var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=&devicetype=" + phonePlatform;
+									errorThis.myWindowOpen(url, '_system');
+								} else {
+			
+									//Otherwise login with the known logged userId
+									var phonePlatform = errorThis.getPlatform();
+				
+									var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform;  //e.g. https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
+									 errorThis.get(url, function(url, resp) {
+										//Registered OK
+				
+									});
+								}
+		
+							});		//End of get
+						}
+						else {
+						
+							//Start polling
+							
+							var pollingURL = localStorage.getItem('pollingURL');
+							errorThis.startPolling(pollingURL);
+						}
+						
+								
+					
+					} else {
+						//Use push instead.
+						errorThis.setupPush();					
+					}
+				},
+				error      : function() {
+					//Use push instead.
+					errorThis.setupPush();
+					return;        
+				}
+			
+			});
+    	
+    		
+    	}
+    },
     
     setupPush: function() {
   	
@@ -297,6 +490,7 @@ var app = {
             
            
             var oldRegId = localStorage.getItem('registrationId');
+            $('#registered').html("<small>Listening for Messages</small>");
             $('#registered').show();
             if (oldRegId !== data.registrationId) {
                 
@@ -356,6 +550,11 @@ var app = {
     {		
     	var platform = "iOS";			//Default on the cordova-ios branch
 		
+		if(pull == true) {
+			//Switch over to the cross-platform AtomJump platform
+			platform = "AtomJump";	
+		}
+		
 		return platform;
     },
     
@@ -386,8 +585,9 @@ var app = {
    		
    		var id = localStorage.getItem('registrationId');
    		
-   		if(id) {	
-			
+
+   		if(id) {
+   			//Already have a registrationId
 			var phonePlatform = errorThis.getPlatform();
 			var platform = phonePlatform;
 		
@@ -405,7 +605,7 @@ var app = {
 			$('#login-popup').hide();
 			
 		} else {
-			 
+			 //Need to setup a registration
 			 var settingApi = localStorage.getItem("api");
          	 if(settingApi) {
           		 api = settingApi;
@@ -414,7 +614,7 @@ var app = {
          	 } 
          	          	 
          	singleClick = true;      
-        	errorThis.setupPush();
+        	errorThis.setupPull();
         	$('#login-popup').hide();
 		}
    		   		
@@ -451,8 +651,8 @@ var app = {
 						
 							if(userId) {
 								localStorage.setItem("loggedUser",userId);
-														
-								app.setupPush();		//register this phone
+											
+								app.setupPull();		//register this phone
 								$('#login-popup').hide();
 						
 							} else {
@@ -579,8 +779,6 @@ var app = {
 	myWindowOpen: function(url, style, options) {
 		//Recommend using style = '_system' for Safari browser
 		cordova.InAppBrowser.open(url, style, options);
-	
-	
 	},
 
 
@@ -652,6 +850,8 @@ var app = {
 		$('#registered').hide();
 		
 		if(api) {
+			//Stop any pull polling
+			_this.stopPolling();
 		
 			//Deregister on the database - by sending a blank id (which gets set as a null on the server). Disassociates phone from user.
 			if(userId) {

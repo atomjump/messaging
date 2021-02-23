@@ -1,5 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
+<<<<<<< HEAD
 <widget id="com.atomjump.messaging" 
+=======
+<widget id="org.atomjump.messaging" 
+>>>>>>> atomjump
 		version="0.5.4" 
 		versionCode="54" 
 		xmlns="http://www.w3.org/ns/widgets" 
@@ -74,7 +78,7 @@
 		<splash src="res/screen/android/splash-land-xxxhdpi.png" density="land-xxxhdpi" />
 
 
-         <plugin name="phonegap-plugin-push" source="npm" spec="~2.2.3">
+         <plugin name="cordova-plugin-push" source="npm" spec="~1.0.3">
         	<param name="SENDER_ID" value="538233303966" />
     	</plugin>
     	

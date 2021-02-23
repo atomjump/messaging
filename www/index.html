@@ -22,7 +22,8 @@
         <meta charset="utf-8" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="viewport" content="user-scalable=no, initial-scale=1, width=device-width" />
-		<meta http-equiv="Content-Security-Policy" content="default-src https://atomjump.com data: gap: https://ssl.gstatic.com  'unsafe-inline' *;  style-src 'self' 'unsafe-inline' 'unsafe-eval' *; media-src *; img-src 'self' data: content: *; connect-src https://atomjump.com">
+
+		<!-- Live version --><meta http-equiv="Content-Security-Policy" content="default-src https://atomjump.com data: gap: https://ssl.gstatic.com  'unsafe-inline' *;  style-src 'self' 'unsafe-inline' 'unsafe-eval' *; media-src *; img-src 'self' data: content: *; connect-src *">
 		
 
 		<link rel="stylesheet" href="css/onsenui.css"/>
@@ -118,8 +119,9 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 				<span style="padding-right: 20px;"><ons-button style="background-color: #cc99cc; color: white;" href="javascript" onclick="return app.logout();">Log Out</ons-button></span>
 			</p>
 			
-			<p style="text-align:center;">	
-				<br/>
+
+
+			<p style="text-align:center; margin-top:70px;">	
 				<span style="vertical-align: top; padding: 10px; padding-top:30px;" class="big-text">AtomJump</span><br/><a href="javascript:" onclick="app.myWindowOpen(encodeURI('https://atomjump.com/'), '_system')"><img  src="icon-Small@3x.png" style="padding 10px;"></a><br/><span id='registered' style="display: none;"><small>Listening for Messages</small></span>
         	</p>
         	
@@ -287,7 +289,7 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 							} else {
 								//Have got no response so far from the network.
 								searchedTerm = jQuery('#srch').val();
-								
+
 								if(ui.content && ui.content.length <= 0) {
 									ui.content.push(
 										{label:"Arts", value:"arts"},
@@ -295,6 +297,7 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 										{label:"Anime", value:"anime"},
 										{label: searchedTerm, value: searchedTerm}									
 									  );  //Can remove this line for iOS builds to remove commercial angle: ,{label:"Create a PRIVATE room '" + searchedTerm + "'", value:searchedTerm, id:searchedTerm}
+										
 								}
 							}
 						} else {
