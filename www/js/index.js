@@ -277,39 +277,51 @@ var app = {
 		 var url = localStorage.getItem('pollingURL');		//Can potentially extend to some country code info here from the cordova API, or user input?
 	  	//this will repeat every 15 seconds
 	  	if(url) {
-	  		errorThis.get(url, function(url, resp) {
-	  			//Resp could be a .json message file
-	  			
-	  			//Call onNotificationEvent(parsedJSON);
-	  			if(resp != "none") {
-	  				try {
-	  					var msg = JSON.parse(resp);
-	  					var data = msg.data;
-	  					errorThis.onNotificationEvent(data);
-	  					
-	  					//Do a self notification alert if we're in the background. See https://github.com/katzer/cordova-plugin-local-notifications
-	  					if(cordova && cordova.plugins && cordova.plugins.notification && cordova.plugins.notification.local) {
-							cordova.plugins.notification.local.schedule({
-								title: data.message,
-								text: data.additionalData.forumName,
-								foreground: true
-							});
-						}
-	  					
-	  				} catch(err) {
-	  					alert("Sorry your message had an error in it. Contents: " + resp);
-	  				
-	  				}	  				
-	  			}
-	  		});
+	  		try {
+				errorThis.get(url, function(url, resp) {
+					//Resp could be a .json message file
+				
+				
+					$('#registered').html("<small>Listening for Messages</small>");
+				
+					//Call onNotificationEvent(parsedJSON);
+					if(resp != "none") {
+						try {
+							var msg = JSON.parse(resp);
+							var data = msg.data;
+							errorThis.onNotificationEvent(data);
+						
+							//Do a self notification alert if we're in the background. See https://github.com/katzer/cordova-plugin-local-notifications
+							if(cordova && cordova.plugins && cordova.plugins.notification && cordova.plugins.notification.local) {
+								cordova.plugins.notification.local.schedule({
+									title: data.message,
+									text: data.additionalData.forumName,
+									foreground: true
+								});
+							}
+						
+						} catch(err) {
+							//Show that there is a problem listening to messages.
+							$('#registered').html("<small style='color:#8F3850;'>Error Listening for Messages</small>");
+							$('#registered').show();
+						}	  				
+					}
+				});
+			} catch(err) {
+				//Show that there is a problem listening to messages.
+				$('#registered').html("<small style='color:#8F3850;'>Error Listening for Messages</small>");
+				$('#registered').show();
+			
+			}
 	  	}
 	},
     
     startPolling: function() {
     	//Regular timed interval checks on the 'pollingURL' localStorage item, every 15 seconds.
-   
+   		$('#registered').html("<small>Listening for Messages</small>");
+		$('#registered').show();
     		
-    	this.pollingCaller = setInterval(errorThis.poll, 30000);
+    	this.pollingCaller = setInterval(errorThis.poll, 15000);
 		
 		
     },
@@ -366,7 +378,7 @@ var app = {
 						pull = true;		//Set the global pull
 		
 						var oldRegId = localStorage.getItem('registrationId');
-						$('#registered').show();
+						
 						if (!oldRegId) {
 							//We need to generate a new registrationId
 		
@@ -389,7 +401,8 @@ var app = {
 								errorThis.startPolling(pollingURL);
 				
 				   
-
+								$('#registered').html("<small>Listening for Messages</small>");
+								$('#registered').show();
 				
 				
 								// Save the new registration ID on the phone
@@ -397,6 +410,7 @@ var app = {
 								// Post registrationId to your app server as the value has changed
 								//Post to server software Loop Server API
 				
+								
 			
 								//Now open the browser, if the button has been set
 								if(singleClick == true) {
@@ -421,6 +435,7 @@ var app = {
 						else {
 						
 							//Start polling
+							
 							var pollingURL = localStorage.getItem('pollingURL');
 							errorThis.startPolling(pollingURL);
 						}
@@ -474,6 +489,7 @@ var app = {
             
            
             var oldRegId = localStorage.getItem('registrationId');
+            $('#registered').html("<small>Listening for Messages</small>");
             $('#registered').show();
             if (oldRegId !== data.registrationId) {
                 
