@@ -294,22 +294,22 @@ var app = {
 							//Do a self notification alert if we're in the background. See https://github.com/katzer/cordova-plugin-local-notifications
 							if(cordova && cordova.plugins && cordova.plugins.notification && cordova.plugins.notification.local) {
 								cordova.plugins.notification.local.schedule({
-									title: data.message,
-									text: data.additionalData.forumName,
+									title: data.additionalData.title,
+									text: data.message,
 									foreground: true
 								});
 							}
 						
 						} catch(err) {
 							//Show that there is a problem listening to messages.
-							$('#registered').html("<small style='color:#8F3850;'>Error Listening for Messages</small>");
+							$('#registered').html("<small style='color:#8F3850;'>Waiting for a Connection..</small>");
 							$('#registered').show();
 						}	  				
 					}
 				});
 			} catch(err) {
 				//Show that there is a problem listening to messages.
-				$('#registered').html("<small style='color:#8F3850;'>Error Listening for Messages</small>");
+				$('#registered').html("<small style='color:#8F3850;'>Waiting for a Connection..</small>");
 				$('#registered').show();
 			
 			}
@@ -321,7 +321,7 @@ var app = {
    		$('#registered').html("<small>Listening for Messages</small>");
 		$('#registered').show();
     		
-    	this.pollingCaller = setInterval(errorThis.poll, 15000);
+    	this.pollingCaller = setInterval(errorThis.poll, 30000);
 		
 		
     },
