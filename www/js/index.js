@@ -309,7 +309,7 @@ var app = {
     	//Regular timed interval checks on the 'pollingURL' localStorage item, every 15 seconds.
    
     		
-    	this.pollingCaller = setInterval(errorThis.poll, 15000);
+    	this.pollingCaller = setInterval(errorThis.poll, 30000);
 		
 		
     },
