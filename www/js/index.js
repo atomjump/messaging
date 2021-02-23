@@ -115,10 +115,6 @@ var app = {
 				} else {
 					finalData.message = "";
 				}
-
-			} else {
-					finalData.message = "";
-				}
 			} else {
 				//No image - the message is to be displayed as-is
 				if(data.message) {
