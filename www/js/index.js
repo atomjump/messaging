@@ -619,7 +619,11 @@ var app = {
     login: function(user, pass, apiUrl)
     {
     	//Login to the remote Loop Server
-   		errorThis.setAPI(apiUrl);
+   		var _this = this;
+   		
+   		_this.setAPI(apiUrl);
+   		
+   		
    		
    		if(user) {
    	
@@ -648,7 +652,7 @@ var app = {
 							if(userId) {
 								localStorage.setItem("loggedUser",userId);
 											
-								app.setupPull();		//register this phone
+								_this.setupPull();		//register this phone
 								$('#login-popup').hide();
 						
 							} else {
