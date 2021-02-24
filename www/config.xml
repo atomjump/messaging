@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.atomjump.messaging" 
-		version="0.5.5" 
+		version="0.5.6" 
 		versionCode="55" 
 		xmlns="http://www.w3.org/ns/widgets" 
 		xmlns:android="http://schemas.android.com/apk/res/android" 

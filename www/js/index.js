@@ -285,17 +285,21 @@ var app = {
 					if(resp != "none") {
 						try {
 							var msg = JSON.parse(resp);
-							var data = msg.data;
-							errorThis.onNotificationEvent(data);
+							var messageData = msg.data;
+							
 						
 							//Do a self notification alert if we're in the background. See https://github.com/katzer/cordova-plugin-local-notifications
-							if(cordova && cordova.plugins && cordova.plugins.notification && cordova.plugins.notification.local) {
-								cordova.plugins.notification.local.schedule({
-									title: data.additionalData.title,
-									text: data.message,
-									foreground: true
-								});
-							}
+							
+							cordova.plugins.notification.local.schedule({
+								title: messageData.additionalData.title,
+								text: messageData.message,
+								foreground: true
+							});
+							
+							//Show an internal message
+							alert("Message data:" + JSON.stringify(messageData));		//TESTING
+							errorThis.onNotificationEvent(messageData);
+							
 						
 						} catch(err) {
 							//Show that there is a problem listening to messages.
@@ -315,17 +319,20 @@ var app = {
     
     startPolling: function() {
     	//Regular timed interval checks on the 'pollingURL' localStorage item, every 15 seconds.
+    	errorThis = this;
+    	
    		$('#registered').html("<small>Listening for Messages</small>");
 		$('#registered').show();
+		
     		
-    	this.pollingCaller = setInterval(errorThis.poll, 30000);
+    	terrorThis.pollingCaller = setInterval(errorThis.poll, 30000);
 		
 		
     },
     
     stopPolling: function() {
-    	if(this.pollingCaller) {
-    		clearInterval(this.pollingCaller);
+    	if(errorThis.pollingCaller) {
+    		clearInterval(errorThis.pollingCaller);
     	}    	
     },
     
@@ -335,6 +342,25 @@ var app = {
     	//Pull from an AtomJump notification system
     	//Works in a similar fashion to setupPush() below, but is cross-platform
     	//and is based on regular polling of a URL for new messages.
+    	
+		/*May be an option?: cordova.plugins.notification.local.hasPermission(function (granted) {
+			if(granted == true) {
+				 //Carry on - we have permission to show notifications
+		 
+			} else {
+				//Not granted - request permission
+				cordova.plugins.notification.local.registerPermission(function (granted) {
+					 if(granted == false) {
+						alert("AtomJump Messaging will use the device's own notification system instead.");
+						//Use push instead.
+						errorThis.setupPush();		
+						return;    
+					 }
+				});
+			}
+		});*/
+		
+    	
     	
     	if(!api) {
     		alert("Sorry, you will need to be signed in to a server before starting to listen.");
