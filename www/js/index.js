@@ -25,8 +25,6 @@ var defaultApi = "https://atomjump.com/api/";		//when a blank is entered
 var rawForumHeader = "ajps_";
 var apiId = "538233303966";
 var singleClick = false;
-var pull = false;				//Switch to true if notifications are coming via a pull method (AtomJump's own), rather than push
-
 
 
 
@@ -53,6 +51,8 @@ var app = {
         
         //The timer to call a pull request
         this.pollingCaller = null;
+        this.pull = false;   			//Switch to true if notifications are coming via a pull method (AtomJump's own), rather than push
+
 
     },
     // Bind Event Listeners
@@ -398,7 +398,7 @@ var app = {
 						which returns the pool server write script e.g.
 						https://medimage-nz1.atomjump.com/write/HMEcfQQCufJmRPMX4C
 						*/
-						pull = true;		//Set the global pull
+						errorThis.pull = true;		//Set the global pull
 		
 						var oldRegId = localStorage.getItem('registrationId');
 						
@@ -572,7 +572,7 @@ var app = {
     {		
     	var platform = "iOS";			//Default on the cordova-ios branch
 		
-		if(pull == true) {
+		if(errorThis.pull == true) {
 			//Switch over to the cross-platform AtomJump platform
 			platform = "AtomJump";	
 		}
