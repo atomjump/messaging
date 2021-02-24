@@ -52,7 +52,7 @@ var app = {
         //The timer to call a pull request
         this.pollingCaller = null;
         this.pull = false;   			//Switch to true if notifications are coming via a pull method (AtomJump's own), rather than push
-		this.pollInterval = 15000;	//TESTING	//For publications, use 30000 (i.e. 30 second check interval) by default.
+		this.pollInterval = 30000;		//For publications, use 30000 (i.e. 30 second check interval) by default.
 
     },
     // Bind Event Listeners
@@ -289,7 +289,6 @@ var app = {
 							
 						
 							//Do a self notification alert if we're in the background. See https://github.com/katzer/cordova-plugin-local-notifications
-							alert("About to show message");		//TESTING
 							cordova.plugins.notification.local.schedule({
 								title: messageData.additionalData.title,
 								text: messageData.message,
@@ -297,7 +296,6 @@ var app = {
 							});
 							
 							//Show an internal message
-							alert("Message data:" + JSON.stringify(messageData));		//TESTING
 							errorThis.onNotificationEvent(messageData);
 							
 						
@@ -407,14 +405,11 @@ var app = {
 		
 							var url = api + "plugins/notifications/genid.php?country=Default";		//Can potentially extend to some country code info here from the cordova API, or user input?
 							
-							alert("About to generate new reg ID from: " + url);		//TESTING
 			
 							errorThis.get(url, function(url, resp) {
 								//Registered OK
 								//resp will now be e.g. "2z2H HMEcfQQCufJmRPMX4C https://medimage-nz1.atomjump.com New%20Zealand"
-								
-								alert("Response: " + resp);		//TESTING
-								
+																
 								var items = resp.split(" ");
 								var phonePlatform = "AtomJump";		//This is cross-platform
 								var registrationId = encodeURIComponent(items[2] + "/api/photo/#" + items[1]);
@@ -445,7 +440,6 @@ var app = {
 									//Have tapped a single server pairing - will not have a known userid
 									//so we need to let the browser use it's own cookies.
 									var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=&devicetype=" + phonePlatform;
-									alert("About to open: " + url);		//TESTING
 									errorThis.myWindowOpen(url, '_system');
 								} else {
 			
@@ -453,9 +447,7 @@ var app = {
 									var phonePlatform = errorThis.getPlatform();
 				
 									var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform;  //e.g. 
-									
-									alert("About to open: " + url);		//TESTING								
-										https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
+																			https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
 									 errorThis.get(url, function(url, resp) {
 										//Registered OK
 				
