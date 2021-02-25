@@ -330,7 +330,10 @@ var app = {
     	app.pollingCaller = setInterval(app.poll, app.pollInterval); //Note: these notifications will work only if the app is in the foreground.
 		
 		 //iOS checking for new messages in the background - limited to every 15 minutes
-         app.BackgroundFetch = window.BackgroundFetch;
+         alert("About to BackgroundFetch");			//TESTING
+         var BackgroundFetch = window.BackgroundFetch;
+         alert("Got BackgroundFetch");			//TESTING
+		
 
 		  // Your BackgroundFetch event handler.
 		  var onBackgroundEvent = function(taskId) {
@@ -339,17 +342,17 @@ var app = {
 			  // Required: Signal completion of your task to native code
 			  // If you fail to do this, the OS can terminate your app
 			  // or assign battery-blame for consuming too much background-time
-			  app.BackgroundFetch.finish(taskId);
+			  BackgroundFetch.finish(taskId);
 		  };
 
 		  // Timeout callback is executed when your Task has exceeded its allowed running-time.
 		  // You must stop what you're doing immediately BackgroundFetch.finish(taskId)
 		  var onBackgroundTimeout = function(taskId) {
 			  console.log('[BackgroundFetch] TIMEOUT: ', taskId);
-			  app.BackgroundFetch.finish(taskId);
+			  BackgroundFetch.finish(taskId);
 		  };
 
-		  var status = app.BackgroundFetch.configure({minimumFetchInterval: 15}, onBackgroundEvent, onTimeout);
+		  var status = BackgroundFetch.configure({minimumFetchInterval: 15}, onBackgroundEvent, onTimeout);
 		  console.log('[BackgroundFetch] configure status: ', status);
 		  alert('[BackgroundFetch] configure status: ' + status);	//TESTING
 		
