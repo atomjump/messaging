@@ -99,12 +99,8 @@ var app = {
          		app.setupPull();
           }
           
-          //TESTING iOS
-          cordova.plugins.notification.local.schedule({
-			title: 'Check notifications on iOS after 20 seconds',
-			trigger: { in: 20, unit: 'second' },
-			foreground: true
-		});
+          
+         
           
     },
     
@@ -287,7 +283,7 @@ var app = {
 					//Resp could be a .json message file
 				
 				
-					$('#registered').html("<small>Listening for Messages</small>");
+					$('#registered').html("<small>Listening for Messages<br/>(every 15 mins)</small>");
 				
 					//Call onNotificationEvent(parsedJSON);
 					if(resp != "none") {
@@ -316,7 +312,7 @@ var app = {
 				});
 			} catch(err) {
 				//Show that there is a problem listening to messages.
-				$('#registered').html("<small style='color:#8F3850;'>Waiting for a Connection..</small>");
+				$('#registered').html("<small style='color:#8F3850;'>Waiting for a Connection..<br/>(Checks every 15 mins)</small>");
 				$('#registered').show();
 			
 			}
@@ -327,11 +323,35 @@ var app = {
     	//Regular timed interval checks on the 'pollingURL' localStorage item, every 15 seconds.
     	errorThis = this;
     	
-   		$('#registered').html("<small>Listening for Messages</small>");
+   		$('#registered').html("<small>Listening for Messages<br/>(every 15 mins)</small>");
 		$('#registered').show();
 		
     		
-    	app.pollingCaller = setInterval(app.poll, app.pollInterval); //Note: this should be 'app' because of scope to the outside world
+    	app.pollingCaller = setInterval(app.poll, app.pollInterval); //Note: these notifications will work only if the app is in the foreground.
+		
+		 //iOS checking for new messages in the background - limited to every 15 minutes
+         app.BackgroundFetch = window.BackgroundFetch;
+
+		  // Your BackgroundFetch event handler.
+		  var onBackgroundEvent = function(taskId) {
+			  console.log('[BackgroundFetch] event received: ', taskId);
+			  app.poll();
+			  // Required: Signal completion of your task to native code
+			  // If you fail to do this, the OS can terminate your app
+			  // or assign battery-blame for consuming too much background-time
+			  app.BackgroundFetch.finish(taskId);
+		  };
+
+		  // Timeout callback is executed when your Task has exceeded its allowed running-time.
+		  // You must stop what you're doing immediately BackgroundFetch.finish(taskId)
+		  var onBackgroundTimeout = function(taskId) {
+			  console.log('[BackgroundFetch] TIMEOUT: ', taskId);
+			  app.BackgroundFetch.finish(taskId);
+		  };
+
+		  var status = app.BackgroundFetch.configure({minimumFetchInterval: 15}, onBackgroundEvent, onTimeout);
+		  console.log('[BackgroundFetch] configure status: ', status);
+		
 		
 		
     },

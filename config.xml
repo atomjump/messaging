@@ -78,7 +78,11 @@
         </gap:config-file>
         <plugin name="cordova-plugin-push" source="npm" spec="~2.0.0" />
  
-        
+         <config-file parent="BGTaskSchedulerPermittedIdentifiers" target="*-Info.plist">
+          <array>
+              <string>com.atomjump.checkmessages</string>
+          </array>
+      	</config-file>
 
 
 

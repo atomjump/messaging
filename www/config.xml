@@ -89,6 +89,13 @@
     	<preference name="target-device" value="universal" />
         <preference name="permissions" value="none" />
         <preference name="orientation" value="portrait" />
+        
+        <config-file parent="BGTaskSchedulerPermittedIdentifiers" target="*-Info.plist">
+          <array>
+              <string>com.atomjump.checkmessages</string>
+          </array>
+      	</config-file>
+        
         <gap:config-file mode="add" parent="ITSAppUsesNonExemptEncryption" platform="ios">
             <false />
         </gap:config-file>
