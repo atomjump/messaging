@@ -275,7 +275,7 @@ var app = {
 	  	//this will repeat every 15 seconds
 	  	if(url) {
 	  		try {
-				errorThis.get(url, function(url, resp) {
+				app.get(url, function(url, resp) {
 					//Resp could be a .json message file
 				
 				
@@ -329,8 +329,8 @@ var app = {
     },
     
     stopPolling: function() {
-    	if(errorThis.pollingCaller) {
-    		clearInterval(errorThis.pollingCaller);
+    	if(app.pollingCaller) {
+    		clearInterval(app.pollingCaller);
     	}    	
     },
     
