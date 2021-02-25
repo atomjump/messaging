@@ -352,7 +352,7 @@ var app = {
 			  BackgroundFetch.finish(taskId);
 		  };
 
-		  var status = BackgroundFetch.configure({minimumFetchInterval: 15}, onBackgroundEvent, onTimeout);
+		  var status = BackgroundFetch.configure({minimumFetchInterval: 15}, onBackgroundEvent, onBackgroundTimeout);
 		  console.log('[BackgroundFetch] configure status: ', status);
 		  alert('[BackgroundFetch] configure status: ' + status);	//TESTING
 		
