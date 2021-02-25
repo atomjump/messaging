@@ -351,6 +351,7 @@ var app = {
 
 		  var status = app.BackgroundFetch.configure({minimumFetchInterval: 15}, onBackgroundEvent, onTimeout);
 		  console.log('[BackgroundFetch] configure status: ', status);
+		  alert('[BackgroundFetch] configure status: ' + status);	//TESTING
 		
 		
 		
@@ -452,7 +453,7 @@ var app = {
 								errorThis.startPolling(pollingURL);
 				
 				   
-								$('#registered').html("<small>Listening for Messages</small>");
+								$('#registered').html("<small>Listening for Messages<br/>(every 15 mins)</small>");
 								$('#registered').show();
 				
 				
