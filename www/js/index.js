@@ -102,7 +102,8 @@ var app = {
           //TESTING iOS
           cordova.plugins.notification.local.schedule({
 			title: 'Check notifications on iOS after 20 seconds',
-			trigger: { in: 20, unit: 'second' }
+			trigger: { in: 20, unit: 'second' },
+			foreground: true
 		});
           
     },
