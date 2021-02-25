@@ -98,6 +98,13 @@ var app = {
           		$('#login-popup').hide();	
          		app.setupPull();
           }
+          
+          //TESTING iOS
+          cordova.plugins.notification.local.schedule({
+			title: 'Check notifications on iOS after 20 seconds',
+			trigger: { in: 20, unit: 'second' }
+		});
+          
     },
     
     onNotificationEvent: function(data) {
