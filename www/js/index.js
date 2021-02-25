@@ -295,7 +295,7 @@ var app = {
 							});
 							
 							//Show an internal message
-							errorThis.onNotificationEvent(messageData);
+							app.onNotificationEvent(messageData);		//Note: this should be 'app' because of scope to the outside world
 						
 							
 						
@@ -323,7 +323,7 @@ var app = {
 		$('#registered').show();
 		
     		
-    	errorThis.pollingCaller = setInterval(errorThis.poll, errorThis.pollInterval);
+    	app.pollingCaller = setInterval(app.poll, app.pollInterval); //Note: this should be 'app' because of scope to the outside world
 		
 		
     },
@@ -679,7 +679,7 @@ var app = {
 							if(userId) {
 								localStorage.setItem("loggedUser",userId);
 											
-								_this.setupPull();		//register this phone
+								app.setupPull();		//register this phone. Note: this should be 'app' because of scope.
 								$('#login-popup').hide();
 						
 							} else {
