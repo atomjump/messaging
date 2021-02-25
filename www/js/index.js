@@ -273,7 +273,7 @@ var app = {
     },
     
     
-    poll: function( )
+    poll: function(cb)
 	{
 		 var url = localStorage.getItem('pollingURL');		//Can potentially extend to some country code info here from the cordova API, or user input?
 	  	//this will repeat every 15 seconds
@@ -300,13 +300,14 @@ var app = {
 							
 							//Show an internal message
 							app.onNotificationEvent(messageData);		//Note: this should be 'app' because of scope to the outside world
-						
+							cb();
 							
 						
 						} catch(err) {
 							//Show that there is a problem listening to messages.
 							$('#registered').html("<small style='color:#8F3850;'>Waiting for a Connection..</small>");
 							$('#registered').show();
+							cb();
 						}	  				
 					}
 				});
@@ -314,8 +315,11 @@ var app = {
 				//Show that there is a problem listening to messages.
 				$('#registered').html("<small style='color:#8F3850;'>Waiting for a Connection..<br/>(Checks every 15 mins)</small>");
 				$('#registered').show();
-			
+				cb();
 			}
+	  	} else {
+	  		//No URL
+	  		cb();
 	  	}
 	},
     
@@ -338,11 +342,16 @@ var app = {
 		  // Your BackgroundFetch event handler.
 		  var onBackgroundEvent = function(taskId) {
 			  console.log('[BackgroundFetch] event received: ', taskId);
-			  app.poll();
-			  // Required: Signal completion of your task to native code
-			  // If you fail to do this, the OS can terminate your app
-			  // or assign battery-blame for consuming too much background-time
-			  BackgroundFetch.finish(taskId);
+			  alert('[BackgroundFetch] event received: ', taskId);		//TESTING
+			  app.poll(function() {
+				  // Required: Signal completion of your task to native code
+				  // If you fail to do this, the OS can terminate your app
+				  // or assign battery-blame for consuming too much background-time
+				  BackgroundFetch.finish(taskId);
+			  
+			  	  alert("Finished background task");		//TESTING
+			  });
+			  
 		  };
 
 		  // Timeout callback is executed when your Task has exceeded its allowed running-time.
