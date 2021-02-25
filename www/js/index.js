@@ -286,11 +286,7 @@ var app = {
 						try {
 							var msg = JSON.parse(resp);
 							var messageData = msg.data;
-							
-						
-							//Show an internal message
-							errorThis.onNotificationEvent(messageData);
-						
+													
 							//Do a self notification alert if we're in the background. See https://github.com/katzer/cordova-plugin-local-notifications
 							cordova.plugins.notification.local.schedule({
 								title: messageData.additionalData.title,
@@ -298,7 +294,9 @@ var app = {
 								foreground: true
 							});
 							
-							
+							//Show an internal message
+							errorThis.onNotificationEvent(messageData);
+						
 							
 						
 						} catch(err) {
