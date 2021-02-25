@@ -301,6 +301,7 @@ var app = {
 							//Show an internal message
 							app.onNotificationEvent(messageData);		//Note: this should be 'app' because of scope to the outside world
 							cb();
+							return;
 							
 						
 						} catch(err) {
@@ -308,6 +309,7 @@ var app = {
 							$('#registered').html("<small style='color:#8F3850;'>Waiting for a Connection..</small>");
 							$('#registered').show();
 							cb();
+							return;
 						}	  				
 					}
 				});
@@ -316,10 +318,12 @@ var app = {
 				$('#registered').html("<small style='color:#8F3850;'>Waiting for a Connection..<br/>(Checks every 15 mins)</small>");
 				$('#registered').show();
 				cb();
+				return;
 			}
 	  	} else {
 	  		//No URL
 	  		cb();
+	  		return;
 	  	}
 	},
     
