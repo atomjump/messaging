@@ -326,6 +326,13 @@ var app = {
 	  		return;
 	  	}
 	},
+	
+	runPoll: function() {
+		//This is run from the regular checks, and allows for a return callback
+		app.poll(function() {
+		});
+	
+	},
     
     startPolling: function() {
     	//Regular timed interval checks on the 'pollingURL' localStorage item, every 15 seconds.
@@ -335,7 +342,7 @@ var app = {
 		$('#registered').show();
 		
     		
-    	app.pollingCaller = setInterval(app.poll, app.pollInterval); //Note: these notifications will work only if the app is in the foreground.
+    	app.pollingCaller = setInterval(app.runPoll, app.pollInterval); //Note: these notifications will work only if the app is in the foreground.
 		
 		 //iOS checking for new messages in the background - limited to every 15 minutes
          var BackgroundFetch = window.BackgroundFetch;
