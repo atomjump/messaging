@@ -283,7 +283,7 @@ var app = {
 					//Resp could be a .json message file
 				
 				
-					$('#registered').html("<small>Listening for Messages<br/>(every 15 mins)</small>");
+					$('#registered').html("<small>Listening for Messages<br/>(Bring app to front)</small>");
 				
 					//Call onNotificationEvent(parsedJSON);
 					if(resp != "none") {
@@ -315,7 +315,7 @@ var app = {
 				});
 			} catch(err) {
 				//Show that there is a problem listening to messages.
-				$('#registered').html("<small style='color:#8F3850;'>Waiting for a Connection..<br/>(Checks every 15 mins)</small>");
+				$('#registered').html("<small style='color:#8F3850;'>Waiting for a Connection..<br/>(Checks every 15 sec)</small>");
 				$('#registered').show();
 				cb();
 				return;
@@ -331,7 +331,7 @@ var app = {
     	//Regular timed interval checks on the 'pollingURL' localStorage item, every 15 seconds.
     	errorThis = this;
     	
-   		$('#registered').html("<small>Listening for Messages<br/>(every 15 mins)</small>");
+   		$('#registered').html("<small>Listening for Messages<br/>(Bring app to front)</small>");
 		$('#registered').show();
 		
     		
@@ -464,7 +464,7 @@ var app = {
 								errorThis.startPolling(pollingURL);
 				
 				   
-								$('#registered').html("<small>Listening for Messages<br/>(every 15 mins)</small>");
+								$('#registered').html("<small>Listening for Messages<br/>(Bring app to front)</small>");
 								$('#registered').show();
 				
 				
