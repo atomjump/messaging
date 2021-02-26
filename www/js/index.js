@@ -460,6 +460,7 @@ var app = {
     },
     
     setupPush: function() {
+  		pull = false;			//Set global pull off
   	
   		if(typeof(PushNotification) == 'undefined') { 
 			alert("PushNotification does not exist sorry");
@@ -845,6 +846,7 @@ var app = {
     logout: function() {
         //We have connected to a server OK
         var _this = this;
+        pull = false;
         
     	userId = localStorage.getItem("loggedUser");
 		localStorage.removeItem("registrationId");
