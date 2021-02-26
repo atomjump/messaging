@@ -857,6 +857,7 @@ var app = {
     factoryReset: function() {
         //We have connected to a server OK
         var _this = this;
+        _this.pull = false;
         
     		navigator.notification.confirm(
 	    		'Are you sure? All your saved forums and other settings will be cleared.',  // message
