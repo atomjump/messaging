@@ -910,6 +910,8 @@ var app = {
         //We have connected to a server OK
         var _this = this;
         
+        _this.pull = false; 		//Assume nothing, iOS / AtomJump connection
+        
     	userId = localStorage.getItem("loggedUser");
 		localStorage.removeItem("registrationId");
 		localStorage.removeItem("loggedUser");
