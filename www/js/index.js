@@ -524,7 +524,8 @@ var app = {
     },
     
     setupPush: function() {
-  		//Actually, this isn't needed, as we can have both pull and push potentially occuring. errorThis.pull = false;		//Set the global pull to off
+  		//Set the global pull to off
+  		errorThis.pull = false;
   	
   		if(typeof(PushNotification) == 'undefined') { 
 			alert("PushNotification does not exist sorry");
