@@ -480,8 +480,7 @@ var app = {
 								errorThis.startPolling(pollingURL);
 				
 				   
-								$('#registered').html("<small>Listening for Messages<br/>(Bring app to front)</small>");
-								$('#registered').show();
+								
 				
 				
 								// Save the new registration ID on the phone
@@ -501,6 +500,10 @@ var app = {
 									alert("Registration opening: " + url);		//TESTING
 									
 									errorThis.myWindowOpen(url, '_system');
+									
+									$('#registered').html("<small><a href='" + url + "' target='_blank'>Tap to start listening for messages</a><br/>(Then close browser)</small>");
+									$('#registered').show();
+									
 								} else {
 			
 									//Otherwise login with the known logged userId
@@ -513,6 +516,11 @@ var app = {
 									url = url.replace("https", "http");		//Must go to a different URL in safari, so using http. TESTING
 									alert("Registration opening: " + url);		//TESTING
 																			https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
+																			
+									$('#registered').html("<small><a href='" + url + "' target='_blank'>Tap to start listening for messages</a><br/>(Then close browser)</small>");
+									$('#registered').show();
+									
+									
 									 errorThis.get(url, function(url, resp) {
 										//Registered OK
 				
