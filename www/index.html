@@ -135,117 +135,124 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 		
 	
 	        <div id="inner-popup">
-			
-			<div style="text-align:right;">	
-				<span style="padding-right: 20px;"><ons-button style="background-color: #cc99cc; color: white;" href="javascript" onclick="return app.logout();">Log Out</ons-button></span>
+	        
+	        <div id="header">
+				<div style="text-align:left; float: left;">
+					<span>
+							<a href="javascript:" onclick="app.showHomeGuide();" style="color: #555; padding:10px;" alt="Add to Home"><ons-icon icon='md-bookmark' class='list__item__icon'></ons-icon>Add</a>
+					</span>
+				</div>	
+				<div style="text-align:right; float: right;">	
+					<span style="padding-right: 20px;"><ons-button style="background-color: #cc99cc; color: white;" href="javascript" onclick="return app.logout();">Log Out</ons-button></span>
+				</div>
 			</div>
 			
 
-
-			<p style="text-align:center;">	
-				<span style="vertical-align: top; padding: 10px; padding-top:10px;" class="big-text">AtomJump</span><br/><a href="javascript:" onclick="app.myWindowOpen(encodeURI('https://atomjump.com/'), '_system')"><img  src="icon-Small@3x.png" style="padding 10px;"></a><br/><span id='registered' style="display: none;"><small>Listening for Messages</small></span>
-        	</p>
-        	
-        	
-        		
-        		
-			<p id="totop" style="text-align:center; margin-top: 10px; padding-top:10px;">
-				<input id="srch" name="orig_query" type="text" size="9" class="resizedTextbox" placeholder="Message about..">
-			</p>	
-			<!--<a href="https://atomjump.com" target="_blank" class="button" style="background-color: #cc99cc; color: white;">TEST THIS&nbsp;&nbsp;<ons-icon style="color: white;" icon="ion-ios-copy-outline" size="24px"></ons-icon></a>-->
+			<div style="clear: both;">	<!-- Start of main block -->
+				<p style="text-align:center;">	
+					<span style="vertical-align: top; padding: 10px; padding-top:10px;" class="big-text">AtomJump</span><br/><a href="javascript:" onclick="app.myWindowOpen(encodeURI('https://atomjump.com/'), '_system')"><img  src="icon-Small@3x.png" style="padding 10px;"></a><br/><span id='registered' style="display: none;"><small>Listening for Messages</small></span>
+				</p>
+			
+			
+				
+				
+				<p id="totop" style="text-align:center; margin-top: 10px; padding-top:10px;">
+					<input id="srch" name="orig_query" type="text" size="9" class="resizedTextbox" placeholder="Message about..">
+				</p>	
+				<!--<a href="https://atomjump.com" target="_blank" class="button" style="background-color: #cc99cc; color: white;">TEST THIS&nbsp;&nbsp;<ons-icon style="color: white;" icon="ion-ios-copy-outline" size="24px"></ons-icon></a>-->
 			
 			
 			
-	        	
-			<ons-list id="forum-list" modifier="chevron">
-				<ons-list-header>Your Shortcuts <span class="small-text" onclick="navigator.notification.alert('These are frequently used messaging forums, which you can add in the settings page. Note: you will need to login independently within your browser to see the correct messages.', function(){}, 'New Account');"><small><ons-icon icon="ion-ios-help" size="20px" fixed-width="true"></small></span></ons-list-header>
-    			
-    		</ons-list>
+				
+				<ons-list id="forum-list" modifier="chevron">
+					<ons-list-header>Your Shortcuts <span class="small-text" onclick="navigator.notification.alert('These are frequently used messaging forums, which you can add in the settings page. Note: you will need to login independently within your browser to see the correct messages.', function(){}, 'New Account');"><small><ons-icon icon="ion-ios-help" size="20px" fixed-width="true"></small></span></ons-list-header>
+				
+				</ons-list>
 	
 	
  
-        
 		
- 		
-        
+		
+		
+		
 
-        <div style="text-align:center;">
-            <span id="notify" class="notify-text"></span>
-            &nbsp;<span id="status" class="notify-text"></span>
-        </div>
-        
-        <br/>
-       
-        
-		<div id="aj-HTML-alert-container">
-        </div>
-        
-         <div id="login-popup" style="display:none;">
-        	<div class="inner-popup">
-        		
-        		<span class="big-text" >AtomJump Messaging</span><br/>
-        		
-        		
-        		<ons-list style="padding-top: 20px;">
-        		 <ons-list-header>Please Choose:</ons-list-header>
-					<ons-list-item expandable>
-					  <span style="width :100%;" onclick="$('.expandable-content').hide(); $(this).parent().find('.expandable-content').slideToggle();">&nbsp;&nbsp;Pair with AtomJump.com</span>
-					  <div class="expandable-content" style="display: none; width: 100%;">
-					  		<p style="text-align:center;">
-					  		<ons-button style="background-color: #7c5599; color: white;" modifier="large--cta" onclick="app.register(defaultApi);">Pair with AtomJump.com</ons-button>
-					  		</p>
-					  	</div>
-					</ons-list-item>
-					<ons-list-item expandable >
-					  <span style="width :100%;" onclick="$('.expandable-content').hide(); $(this).parent().find('.expandable-content').slideToggle();"><b>(Or)</b>&nbsp;&nbsp;Pair with a Private Server</span>
-					  <div class="expandable-content" style="width: 100%;">
-					  	<p style="text-align:center;"><input style="padding:5px;" id="pair-private-server" type="url" placeholder="Paste In Here" size="26" class="resizedTextbox"><br/><br/>
-					  		<ons-button style="background-color: #7c5599; color: white;" modifier="large--cta" onclick="app.register($('#pair-private-server').val());">Pair with a Private Server</ons-button>
-					  	</p>
-					  </div>
-					</ons-list-item>
-					<ons-list-item expandable>
-					  
-					   <span style="width:100%;" onclick="$('.expandable-content').hide(); $(this).parent().find('.expandable-content').slideToggle()"><b>(Or)</b>&nbsp;&nbsp;Login to the App</span>
-					  
-					  <div class="expandable-content" style="display: none; width: 100%;">
-					  	
-					  	<div id="login">
-					  		<br/>
-							<span class="small-text" onclick="navigator.notification.alert('Please enter your new account email and password in the same boxes. Note: you will need to login within your browser also.', function(){}, 'New Account');">New Account <small><ons-icon icon="ion-ios-help" size="20px" fixed-width="true"></small><br/></span>
-	   
-							<br/>
-
-				
-				
-							<p style="text-align:center;">
-					
-								<input style="padding:5px;" id="user" type="email" placeholder="Email" size="20" class="resizedTextbox">
-								<input style="padding:5px;" id="password" type="password" placeholder="Password" size="20" class="resizedTextbox">
-					
-								<input style="padding:5px; display: none;" id="private-server" type="url" placeholder="Private Server URL" size="26" class="resizedTextbox">
-							</p>
-							<p>
-								<ons-button style="background-color: #7c5599; color: white;" modifier="large" onclick="app.login($('#user').val(), $('#password').val(), $('#private-server').val());">Login</ons-button>
-							</p>
-				
-							<p>
-								<a class="small-text" href="javascript:" onclick="return app.clearPass($('#user').val(), $('#private-server').val());">Reset Password</a>
-							</p>
-							<p>
-								<a class="small-text" href="javascript:" onclick="$('#private-server').show(); return false;">Private Server</a>
-							</p>
-						</div>
-				
-						</div>
-					</ons-list-item>
-        		 </ons-list>
-        		<br/>
-        		
-        		
+			<div style="text-align:center;">
+				<span id="notify" class="notify-text"></span>
+				&nbsp;<span id="status" class="notify-text"></span>
 			</div>
-        </div>
-        
+		
+			<br/>
+	   
+		
+			<div id="aj-HTML-alert-container">
+			</div>
+		
+			 <div id="login-popup" style="display:none;">
+				<div class="inner-popup">
+				
+					<span class="big-text" >AtomJump Messaging</span><br/>
+				
+				
+					<ons-list style="padding-top: 20px;">
+					 <ons-list-header>Please Choose:</ons-list-header>
+						<ons-list-item expandable>
+						  <span style="width :100%;" onclick="$('.expandable-content').hide(); $(this).parent().find('.expandable-content').slideToggle();">&nbsp;&nbsp;Pair with AtomJump.com</span>
+						  <div class="expandable-content" style="display: none; width: 100%;">
+								<p style="text-align:center;">
+								<ons-button style="background-color: #7c5599; color: white;" modifier="large--cta" onclick="app.register(defaultApi);">Pair with AtomJump.com</ons-button>
+								</p>
+							</div>
+						</ons-list-item>
+						<ons-list-item expandable >
+						  <span style="width :100%;" onclick="$('.expandable-content').hide(); $(this).parent().find('.expandable-content').slideToggle();"><b>(Or)</b>&nbsp;&nbsp;Pair with a Private Server</span>
+						  <div class="expandable-content" style="width: 100%;">
+							<p style="text-align:center;"><input style="padding:5px;" id="pair-private-server" type="url" placeholder="Paste In Here" size="26" class="resizedTextbox"><br/><br/>
+								<ons-button style="background-color: #7c5599; color: white;" modifier="large--cta" onclick="app.register($('#pair-private-server').val());">Pair with a Private Server</ons-button>
+							</p>
+						  </div>
+						</ons-list-item>
+						<ons-list-item expandable>
+					  
+						   <span style="width:100%;" onclick="$('.expandable-content').hide(); $(this).parent().find('.expandable-content').slideToggle()"><b>(Or)</b>&nbsp;&nbsp;Login to the App</span>
+					  
+						  <div class="expandable-content" style="display: none; width: 100%;">
+						
+							<div id="login">
+								<br/>
+								<span class="small-text" onclick="navigator.notification.alert('Please enter your new account email and password in the same boxes. Note: you will need to login within your browser also.', function(){}, 'New Account');">New Account <small><ons-icon icon="ion-ios-help" size="20px" fixed-width="true"></small><br/></span>
+	   
+								<br/>
+
+				
+				
+								<p style="text-align:center;">
+					
+									<input style="padding:5px;" id="user" type="email" placeholder="Email" size="20" class="resizedTextbox">
+									<input style="padding:5px;" id="password" type="password" placeholder="Password" size="20" class="resizedTextbox">
+					
+									<input style="padding:5px; display: none;" id="private-server" type="url" placeholder="Private Server URL" size="26" class="resizedTextbox">
+								</p>
+								<p>
+									<ons-button style="background-color: #7c5599; color: white;" modifier="large" onclick="app.login($('#user').val(), $('#password').val(), $('#private-server').val());">Login</ons-button>
+								</p>
+				
+								<p>
+									<a class="small-text" href="javascript:" onclick="return app.clearPass($('#user').val(), $('#private-server').val());">Reset Password</a>
+								</p>
+								<p>
+									<a class="small-text" href="javascript:" onclick="$('#private-server').show(); return false;">Private Server</a>
+								</p>
+							</div>
+				
+							</div>
+						</ons-list-item>
+					 </ons-list>
+					<br/>
+				
+				
+				</div>
+			</div>
+        </div>  <!--  End of main block -->
         
         <div id="settings-popup" style="display:none;">
         	<div class="inner-popup">

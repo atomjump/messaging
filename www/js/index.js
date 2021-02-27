@@ -562,6 +562,12 @@ var app = {
     	}
     },
     
+    showHomeGuide: function() {
+    	$('#registered').html("<small>Add app to your Homescreen<br/><a class='button' href='https://support.apple.com/en-nz/guide/iphone/iph42ab2f3a7/ios#iph4f9a47bbc' target='_blank' onclick=''>iOS Guide</a>&nbsp;<a class='button' href='https://www.wikihow.com/Set-a-Bookmark-Shortcut-in-Your-Home-Screen-on-Android' target='_blank' onclick=''>Android Guide</a></small>");
+		$('#registered').show();
+    
+    },
+    
     setupPush: function() {
   		//Set the global pull to off
   		errorThis.pull = false;
