@@ -282,7 +282,6 @@ var app = {
 				app.get(url, function(url, resp) {
 					//Resp could be a .json message file
 				
-					alert("Got response from poll"); 		//TESTING
 				
 				
 					$('#registered').html("<small>Listening for Messages<br/>(Bring app to front)</small>");
@@ -330,7 +329,6 @@ var app = {
 	},
 	
 	runPoll: function() {
-		alert("In runPoll"); 		//TESTING
 		//This is run from the regular checks, and allows for a return callback
 		app.poll(function() {
 		});
@@ -414,9 +412,7 @@ var app = {
     		alert("Sorry, you will need to be signed in to a server before starting to listen.");
     		return;    		
     	} else {
-    	
-    		alert("Setting up pull");		//TESTING
-    	
+     	
     		//Check the server if we have pull available
 			$.ajax({
 				type       : "POST",
@@ -425,7 +421,6 @@ var app = {
 				crossDomain: true,
 				success    : function(resp) {
 					
-					alert("Got a response from check-pull.php");		//TESTING
 					
 					if(resp && resp.response == "true") {
 						//TODO: allow user to choose in some circumstances
@@ -496,8 +491,7 @@ var app = {
 									//so we need to let the browser use it's own cookies.
 									var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=&devicetype=" + phonePlatform;
 									
-									url = url.replace("https", "http");		//Must go to a different URL in safari, so using http. TESTING
-									alert("Registration opening: " + url);		//TESTING
+									//url = url.replace("https", "http");		//Must go to a different URL in safari, so using http. TESTING
 									
 									//errorThis.myWindowOpen(url, '_system');
 									
@@ -513,18 +507,15 @@ var app = {
 				
 									var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform;  //e.g. 
 									
-									url = url.replace("https", "http");		//Must go to a different URL in safari, so using http. TESTING
-									alert("Registration opening: " + url);		//TESTING
+									//url = url.replace("https", "http");		//Must go to a different URL in safari, so using http. TESTING
+									
 																			https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
 																			
 									$('#registered').html("<small><a href='" + url + "' target='_blank'>Tap to start listening for messages</a><br/>(Then close browser)</small>");
 									$('#registered').show();
 									
 									
-									 /*TEST OUT errorThis.get(url, function(url, resp) {
-										//Registered OK
-				
-									});*/
+									
 								}
 		
 							});		//End of get
@@ -881,11 +872,7 @@ var app = {
 	myWindowOpen: function(myUrl, style, options) {
 		//Recommend using style = '_system' for Safari browser
 		//OLDcordova.InAppBrowser.open(url, style, options);
-		alert("Before window open");		//TESTING
 		window.open(myUrl, style, options);		//TESTING blank
-		alert("In middle");
-		window.location = url(myUrl);
-		alert("After window open");		//TESTING
 	},
 
 
