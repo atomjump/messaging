@@ -301,6 +301,7 @@ var app = {
 							
 							//Show an internal message
 							app.onNotificationEvent(messageData);		//Note: this should be 'app' because of scope to the outside world
+							soundEffect.play();
 							cb();
 							return;
 							
@@ -491,11 +492,11 @@ var app = {
 									//so we need to let the browser use it's own cookies.
 									var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=&devicetype=" + phonePlatform;
 									
-									//url = url.replace("https", "http");		//Must go to a different URL in safari, so using http. TESTING
+									
 									
 									//errorThis.myWindowOpen(url, '_system');
 									
-									$('#registered').html("<small><a href='" + url + "' target='_blank'>Tap to start listening for messages</a><br/>(Then close browser)</small>");
+									$('#registered').html("<small><a href='" + url + "' target='_blank' onclick='soundEffect.play();'>Tap to start listening for messages</a><br/>(Then close browser)</small>");
 									$('#registered').show();
 									
 								} else {
@@ -505,13 +506,9 @@ var app = {
 				
 									
 				
-									var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform;  //e.g. 
-									
-									//url = url.replace("https", "http");		//Must go to a different URL in safari, so using http. TESTING
-									
-																			https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
+									var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform;  //e.g. 								https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
 																			
-									$('#registered').html("<small><a href='" + url + "' target='_blank'>Tap to start listening for messages</a><br/>(Then close browser)</small>");
+									$('#registered').html("<small><a href='" + url + "' target='_blank' onclick='soundEffect.play();'>Tap to start listening for messages</a><br/>(Then close browser)</small>");
 									$('#registered').show();
 									
 									
