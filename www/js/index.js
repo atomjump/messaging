@@ -308,6 +308,10 @@ var app = {
 							app.onNotificationEvent(messageData);		//Note: this should be 'app' because of scope to the outside world
 							soundEffect.play();
 							cb();
+							
+							//There was a new message, so check again for another one - there may be a group of them at the start of opening the app.
+							app.runPoll();
+							
 							return;
 							
 						
