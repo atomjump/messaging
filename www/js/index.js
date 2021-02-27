@@ -264,7 +264,11 @@ var app = {
 		}
 		
 		
+		var newHTML = "<span style='vertical-align: top; padding: 10px; padding-top:30px;' class='big-text'>AtomJump Message</span><br/><img  src='icon-Small@3x.png' style='padding 10px;'><ons-fab style='z-index: 1800;' position='top right'  onclick=\"app.closeNotifications('" + containerElement + "');\"><ons-icon icon=\"md-close\" ></ons-icon></ons-fab><p><b>" + finalData.message + insertImage + "</b>" + displayMessageCnt + "<br/><br/><ons-button style=\"background-color: #cc99cc; color: white;\" href=\"" + finalData.observeUrl + "\" target='_blank' onclick='app.warningBrowserOpen(\"gotoforum\", function() { return false; });'>Open the Forum&nbsp;&nbsp;<ons-icon style=\"color: white;\" icon=\"ion-ios-copy-outline\" size=\"24px\"></ons-icon></ons-button><br/><br/>" + finalData.forumMessage + ": " + finalData.forumName  + "<br/><br/><small>" + keepListening + "</small></p>";
+		
+		/* OLD STYLE:
 		var newHTML = "<span style='vertical-align: top; padding: 10px; padding-top:30px;' class='big-text'>AtomJump Message</span><br/><img  src='icon-Small@3x.png' style='padding 10px;'><ons-fab style='z-index: 1800;' position='top right'  onclick=\"app.closeNotifications('" + containerElement + "');\"><ons-icon icon=\"md-close\" ></ons-icon></ons-fab><p><b>" + finalData.message + insertImage + "</b>" + displayMessageCnt + "<br/><br/><ons-button style=\"background-color: #cc99cc; color: white;\" href='javascript:' onclick='app.warningBrowserOpen(\"gotoforum\", function() { app.myWindowOpen(\"" + finalData.observeUrl + "\", \"_system\"); });'>Open the Forum&nbsp;&nbsp;<ons-icon style=\"color: white;\" icon=\"ion-ios-copy-outline\" size=\"24px\"></ons-icon></ons-button><br/><br/>" + finalData.forumMessage + ": " + finalData.forumName  + "<br/><br/><small>" + keepListening + "</small></p>";
+		*/
 		
 		document.getElementById(displayElement).innerHTML = newHTML;		
 		document.getElementById(containerElement).style.display = "block";   
@@ -277,8 +281,7 @@ var app = {
 	{
 		 var url = localStorage.getItem('pollingURL');		//Can potentially extend to some country code info here from the cordova API, or user input?
 
-		alert("Polling URL" + url);		//TESTING
-	  	//this will repeat every 15 seconds
+		//this will repeat every 15 seconds
 	  	if(url) {
 	  		try {
 				app.get(url, function(url, resp) {
@@ -348,7 +351,6 @@ var app = {
     		
     	app.pollingCaller = setInterval(app.runPoll, app.pollInterval); //Note: these notifications will work only if the app is in the foreground.
     	
-    	alert("Check immediately:" + checkImmediately);	//TESTING
     	if(checkImmediately == true) {
     	
     		app.runPoll();
