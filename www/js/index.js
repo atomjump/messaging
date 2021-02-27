@@ -855,7 +855,7 @@ var app = {
     	{
     	
     		case 'gotoforum':
-    			if(count < 2000) {  //TESTING should be 2
+    			if(count < 2) {
     			
     				/*navigator.notification.alert("You will need to enter your personal email and password on the first occasion, under 'Settings', 'more', and then click 'Save Settings'. Note: This message will only display twice.",    
 						cb,         					// callback
