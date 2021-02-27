@@ -188,14 +188,14 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 						<div style="text-align:left; float: left;">
 						</div>	
 						<div style="text-align:right; float: right;">	
-							<a href="javascript:" onclick="$('#add-to-home').toggle();" style="color: #555; padding:10px;" alt="Add to Home"><ons-icon icon='md-bookmark' class='list__item__icon'></ons-icon>Install</a>
+							<a href="javascript:" onclick="$('#add-to-home').toggle(); $('#ios-guide').hide(); $('#android-guide').hide(); " style="color: #555; padding:10px;" alt="Add to Home"><ons-icon icon='md-bookmark' class='list__item__icon'></ons-icon>Install</a>
 						</div>
 						<div id="add-to-home" style="display:none;">
-							<small>Add app to your Homescreen<br/><a class='button' onclick="$('#ios-guide').toggle();" href='javascript:'>iOS Guide</a>&nbsp;<a class='button' onclick="$('#android-guide').toggle();" href='javascript:'>Android Guide</a></small><br/><br/>
+							<small>Add app to your Homescreen<br/><a class='button' onclick="$('#ios-guide').toggle(); $('#android-guide').hide();" href='javascript:'>iOS Guide</a>&nbsp;<a class='button' onclick="$('#android-guide').toggle(); $('#ios-guide').hide();" href='javascript:'>Android Guide</a></small><br/><br/>
 						</div>
 						<div id="ios-guide" style="display:none;">Tap <img src="img/safari-add.png" width="25" height="30">, usually along the bottom of the screen, and then tap 'Add to Home Screen'. <a href="https://support.apple.com/en-nz/guide/iphone/iph42ab2f3a7/ios#iph4f9a47bbc">More Details</a><br/><br/>
 						</div>
-						<div id="android-guide" style="display:none;">Tap the <img src="img/chrome-menu.png" width="30" height="30"> in the top right corner of the screen, and then choose 'Add to Home Screen'. <a href="https://www.wikihow.com/Set-a-Bookmark-Shortcut-in-Your-Home-Screen-on-Android">More Details</a><br/><br/>
+						<div id="android-guide" style="display:none;">Tap the <img src="img/chrome-menu.png" width="20" height="20"> in the top right corner of the screen, and then choose 'Add to Home Screen'. <a href="https://www.wikihow.com/Set-a-Bookmark-Shortcut-in-Your-Home-Screen-on-Android">More Details</a><br/><br/>
 						</div>
 					</div>
 				
