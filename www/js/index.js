@@ -1168,7 +1168,7 @@ var app = {
     		
     		for(var cnt = 0; cnt< settings.length; cnt++) {
     		
-    			prepList = prepList + "<a href=\"" + encodeURI(settings[cnt].url) + "\"<ons-list-item target=\"_blank\">" + errorThis.ellipse(settings[cnt].forum, 27) + "</ons-list-item></a>";
+    			prepList = prepList + "<a class=\"aj-list\" href=\"" + encodeURI(settings[cnt].url) + "\" target=\"_blank\"><ons-list-item>" + errorThis.ellipse(settings[cnt].forum, 27) + "</ons-list-item></a>";  //</ons-list-item>
     			
     		}
     		$('#forum-list').html(prepList);
