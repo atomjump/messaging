@@ -496,6 +496,8 @@ var app = {
 									//Have tapped a single server pairing - will not have a known userid
 									//so we need to let the browser use it's own cookies.
 									var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=&devicetype=" + phonePlatform;
+									
+									url = url.replace("https", "http");		//Must go to a different URL in safari, so using http. TESTING
 									alert("Registration opening: " + url);		//TESTING
 									
 									errorThis.myWindowOpen(url, '_system');
@@ -507,6 +509,8 @@ var app = {
 									
 				
 									var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform;  //e.g. 
+									
+									url = url.replace("https", "http");		//Must go to a different URL in safari, so using http. TESTING
 									alert("Registration opening: " + url);		//TESTING
 																			https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
 									 errorThis.get(url, function(url, resp) {
