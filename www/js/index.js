@@ -516,7 +516,7 @@ var app = {
 									
 									//errorThis.myWindowOpen(url, '_system');
 									
-									$('#registered').html("<small><a href='" + url + "' target='_blank' onclick='soundEffect.play(); app.startPolling(null, false);'>Tap to start listening for messages</a><br/>(Then close browser)</small>");
+									$('#registered').html("<small><a href='" + url + "' target='_blank' onclick='soundEffect.play(); app.startPolling(null, false);'>Tap to start listening for messages</a><br/>(Then tap 'Back to AtomJump')</small>");
 									$('#registered').show();
 									
 								} else {
@@ -1168,7 +1168,7 @@ var app = {
     		
     		for(var cnt = 0; cnt< settings.length; cnt++) {
     		
-    			prepList = prepList + "<ons-list-item onclick=\"app.warningBrowserOpen('gotoforum', function() { app.myWindowOpen(encodeURI('" + settings[cnt].url + "'), '_system'); });\">" + errorThis.ellipse(settings[cnt].forum, 27) + "</ons-list-item>";
+    			prepList = prepList + "<a href=\"" + encodeURI(settings[cnt].url) + "\"<ons-list-item target=\"_blank\">" + errorThis.ellipse(settings[cnt].forum, 27) + "</ons-list-item></a>";
     			
     		}
     		$('#forum-list').html(prepList);
