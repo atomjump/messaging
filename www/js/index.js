@@ -52,7 +52,7 @@ var app = {
         //The timer to call a pull request
         this.pollingCaller = null;
         this.pull = false;   			//Switch to true if notifications are coming via a pull method (AtomJump's own), rather than push
-		this.pollInterval = 30000;		//For publications, use 30000 (i.e. 30 second check interval) by default.
+		this.pollInterval = 5000;		//For publications, use 30000 (i.e. 30 second check interval) by default.
 
     },
     // Bind Event Listeners
@@ -264,7 +264,7 @@ var app = {
 		}
 		
 		
-		var newHTML = "<span style='vertical-align: top; padding: 10px; padding-top:30px;' class='big-text'>AtomJump Message</span><br/><img  src='icon-Small@3x.png' style='padding 10px;'><ons-fab style='z-index: 1800;' position='top right'  onclick=\"app.closeNotifications('" + containerElement + "');\"><ons-icon icon=\"md-close\" ></ons-icon></ons-fab><p><b>" + finalData.message + insertImage + "</b>" + displayMessageCnt + "<br/><br/><ons-button style=\"background-color: #cc99cc; color: white;\" href=\"" + finalData.observeUrl + "\" target='_blank' onclick='app.warningBrowserOpen(\"gotoforum\", function() { return true; });'>Open the Forum&nbsp;&nbsp;<ons-icon style=\"color: white;\" icon=\"ion-ios-copy-outline\" size=\"24px\"></ons-icon></ons-button><br/><br/>" + finalData.forumMessage + ": " + finalData.forumName  + "<br/><br/><small>" + keepListening + "</small></p>";
+		var newHTML = "<span style='vertical-align: top; padding: 10px; padding-top:30px;' class='big-text'>AtomJump Message</span><br/><img  src='icon-Small@3x.png' style='padding 10px;'><ons-fab style='z-index: 1800;' position='top right'  onclick=\"app.closeNotifications('" + containerElement + "');\"><ons-icon icon=\"md-close\" ></ons-icon></ons-fab><p><b>" + finalData.message + insertImage + "</b>" + displayMessageCnt + "<br/><br/><ons-button style=\"background-color: #cc99cc; color: white;\" href=\"" + finalData.observeUrl + "\" target='_blank'>Open the Forum&nbsp;&nbsp;<ons-icon style=\"color: white;\" icon=\"ion-ios-copy-outline\" size=\"24px\"></ons-icon></ons-button><br/><br/>" + finalData.forumMessage + ": " + finalData.forumName  + "<br/><br/><small>" + keepListening + "</small></p>";
 		
 		/* OLD STYLE:
 		var newHTML = "<span style='vertical-align: top; padding: 10px; padding-top:30px;' class='big-text'>AtomJump Message</span><br/><img  src='icon-Small@3x.png' style='padding 10px;'><ons-fab style='z-index: 1800;' position='top right'  onclick=\"app.closeNotifications('" + containerElement + "');\"><ons-icon icon=\"md-close\" ></ons-icon></ons-fab><p><b>" + finalData.message + insertImage + "</b>" + displayMessageCnt + "<br/><br/><ons-button style=\"background-color: #cc99cc; color: white;\" href='javascript:' onclick='app.warningBrowserOpen(\"gotoforum\", function() { app.myWindowOpen(\"" + finalData.observeUrl + "\", \"_system\"); });'>Open the Forum&nbsp;&nbsp;<ons-icon style=\"color: white;\" icon=\"ion-ios-copy-outline\" size=\"24px\"></ons-icon></ons-button><br/><br/>" + finalData.forumMessage + ": " + finalData.forumName  + "<br/><br/><small>" + keepListening + "</small></p>";
