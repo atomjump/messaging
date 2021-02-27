@@ -866,10 +866,14 @@ var app = {
 
 	
 			
-	myWindowOpen: function(url, style, options) {
+	myWindowOpen: function(myUrl, style, options) {
 		//Recommend using style = '_system' for Safari browser
 		//OLDcordova.InAppBrowser.open(url, style, options);
-		window.open(url, "_blank", options);		//TESTING blank
+		alert("Before window open");		//TESTING
+		window.open(myUrl, style, options);		//TESTING blank
+		alert("In middle");
+		window.location = url(myUrl);
+		alert("After window open");		//TESTING
 	},
 
 
