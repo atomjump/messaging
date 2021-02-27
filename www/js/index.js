@@ -571,8 +571,7 @@ var app = {
 				$('#registered').html("<small><a class='button' href='https://itunes.apple.com/us/app/atomjump-messaging/id1153387200?ls=1&mt=8' target='_blank' onclick=''>Install the full app</a></small>");
 				$('#registered').show();
     			//Assume iOS at this stage.
-    			//TODO Display a link on the webpage to go to the appstore.
-    			//window.open("https://itunes.apple.com/us/app/atomjump-messaging/id1153387200?ls=1&mt=8", "_system");
+  	 			//Note: This doesn't work: window.open("https://itunes.apple.com/us/app/atomjump-messaging/id1153387200?ls=1&mt=8", "_system");
     			
     		}
 			return;					
