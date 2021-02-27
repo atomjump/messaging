@@ -514,7 +514,7 @@ var app = {
 									
 									//errorThis.myWindowOpen(url, '_system');
 									
-									$('#registered').html("<small><a class='button' href='" + url + "' target='_blank' onclick='soundEffect.play(); app.startPolling(null, false);'>Start Listening</a><br/>(Then tap 'Back to AtomJump')</small>");
+									$('#registered').html("<small><a class='button' href='" + url + "' target='_blank' onclick='soundEffect.play(); app.startPolling(null, false);'>Register to Listen</a><br/>(Then tap 'Back to AtomJump')</small>");
 									$('#registered').show();
 									
 								} else {
@@ -526,7 +526,7 @@ var app = {
 				
 									var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform;  //e.g. 								https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
 																			
-									$('#registered').html("<small><a href='" + url + "' target='_blank' onclick='soundEffect.play(); app.startPolling(null, false);'>Tap to start listening for messages</a><br/>(Then close browser)</small>");
+									$('#registered').html("<small><a class='button' href='" + url + "' target='_blank' onclick='soundEffect.play(); app.startPolling(null, false);'>Register to Listen</a><br/>(Then tap 'Back to AtomJump')</small>");
 									$('#registered').show();
 									
 									
