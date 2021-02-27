@@ -563,7 +563,7 @@ var app = {
     },
     
     showHomeGuide: function() {
-    	$('#registered').html("<small>Add app to your Homescreen<br/><a class='button' href='https://support.apple.com/en-nz/guide/iphone/iph42ab2f3a7/ios#iph4f9a47bbc' target='_blank' onclick=''>iOS Guide</a>&nbsp;<a class='button' href='https://www.wikihow.com/Set-a-Bookmark-Shortcut-in-Your-Home-Screen-on-Android' target='_blank' onclick=''>Android Guide</a><br/><a style='margin:4px;' class='button' href='http://staging.atomjump.com:8000' target='_blank'>Open in Browser <ons-icon icon='md-open-in-new' class='list__item__icon'></ons-icon> </a></small>");
+    	$('#registered').html("<small>Add app to your Homescreen<br/><a class='button' href='https://support.apple.com/en-nz/guide/iphone/iph42ab2f3a7/ios#iph4f9a47bbc' target='_blank' onclick=''>iOS Guide</a>&nbsp;<a class='button' href='https://www.wikihow.com/Set-a-Bookmark-Shortcut-in-Your-Home-Screen-on-Android' target='_blank' onclick=''>Android Guide</a></small>");
 		$('#registered').show();
     
     },
