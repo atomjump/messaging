@@ -191,7 +191,11 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 							<a href="javascript:" onclick="$('#add-to-home').toggle();" style="color: #555; padding:10px;" alt="Add to Home"><ons-icon icon='md-bookmark' class='list__item__icon'></ons-icon>Install</a>
 						</div>
 						<div id="add-to-home" style="display:none;">
-							<small>Add app to your Homescreen<br/><a class='button' href='https://support.apple.com/en-nz/guide/iphone/iph42ab2f3a7/ios#iph4f9a47bbc'  >iOS Guide</a>&nbsp;<a class='button' href='https://www.wikihow.com/Set-a-Bookmark-Shortcut-in-Your-Home-Screen-on-Android' >Android Guide</a></small><br/><br/>
+							<small>Add app to your Homescreen<br/><a class='button' onclick="$('#ios-guide').toggle();" href='javascript:'>iOS Guide</a>&nbsp;<a class='button' onclick="$('#android-guide').toggle();" href='javascript:'>Android Guide</a></small><br/><br/>
+						</div>
+						<div id="ios-guide" style="display:none;">iOS Tips <img src="img/safari-add.png" width="25" height="30"><a href="https://support.apple.com/en-nz/guide/iphone/iph42ab2f3a7/ios#iph4f9a47bbc">More</a><br/><br/>
+						</div>
+						<div id="android-guide" style="display:none;">Android Tips <img src="img/chrome-menu.png" width="30" height="30"> <a href="https://www.wikihow.com/Set-a-Bookmark-Shortcut-in-Your-Home-Screen-on-Android">More</a><br/><br/>
 						</div>
 					</div>
 				
