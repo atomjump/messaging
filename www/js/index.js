@@ -464,7 +464,7 @@ var app = {
 								//Registered OK
 								//resp will now be e.g. "2z2H HMEcfQQCufJmRPMX4C https://medimage-nz1.atomjump.com New%20Zealand"
 								
-								alert("Registered " + resp);		//TESTING
+								
 																
 								var items = resp.split(" ");
 								var phonePlatform = "AtomJump";		//This is cross-platform
@@ -496,13 +496,18 @@ var app = {
 									//Have tapped a single server pairing - will not have a known userid
 									//so we need to let the browser use it's own cookies.
 									var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=&devicetype=" + phonePlatform;
+									alert("Registration opening: " + url);		//TESTING
+									
 									errorThis.myWindowOpen(url, '_system');
 								} else {
 			
 									//Otherwise login with the known logged userId
 									var phonePlatform = errorThis.getPlatform();
 				
+									
+				
 									var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform;  //e.g. 
+									alert("Registration opening: " + url);		//TESTING
 																			https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
 									 errorThis.get(url, function(url, resp) {
 										//Registered OK
