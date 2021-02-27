@@ -41,7 +41,7 @@ var app = {
         
         errorThis = this;
         
-        //Set display name - TODO: check this is valid here
+        //Set display name
         this.displayForumNames();
         
       
@@ -568,7 +568,7 @@ var app = {
   	
   		if(typeof(PushNotification) == 'undefined') { 
 			if(confirm("Sorry, this site is configured to send system notifications in the background. For this you will need the full app from the app-store.")) {
-				$('#registered').html("<small><a class='button' href='https://itunes.apple.com/us/app/atomjump-messaging/id1153387200?ls=1&mt=8' target='_blank' onclick=''>Install the full app</a></small>");
+				$('#registered').html("<small><a class='button' href='https://itunes.apple.com/us/app/atomjump-messaging/id1153387200?ls=1&mt=8' target='_blank' onclick=''>iOS app</a><a class='button' href='https://play.google.com/store/apps/details?id=org.atomjump.messaging' target='_blank' onclick=''>Android app</a></small>");
 				$('#registered').show();
     			//Assume iOS at this stage.
   	 			//Note: This doesn't work: window.open("https://itunes.apple.com/us/app/atomjump-messaging/id1153387200?ls=1&mt=8", "_system");
