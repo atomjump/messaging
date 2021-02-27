@@ -977,7 +977,11 @@ var app = {
 				//Deregister from remote server connection in a browser
 				var url = api + "plugins/notifications/register.php?id=";
 
-				_this.myWindowOpen(url, '_system');
+				//_this.myWindowOpen(url, '_system');
+				this.get(url, function(url, resp) {
+					//deregister
+			
+				});
 			
 			}
 
