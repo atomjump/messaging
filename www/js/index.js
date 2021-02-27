@@ -52,7 +52,7 @@ var app = {
         //The timer to call a pull request
         this.pollingCaller = null;
         this.pull = false;   			//Switch to true if notifications are coming via a pull method (AtomJump's own), rather than push
-		this.pollInterval = 5000;		//For publications, use 30000 (i.e. 30 second check interval) by default.
+		this.pollInterval = 30000;		//For publications, use 30000 (i.e. 30 second check interval) by default.
 
     },
     // Bind Event Listeners
