@@ -282,6 +282,8 @@ var app = {
 				app.get(url, function(url, resp) {
 					//Resp could be a .json message file
 				
+					alert("Got response from poll"); 		//TESTING
+				
 				
 					$('#registered').html("<small>Listening for Messages<br/>(Bring app to front)</small>");
 				
@@ -328,6 +330,7 @@ var app = {
 	},
 	
 	runPoll: function() {
+		alert("In runPoll"); 		//TESTING
 		//This is run from the regular checks, and allows for a return callback
 		app.poll(function() {
 		});
@@ -345,7 +348,7 @@ var app = {
     	app.pollingCaller = setInterval(app.runPoll, app.pollInterval); //Note: these notifications will work only if the app is in the foreground.
 		
 		 //iOS checking for new messages in the background - limited to every 15 minutes
-         var BackgroundFetch = window.BackgroundFetch;
+         /*TESTING OUT var BackgroundFetch = window.BackgroundFetch;
  		
 
 		  // Your BackgroundFetch event handler.
@@ -370,7 +373,7 @@ var app = {
 
 		  var status = BackgroundFetch.configure({minimumFetchInterval: 15}, onBackgroundEvent, onBackgroundTimeout);
 		  console.log('[BackgroundFetch] configure status: ', status);
-		
+			*/
 		
 		
     },
@@ -412,6 +415,8 @@ var app = {
     		return;    		
     	} else {
     	
+    		alert("Setting up pull");		//TESTING
+    	
     		//Check the server if we have pull available
 			$.ajax({
 				type       : "POST",
@@ -419,6 +424,8 @@ var app = {
 				dataType: 'jsonp', // Notice! JSONP <-- P (lowercase)
 				crossDomain: true,
 				success    : function(resp) {
+					
+					alert("Got a response from check-pull.php");		//TESTING
 					
 					if(resp && resp.response == "true") {
 						//TODO: allow user to choose in some circumstances
@@ -456,6 +463,8 @@ var app = {
 							errorThis.get(url, function(url, resp) {
 								//Registered OK
 								//resp will now be e.g. "2z2H HMEcfQQCufJmRPMX4C https://medimage-nz1.atomjump.com New%20Zealand"
+								
+								alert("Registered " + resp);		//TESTING
 																
 								var items = resp.split(" ");
 								var phonePlatform = "AtomJump";		//This is cross-platform
