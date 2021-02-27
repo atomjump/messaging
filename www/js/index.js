@@ -276,6 +276,8 @@ var app = {
     poll: function(cb)
 	{
 		 var url = localStorage.getItem('pollingURL');		//Can potentially extend to some country code info here from the cordova API, or user input?
+
+		alert("Polling URL" + url);		//TESTING
 	  	//this will repeat every 15 seconds
 	  	if(url) {
 	  		try {
