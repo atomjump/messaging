@@ -567,9 +567,12 @@ var app = {
   		errorThis.pull = false;
   	
   		if(typeof(PushNotification) == 'undefined') { 
-			if(confirm("Sorry, this site is configured to send system notifications in the background. For this you will need the full app from the app-store. Would you like to install this now?")) {
+			confirm("Sorry, this site is configured to send system notifications in the background. For this you will need the full app from the app-store.")) {
+				$('#registered').html("<small><a class='button' href='https://itunes.apple.com/us/app/atomjump-messaging/id1153387200?ls=1&mt=8' target='_blank' onclick=''>Install the full app</a></small>");
+				$('#registered').show();
     			//Assume iOS at this stage.
-    			window.open("https://itunes.apple.com/us/app/atomjump-messaging/id1153387200?ls=1&mt=8", "_system");
+    			//TODO Display a link on the webpage to go to the appstore.
+    			//window.open("https://itunes.apple.com/us/app/atomjump-messaging/id1153387200?ls=1&mt=8", "_system");
     			
     		}
 			return;					
