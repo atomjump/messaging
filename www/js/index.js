@@ -499,7 +499,7 @@ var app = {
 									url = url.replace("https", "http");		//Must go to a different URL in safari, so using http. TESTING
 									alert("Registration opening: " + url);		//TESTING
 									
-									errorThis.myWindowOpen(url, '_system');
+									//errorThis.myWindowOpen(url, '_system');
 									
 									$('#registered').html("<small><a href='" + url + "' target='_blank'>Tap to start listening for messages</a><br/>(Then close browser)</small>");
 									$('#registered').show();
@@ -521,10 +521,10 @@ var app = {
 									$('#registered').show();
 									
 									
-									 errorThis.get(url, function(url, resp) {
+									 /*TEST OUT errorThis.get(url, function(url, resp) {
 										//Registered OK
 				
-									});
+									});*/
 								}
 		
 							});		//End of get
