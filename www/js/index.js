@@ -346,7 +346,9 @@ var app = {
     		
     	app.pollingCaller = setInterval(app.runPoll, app.pollInterval); //Note: these notifications will work only if the app is in the foreground.
     	
+    	alert("Check immediately:" + checkImmediately);	//TESTING
     	if(checkImmediately == true) {
+    	
     		app.runPoll();
     	}
  		
