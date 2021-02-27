@@ -307,11 +307,11 @@ var app = {
 							//Show an internal message
 							app.onNotificationEvent(messageData);		//Note: this should be 'app' because of scope to the outside world
 							soundEffect.play();
-							cb();
 							
 							//There was a new message, so check again for another one - there may be a group of them at the start of opening the app.
-							app.runPoll();
 							
+							
+							cb(true);							
 							return;
 							
 						
@@ -319,7 +319,7 @@ var app = {
 							//Show that there is a problem listening to messages.
 							$('#registered').html("<small style='color:#8F3850;'>Waiting for a Connection..</small>");
 							$('#registered').show();
-							cb();
+							cb(false);
 							return;
 						}	  				
 					}
@@ -328,19 +328,22 @@ var app = {
 				//Show that there is a problem listening to messages.
 				$('#registered').html("<small style='color:#8F3850;'>Waiting for a Connection..<br/>(Checks every 15 sec)</small>");
 				$('#registered').show();
-				cb();
+				cb(false);
 				return;
 			}
 	  	} else {
 	  		//No URL
-	  		cb();
+	  		cb(false);
 	  		return;
 	  	}
 	},
 	
 	runPoll: function() {
 		//This is run from the regular checks, and allows for a return callback
-		app.poll(function() {
+		app.poll(function(runAgain) {
+			if(runAgain == true) {
+				app.runPoll();
+			}
 		});
 	
 	},
