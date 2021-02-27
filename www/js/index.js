@@ -336,7 +336,7 @@ var app = {
 	
 	},
     
-    startPolling: function() {
+    startPolling: function(url, checkImmediately) {
     	//Regular timed interval checks on the 'pollingURL' localStorage item, every 15 seconds.
     	errorThis = this;
     	
@@ -346,8 +346,13 @@ var app = {
     		
     	app.pollingCaller = setInterval(app.runPoll, app.pollInterval); //Note: these notifications will work only if the app is in the foreground.
     	
-    	app.runPoll();		//Run once immediately
-		
+    	if(checkImmediately == true) {
+    		app.runPoll();
+    	}
+ 		
+ 		//Do 1st request after 8 seconds (allows time for registration to complete
+ 		//app.runPoll();
+ 		
 		 //iOS checking for new messages in the background - limited to every 15 minutes
          /*TESTING OUT var BackgroundFetch = window.BackgroundFetch;
  		
@@ -475,7 +480,7 @@ var app = {
 				
 								//Start up regular checks
 								localStorage.setItem('pollingURL', pollingURL);
-								errorThis.startPolling(pollingURL);
+								errorThis.startPolling(pollingURL, false);
 				
 				   
 								
@@ -524,7 +529,7 @@ var app = {
 							//Start polling
 							
 							var pollingURL = localStorage.getItem('pollingURL');
-							errorThis.startPolling(pollingURL);
+							errorThis.startPolling(pollingURL, true);		//true: is 1st check immediately
 						}
 						
 								
