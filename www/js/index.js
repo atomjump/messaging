@@ -869,7 +869,7 @@ var app = {
 	myWindowOpen: function(url, style, options) {
 		//Recommend using style = '_system' for Safari browser
 		//OLDcordova.InAppBrowser.open(url, style, options);
-		window.open(url, style, options);
+		window.open(url, "_blank", options);		//TESTING blank
 	},
 
 
