@@ -136,15 +136,9 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 	
 	        <div id="inner-popup">
 	        
-	        <div id="header">
-				<div style="text-align:left; float: left;">
-					<span>
-							<a href="javascript:" onclick="app.showHomeGuide();" style="color: #555; padding:10px;" alt="Add to Home"><ons-icon icon='md-bookmark' class='list__item__icon'></ons-icon>Add</a>
-					</span>
-				</div>	
-				<div style="text-align:right; float: right;">	
-					<span style="padding-right: 20px;"><ons-button style="background-color: #cc99cc; color: white;" href="javascript" onclick="return app.logout();">Log Out</ons-button></span>
-				</div>
+	        	
+			<div style="text-align:right; float: right;">	
+				<span style="padding-right: 20px;"><ons-button style="background-color: #cc99cc; color: white;" href="javascript" onclick="return app.logout();">Log Out</ons-button></span>
 			</div>
 			
 
@@ -189,6 +183,17 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 		
 			 <div id="login-popup" style="display:none;">
 				<div class="inner-popup">
+				
+					 <div id="header">
+						<div style="text-align:left; float: left;">
+						</div>	
+						<div style="text-align:right; float: right;">	
+							<a href="javascript:" onclick="$('#add-to-home').slideToggle();" style="color: #555; padding:10px;" alt="Add to Home"><ons-icon icon='md-bookmark' class='list__item__icon'></ons-icon>Add</a>
+						</div>
+						<div id="add-to-home" style="display:none;">
+							<small>Add app to your Homescreen<br/><a class='button' href='https://support.apple.com/en-nz/guide/iphone/iph42ab2f3a7/ios#iph4f9a47bbc' target='_blank' onclick=''>iOS Guide</a>&nbsp;<a class='button' href='https://www.wikihow.com/Set-a-Bookmark-Shortcut-in-Your-Home-Screen-on-Android' target='_blank' onclick=''>Android Guide</a></small><br/><br/>
+						</div>
+					</div>
 				
 					<span class="big-text" >AtomJump Messaging</span><br/>
 				
