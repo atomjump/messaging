@@ -900,12 +900,15 @@ var app = {
 		//OLDcordova.InAppBrowser.open(url, style, options);
 		alert("Opening:" + myUrl + " Style:" + style);	//TESTING
 		var link = document.createElement('a');
-		link.href = myUrl;
+		link.setAttribute("href", myUrl);
 		link.setAttribute("target", style);
 		alert("Set style");	//TESTING
 		document.body.appendChild(link);
 		alert("Appended to body");	//TESTING
-		link.click(); 
+		
+		var dispatch = document.createEvent("HTMLEvents");
+    	dispatch.initEvent("click", true, true);
+    	link.dispatchEvent(dispatch);
 		alert("Clicked link");	//TESTING
 		return;
 		
