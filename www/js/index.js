@@ -25,6 +25,9 @@ var defaultApi = "https://atomjump.com/api/";		//when a blank is entered
 var rawForumHeader = "ajps_";
 var apiId = "538233303966";
 var singleClick = false;
+var iosAppLink = "https://itunes.apple.com/us/app/atomjump-messaging/id1153387200?ls=1&mt=8";
+var	androidAppLink = "https://play.google.com/store/apps/details?id=org.atomjump.messaging";
+
 
 
 
@@ -562,7 +565,6 @@ var app = {
     	}
     },
     
-
     
     setupPush: function() {
   		//Set the global pull to off
@@ -570,7 +572,7 @@ var app = {
   	
   		if(typeof(PushNotification) == 'undefined') { 
 			if(confirm("Sorry, this site is configured to send system notifications in the background. For this you will need the full app from the app-store.")) {
-				$('#registered').html("<small><a class='button' href='https://itunes.apple.com/us/app/atomjump-messaging/id1153387200?ls=1&mt=8' target='_blank' onclick=''>iOS app</a>&nbsp;<a class='button' href='https://play.google.com/store/apps/details?id=org.atomjump.messaging' target='_blank' onclick=''>Android app</a></small>");
+				$('#registered').html("<small><a class='button' href='" + iosAppLink + "' target='_blank' onclick=''>iOS app</a>&nbsp;<a class='button' href='" + androidAppLink + "' target='_blank' onclick=''>Android app</a></small>");
 				$('#registered').show();
     			//Assume iOS at this stage.
   	 			//Note: This doesn't work: window.open("https://itunes.apple.com/us/app/atomjump-messaging/id1153387200?ls=1&mt=8", "_system");
