@@ -898,7 +898,7 @@ var app = {
 	myWindowOpen: function(myUrl, style, options) {
 		//Recommend using style = '_system' for Safari browser
 		//OLDcordova.InAppBrowser.open(url, style, options);
-		alert("Opening:" + myUrl + " Style:" + style);	//TESTING
+		/*alert("Opening:" + myUrl + " Style:" + style);	//TESTING
 		var link = document.createElement('a');
 		link.setAttribute("href", myUrl);
 		link.setAttribute("target", style);
@@ -907,9 +907,13 @@ var app = {
 		alert("Appended to body");	//TESTING
 		
 		var dispatch = document.createEvent("HTMLEvents");
-    	dispatch.initEvent("click", true, true);
-    	link.dispatchEvent(dispatch);
-		alert("Clicked link");	//TESTING
+    	    	
+    	link.dispatchEvent(new MouseEvent("click", {'view': window, 'bubbles': true, 'cancelable': true}););
+    	
+		alert("Clicked link");	//TESTING*/
+		$("#click-url").href(myUrl);
+		$("#click-url").click();
+		
 		return;
 		
 	},
