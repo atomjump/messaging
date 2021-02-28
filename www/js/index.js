@@ -897,6 +897,8 @@ var app = {
 			
 	myWindowOpen: function(myUrl, style, options) {
 		//Recommend using style = '_blank' for Safari browser to open a new page
+	
+		$("#click-url span").trigger("click");
 
 		$("#click-url").show();
 		$("#click-url").attr("href", myUrl);
