@@ -900,9 +900,8 @@ var app = {
 	
 		$("#click-url").show();
 		$("#click-url").attr("href", myUrl);
-		$("#click-url span").trigger("focus");				//TESTING
 		$("#click-url span").trigger("click");
-		//$("#click-url span").trigger("click");		//TESTINGOUT iOS Safari needs a double click to work for some weird reason. This seems to work on Android Chrome too.
+		$("#click-url span").trigger("click");		//iOS Safari needs a double click to work for some weird reason. This seems to work on Android Chrome too.
 		$("#click-url").hide();
 		
 		return;
