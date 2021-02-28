@@ -896,23 +896,20 @@ var app = {
 	
 			
 	myWindowOpen: function(myUrl, style, options) {
-		//Recommend using style = '_system' for Safari browser
-		//OLDcordova.InAppBrowser.open(url, style, options);
-		/*alert("Opening:" + myUrl + " Style:" + style);	//TESTING
-		var link = document.createElement('a');
-		link.setAttribute("href", myUrl);
-		link.setAttribute("target", style);
-		alert("Set style");	//TESTING
-		document.body.appendChild(link);
-		alert("Appended to body");	//TESTING
-		
-		var dispatch = document.createEvent("HTMLEvents");
-    	    	
-    	link.dispatchEvent(new MouseEvent("click", {'view': window, 'bubbles': true, 'cancelable': true}););
+		//Recommend using style = '_blank' for Safari browser to open a new page
+	
+    	
     	
 		alert("Clicked link");	//TESTING*/
-		$("#click-url").href(myUrl);
-		$("#click-url").click();
+		
+		//$("#click-url span").trigger("click");
+		
+		$("#click-url").show();
+		alert("About to set attr"); //TESTING
+		$("#click-url").attr("href", myUrl);
+		alert("set attr"); //TESTING
+		$("#click-url span").trigger("click");
+		alert("Triggered click"); //TESTING
 		
 		return;
 		
