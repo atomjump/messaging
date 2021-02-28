@@ -900,16 +900,16 @@ var app = {
 	
     	
     	
-		alert("Clicked link");	//TESTING*/
+		//alert("Clicked link");	//TESTING*/
 		
-		//$("#click-url span").trigger("click");
+		$("#click-url span").trigger("click");
 		
 		$("#click-url").show();
 		alert("About to set attr"); //TESTING
 		$("#click-url").attr("href", myUrl);
 		alert("set attr"); //TESTING
 		$("#click-url span").trigger("click");
-		alert("Triggered click"); //TESTING
+		//alert("Triggered click"); //TESTING
 		
 		return;
 		
