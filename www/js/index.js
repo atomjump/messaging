@@ -903,7 +903,7 @@ var app = {
 		$("#click-url").show();
 		$("#click-url").attr("href", myUrl);
 		$("#click-url span").trigger("click");
-		$("#click-url span").trigger("click");		//Trying a double
+		//$("#click-url span").trigger("click");		//Trying a double
 		$("#click-url").hide();
 		
 		return;
