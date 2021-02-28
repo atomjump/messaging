@@ -897,19 +897,10 @@ var app = {
 			
 	myWindowOpen: function(myUrl, style, options) {
 		//Recommend using style = '_blank' for Safari browser to open a new page
-	
-    	
-    	
-		//alert("Clicked link");	//TESTING*/
-		
-		$("#click-url span").trigger("click");
-		
+
 		$("#click-url").show();
-		alert("About to set attr"); //TESTING
 		$("#click-url").attr("href", myUrl);
-		alert("set attr"); //TESTING
 		$("#click-url span").trigger("click");
-		//alert("Triggered click"); //TESTING
 		
 		return;
 		
