@@ -625,7 +625,7 @@ var app = {
                 	
                 	
                 	var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=&devicetype=" + phonePlatform;
-                	errorThis.myWindowOpen(url, '_system');
+                	errorThis.myWindowOpen(url, '_blank');
                 } else {
                 
                  	//Otherwise login with the known logged userId
@@ -707,7 +707,7 @@ var app = {
 		
 			var url = api + "plugins/notifications/register.php?id=" + id + "&devicetype=" + platform;
 
-			errorThis.myWindowOpen(url, '_system');
+			errorThis.myWindowOpen(url, '_blank');
 			
 			var settingApi = localStorage.getItem("api");
          	 if(settingApi) {
@@ -901,7 +901,7 @@ var app = {
 		
 		var link = document.createElement('a');
 		link.href = myUrl;
-		link.target = style;
+		link.setAttribute("target", style);
 		document.body.appendChild(link);
 		link.click(); 
 		return;
@@ -999,7 +999,6 @@ var app = {
 				//Deregister from remote server connection in a browser
 				var url = api + "plugins/notifications/register.php?id=";
 
-				//_this.myWindowOpen(url, '_system');
 				this.get(url, function(url, resp) {
 					//deregister
 			
