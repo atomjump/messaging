@@ -898,12 +898,15 @@ var app = {
 	myWindowOpen: function(myUrl, style, options) {
 		//Recommend using style = '_system' for Safari browser
 		//OLDcordova.InAppBrowser.open(url, style, options);
-		
+		alert("Opening:" + myUrl + " Style:" + style);	//TESTING
 		var link = document.createElement('a');
 		link.href = myUrl;
 		link.setAttribute("target", style);
+		alert("Set style");	//TESTING
 		document.body.appendChild(link);
+		alert("Appended to body");	//TESTING
 		link.click(); 
+		alert("Clicked link");	//TESTING
 		return;
 		
 	},
