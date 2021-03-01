@@ -493,7 +493,7 @@ var app = {
   		pull = false;			//Set global pull off
   	
   		if(typeof(PushNotification) == 'undefined') { 
-			alert("PushNotification does not exist sorry");
+			alert("Sorry, your app is not configured to connect to the system notifications.");
 			return;					
 		} else {
   	
