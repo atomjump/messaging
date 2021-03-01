@@ -469,15 +469,16 @@ var app = {
 				},
 				error      : function() {
 					//Use push instead.
+					alert("TESTING error detected in check-pull");		//TESTING
 					if(resp && resp.supports) {
 						if(resp.supports.android == true) {
-							errorThis.setupPush();
+							app.setupPush();
 						} else {
 							alert("Sorry, this server is not configured to send Android background notifications. Please contact the owner of the service to request this.");
 						}
 					} else {
 						//Potentially a legacy server with a 404 returned - attempt to use push anyway.
-						errorThis.setupPush();
+						app.setupPush();
 					}
 					return;        
 				}
