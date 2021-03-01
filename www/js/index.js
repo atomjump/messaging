@@ -469,17 +469,9 @@ var app = {
 				},
 				error      : function() {
 					//Use push instead.
-					alert("TESTING error detected in check-pull");		//TESTING
-					if(resp && resp.supports) {
-						if(resp.supports.android == true) {
-							app.setupPush();
-						} else {
-							alert("Sorry, this server is not configured to send Android background notifications. Please contact the owner of the service to request this.");
-						}
-					} else {
-						//Potentially a legacy server with a 404 returned - attempt to use push anyway.
-						app.setupPush();
-					}
+					
+					//Potentially a legacy server with a 404 returned - attempt to use push anyway.
+					errorThis.setupPush();
 					return;        
 				}
 			
@@ -493,7 +485,7 @@ var app = {
   		pull = false;			//Set global pull off
   	
   		if(typeof(PushNotification) == 'undefined') { 
-			alert("Sorry, your app is not configured to connect to the system notifications.");
+			alert("Sorry, your app is not configured to connect to system notifications.");
 			return;					
 		} else {
   	
@@ -511,14 +503,14 @@ var app = {
 				"windows": {}
 			});
 			
+			
 			//Perhaps also?: ,	"badge": true
 
 		}
         
         
         push.on('registration', function(data) {
-            
-           
+                      
             var oldRegId = localStorage.getItem('registrationId');
             $('#registered').html("<small>Listening for Messages</small>");
             $('#registered').show();
