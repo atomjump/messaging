@@ -517,7 +517,7 @@ var app = {
 							} else {
 								alert("Sorry, this server is not configured to send Android background notifications. Please contact the owner of the service to request this.");
 							}				
-						}
+						
 					} else {
 						//Invalid data response
 						alert("Sorry, there was a problem connecting to your messaging server. Please try again later.");
