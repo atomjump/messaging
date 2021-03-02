@@ -388,44 +388,51 @@ var app = {
 					
 					if(resp && resp.supports) {
 					
-						var useAtomJump = false;
-						
-						if((resp.supports.atomjump == true)&&(resp.supports.android == true)) {
-							 //Give the user a choice
-							if(confirm("The service you are connecting to allows immediate Android notifications. AtomJump notifications use slightly more battery power, and can take a few more seconds to pop up, but they use peer-reviewable software, and do not share data with Google. Do you wish to use AtomJump notifications, instead?")) {
-								useAtomJump = true;
-							}
-								
-						}
 					
-						if(resp.supports.atomjump == true && useAtomJump == true) {
-							//TODO: allow user to choose in some circumstances
 						
-							//Use pull
 						
-							/*Example 	
-		
-							Step 1. App requests a registration event
-	
-							Pair from this PHP script e.g:
-							http://this.ajmessaging.url/api/plugins/notifications/genid.php?country=NZ
-	
-							which will return e.g.
-							2z2H HMEcfQQCufJmRPMX4C https://medimage-nz1.atomjump.com New%20Zealand 
-	
-	
-							If any other software needs it, we can request in the next couple of hours:
-	
-							https://medimage-pair.atomjump.com/med-genid.php?compare=2z2H
-	
-							which returns the pool server write script e.g.
-							https://medimage-nz1.atomjump.com/write/HMEcfQQCufJmRPMX4C
-							*/
-							errorThis.pull = true;		//Set the global pull
-		
-							var oldRegId = localStorage.getItem('registrationId');
 						
-							if (!oldRegId) {
+						//Use pull
+					
+						/*Example 	
+	
+						Step 1. App requests a registration event
+
+						Pair from this PHP script e.g:
+						http://this.ajmessaging.url/api/plugins/notifications/genid.php?country=NZ
+
+						which will return e.g.
+						2z2H HMEcfQQCufJmRPMX4C https://medimage-nz1.atomjump.com New%20Zealand 
+
+
+						If any other software needs it, we can request in the next couple of hours:
+
+						https://medimage-pair.atomjump.com/med-genid.php?compare=2z2H
+
+						which returns the pool server write script e.g.
+						https://medimage-nz1.atomjump.com/write/HMEcfQQCufJmRPMX4C
+						*/
+						errorThis.pull = true;		//Set the global pull
+	
+						var oldRegId = localStorage.getItem('registrationId');
+					
+						if (!oldRegId) {
+						
+						
+							//Allow user to choose if they want AtomJump
+							useAtomJump = false;
+							if((resp.supports.atomjump == true)&&(resp.supports.android == true)) {
+								 //Give the user a choice
+								if(confirm("The service you are connecting to allows immediate Android notifications. AtomJump notifications use slightly more battery power, and can take a few more seconds to pop up, but they use peer-reviewable software, and do not share data with Google. Do you wish to use AtomJump notifications, instead?")) {
+									useAtomJump = true;
+									localStorage.getItem('registrationId');
+								}
+							
+							}
+					
+							if(resp.supports.atomjump == true && useAtomJump == true) {
+								//Use AtomJump
+							
 								//We need to generate a new registrationId
 		
 								var url = api + "plugins/notifications/genid.php?country=Default";		//Can potentially extend to some country code info here from the cordova API, or user input?
@@ -483,15 +490,24 @@ var app = {
 									}
 		
 								});		//End of get
-							}
-							else {
-						
-								//Start polling
 							
-								var pollingURL = localStorage.getItem('pollingURL');
-							errorThis.startPolling(pollingURL, true);		//true: is 1st check immediately
+								
+							
+							} else {
+								//User has selected to not use AtomJump
+								//Use push instead.
+								if(resp.supports.android == true) {
+									errorThis.setupPush();
+								} else {
+									alert("Sorry, this server is not configured to send Android background notifications. Please contact the owner of the service to request this.");
+								}
 							}
+						} else {
 						
+							//Start polling AtomJump immediately - an existing registration
+							var pollingURL = localStorage.getItem('pollingURL');
+							errorThis.startPolling(pollingURL, true);		//true: is 1st check immediately
+						}
 								
 					
 						} else {
