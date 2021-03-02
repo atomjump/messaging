@@ -109,13 +109,11 @@ var app = {
     
     onNotificationEvent: function(data) {
 		console.log('notification event: ' + JSON.stringify(data));
-		alert('notification event: ' + JSON.stringify(data));		//TESTING
 		var finalData = {};
 		 
 		 
 		//See https://github.com/phonegap/phonegap-plugin-push/blob/master/docs/API.md
 		var platform = errorThis.getPlatform();
-		alert("Platform:" + platform);		//TESTING
 		if(platform == 'iOS') {
 			if(data.additionalData && data.additionalData.data && data.additionalData.data.image) {
 				finalData.image = data.additionalData.data.image;
@@ -268,7 +266,6 @@ var app = {
 		
 		}
 		
-		alert("TESTING: about to set msg");	//TESTING
 		var newHTML = "<span style='vertical-align: top; padding: 10px; padding-top:30px;' class='big-text'>AtomJump Message</span><br/><img  src='icon-Small@3x.png' style='padding 10px;'><ons-fab style='z-index: 1800;' position='top right'  onclick=\"app.closeNotifications('" + containerElement + "');\"><ons-icon icon=\"md-close\" ></ons-icon></ons-fab><p><b>" + finalData.message + insertImage + "</b>" + displayMessageCnt + "<br/><br/><ons-button style=\"background-color: #cc99cc; color: white;\" href='javascript:' onclick='app.myWindowOpen(\"" + finalData.observeUrl + "\", \"_system\");'>Open the Forum&nbsp;&nbsp;<ons-icon style=\"color: white;\" icon=\"ion-ios-copy-outline\" size=\"24px\"></ons-icon></ons-button><br/><br/>" + finalData.forumMessage + ": " + finalData.forumName  + "<br/><br/><small>" + keepListening + "</small></p>";
 	
 		alert(newHTML);		//TESTING
