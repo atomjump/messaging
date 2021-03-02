@@ -387,10 +387,6 @@ var app = {
 				success    : function(resp) {
 					
 					if(resp && resp.supports) {
-					
-					
-						
-						
 						
 						//Use pull
 					
@@ -508,15 +504,6 @@ var app = {
 							var pollingURL = localStorage.getItem('pollingURL');
 							errorThis.startPolling(pollingURL, true);		//true: is 1st check immediately
 						}
-								
-					
-						} else {
-							//Use push instead.
-							if(resp.supports.android == true) {
-								errorThis.setupPush();
-							} else {
-								alert("Sorry, this server is not configured to send Android background notifications. Please contact the owner of the service to request this.");
-							}				
 						
 					} else {
 						//Invalid data response
