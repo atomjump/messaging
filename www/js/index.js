@@ -25,7 +25,8 @@ var defaultApi = "https://atomjump.com/api/";		//when a blank is entered
 var rawForumHeader = "ajps_";
 var apiId = "538233303966";
 var singleClick = false;
-var pull = false;				//Switch to true if notifications are coming via a pull method (AtomJump's own), rather than push
+var iosAppLink = "https://itunes.apple.com/us/app/atomjump-messaging/id1153387200?ls=1&mt=8";
+var	androidAppLink = "https://play.google.com/store/apps/details?id=org.atomjump.messaging";
 
 
 
@@ -43,7 +44,7 @@ var app = {
         
         errorThis = this;
         
-        //Set display name - TODO: check this is valid here
+        //Set display name
         this.displayForumNames();
         
       
@@ -53,6 +54,8 @@ var app = {
         
         //The timer to call a pull request
         this.pollingCaller = null;
+        this.pull = false;   			//Switch to true if notifications are coming via a pull method (AtomJump's own), rather than push
+		this.pollInterval = 30000;		//For publications, use 30000 (i.e. 30 second check interval) by default.
 
     },
     // Bind Event Listeners
@@ -98,6 +101,10 @@ var app = {
           		$('#login-popup').hide();	
          		app.setupPull();
           }
+          
+          
+         
+          
     },
     
     onNotificationEvent: function(data) {
@@ -180,7 +187,6 @@ var app = {
 		var displayMessageCnt = "";
 		var keepListening = "Close this page to keep listening.";		//Default message at the bottom
 		
-	
 		for(var cnt = 0; cnt < errorThis.currentForums.length; cnt++) {
 			if(errorThis.currentForums[cnt].url == finalData.observeUrl) {
 				//Yes, a new message for the same forum
@@ -244,7 +250,6 @@ var app = {
    			 newElement.innerHTML = "<div id=\"" + displayElement + "\" class=\"inner-popup\"></div>";
     		document.getElementById("aj-HTML-alert-container").appendChild(newElement);
 
-			
 		}
 		
 		
@@ -272,13 +277,13 @@ var app = {
     },
     
     
-    poll: function( )
+    poll: function(cb)
 	{
 		 var url = localStorage.getItem('pollingURL');		//Can potentially extend to some country code info here from the cordova API, or user input?
 	  	//this will repeat every 15 seconds
 	  	if(url) {
 	  		try {
-				errorThis.get(url, function(url, resp) {
+				app.get(url, function(url, resp) {
 					//Resp could be a .json message file
 				
 				
@@ -288,22 +293,31 @@ var app = {
 					if(resp != "none") {
 						try {
 							var msg = JSON.parse(resp);
-							var data = msg.data;
-							errorThis.onNotificationEvent(data);
+							var messageData = msg.data;
 						
 							//Do a self notification alert if we're in the background. See https://github.com/katzer/cordova-plugin-local-notifications
-							if(cordova && cordova.plugins && cordova.plugins.notification && cordova.plugins.notification.local) {
 								cordova.plugins.notification.local.schedule({
-									title: data.additionalData.title,
-									text: data.message,
+								title: messageData.additionalData.title,
+								text: messageData.message,
 									foreground: true
 								});
-							}
+							
+							//Show an internal message
+							app.onNotificationEvent(messageData);		//Note: this should be 'app' because of scope to the outside world
+							
+							//There was a new message, so check again for another one - there may be a group of them at the start of opening the app.
+							
+							
+							cb(true);							
+							return;
+							
 						
 						} catch(err) {
 							//Show that there is a problem listening to messages.
 							$('#registered').html("<small style='color:#8F3850;'>Waiting for a Connection..</small>");
 							$('#registered').show();
+							cb(false);
+							return;
 						}	  				
 					}
 				});
@@ -313,22 +327,44 @@ var app = {
 				$('#registered').show();
 			
 			}
+	  	} else {
+	  		//No URL
+	  		cb(false);
+	  		return;
 	  	}
 	},
     
-    startPolling: function() {
+	runPoll: function() {
+		//This is run from the regular checks, and allows for a return callback
+		app.poll(function(runAgain) {
+			if(runAgain == true) {
+				app.runPoll();
+			}
+		});
+	
+	},
+    
+    startPolling: function(url, checkImmediately) {
     	//Regular timed interval checks on the 'pollingURL' localStorage item, every 15 seconds.
+    	errorThis = this;
+    	
    		$('#registered').html("<small>Listening for Messages</small>");
 		$('#registered').show();
     		
-    	this.pollingCaller = setInterval(errorThis.poll, 30000);
+    		
+    	app.pollingCaller = setInterval(app.runPoll, app.pollInterval); //Note: these notifications will work only if the app is in the foreground.
+    	
+    	if(checkImmediately == true) {
+    	
+    		app.runPoll();
+    	}
 		
 		
     },
     
     stopPolling: function() {
-    	if(this.pollingCaller) {
-    		clearInterval(this.pollingCaller);
+    	if(app.pollingCaller) {
+    		clearInterval(app.pollingCaller);
     	}    	
     },
     
@@ -387,7 +423,7 @@ var app = {
 							which returns the pool server write script e.g.
 							https://medimage-nz1.atomjump.com/write/HMEcfQQCufJmRPMX4C
 							*/
-							pull = true;		//Set the global pull
+							errorThis.pull = true;		//Set the global pull
 		
 							var oldRegId = localStorage.getItem('registrationId');
 						
@@ -396,9 +432,13 @@ var app = {
 		
 								var url = api + "plugins/notifications/genid.php?country=Default";		//Can potentially extend to some country code info here from the cordova API, or user input?
 			
+			
 								errorThis.get(url, function(url, resp) {
 									//Registered OK
 									//resp will now be e.g. "2z2H HMEcfQQCufJmRPMX4C https://medimage-nz1.atomjump.com New%20Zealand"
+								
+								
+																
 									var items = resp.split(" ");
 									var phonePlatform = "AtomJump";		//This is cross-platform
 									var registrationId = encodeURIComponent(items[2] + "/api/photo/#" + items[1]);
@@ -435,6 +475,8 @@ var app = {
 										//Otherwise login with the known logged userId
 										var phonePlatform = errorThis.getPlatform();
 				
+									
+				
 										var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform;  //e.g. https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
 										 errorThis.get(url, function(url, resp) {
 											//Registered OK
@@ -449,7 +491,7 @@ var app = {
 								//Start polling
 							
 								var pollingURL = localStorage.getItem('pollingURL');
-								errorThis.startPolling(pollingURL);
+							errorThis.startPolling(pollingURL, true);		//true: is 1st check immediately
 							}
 						
 								
@@ -481,8 +523,10 @@ var app = {
     	}
     },
     
+    
     setupPush: function() {
-  		pull = false;			//Set global pull off
+  		//Set the global pull to off
+  		errorThis.pull = false;
   	
   		if(typeof(PushNotification) == 'undefined') { 
 			alert("Sorry, your app is not configured to connect to system notifications.");
@@ -503,7 +547,6 @@ var app = {
 				"windows": {}
 			});
 			
-			
 			//Perhaps also?: ,	"badge": true
 
 		}
@@ -511,6 +554,7 @@ var app = {
         
         push.on('registration', function(data) {
                       
+           
             var oldRegId = localStorage.getItem('registrationId');
             $('#registered').html("<small>Listening for Messages</small>");
             $('#registered').show();
@@ -648,7 +692,11 @@ var app = {
     login: function(user, pass, apiUrl)
     {
     	//Login to the remote Loop Server
-   		errorThis.setAPI(apiUrl);
+   		var _this = this;
+   		
+   		_this.setAPI(apiUrl);
+   		
+   		
    		
    		if(user) {
    	
@@ -677,8 +725,12 @@ var app = {
 							if(userId) {
 								localStorage.setItem("loggedUser",userId);
 											
-								app.setupPull();		//register this phone
+								app.setupPull();		//register this phone. Note: this should be 'app' because of scope.
 								$('#login-popup').hide();
+								
+								//Give a warning about logging into the browser, since we haven't
+								//actually checked/paired with it.
+								app.warningBrowserOpen('gotoforum', function() {});
 						
 							} else {
 								navigator.notification.alert("Sorry, we detected a user, but this version of AtomJump Messaging Server does not support app logins.");
@@ -779,7 +831,7 @@ var app = {
     		case 'gotoforum':
     			if(count < 2) {
     			
-    				navigator.notification.alert("You will need to enter your personal email and password on the first occasion, under 'Settings', 'more', and then click 'Save Settings'. Note: This message will only display twice.",    
+    				navigator.notification.alert("You may need to enter your personal email and password on the first time you are on a forum, under 'Settings', 'more', and then click 'Save Settings'. Note: This message will only display twice.",    
 						cb,         					// callback
 						'Opening Message Forum',        // title
 						'OK'                  		// buttonName
@@ -816,6 +868,7 @@ var app = {
     factoryReset: function() {
         //We have connected to a server OK
         var _this = this;
+        _this.pull = false;
         
     		navigator.notification.confirm(
 	    		'Are you sure? All your saved forums and other settings will be cleared.',  // message
@@ -868,7 +921,8 @@ var app = {
     logout: function() {
         //We have connected to a server OK
         var _this = this;
-        pull = false;
+        
+        _this.pull = false; 		//Assume nothing, Android connection
         
     	userId = localStorage.getItem("loggedUser");
 		localStorage.removeItem("registrationId");
@@ -897,7 +951,10 @@ var app = {
 				//Deregister from remote server connection in a browser
 				var url = api + "plugins/notifications/register.php?id=";
 
-				_this.myWindowOpen(url, '_system');
+				_this.get(url, function(url, resp) {
+					//deregister non-visibly
+			
+				});
 			
 			}
 
@@ -1077,7 +1134,7 @@ var app = {
     		
     		for(var cnt = 0; cnt< settings.length; cnt++) {
     		
-    			prepList = prepList + "<ons-list-item onclick=\"app.warningBrowserOpen('gotoforum', function() { app.myWindowOpen(encodeURI('" + settings[cnt].url + "'), '_system'); });\">" + errorThis.ellipse(settings[cnt].forum, 27) + "</ons-list-item>";
+    			prepList = prepList + "<ons-list-item onclick=\"app.myWindowOpen(encodeURI('" + settings[cnt].url + "'), '_system');\">" + errorThis.ellipse(settings[cnt].forum, 27) + "</ons-list-item>";
     			
     		}
     		$('#forum-list').html(prepList);
