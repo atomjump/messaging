@@ -528,11 +528,11 @@ var app = {
 									var phonePlatform = errorThis.getPlatform();
 				
 									
+									
+									var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform;  //e.g. 								https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
 									errorThis.myWindowOpen(url, '_blank');
 									app.startPolling(null, false);
-				
-									var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform;  //e.g. 								https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
-																			
+														
 									/*$('#registered').html("<small><a class='button' href='" + url + "' target='_blank' onclick='soundEffect.play(); app.startPolling(null, false);'>Register to Listen</a><br/>(Then tap 'Back to AtomJump')</small>");
 									$('#registered').show();*/
 									
