@@ -363,38 +363,7 @@ var app = {
     	
     		app.runPoll();
     	}
- 		
- 		//Do 1st request after 8 seconds (allows time for registration to complete
- 		//app.runPoll();
- 		
-		 //iOS checking for new messages in the background - limited to every 15 minutes
-         /*TESTING OUT var BackgroundFetch = window.BackgroundFetch;
- 		
-
-		  // Your BackgroundFetch event handler.
-		  var onBackgroundEvent = function(taskId) {
-			  console.log('[BackgroundFetch] event received: ', taskId);
-			  app.poll(function() {
-				  // Required: Signal completion of your task to native code
-				  // If you fail to do this, the OS can terminate your app
-				  // or assign battery-blame for consuming too much background-time
-				  BackgroundFetch.finish(taskId);
-			  
-			  });
-			  
-		  };
-
-		  // Timeout callback is executed when your Task has exceeded its allowed running-time.
-		  // You must stop what you're doing immediately BackgroundFetch.finish(taskId)
-		  var onBackgroundTimeout = function(taskId) {
-			  console.log('[BackgroundFetch] TIMEOUT: ', taskId);
-			  BackgroundFetch.finish(taskId);
-		  };
-
-		  var status = BackgroundFetch.configure({minimumFetchInterval: 15}, onBackgroundEvent, onBackgroundTimeout);
-		  console.log('[BackgroundFetch] configure status: ', status);
-			*/
-		
+ 	
 		
     },
     
@@ -515,8 +484,8 @@ var app = {
 									
 									
 									app.startPolling(null, false);
-									alert("About to open remote page");
-									app.myWindowOpen(url, '_blank');
+									//alert("About to open remote page");
+									app.myWindowOpen(encodeURI(url), '_blank');
 									
 									
 																		
@@ -532,8 +501,8 @@ var app = {
 									
 									var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform;  //e.g. 								https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
 									app.startPolling(null, false);
-									alert("About to open remote page");
-									app.myWindowOpen(url, '_blank');
+									//alert("About to open remote page");
+									app.myWindowOpen(encodeURI(url), '_blank');
 									
 														
 									/*$('#registered').html("<small><a class='button' href='" + url + "' target='_blank' onclick='soundEffect.play(); app.startPolling(null, false);'>Register to Listen</a><br/>(Then tap 'Back to AtomJump')</small>");
