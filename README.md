@@ -22,7 +22,7 @@ The 'master' branch is for Android phones, while the 'ios-*' branch is for iPhon
 On iOS, you will need distribution keys.
 
 
-# Developing
+# Developing / Installing
 
 Branches and their descriptions:
 
