@@ -888,17 +888,21 @@ var app = {
 		$("#click-url").show();
 		$("#click-url").attr("href", myUrl);
 		
-		var returned = false;
+		var returnedCnt = 0;
 		
 		if(cb) {
 			var myCb = cb;
-			$("#click-url").on('click', function() {
-				returned = true;
-				$("#click-url").hide();
-				 myCb(true);		//Seemed to have clicked OK - likely a desktop or chrome mobile browser
+			$("#click-url").on('click', function(e) {
+				returnedCnt ++;
+				
+				if(returnedCnt >= 2) {
+					$("#click-url").hide();
+				 	myCb(true);		//Seemed to have clicked OK - likely a desktop or chrome mobile browser
+				}
 			});
 			
 			//Single click
+			$("#click-url span").trigger("click");	
 			$("#click-url span").trigger("click");
 			
 			//If this hasn't registered above within 2 seconds it is likely an iPhone. Return false.
