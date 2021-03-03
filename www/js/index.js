@@ -483,32 +483,47 @@ var app = {
 									var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=&devicetype=" + phonePlatform;
 									
 									
-									app.startPolling(null, false);
-									//alert("About to open remote page");
-									app.myWindowOpen(encodeURI(url), '_blank');
 									
+									var openSuccess = false;
+									try {
+										app.myWindowOpen(encodeURI(url), '_blank');
+										openSuccess = true;
+										alert("Success opening window");		//TESTING
+									} catch(err) {
+										//Likely on iPhones, create a 2nd clickable button that will start up the new page																		
+										$('#registered').html("<small><a class='button' href='" + url + "' target='_blank' onclick='soundEffect.play(); app.startPolling(null, false);'>Register to Listen</a><br/>(Then tap 'Back to AtomJump')</small>");
+										$('#registered').show();
 									
-																		
-									/*$('#registered').html("<small><a class='button' href='" + url + "' target='_blank' onclick='soundEffect.play(); app.startPolling(null, false);'>Register to Listen</a><br/>(Then tap 'Back to AtomJump')</small>");
-									$('#registered').show();*/
+									}
+									
+									if(openSuccess == true) {
+										app.startPolling(null, false);
+									}
 									
 								} else {
 			
 									//Otherwise login with the known logged userId
 									var phonePlatform = errorThis.getPlatform();
-				
-									
 									
 									var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform;  //e.g. 								https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
-									app.startPolling(null, false);
-									//alert("About to open remote page");
-									app.myWindowOpen(encodeURI(url), '_blank');
 									
-														
-									/*$('#registered').html("<small><a class='button' href='" + url + "' target='_blank' onclick='soundEffect.play(); app.startPolling(null, false);'>Register to Listen</a><br/>(Then tap 'Back to AtomJump')</small>");
-									$('#registered').show();*/
+				
+									var openSuccess = false;
+									try {
+										app.myWindowOpen(encodeURI(url), '_blank');
+										openSuccess = true;
+										alert("Success opening window known");		//TESTING
+									} catch(err) {
+										//Likely on iPhones, create a 2nd clickable button that will start up the new page	
+										$('#registered').html("<small><a class='button' href='" + url + "' target='_blank' onclick='soundEffect.play(); app.startPolling(null, false);'>Register to Listen</a><br/>(Then tap 'Back to AtomJump')</small>");
+										$('#registered').show();
 									
+									}
 									
+									if(openSuccess == true) {
+										app.startPolling(null, false);
+									}
+								
 									
 								}
 		
@@ -871,9 +886,10 @@ var app = {
 
 	
 			
-	myWindowOpen: function(myUrl, style, options) {
+	myWindowOpen: function(myUrl, style, cb) {
 		//Recommend using style = '_blank' for Safari browser to open a new page
-	
+		
+		
 		$("#click-url").show();
 		$("#click-url").attr("href", myUrl);
 		$("#click-url span").trigger("click");
