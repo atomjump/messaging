@@ -485,17 +485,19 @@ var app = {
 									
 									
 									var openSuccess = false;
-									openSuccess = app.myWindowOpen(encodeURI(url), '_blank');
+									openSuccess = app.myWindowOpen(encodeURI(url), '_blank', function(result) {
 										
-									if(openSuccess == false) {
-										//Likely on iPhones, create a 2nd clickable button that will start up the new page																		
-										$('#registered').html("<small><a class='button' href='" + url + "' target='_blank' onclick='soundEffect.play(); app.startPolling(null, false);'>Register to Listen</a><br/>(Then tap 'Back to AtomJump')</small>");
-										$('#registered').show();
+										if(result == true) {
+											app.startPolling(null, false);
+										} else {
+											//Likely on iPhones, create a 2nd clickable button that will start up the new page, just in-case
+											$('#registered').html("<small><a class='button' href='" + url + "' target='_blank' onclick='soundEffect.play(); app.startPolling(null, false);'>Register to Listen</a><br/>(Then tap 'Back to AtomJump')</small>");
+											$('#registered').show();
+										}
+									});
 									
-									}									
-									if(openSuccess == true) {
-										app.startPolling(null, false);
-									}
+																											
+									
 									
 								} else {
 			
@@ -506,17 +508,16 @@ var app = {
 									
 				
 									var openSuccess = false;
-									openSuccess = app.myWindowOpen(encodeURI(url), '_blank');
+									openSuccess = app.myWindowOpen(encodeURI(url), '_blank', function(result) {
 										
-									if(openSuccess == false) {
-										//Likely on iPhones, create a 2nd clickable button that will start up the new page																		
-										$('#registered').html("<small><a class='button' href='" + url + "' target='_blank' onclick='soundEffect.play(); app.startPolling(null, false);'>Register to Listen</a><br/>(Then tap 'Back to AtomJump')</small>");
-										$('#registered').show();
-									
-									}									
-									if(openSuccess == true) {
-										app.startPolling(null, false);
-									}
+										if(result == true) {
+											app.startPolling(null, false);
+										} else {
+											//Likely on iPhones, create a 2nd clickable button that will start up the new page, just in-case
+											$('#registered').html("<small><a class='button' href='" + url + "' target='_blank' onclick='soundEffect.play(); app.startPolling(null, false);'>Register to Listen</a><br/>(Then tap 'Back to AtomJump')</small>");
+											$('#registered').show();
+										}
+									});
 								
 									
 								}
@@ -886,17 +887,27 @@ var app = {
 		
 		$("#click-url").show();
 		$("#click-url").attr("href", myUrl);
-		$("#click-url span").trigger("click");
-		$("#click-url span").trigger("click", function(e){   
-   			 //e.isTrigger//undefined when the element is clicked
-    		 //e.isTrigger //true for $(element).trigger('click');
-    		 $("#click-url").hide();
-    		 if(e.isTrigger == true) {
-    		 	return true;
-    		 } else {
-    		 	return false;
-    		 }
-		});		//iOS Safari needs a double click to work for some weird reason. This seems to work on Android Chrome too.		
+		
+		
+		if(cb) {
+			var myCb = cb;
+			$("#click-url").on('click', function() {
+				//alert("clicked the input");			//TESTING
+				$("#click-url").hide();
+				 myCb(true);		//Seemed to have clicked OK - likely a desktop or chrome mobile browser
+			});
+			
+			//Single click
+			$("#click-url span").trigger("click");
+		} else {
+		
+			//Fallthrough - iOS Safari needs a double click to work for some weird reason.	
+			$("#click-url span").trigger("click");	
+			$("#click-url span").trigger("click");	
+			$("#click-url").hide();
+			return;
+		}
+		
 	},
 
 
@@ -937,7 +948,7 @@ var app = {
 								//Deregister from remote server connection in a browser
 								var url = api + "plugins/notifications/register.php?id=";
 
-								//Optional:_this.myWindowOpen(url, '_blank');
+								//Optional:_this.myWindowOpen(url, '_blank', function() {});
 						
 						}
     		
