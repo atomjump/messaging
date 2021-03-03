@@ -881,7 +881,7 @@ var app = {
 		$("#click-url").show();
 		$("#click-url").attr("href", myUrl);		
 		$("#click-url span").trigger("click");	
-		//$("#click-url span").trigger("click");		//Fallthrough - iOS Safari needs a double click to work for some weird reason.	
+		$("#click-url span").trigger("click");		//Fallthrough - iOS Safari needs a double click to work for some weird reason.	
 		$("#click-url").hide();
 		
 	},
