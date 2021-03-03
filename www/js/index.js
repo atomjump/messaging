@@ -877,11 +877,19 @@ var app = {
 	myWindowOpen: function(myUrl, style) {
 		//Recommend using style = '_blank' for Safari browser to open a new page
 		
+		var isSafari = navigator.vendor && navigator.vendor.indexOf('Apple') > -1 &&
+               navigator.userAgent &&
+               navigator.userAgent.indexOf('CriOS') == -1 &&
+               navigator.userAgent.indexOf('FxiOS') == -1;
+		
 		
 		$("#click-url").show();
 		$("#click-url").attr("href", myUrl);		
 		$("#click-url span").trigger("click");	
-		$("#click-url span").trigger("click");		//Fallthrough - iOS Safari needs a double click to work for some weird reason.	
+		if(isSafari) {
+			$("#click-url span").trigger("click");		//Fallthrough - iOS Safari needs a double click to work for some weird reason.
+		}	
+		
 		$("#click-url").hide();
 		
 	},
