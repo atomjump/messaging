@@ -492,7 +492,7 @@ var app = {
 									app.startPolling(null, false, 5);		//After 5 seconds it will check and remove this button below
 
 									//Likely on iPhones, create a 2nd clickable button that will start up the new page, just in-case
-									$('#registered').html("<small><a class='button' href='" + url + "' target='_blank'>Register to Listen</a><br/>(Then tap 'Back to AtomJump')</small>");
+									$('#registered').html("<small><a class='button' href='" + url + "' target='_blank'>Register to Listen</a><br/>(Within 5 seconds)</small>");
 									$('#registered').show();
 																			
 									
@@ -509,7 +509,7 @@ var app = {
 									app.startPolling(null, false, 5);		//After 5 seconds it will check and remove this button below
 
 									//Likely on iPhones, create a 2nd clickable button that will start up the new page, just in-case
-									$('#registered').html("<small><a class='button' href='" + url + "' target='_blank'>Register to Listen</a><br/>(Then tap 'Back to AtomJump')</small>");
+									$('#registered').html("<small><a class='button' href='" + url + "' target='_blank'>Register to Listen</a><br/>(Within 5 seconds)</small>");
 									$('#registered').show();
 								
 									
