@@ -515,6 +515,7 @@ var app = {
 									
 									
 									app.startPolling(null, false);
+									alert("About to open remote page");
 									app.myWindowOpen(url, '_blank');
 									
 									
@@ -531,6 +532,7 @@ var app = {
 									
 									var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform;  //e.g. 								https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
 									app.startPolling(null, false);
+									alert("About to open remote page");
 									app.myWindowOpen(url, '_blank');
 									
 														
