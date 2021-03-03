@@ -24,7 +24,23 @@
         <meta name="viewport" content="user-scalable=no, initial-scale=1, width=device-width" />
         <meta name="apple-mobile-web-app-capable" content="yes">
 		<link rel="apple-touch-icon" sizes="128x128" href="icon.png">
-		<link rel="icon" href="img/favicon.ico"  type="image/icon type">
+		<!--<link rel="icon" href="img/favicon.ico"  type="image/icon type">-->
+		
+		
+		<link rel="apple-touch-icon-precomposed" sizes="57x57" href="icon-57.png">
+
+		<link rel="apple-touch-icon-precomposed" sizes="114x114" href="icon-72@2x.png">
+
+		<link rel="apple-touch-icon-precomposed" sizes="72x72" href="icon-57@2x.png">
+
+		<link rel="apple-touch-icon-precomposed" sizes="144x144" href="icon-72@2x.png">
+
+		<link rel="icon" type="image/vnd.microsoft.icon" sizes="48x48" href="favicon.ico">
+
+		<link rel="icon" sizes="128x128" href="icon.png">
+
+		<!--<link rel="icon" href="favicon.png" type="image/x-icon">-->
+		
 
 		<!-- Live version --><meta http-equiv="Content-Security-Policy" content="default-src https://atomjump.com data: gap: https://ssl.gstatic.com  'unsafe-inline' *;  style-src 'self' 'unsafe-inline' 'unsafe-eval' *; media-src *; img-src 'self' data: content: *; connect-src *;">
 		
@@ -197,11 +213,13 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 							<a href="javascript:" onclick="$('#add-to-home').toggle(); $('#ios-guide').hide(); $('#android-guide').hide(); " style="color: #555; padding:10px;" alt="Add to Home"><ons-icon icon='md-bookmark' class='list__item__icon'></ons-icon>Install</a>
 						</div>
 						<div id="add-to-home" style="display:none;">
-							<small>Add app to your Homescreen<br/><a class='button' onclick="$('#ios-guide').toggle(); $('#android-guide').hide();" href='javascript:'>iOS Guide</a>&nbsp;<a class='button' onclick="$('#android-guide').toggle(); $('#ios-guide').hide();" href='javascript:'>Android Guide</a></small><br/><br/>
+							<small>Add app to your Homescreen<br/><a class='button' onclick="$('#ios-guide').toggle(); $('#android-guide').hide(); $('#desktop-guide').hide();" href='javascript:'>iOS Guide</a>&nbsp;<a class='button' onclick="$('#android-guide').toggle(); $('#ios-guide').hide(); $('#desktop-guide').hide();" href='javascript:'>Android Guide</a>&nbsp;<a class='button' onclick="$('#desktop-guide').toggle(); $('#ios-guide').hide(); $('#android-guide').hide();" href='javascript:'>Desktop Guide</a></small><br/><br/>
 						</div>
 						<div id="ios-guide" style="display:none;">Tap <img src="img/safari-add.png" width="25" height="30">, usually along the bottom of the screen, and then tap 'Add to Home Screen'. <a href="https://support.apple.com/en-nz/guide/iphone/iph42ab2f3a7/ios#iph4f9a47bbc">More Details</a><br/><br/><small><strong>Note:</strong> With this version you get notifications while the <strong>app is open</strong>, but not when it is closed. Use the <a href="https://itunes.apple.com/us/app/atomjump-messaging/id1153387200?ls=1&mt=8" target="_blank">full app</a>, instead for background notifications (if the Messaging installation supports this feature).</small><br/><br/>
 						</div>
 						<div id="android-guide" style="display:none;">Tap the <img src="img/chrome-menu.png" width="20" height="20"> in the top right corner of the screen, and then choose 'Add to Home Screen'. <a href="https://www.wikihow.com/Set-a-Bookmark-Shortcut-in-Your-Home-Screen-on-Android">More Details</a><br/><br/><small><strong>Note:</strong> With this version you get visible notifications while the <strong>app is open</strong>, but only audible beeps when it is closed. Use the <a href="https://play.google.com/store/apps/details?id=org.atomjump.messaging" target="_blank">full app</a>, instead for background notifications (if the Messaging installation supports this feature).</small><br/><br/>
+						</div>
+						<div id="desktop-guide" style="display:none;">Click the <img src="img/firefox-drag-desktop.png"> or <img src="img/chrome-desktop-drag.png"> bookmark-style icon in the URL bar to the left of the URL, and depending on the browser, drag this onto your desktop. <a href="https://www.hellotech.com/guide/for/how-to-create-a-desktop-shortcut-to-a-website">More Details</a><br/><br/><small><strong>Why?</strong> You can run this app in a background tab within your desktop browser and get an audible beep when a new message arrives, from any of your subscribed forums. The tab should be highlighted, too.</small><br/><br/>
 						</div>
 					</div>
 				
