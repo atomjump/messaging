@@ -485,17 +485,14 @@ var app = {
 									
 									
 									var openSuccess = false;
-									try {
-										app.myWindowOpen(encodeURI(url), '_blank');
-										openSuccess = true;
-										alert("Success opening window");		//TESTING
-									} catch(err) {
+									openSuccess = app.myWindowOpen(encodeURI(url), '_blank');
+										
+									if(openSuccess == false) {
 										//Likely on iPhones, create a 2nd clickable button that will start up the new page																		
 										$('#registered').html("<small><a class='button' href='" + url + "' target='_blank' onclick='soundEffect.play(); app.startPolling(null, false);'>Register to Listen</a><br/>(Then tap 'Back to AtomJump')</small>");
 										$('#registered').show();
 									
-									}
-									
+									}									
 									if(openSuccess == true) {
 										app.startPolling(null, false);
 									}
@@ -509,17 +506,14 @@ var app = {
 									
 				
 									var openSuccess = false;
-									try {
-										app.myWindowOpen(encodeURI(url), '_blank');
-										openSuccess = true;
-										alert("Success opening window known");		//TESTING
-									} catch(err) {
-										//Likely on iPhones, create a 2nd clickable button that will start up the new page	
+									openSuccess = app.myWindowOpen(encodeURI(url), '_blank');
+										
+									if(openSuccess == false) {
+										//Likely on iPhones, create a 2nd clickable button that will start up the new page																		
 										$('#registered').html("<small><a class='button' href='" + url + "' target='_blank' onclick='soundEffect.play(); app.startPolling(null, false);'>Register to Listen</a><br/>(Then tap 'Back to AtomJump')</small>");
 										$('#registered').show();
 									
-									}
-									
+									}									
 									if(openSuccess == true) {
 										app.startPolling(null, false);
 									}
@@ -893,11 +887,16 @@ var app = {
 		$("#click-url").show();
 		$("#click-url").attr("href", myUrl);
 		$("#click-url span").trigger("click");
-		$("#click-url span").trigger("click");		//iOS Safari needs a double click to work for some weird reason. This seems to work on Android Chrome too.
-		$("#click-url").hide();
-		
-		return;
-		
+		$("#click-url span").trigger("click", function(e){   
+   			 //e.isTrigger//undefined when the element is clicked
+    		 //e.isTrigger //true for $(element).trigger('click');
+    		 $("#click-url").hide();
+    		 if(e.isTrigger == true) {
+    		 	return true;
+    		 } else {
+    		 	return false;
+    		 }
+		});		//iOS Safari needs a double click to work for some weird reason. This seems to work on Android Chrome too.		
 	},
 
 
