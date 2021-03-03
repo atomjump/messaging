@@ -514,9 +514,9 @@ var app = {
 									var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=&devicetype=" + phonePlatform;
 									
 									
-									
-									errorThis.myWindowOpen(url, '_blank');
 									app.startPolling(null, false);
+									app.myWindowOpen(url, '_blank');
+									
 									
 																		
 									/*$('#registered').html("<small><a class='button' href='" + url + "' target='_blank' onclick='soundEffect.play(); app.startPolling(null, false);'>Register to Listen</a><br/>(Then tap 'Back to AtomJump')</small>");
@@ -530,8 +530,9 @@ var app = {
 									
 									
 									var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform;  //e.g. 								https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
-									errorThis.myWindowOpen(url, '_blank');
 									app.startPolling(null, false);
+									app.myWindowOpen(url, '_blank');
+									
 														
 									/*$('#registered').html("<small><a class='button' href='" + url + "' target='_blank' onclick='soundEffect.play(); app.startPolling(null, false);'>Register to Listen</a><br/>(Then tap 'Back to AtomJump')</small>");
 									$('#registered').show();*/
@@ -950,7 +951,7 @@ var app = {
 								//Deregister from remote server connection in a browser
 								var url = api + "plugins/notifications/register.php?id=";
 
-								myWindowOpen(url, '_blank');
+								//Optional:_this.myWindowOpen(url, '_blank');
 						
 						}
     		
