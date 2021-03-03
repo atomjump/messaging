@@ -888,17 +888,25 @@ var app = {
 		$("#click-url").show();
 		$("#click-url").attr("href", myUrl);
 		
+		var returned = false;
 		
 		if(cb) {
 			var myCb = cb;
 			$("#click-url").on('click', function() {
-				//alert("clicked the input");			//TESTING
+				returned = true;
 				$("#click-url").hide();
 				 myCb(true);		//Seemed to have clicked OK - likely a desktop or chrome mobile browser
 			});
 			
 			//Single click
 			$("#click-url span").trigger("click");
+			
+			//If this hasn't registered above within 2 seconds it is likely an iPhone. Return false.
+			setTimeout(function(){ 
+				if(returned == false) {
+					myCb(false);
+				}				
+			 }, 2000);
 		} else {
 		
 			//Fallthrough - iOS Safari needs a double click to work for some weird reason.	
