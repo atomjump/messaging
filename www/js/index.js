@@ -888,14 +888,17 @@ var app = {
 		$("#click-url").show();
 		$("#click-url").attr("href", myUrl);
 		
-		var returnedCnt = 0;
+		
 		
 		if(cb) {
 			var myCb = cb;
-			$("#click-url").on('click', function(e) {
+			var returnedCnt = 0;
+			
+			$("#click-url span").on('click', function(e) {
 				returnedCnt ++;
-				
-				if(returnedCnt >= 2) {
+				alert("Returned cnt:" + returnedCnt + " Resp:" + JSON.stringify(e));
+				if(returnedCnt >= 1) {
+					
 					$("#click-url").hide();
 				 	myCb(true);		//Seemed to have clicked OK - likely a desktop or chrome mobile browser
 				}
@@ -903,11 +906,11 @@ var app = {
 			
 			//Single click
 			$("#click-url span").trigger("click");	
-			$("#click-url span").trigger("click");
+			//$("#click-url span").trigger("click");
 			
 			//If this hasn't registered above within 2 seconds it is likely an iPhone. Return false.
 			setTimeout(function(){ 
-				if(returned == false) {
+				if(returnedCnt < 1) {
 					myCb(false);
 				}				
 			 }, 2000);
