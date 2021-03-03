@@ -349,7 +349,7 @@ var app = {
 	
 	},
     
-    startPolling: function(url, checkImmediately) {
+    startPolling: function(url, checkImmediately, checkAfterSeconds) {
     	//Regular timed interval checks on the 'pollingURL' localStorage item, every 15 seconds.
     	errorThis = this;
     	
@@ -362,6 +362,10 @@ var app = {
     	if(checkImmediately == true) {
     	
     		app.runPoll();
+    	}
+    	
+    	if(checkAfterSeconds) {
+    		setTimeout(function(){ app.runPoll(); }, checkAfterSeconds*1000);
     	}
  	
 		
@@ -484,19 +488,13 @@ var app = {
 									
 									
 									
-									var openSuccess = false;
-									openSuccess = app.myWindowOpen(encodeURI(url), '_blank', function(result) {
-										
-										if(result == true) {
-											app.startPolling(null, false);
-										} else {
-											//Likely on iPhones, create a 2nd clickable button that will start up the new page, just in-case
-											$('#registered').html("<small><a class='button' href='" + url + "' target='_blank' onclick='soundEffect.play(); app.startPolling(null, false);'>Register to Listen</a><br/>(Then tap 'Back to AtomJump')</small>");
-											$('#registered').show();
-										}
-									});
-									
-																											
+									openSuccess = app.myWindowOpen(encodeURI(url), '_blank');
+									app.startPolling(null, false, 5);		//After 5 seconds it will check and remove this button below
+
+									//Likely on iPhones, create a 2nd clickable button that will start up the new page, just in-case
+									$('#registered').html("<small><a class='button' href='" + url + "' target='_blank'>Register to Listen</a><br/>(Then tap 'Back to AtomJump')</small>");
+									$('#registered').show();
+																			
 									
 									
 								} else {
@@ -507,17 +505,12 @@ var app = {
 									var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform;  //e.g. 								https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
 									
 				
-									var openSuccess = false;
-									openSuccess = app.myWindowOpen(encodeURI(url), '_blank', function(result) {
-										
-										if(result == true) {
-											app.startPolling(null, false);
-										} else {
-											//Likely on iPhones, create a 2nd clickable button that will start up the new page, just in-case
-											$('#registered').html("<small><a class='button' href='" + url + "' target='_blank' onclick='soundEffect.play(); app.startPolling(null, false);'>Register to Listen</a><br/>(Then tap 'Back to AtomJump')</small>");
-											$('#registered').show();
-										}
-									});
+									openSuccess = app.myWindowOpen(encodeURI(url), '_blank');
+									app.startPolling(null, false, 5);		//After 5 seconds it will check and remove this button below
+
+									//Likely on iPhones, create a 2nd clickable button that will start up the new page, just in-case
+									$('#registered').html("<small><a class='button' href='" + url + "' target='_blank'>Register to Listen</a><br/>(Then tap 'Back to AtomJump')</small>");
+									$('#registered').show();
 								
 									
 								}
@@ -881,46 +874,15 @@ var app = {
 
 	
 			
-	myWindowOpen: function(myUrl, style, cb) {
+	myWindowOpen: function(myUrl, style) {
 		//Recommend using style = '_blank' for Safari browser to open a new page
 		
 		
 		$("#click-url").show();
-		$("#click-url").attr("href", myUrl);
-		
-		
-		
-		if(cb) {
-			var myCb = cb;
-			var returnedCnt = 0;
-			
-			$("#click-url span").on('click', function(e) {
-				returnedCnt ++;
-				if(returnedCnt >= 2) {
-					
-					$("#click-url").hide();
-				 	myCb(true);		//Seemed to have clicked OK - likely a desktop or chrome mobile browser
-				}
-			});
-			
-			//Single click
-			$("#click-url span").trigger("click");	
-			$("#click-url span").trigger("click");
-			
-			//If this hasn't registered above within 2 seconds it is likely an iPhone. Return false.
-			setTimeout(function(){ 
-				if(returnedCnt < 2) {
-					myCb(false);
-				}				
-			 }, 2000);
-		} else {
-		
-			//Fallthrough - iOS Safari needs a double click to work for some weird reason.	
-			$("#click-url span").trigger("click");	
-			$("#click-url span").trigger("click");	
-			$("#click-url").hide();
-			return;
-		}
+		$("#click-url").attr("href", myUrl);		
+		$("#click-url span").trigger("click");	
+		//$("#click-url span").trigger("click");		//Fallthrough - iOS Safari needs a double click to work for some weird reason.	
+		$("#click-url").hide();
 		
 	},
 
