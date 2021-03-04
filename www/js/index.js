@@ -899,7 +899,9 @@ var app = {
 								//Deregister from remote server connection in a browser
 								var url = api + "plugins/notifications/register.php?id=";
 
-								myWindowOpen(url, '_system');
+								//This needs to open the browser, or the session won't logout
+								//This is not optional. It will not logout correctly otherwise.
+								_this.myWindowOpen(url, '_system');
 						
 						}
     		
@@ -952,10 +954,9 @@ var app = {
 				//Deregister from remote server connection in a browser
 				var url = api + "plugins/notifications/register.php?id=";
 
-				_this.get(url, function(url, resp) {
-					//deregister non-visibly
-			
-				});
+				//This needs to open the browser, or the session won't logout
+				//This is not optional. It will not logout correctly otherwise.
+				_this.myWindowOpen(url, '_system');
 			
 			}
 
