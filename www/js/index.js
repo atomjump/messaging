@@ -489,10 +489,10 @@ var app = {
 									
 									
 									openSuccess = app.myWindowOpen(encodeURI(url), '_blank');
-									app.startPolling(null, false, 5);		//After 5 seconds it will check and remove this button below
+									app.startPolling(null, false, 10);		//After 5 seconds it will check and remove this button below
 
 									//Likely on iPhones, create a 2nd clickable button that will start up the new page, just in-case
-									$('#registered').html("<small><a class='button' href='" + url + "' target='_blank'>Register to Listen</a><br/>(Within 5 seconds)</small>");
+									$('#registered').html("<small><a class='button' href='" + url + "' target='_blank'>Complete Pairing</a><br/>(Tap if you are seeing this)</small>");
 									$('#registered').show();
 																			
 									
@@ -506,10 +506,10 @@ var app = {
 									
 				
 									openSuccess = app.myWindowOpen(encodeURI(url), '_blank');
-									app.startPolling(null, false, 5);		//After 5 seconds it will check and remove this button below
+									app.startPolling(null, false, 10);		//After 7 seconds it will check and remove this button below
 
 									//Likely on iPhones, create a 2nd clickable button that will start up the new page, just in-case
-									$('#registered').html("<small><a class='button' href='" + url + "' target='_blank'>Register to Listen</a><br/>(Within 5 seconds)</small>");
+									$('#registered').html("<small><a class='button' href='" + url + "' target='_blank'>Complete Pairing</a><br/>(Tap if you are seeing this)</small>");
 									$('#registered').show();
 								
 									
