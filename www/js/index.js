@@ -865,27 +865,53 @@ var app = {
    			
    			var origStr = newForumName;
    			
-   			//Check if it is a url
+   			//Check if it is a url starting with http
    			if(origStr.substring(0,4) == "http") {
    				var url = origStr;
    				var forumTitle = origStr.replace("https://", "");		//Get rid of http visually
    				forumTitle = forumTitle.replace("http://","");   				
    				var forumName = origStr;
    			} else {
-   				//An atomjump.com subdomain
-				var subdomain = origStr.replace(/\s+/g, '');  //remove spaces
-				subdomain = subdomain.replace(/[^a-z0-9\-]/gi, '');	//keep letters and numbers only (and hyphens)
-				if(subdomain == origStr) {
-					//Straightforward redirect
-					var url = 'https://' + subdomain + '.atomjump.com/go/';
-				} else {
-					var url = 'https://' + subdomain + '.atomjump.com/?orig_query=' + encodeURIComponent(origStr + '&autostart=true');
-						
-				}
+   			
+   				var subdomainVer = true;		//Assume this is a subdomain
+   			
+				//Check if it is URL with dots
+				if(origStr.indexOf(".") !== -1) {
+					
+					//Special case: "test.atomjump.com"
+					if((origStr.indexOf(".atomjump.com") !== -1)||
+						(origStr.indexOf(".ajmp.co") !== -1)) {
+						subdomainVer = true;
+						origStr = origStr.replace(".atomjump.com", "");
+						origStr = origStr.replace(".ajmp.co", "");
+					} else {
+						//So this is a generic URL e.g. "mycompany.com/link"
+						//By default append 'http' at the start of the URL. Most sites
+						//will convert this into https.
+						var url = "http://" + origStr;
+						subdomainVer = false;		//Use directly.
+						var forumTitle = origStr;
+						var forumName = origStr;
+					}
+				} 
 				
-				var forumTitle = subdomain + '@';
-				var forumName = subdomain;
-		    }
+				
+				if(subdomainVer == true) {
+					//An atomjump.com subdomain
+					var subdomain = origStr.replace(/\s+/g, '');  //remove spaces
+					subdomain = subdomain.replace(/[^a-z0-9\-]/gi, '');	//keep letters and numbers only (and hyphens)
+					if(subdomain == origStr) {
+						//Straightforward redirect
+						var url = 'https://' + subdomain + '.atomjump.com/go/';
+					} else {
+						var url = 'https://' + subdomain + '.atomjump.com/?orig_query=' + encodeURIComponent(origStr + '&autostart=true');
+						
+					}
+				
+					var forumTitle = subdomain + '@';
+					var forumName = subdomain;
+				}
+			}
    			
    			//Create a new entry - which will be blank to begin with
    			var newSetting = { 
