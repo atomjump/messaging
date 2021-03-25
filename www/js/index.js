@@ -18,7 +18,7 @@
  */
 
 
-var errorThis = {};  //Used as a global error handler
+var innerThis = {};  //Used as a global error handler
 var userId = null;			//From a login when we open the app
 var api = "https://atomjump.com/api/";
 var defaultApi = "https://atomjump.com/api/";		//when a blank is entered
@@ -39,7 +39,7 @@ var app = {
         
         
         
-        errorThis = this;
+        innerThis = this;
         
         //Set display name - TODO: check this is valid here
         this.displayForumNames();
@@ -107,10 +107,10 @@ var app = {
     onNotificationEvent: function(data) {
 		console.log('notification event');
 		var finalData = {};
-		errorThis = this;
+		innerThis = this;
 		 
 		//See https://github.com/phonegap/phonegap-plugin-push/blob/master/docs/API.md
-		var platform = errorThis.getPlatform();
+		var platform = innerThis.getPlatform();
 		if(platform == 'iOS') {
 			if(data.additionalData && data.additionalData.data && data.additionalData.data.image) {
 				finalData.image = data.additionalData.data.image;
@@ -184,27 +184,27 @@ var app = {
 		var displayMessageCnt = "";
 		var keepListening = "Close this page to keep listening.";		//Default message at the bottom
 		
-		for(var cnt = 0; cnt < errorThis.currentForums.length; cnt++) {
-			if(errorThis.currentForums[cnt].url == finalData.observeUrl) {
+		for(var cnt = 0; cnt < innerThis.currentForums.length; cnt++) {
+			if(innerThis.currentForums[cnt].url == finalData.observeUrl) {
 				//Yes, a new message for the same forum
 				
 				foundExisting = true;
 				
 				//Prevent duplicates for the count
-				if(finalData.message != errorThis.currentForums[cnt].lastMsg) {
+				if(finalData.message != innerThis.currentForums[cnt].lastMsg) {
 					
 					//Found an existing entry - add one more message to the count
 					
 					foundNum = cnt;
-					var msgCnt = errorThis.currentForums[cnt].msgCnt;
+					var msgCnt = innerThis.currentForums[cnt].msgCnt;
 					var msgWord = "messages";
 					if(msgCnt == 1) msgWord = "message";
 					displayMessageCnt = "<br/><br/>+" + msgCnt + " other " + msgWord + "</br>";
-					errorThis.currentForums[cnt].msgCnt = errorThis.currentForums[cnt].msgCnt + 1;
-					errorThis.currentForums[cnt].lastMsg = finalData.message;		//Prevent future duplicates
+					innerThis.currentForums[cnt].msgCnt = innerThis.currentForums[cnt].msgCnt + 1;
+					innerThis.currentForums[cnt].lastMsg = finalData.message;		//Prevent future duplicates
 					
-					containerElement = errorThis.currentForums[cnt].containerElement;
-					displayElement = errorThis.currentForums[cnt].displayElement;
+					containerElement = innerThis.currentForums[cnt].containerElement;
+					displayElement = innerThis.currentForums[cnt].displayElement;
 				} else {
 					return;	//Exit the display early on a duplicate. There is no need to update the message display
 				}
@@ -219,7 +219,7 @@ var app = {
 	    if(foundExisting == false) {
 	    	//Create a new forum
 	    	
-	    	var forumCnt = errorThis.currentForums.length;
+	    	var forumCnt = innerThis.currentForums.length;
 	    	foundNum = forumCnt;
 	    	containerElement = 'aj-HTML-alert-' + forumCnt;
 	    	displayElement = 'aj-HTML-alert-inner-' + forumCnt;
@@ -232,7 +232,7 @@ var app = {
 					"msgCnt": 1,
 					"lastMsg": finalData.message
 			};
-			errorThis.currentForums.push(newEntry);
+			innerThis.currentForums.push(newEntry);
 			//Insert the visual element into the HTML container
 			/*<div id="aj-HTML-alert-0" class="aj-HTML-alert" style="display:none;">
 				<div id="aj-HTML-alert-inner-0" class="inner-popup"></div>
@@ -336,7 +336,7 @@ var app = {
     
     startPolling: function() {
     	//Regular timed interval checks on the 'pollingURL' localStorage item, every 15 seconds.
-    	errorThis = this;
+    	innerThis = this;
     	
    		$('#registered').html("<small>Listening for Messages<br/>(Bring app to front)</small>");
 		$('#registered').show();
@@ -383,7 +383,7 @@ var app = {
     
     setupPull: function() {
     
-    	errorThis = this;
+    	innerThis = this;
     	//Pull from an AtomJump notification system
     	//Works in a similar fashion to setupPush() below, but is cross-platform
     	//and is based on regular polling of a URL for new messages.
@@ -398,7 +398,7 @@ var app = {
 					 if(granted == false) {
 						alert("AtomJump Messaging will use the device's own notification system instead.");
 						//Use push instead.
-						errorThis.setupPush();		
+						innerThis.setupPush();		
 						return;    
 					 }
 				});
@@ -443,7 +443,7 @@ var app = {
 						which returns the pool server write script e.g.
 						https://medimage-nz1.atomjump.com/write/HMEcfQQCufJmRPMX4C
 						*/
-						errorThis.pull = true;		//Set the global pull
+						innerThis.pull = true;		//Set the global pull
 		
 						var oldRegId = localStorage.getItem('registrationId');
 						
@@ -453,7 +453,7 @@ var app = {
 							var url = api + "plugins/notifications/genid.php?country=Default";		//Can potentially extend to some country code info here from the cordova API, or user input?
 							
 			
-							errorThis.get(url, function(url, resp) {
+							innerThis.get(url, function(url, resp) {
 								//Registered OK
 								//resp will now be e.g. "2z2H HMEcfQQCufJmRPMX4C https://medimage-nz1.atomjump.com New%20Zealand"
 																
@@ -468,7 +468,7 @@ var app = {
 				
 								//Start up regular checks
 								localStorage.setItem('pollingURL', pollingURL);
-								errorThis.startPolling(pollingURL);
+								innerThis.startPolling(pollingURL);
 				
 				   
 								$('#registered').html("<small>Listening for Messages<br/>(Bring app to front)</small>");
@@ -487,15 +487,15 @@ var app = {
 									//Have tapped a single server pairing - will not have a known userid
 									//so we need to let the browser use it's own cookies.
 									var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=&devicetype=" + phonePlatform;
-									errorThis.myWindowOpen(url, '_system');
+									innerThis.myWindowOpen(url, '_system');
 								} else {
 			
 									//Otherwise login with the known logged userId
-									var phonePlatform = errorThis.getPlatform();
+									var phonePlatform = innerThis.getPlatform();
 				
 									var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform;  //e.g. 
 																			https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
-									 errorThis.get(url, function(url, resp) {
+									 innerThis.get(url, function(url, resp) {
 										//Registered OK
 				
 									});
@@ -508,19 +508,19 @@ var app = {
 							//Start polling
 							
 							var pollingURL = localStorage.getItem('pollingURL');
-							errorThis.startPolling(pollingURL);
+							innerThis.startPolling(pollingURL);
 						}
 						
 								
 					
 					} else {
 						//Use push instead.
-						errorThis.setupPush();					
+						innerThis.setupPush();					
 					}
 				},
 				error      : function() {
 					//Use push instead.
-					errorThis.setupPush();
+					innerThis.setupPush();
 					return;        
 				}
 			
@@ -532,7 +532,7 @@ var app = {
     
     setupPush: function() {
   		//Set the global pull to off
-  		errorThis.pull = false;
+  		innerThis.pull = false;
   	
   		if(typeof(PushNotification) == 'undefined') { 
 			alert("PushNotification does not exist sorry");
@@ -579,18 +579,18 @@ var app = {
                 	//so we need to let the browser use it's own cookies.
                 	
                 	//Confirm device.platform if it is blank.
-                	var phonePlatform = errorThis.getPlatform();
+                	var phonePlatform = innerThis.getPlatform();
                 	
                 	
                 	var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=&devicetype=" + phonePlatform;
-                	errorThis.myWindowOpen(url, '_system');
+                	innerThis.myWindowOpen(url, '_system');
                 } else {
                 
                  	//Otherwise login with the known logged userId
-                 	var phonePlatform = errorThis.getPlatform();
+                 	var phonePlatform = innerThis.getPlatform();
                  	
                	 	var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform;  //e.g. https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
-					 errorThis.get(url, function(url, resp) {
+					 innerThis.get(url, function(url, resp) {
 						//Registered OK
 					
 					});
@@ -622,7 +622,7 @@ var app = {
     {		
     	var platform = "iOS";			//Default on the cordova-ios branch
 		
-		if(errorThis.pull == true) {
+		if(innerThis.pull == true) {
 			//Switch over to the cross-platform AtomJump platform
 			platform = "AtomJump";	
 		}
@@ -653,19 +653,19 @@ var app = {
     register: function(apiUrl)
     {
     	//Register to the remote Loop Server
-   		errorThis.setAPI(apiUrl); 
+   		innerThis.setAPI(apiUrl); 
    		
    		var id = localStorage.getItem('registrationId');
    		
 
    		if(id) {
    			//Already have a registrationId
-			var phonePlatform = errorThis.getPlatform();
+			var phonePlatform = innerThis.getPlatform();
 			var platform = phonePlatform;
 		
 			var url = api + "plugins/notifications/register.php?id=" + id + "&devicetype=" + platform;
 
-			errorThis.myWindowOpen(url, '_system');
+			innerThis.myWindowOpen(url, '_system');
 			
 			var settingApi = localStorage.getItem("api");
          	 if(settingApi) {
@@ -686,7 +686,7 @@ var app = {
          	 } 
          	          	 
          	singleClick = true;      
-        	errorThis.setupPull();
+        	innerThis.setupPull();
         	$('#login-popup').hide();
 		}
    		   		
@@ -766,7 +766,7 @@ var app = {
 
 	clearPass: function(email, apiUrl) {
 		
-		errorThis.setAPI(apiUrl);
+		innerThis.setAPI(apiUrl);
 		
 	   	$.ajax({
 			type       : "POST",
@@ -973,7 +973,7 @@ var app = {
 
     openSettings: function() {
     	//Open the settings screen
-    	var html = errorThis.listForums();
+    	var html = innerThis.listForums();
     	document.getElementById("settings").innerHTML = html;
     	
     	document.getElementById("settings-popup").style.display = "block";
@@ -991,9 +991,9 @@ var app = {
     	myobj.remove();
     	
     	//Remove this element from the array of current forums open
-    	for(var cnt = 0; cnt< errorThis.currentForums.length; cnt++) {
-    		if(errorThis.currentForums[cnt].containerElement == closeElement) {
-    			errorThis.currentForums.splice(cnt,1);		//Remove this forum from the array
+    	for(var cnt = 0; cnt< innerThis.currentForums.length; cnt++) {
+    		if(innerThis.currentForums[cnt].containerElement == closeElement) {
+    			innerThis.currentForums.splice(cnt,1);		//Remove this forum from the array
     		}
     	}
     },
@@ -1001,7 +1001,7 @@ var app = {
     listForums: function() {
     	var prepList = "";
     	
- 		var settings = errorThis.getArrayLocalStorage("settings");
+ 		var settings = innerThis.getArrayLocalStorage("settings");
 	
 		if(settings) {
 	
@@ -1009,7 +1009,7 @@ var app = {
 		
 	
 			for(var cnt = 0; cnt< settings.length; cnt++) {
-				prepList = prepList + "<ons-list-item>" + errorThis.ellipse(settings[cnt].forum, 27) + " <div class='right'><ons-icon icon='md-delete' class='list__item__icon' onclick='app.deleteForum(" + cnt + ");'></ons-icon></div></ons-list-item>";
+				prepList = prepList + "<ons-list-item>" + innerThis.ellipse(settings[cnt].forum, 27) + " <div class='right'><ons-icon icon='md-delete' class='list__item__icon' onclick='app.deleteForum(" + cnt + ");'></ons-icon></div></ons-list-item>";
 		
 			}
         } else {
@@ -1033,7 +1033,7 @@ var app = {
 		//Ask for a name of the current Server:
 		navigator.notification.prompt(
 			'Please enter the AtomJump.com name, e.g. \'london\', or URL for your forum',  // message
-			errorThis.saveForumName,                  // callback to invoke
+			innerThis.saveForumName,                  // callback to invoke
 			'Forum Name',            // title
 			['Ok','Cancel'],             // buttonLabels
 			''                 // defaultText
@@ -1050,23 +1050,23 @@ var app = {
 	    		'Are you sure? This forum will be removed.',  // message
 	    		function(buttonIndex) {
 	    			if(buttonIndex == 1) {
-						var settings = errorThis.getArrayLocalStorage("settings");
+						var settings = innerThis.getArrayLocalStorage("settings");
     	
 						if((settings == null)|| (settings == '')) {
 							//Nothing to delete 
 						} else {
 						
 							//Check if it is deleting the current entry
-							var deleteName = settings[errorThis.myForumId].forum;
+							var deleteName = settings[innerThis.myForumId].forum;
 							
 						
-							settings.splice(errorThis.myForumId, 1);  //Remove the entry entirely from array
+							settings.splice(innerThis.myForumId, 1);  //Remove the entry entirely from array
 			
-							errorThis.setArrayLocalStorage("settings", settings);
+							innerThis.setArrayLocalStorage("settings", settings);
 						} 
 		
-						errorThis.openSettings();	//refresh settings page
-						errorThis.displayForumNames();		//refresh homepage
+						innerThis.openSettings();	//refresh settings page
+						innerThis.displayForumNames();		//refresh homepage
 					}
 	    		
 	    		},                  // callback to invoke
@@ -1092,9 +1092,9 @@ var app = {
     		
     		
     		
-    		errorThis.saveForum(results.input1);
+    		innerThis.saveForum(results.input1);
     		
-    		errorThis.closeSettings();
+    		innerThis.closeSettings();
     		return;
     	} else {
     		//Clicked on 'Exit'. Do nothing.
@@ -1128,7 +1128,7 @@ var app = {
     		
     		for(var cnt = 0; cnt< settings.length; cnt++) {
     		
-    			prepList = prepList + "<ons-list-item onclick=\"app.warningBrowserOpen('gotoforum', function() { app.myWindowOpen(encodeURI('" + settings[cnt].url + "'), '_system'); });\">" + errorThis.ellipse(settings[cnt].forum, 27) + "</ons-list-item>";
+    			prepList = prepList + "<ons-list-item onclick=\"app.warningBrowserOpen('gotoforum', function() { app.myWindowOpen(encodeURI('" + settings[cnt].url + "'), '_system'); });\">" + innerThis.ellipse(settings[cnt].forum, 27) + "</ons-list-item>";
     			
     		}
     		$('#forum-list').html(prepList);
