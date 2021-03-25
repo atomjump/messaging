@@ -175,7 +175,7 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 					<ons-list-item expandable >
 					  <span style="width :100%;" onclick="$('.expandable-content').hide(); $(this).parent().find('.expandable-content').slideToggle();"><b>(Or)</b>&nbsp;&nbsp;Pair with a Private Server</span>
 					  <div class="expandable-content" style="display: none; width: 100%;">
-					  	<p style="text-align:center;"><input style="padding:5px;" id="pair-private-server" type="url" placeholder="Paste In Here" size="26" class="resizedTextbox"><br/><br/>
+					  	<p style="text-align:center;"><input style="padding:5px;" id="pair-private-server" type="url" placeholder="Paste In Here http://" size="26" class="resizedTextbox"><br/><br/>
 					  		<ons-button style="background-color: #7c5599; color: white;" modifier="large--cta" onclick="app.register($('#pair-private-server').val());"><ons-icon icon='md-link'></ons-icon>&nbsp;&nbsp;Pair with your Private Server</ons-button>
 					  	</p>
 					  </div>
