@@ -418,7 +418,7 @@ var app = {
 							//Allow user to choose if they want AtomJump
 							var useAtomJump = false;
 							var canUseAndroidNative = true;
-							if(typeof(pushNotification) == 'undefined') { 
+							if(typeof(PushNotification) == 'undefined') { 
 								//Can't use Android Native messages from the app (typically it is an app 
 								//not from the appstore)
 								canUseAndroidNative = false;
@@ -540,13 +540,13 @@ var app = {
   		//Set the global pull to off
   		innerThis.pull = false;
   	
-  		if(typeof(pushNotification) == 'undefined') { 
+  		if(typeof(PushNotification) == 'undefined') { 
 			alert("Sorry, your app is not configured to connect to system notifications.");
 			return;					
 		} else {
   	
   	
-			var push = pushNotification.init({
+			var push = PushNotification.init({
 				"android": {},
       			"browser": {
         			"pushServiceURL": 'http://push.api.phonegap.com/v1/push'
