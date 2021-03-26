@@ -35,7 +35,8 @@
       "cordova-plugin-dialogs": {},
       "cordova-plugin-globalization": {},
       "cordova-plugin-inappbrowser": {},
-      "cordova-plugin-cleartext": {}
+      "cordova-plugin-cleartext": {},
+      "@havesource/cordova-plugin-push": {}
     },
     "platforms": [
       "browser",
