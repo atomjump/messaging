@@ -416,8 +416,16 @@ var app = {
 						
 						
 							//Allow user to choose if they want AtomJump
-							useAtomJump = false;
-							if((resp.supports.atomjump == true)&&(resp.supports.android == true)) {
+							var useAtomJump = false;
+							var canUseAndroidNative = true;
+							if(typeof(PushNotification) == 'undefined') { 
+								//Can't use Android Native messages from the app (typically it is an app 
+								//not from the appstore)
+								canUseAndroidNative = false;
+								useAtomJump = true;		//Force use of AtomJump messages
+							}
+							
+							if((resp.supports.atomjump == true)&&(resp.supports.android == true)&&(canUseAndroidNative == true)) {
 								 //Give the user a choice
 								if(confirm("The service you are connecting to allows immediate Android notifications. AtomJump notifications use slightly more battery power, and can take a few more seconds to pop up, but they use peer-reviewable software, and do not share data with Google. Do you wish to use AtomJump notifications, instead?")) {
 									useAtomJump = true;
@@ -489,7 +497,10 @@ var app = {
 							
 								
 							
+							 					
 							} else {
+								
+								//Use Google notifications
 								//User has selected to not use AtomJump
 								//Use push instead.
 								if(resp.supports.android == true) {
