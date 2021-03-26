@@ -317,6 +317,8 @@ var app = {
                 	
                 	
                 	var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=&devicetype=" + phonePlatform;
+                	
+                	alert(url);		//TESTING
                 	innerThis.myWindowOpen(url, '_system');
                 } else {
                 
@@ -324,6 +326,8 @@ var app = {
                  	var phonePlatform = innerThis.getPlatform();
                  	
                	 	var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform;  //e.g. https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
+               	 	
+               	 	alert(url);		//TESTING
 					 innerThis.get(url, function(url, resp) {
 						//Registered OK
 					
