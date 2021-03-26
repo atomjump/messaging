@@ -298,7 +298,7 @@ var app = {
            
             var oldRegId = localStorage.getItem('registrationId');
             $('#registered').show();
-            if (oldRegId !== data.registrationId) {
+            if (oldRegId != data.registrationId) {
                 
                 
                 // Save new registration ID
@@ -333,7 +333,9 @@ var app = {
 					
 					});
 				}
-            } 
+            } else {
+            	
+            }
 			
              
         });
@@ -386,8 +388,10 @@ var app = {
     register: function(apiUrl)
     {
     	//Register to the remote Loop Server
+    	alert("IN here 1");
    		innerThis.setAPI(apiUrl); 
    		
+   		alert("IN here 2");
    		var id = localStorage.getItem('registrationId');
    		
    		if(id) {	
@@ -397,6 +401,7 @@ var app = {
 		
 			var url = api + "plugins/notifications/register.php?id=" + id + "&devicetype=" + platform;
 
+			alert("IN here 3 " + url);
 			innerThis.myWindowOpen(url, '_system');
 			
 			var settingApi = localStorage.getItem("api");
@@ -417,7 +422,8 @@ var app = {
           	 	$('#pair-private-server').val(api);
          	 } 
          	          	 
-         	singleClick = true;      
+         	singleClick = true;     
+         	alert("IN here 4 "); 
         	innerThis.setupPush();
         	$('#login-popup').hide();
 		}
