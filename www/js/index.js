@@ -274,7 +274,7 @@ var app = {
 			return;					
 		} else {
   	
-  	
+  			alert("In here 5");		//TESTING
 			var push = PushNotification.init({
 				"android": {},
       			"browser": {
@@ -288,6 +288,8 @@ var app = {
 				"windows": {}
 			});
 			
+			alert("In here 6");		//TESTING
+			
 			//Perhaps also?: ,	"badge": true
 
 		}
@@ -295,7 +297,7 @@ var app = {
         
         push.on('registration', function(data) {
             
-           
+           alert("In registration");		//TESTING
             var oldRegId = localStorage.getItem('registrationId');
             $('#registered').show();
             if (oldRegId != data.registrationId) {
