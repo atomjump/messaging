@@ -274,8 +274,7 @@ var app = {
 			return;					
 		} else {
   	
-  			alert("In here 5");		//TESTING
-			var push = PushNotification.init({
+ 			var push = PushNotification.init({
 				"android": {},
       			"browser": {
         			"pushServiceURL": 'http://push.api.phonegap.com/v1/push'
@@ -288,7 +287,6 @@ var app = {
 				"windows": {}
 			});
 			
-			alert("In here 6");		//TESTING
 			
 			//Perhaps also?: ,	"badge": true
 
@@ -297,7 +295,6 @@ var app = {
         
         push.on('registration', function(data) {
             
-           alert("In registration");		//TESTING
             var oldRegId = localStorage.getItem('registrationId');
             $('#registered').show();
             if (oldRegId != data.registrationId) {
@@ -320,7 +317,6 @@ var app = {
                 	
                 	var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=&devicetype=" + phonePlatform;
                 	
-                	alert(url);		//TESTING
                 	innerThis.myWindowOpen(url, '_system');
                 } else {
                 
@@ -329,15 +325,12 @@ var app = {
                  	
                	 	var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform;  //e.g. https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
                	 	
-               	 	alert(url);		//TESTING
 					 innerThis.get(url, function(url, resp) {
 						//Registered OK
 					
 					});
 				}
-            } else {
-            	
-            }
+            } 
 			
              
         });
@@ -390,10 +383,8 @@ var app = {
     register: function(apiUrl)
     {
     	//Register to the remote Loop Server
-    	alert("IN here 1");
    		innerThis.setAPI(apiUrl); 
    		
-   		alert("IN here 2");
    		var id = localStorage.getItem('registrationId');
    		
    		if(id) {	
@@ -403,7 +394,6 @@ var app = {
 		
 			var url = api + "plugins/notifications/register.php?id=" + id + "&devicetype=" + platform;
 
-			alert("IN here 3 " + url);
 			innerThis.myWindowOpen(url, '_system');
 			
 			var settingApi = localStorage.getItem("api");
@@ -425,8 +415,7 @@ var app = {
          	 } 
          	          	 
          	singleClick = true;     
-         	alert("IN here 4 "); 
-        	innerThis.setupPush();
+         	innerThis.setupPush();
         	$('#login-popup').hide();
 		}
    		   		
