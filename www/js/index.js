@@ -273,7 +273,6 @@ var app = {
 			alert("PushNotification does not exist sorry");
 			return;					
 		} else {
-  			alert("PushNotification Exists OK");	//TESTING 1
  			var push = PushNotification.init({
 				"android": {},
       			"browser": {
@@ -287,7 +286,6 @@ var app = {
 				"windows": {}
 			});
 			
-			alert("PushNotification init OK");	//TESTING 1
 			//Perhaps also?: ,	"badge": true
 
 		}
@@ -295,7 +293,6 @@ var app = {
         
         push.on('registration', function(data) {
             
-            alert("PushNotification registration OK");	//TESTING 1
             
             var oldRegId = localStorage.getItem('registrationId');
             $('#registered').show();
@@ -319,7 +316,6 @@ var app = {
                 	
                 	var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=&devicetype=" + phonePlatform;
                 	
-                	alert("PushNotification URL opening:" + url);	//TESTING 1
                 	
                 	innerThis.myWindowOpen(url, '_system');
                 } else {
@@ -329,8 +325,7 @@ var app = {
                  	
                	 	var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform;  //e.g. https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
                	 	
-               	 	alert("PushNotification URL opening B:" + url);	//TESTING 1
-               	 	
+                	 	
 					 innerThis.get(url, function(url, resp) {
 						//Registered OK
 					
