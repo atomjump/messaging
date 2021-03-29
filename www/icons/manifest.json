@@ -1,5 +1,7 @@
 {
- "name": "App",
+ "name": "AtomJump Streaming",
+ "short_name": "AtomJump Streaming",
+ "display": "standalone",
  "icons": [
   {
    "src": "\/android-icon-36x36.png",
