@@ -99,7 +99,6 @@ var app = {
 		console.log('notification event');
 		var finalData = {};
 		
-		innerThis = this;  //TESTING - I think we need to remove this line...
 		
 		 
 		//See https://github.com/phonegap/phonegap-plugin-push/blob/master/docs/API.md
