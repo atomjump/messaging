@@ -99,6 +99,13 @@ var app = {
 		console.log('notification event');
 		var finalData = {};
 		
+		if(!innerThis) {
+			if(app) {
+				innerThis = app;		//If coming from an outside source such as a popup notification
+			} else {
+				innerThis = this;		//This can error on iPhone apps. 
+			}
+		}
 		
 		 
 		//See https://github.com/phonegap/phonegap-plugin-push/blob/master/docs/API.md
