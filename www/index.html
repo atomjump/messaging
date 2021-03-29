@@ -124,7 +124,7 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
         	</p>
         	
         	<!-- TESTING -->
-        	<a href="javascript:" onclick="var data = {'message':'Test message' }; data.additionalData.data.observeUrl = 'https://test.com'; app.onNotificationEvent(data);">TEST NOTIFICATION</a>
+        	<a href="javascript:" onclick="var data = {'message':'Test message' }; data.additionalData = {}; data.additionalData.data = {}; data.additionalData.data.observeUrl = 'https://test.com'; app.onNotificationEvent(data);">TEST NOTIFICATION</a>
         	<!-- End TESTING -->
         		
         		
