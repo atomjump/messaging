@@ -99,7 +99,7 @@ var app = {
 		console.log('notification event');
 		var finalData = {};
 		
-		var innerThis = this;  //TESTING
+		innerThis = this;  //TESTING
 		
 		 
 		//See https://github.com/phonegap/phonegap-plugin-push/blob/master/docs/API.md
