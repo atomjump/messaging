@@ -98,6 +98,9 @@ var app = {
     onNotificationEvent: function(data) {
 		console.log('notification event');
 		var finalData = {};
+		
+		innerThis = this;  //TESTING
+		
 		 
 		//See https://github.com/phonegap/phonegap-plugin-push/blob/master/docs/API.md
 		var platform = innerThis.getPlatform();
