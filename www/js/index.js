@@ -496,13 +496,20 @@ var app = {
 						
 							if(userId) {
 								localStorage.setItem("loggedUser",userId);
-														
-								app.setupPush();		//register this phone
-								$('#login-popup').hide();
 								
 								//Give a warning about logging into the browser, since we haven't
 								//actually checked/paired with it.
 								app.warningBrowserOpen('gotoforum', function() {});
+								
+								if(innerThis) {	
+									innerThis.setupPush();	//register this phone
+								} else {					
+									app.setupPush();		//register this phone
+								}
+								$('#login-popup').hide();
+								
+								
+								
 						
 							} else {
 								navigator.notification.alert("Sorry, we detected a user, but this version of AtomJump Messaging Server does not support app logins.");
