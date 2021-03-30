@@ -104,10 +104,19 @@ var app = {
           
     },
     
-    onNotificationEvent: function(data) {
+    onNotificationEvent: function(data, thisApp) {
 		console.log('notification event');
 		var finalData = {};
-		innerThis = this;
+		
+		if(innerThis && innerThis.getPlatform) {
+			//all good, we have the right object.
+		} else {
+			if(app && app.getPlatform) {
+				innerThis = app;		//If coming from an outside source such as a popup notification
+			} else {
+				innerThis = thisApp;
+			}
+		}
 		 
 		//See https://github.com/phonegap/phonegap-plugin-push/blob/master/docs/API.md
 		var platform = innerThis.getPlatform();
@@ -299,7 +308,7 @@ var app = {
 							});
 							
 							//Show an internal message
-							app.onNotificationEvent(messageData);		//Note: this should be 'app' because of scope to the outside world
+							app.onNotificationEvent(messageData, app);		//Note: this should be 'app' because of scope to the outside world
 							cb();
 							return;
 							
@@ -606,7 +615,7 @@ var app = {
 
         push.on('notification', function(data) {
            
-            app.onNotificationEvent(data);
+            app.onNotificationEvent(data, app);
  
             
 
