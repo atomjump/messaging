@@ -352,15 +352,21 @@ var app = {
 
         push.on('notification', function(data) {
             
+            
+            alert(JSON.stringify(data));		//TESTING
             if(app && app.getPlatform) {
+            	alert("Using 'app'");			//TESTING
             	app.onNotificationEvent(data, app);
  			} else {
  				if(innerThis && innerThis.getPlatform) {
+ 					alert("Using 'innerThis'");			//TESTING
  					innerThis.onNotificationEvent(data, innerThis);
  				} else {
+ 					alert("Using 'this'");			//TESTING
  					this.onNotificationEvent(data, this);
  				}
  			}
+            
             
 
             push.finish(function() {
