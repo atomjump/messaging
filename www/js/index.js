@@ -463,7 +463,7 @@ var app = {
         	$('#login-popup').hide();
 		}
    		   		
-   	},  
+   	},
     
     login: function(user, pass, apiUrl)
     {
@@ -696,8 +696,6 @@ var app = {
     	userId = localStorage.getItem("loggedUser");	
 		localStorage.removeItem("registrationId");
 		localStorage.removeItem("loggedUser");
-		$('#user').val('');
-		$('#password').val('');
 		$('#registered').hide();
 		
 		if(api) {
