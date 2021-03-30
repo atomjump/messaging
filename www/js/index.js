@@ -502,9 +502,9 @@ var app = {
 								app.warningBrowserOpen('gotoforum', function() {});
 								
 								if(innerThis) {	
-									innerThis.setupPush();	//register this phone
+									innerThis.register(apiUrl);		//register this phone
 								} else {					
-									app.setupPush();		//register this phone
+									app.register(apiUrl);		//register this phone
 								}
 								$('#login-popup').hide();
 								
