@@ -73,12 +73,14 @@ var app = {
           }
           
           
-          
+          var setupPushAlready = false;
+            
           userId = localStorage.getItem('loggedUser');
         
           if(userId) {
         	//Yep, we have a logged in user
         	$('#login-popup').hide();	
+        	setupPushAlready = true;
         	app.setupPush();
         
           } else {
@@ -91,7 +93,9 @@ var app = {
           
           if(oldRegId) {
           		$('#login-popup').hide();	
-        		app.setupPush();
+          		if(setupPushAlready == false) {
+        			app.setupPush();
+        		}
           }
     },
     
@@ -715,6 +719,8 @@ var app = {
 				var url = api + "plugins/notifications/register.php?id=";
 
 				_this.myWindowOpen(url, '_system');
+				
+				userId = null;		//This may be a blank user string, so fully clear it off.
 			
 			}
 
