@@ -627,7 +627,16 @@ var app = {
 
         push.on('notification', function(data) {
            
-            app.onNotificationEvent(data);
+            if(app && app.getPlatform) {
+            	app.onNotificationEvent(data, app);
+ 			} else {
+ 				if(innerThis && innerThis.getPlatform) {
+ 					innerThis.onNotificationEvent(data, innerThis);
+ 				} else {
+ 					this.onNotificationEvent(data, this);
+ 				}
+ 			}
+           
  
             
 
