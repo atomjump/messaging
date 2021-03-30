@@ -95,15 +95,17 @@ var app = {
           }
     },
     
-    onNotificationEvent: function(data) {
+    onNotificationEvent: function(data, thisApp) {
 		console.log('notification event');
 		var finalData = {};
 		
-		if(!innerThis) {
-			if(app) {
+		if(innerThis && innerThis.getPlatform) {
+			//all good, we have the right object.
+		} else {
+			if(app && app.getPlatform) {
 				innerThis = app;		//If coming from an outside source such as a popup notification
 			} else {
-				innerThis = this;		//This can error on iPhone apps. 
+				innerThis = thisApp;
 			}
 		}
 		
@@ -350,7 +352,7 @@ var app = {
 
         push.on('notification', function(data) {
            
-            app.onNotificationEvent(data);
+            app.onNotificationEvent(data, app);
  
             
 
