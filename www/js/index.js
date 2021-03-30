@@ -694,7 +694,7 @@ var app = {
         var _this = this;
         
     	userId = localStorage.getItem("loggedUser");	
-		//This should not be in here: localStorage.removeItem("registrationId");
+		//This should not be in here or it will attempt to register again immediately: localStorage.removeItem("registrationId");
 		localStorage.removeItem("loggedUser");
 		$('#registered').hide();
 		
