@@ -304,7 +304,7 @@ var app = {
             
             var oldRegId = localStorage.getItem('registrationId');
             $('#registered').show();
-            if (oldRegId != data.registrationId) {
+            if (oldRegId !== data.registrationId) {
                 
                 
                 // Save new registration ID
@@ -658,7 +658,7 @@ var app = {
         //We have connected to a server OK
         var _this = this;
         
-    	userId = localStorage.getItem("loggedUser");
+    	userId = localStorage.getItem("loggedUser");	
 		localStorage.removeItem("registrationId");
 		localStorage.removeItem("loggedUser");
 		$('#user').val('');
