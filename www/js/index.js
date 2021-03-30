@@ -352,20 +352,36 @@ var app = {
 
         push.on('notification', function(data) {
             
-            
-            alert(JSON.stringify(data));		//TESTING
-            if(app && app.getPlatform) {
-            	alert("Using 'app'");			//TESTING
-            	app.onNotificationEvent(data, app);
- 			} else {
- 				if(innerThis && innerThis.getPlatform) {
- 					alert("Using 'innerThis'");			//TESTING
- 					innerThis.onNotificationEvent(data, innerThis);
- 				} else {
- 					alert("Using 'this'");			//TESTING
- 					this.onNotificationEvent(data, this);
+            var called = false;
+            if(data && data.additionalData && data.additionalData.coldstart == true) {
+            	//A coldstart (i.e we are likely from the background
+            	if(app && app.getPlatform) {
+            		app.onNotificationEvent(data, app);
+            		called = true;
  				}
  			}
+            
+            if(data && data.additionalData && data.additionalData.foreground == true) {
+            	//A foreground version, use the innerThis
+            	if(innerThis && innerThis.getPlatform) {
+            		innerThis.onNotificationEvent(data, innerThis);
+            		called = true;
+            	}
+            }
+            
+            
+            if(called == false) {
+				//Else, try all options
+				if(app && app.getPlatform) {
+					app.onNotificationEvent(data, app);
+				} else {
+					if(innerThis && innerThis.getPlatform) {
+						innerThis.onNotificationEvent(data, innerThis);
+					} else {
+						this.onNotificationEvent(data, this);
+					}
+				}
+			}
             
             
 
