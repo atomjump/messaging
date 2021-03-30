@@ -497,10 +497,6 @@ var app = {
 							if(userId) {
 								localStorage.setItem("loggedUser",userId);
 								
-								//Give a warning about logging into the browser, since we haven't
-								//actually checked/paired with it.
-								app.warningBrowserOpen('gotoforum', function() {});
-								
 								if(innerThis) {	
 									innerThis.register(apiUrl);		//register this phone
 								} else {					
