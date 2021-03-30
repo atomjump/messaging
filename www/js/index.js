@@ -694,7 +694,7 @@ var app = {
         var _this = this;
         
     	userId = localStorage.getItem("loggedUser");	
-		localStorage.removeItem("registrationId");
+		//This should not be in here: localStorage.removeItem("registrationId");
 		localStorage.removeItem("loggedUser");
 		$('#registered').hide();
 		
