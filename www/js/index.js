@@ -549,6 +549,7 @@ var app = {
 			url        : api + "clear-pass-phone.php",
 			crossDomain: true,
 			data       : { 'email': email },
+			dataType   : 'jsonp',
 			success    : function(response) {
 				navigator.notification.alert(response);
 			},
