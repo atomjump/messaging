@@ -81,7 +81,7 @@ var app = {
         	//Yep, we have a logged in user
         	$('#login-popup').hide();	
         	setupPushAlready = true;
-        	app.setupPush();
+        	app.setupPush(null);
         
           } else {
             //No logged user - show the login page
@@ -94,7 +94,7 @@ var app = {
           if(oldRegId) {
           		$('#login-popup').hide();	
           		if(setupPushAlready == false) {
-        			app.setupPush();
+        			app.setupPush(null);
         		}
           }
     },
@@ -281,7 +281,7 @@ var app = {
     },
     
     
-    setupPush: function() {
+    setupPush: function(email) {
   	
   		if(typeof(PushNotification) == 'undefined') { 
 			alert("PushNotification does not exist sorry");
@@ -329,7 +329,9 @@ var app = {
                 	
                 	
                 	var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=&devicetype=" + phonePlatform;
-                	
+                	if(email) {
+						url = url + "&email=" + encodeURIComponent(email);
+					}
                 	
                 	innerThis.myWindowOpen(url, '_system');
                 } else {
@@ -338,6 +340,9 @@ var app = {
                  	var phonePlatform = innerThis.getPlatform();
                  	
                	 	var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform;  //e.g. https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
+               	 	if(email) {
+						url = url + "&email=" + encodeURIComponent(email);
+					}
                	 	
                 	 	
 					 innerThis.get(url, function(url, resp) {
@@ -462,7 +467,7 @@ var app = {
          	 } 
          	          	 
          	singleClick = true;     
-         	innerThis.setupPush();
+         	innerThis.setupPush(email);
         	$('#login-popup').hide();
 		}
    		   		
