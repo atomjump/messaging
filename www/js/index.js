@@ -438,7 +438,7 @@ var app = {
 		
 			var url = api + "plugins/notifications/register.php?id=" + id + "&devicetype=" + platform;
 			if(email) {
-				url = url + "&email=" + email;
+				url = url + "&email=" + encodeURIComponent(email);
 			}
 
 			innerThis.myWindowOpen(url, '_system');
