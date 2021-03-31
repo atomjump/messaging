@@ -544,6 +544,8 @@ var app = {
 			innerThis.setAPI(apiUrl);
 		}
 		
+		alert("API: " + api + " Email:" + email);		//TESTING
+		
 	   	$.ajax({
 			type       : "POST",
 			url        : api + "clear-pass-phone.php",
@@ -552,8 +554,9 @@ var app = {
 			success    : function(response) {
 				navigator.notification.alert(response);
 			},
-			error      : function() {
-				navigator.notification.alert('Sorry we cannot connect to your AtomJump Messaging Server. Please try again later.');                  
+			error      : function(xhr, status, error) {
+				var errorMessage = xhr.status + ': ' + xhr.statusText
+				navigator.notification.alert('Sorry we cannot reset your password. Please try again later. Error:' + errorMessage);                  
 			}
 	   });     	
 
