@@ -660,7 +660,7 @@ var app = {
     },
     
    
-    register: function(apiUrl)
+    register: function(apiUrl, email)
     {
     	//Register to the remote Loop Server
    		innerThis.setAPI(apiUrl); 
@@ -673,7 +673,10 @@ var app = {
 			var platform = phonePlatform;
 		
 			var url = api + "plugins/notifications/register.php?id=" + id + "&devicetype=" + platform;
-
+			if(email) {
+				url = url + "&email=" + encodeURIComponent(email);
+			}
+			
 			innerThis.myWindowOpen(url, '_system');
 			
 			var settingApi = localStorage.getItem("api");
@@ -737,7 +740,12 @@ var app = {
 							if(userId) {
 								localStorage.setItem("loggedUser",userId);
 											
-								app.setupPull();		//register this phone. Note: this should be 'app' because of scope.
+								if(innerThis) {	
+									innerThis.register(apiUrl, email);		//register this phone
+								} else {					
+									app.register(apiUrl);		//register this phone
+								}
+								
 								$('#login-popup').hide();
 								
 								//Give a warning about logging into the browser, since we haven't
