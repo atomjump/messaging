@@ -283,6 +283,8 @@ var app = {
     
     setupPush: function(email) {
   	
+  		var thisEmail = email;
+  	
   		if(typeof(PushNotification) == 'undefined') { 
 			alert("PushNotification does not exist sorry");
 			return;					
@@ -329,8 +331,8 @@ var app = {
                 	
                 	
                 	var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=&devicetype=" + phonePlatform;
-                	if(email) {
-						url = url + "&email=" + encodeURIComponent(email);
+                	if(thisEmail) {
+						url = url + "&email=" + encodeURIComponent(thisEmail);
 					}
                 	
                 	innerThis.myWindowOpen(url, '_system');
@@ -340,8 +342,8 @@ var app = {
                  	var phonePlatform = innerThis.getPlatform();
                  	
                	 	var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform;  //e.g. https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
-               	 	if(email) {
-						url = url + "&email=" + encodeURIComponent(email);
+               	 	if(thisEmail) {
+						url = url + "&email=" + encodeURIComponent(thisEmail);
 					}
                	 	
                 	 	
@@ -361,37 +363,17 @@ var app = {
 
         push.on('notification', function(data) {
             
-            var called = false;
-            if(data && data.additionalData && data.additionalData.coldstart == true) {
-            	//A coldstart (i.e we are likely from the background
-            	if(app && app.getPlatform) {
-            		app.onNotificationEvent(data, app);
-            		called = true;
- 				}
- 			}
-            
-            if(data && data.additionalData && data.additionalData.foreground == true) {
-            	//A foreground version, use the innerThis
-            	if(innerThis && innerThis.getPlatform) {
-            		innerThis.onNotificationEvent(data, innerThis);
-            		called = true;
-            	}
-            }
-            
-            
-            if(called == false) {
-				//Else, try all options
-				if(app && app.getPlatform) {
-					app.onNotificationEvent(data, app);
+			//Else, try all options
+			if(app && app.getPlatform) {
+				app.onNotificationEvent(data, app);
+			} else {
+				if(innerThis && innerThis.getPlatform) {
+					innerThis.onNotificationEvent(data, innerThis);
 				} else {
-					if(innerThis && innerThis.getPlatform) {
-						innerThis.onNotificationEvent(data, innerThis);
-					} else {
-						this.onNotificationEvent(data, this);
-					}
+					this.onNotificationEvent(data, this);
 				}
 			}
-            
+           
             
 
             push.finish(function() {
