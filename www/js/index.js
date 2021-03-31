@@ -448,8 +448,12 @@ var app = {
           	 	$('#pair-private-server').val(api);
          	 } 
          	          	 
-         	singleClick = true;     
-         	innerThis.setupPush(email);
+         	singleClick = true; 
+         	if(app) {    
+         		app.setupPush(email);
+         	} else {
+         		innerThis.setupPush(email);
+         	}
         	$('#login-popup').hide();
 		}
    		   		
