@@ -312,7 +312,7 @@ var app = {
             
             var oldRegId = localStorage.getItem('registrationId');
             $('#registered').show();
-            if (oldRegId !== data.registrationId) {
+            if(oldRegId !== data.registrationId) {
                 
                 
                 // Save new registration ID
