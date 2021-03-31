@@ -86,7 +86,7 @@ var app = {
           if(userId) {
         	//Yep, we have a logged in user
         	$('#login-popup').hide();
-        	app.setupPull();
+        	app.setupPull(null);
         	return;		
         
           } else {
@@ -99,7 +99,7 @@ var app = {
           
           if(oldRegId) {
           		$('#login-popup').hide();	
-         		app.setupPull();
+         		app.setupPull(null);
           }
           
           
@@ -366,9 +366,10 @@ var app = {
     	}    	
     },
     
-    setupPull: function() {
+    setupPull: function(email) {
     
     	innerThis = this;
+    	var thisEmail = email;
     	//Pull from an AtomJump notification system
     	//Works in a similar fashion to setupPush() below, but is cross-platform
     	//and is based on regular polling of a URL for new messages.
@@ -440,7 +441,8 @@ var app = {
 								//We need to generate a new registrationId
 		
 								var url = api + "plugins/notifications/genid.php?country=Default";		//Can potentially extend to some country code info here from the cordova API, or user input?
-			
+
+								var thisEmailB = thisEmail;
 			
 								innerThis.get(url, function(url, resp) {
 									//Registered OK
@@ -478,6 +480,9 @@ var app = {
 										//Have tapped a single server pairing - will not have a known userid
 										//so we need to let the browser use it's own cookies.
 										var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=&devicetype=" + phonePlatform;
+										if(thisEmailB) {
+											url = url + "&email=" + encodeURIComponent(thisEmailB);
+										}
 										innerThis.myWindowOpen(url, '_system');
 									} else {
 			
@@ -487,6 +492,9 @@ var app = {
 									
 				
 										var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform;  //e.g. https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
+										if(thisEmailB) {
+											url = url + "&email=" + encodeURIComponent(thisEmailB);
+										}
 										 innerThis.get(url, function(url, resp) {
 											//Registered OK
 				
@@ -504,7 +512,7 @@ var app = {
 								//User has selected to not use AtomJump
 								//Use push instead.
 								if(resp.supports.android == true) {
-									innerThis.setupPush();
+									innerThis.setupPush(null);
 								} else {
 									alert("Sorry, this server is not configured to send Android background notifications. Please contact the owner of the service to request this.");
 								}
@@ -525,7 +533,7 @@ var app = {
 					//Use push instead.
 					
 					//Potentially a legacy server with a 404 returned - attempt to use push anyway.
-					innerThis.setupPush();
+					innerThis.setupPush(null);
 					return;        
 				}
 			
@@ -536,9 +544,10 @@ var app = {
     },
     
     
-    setupPush: function() {
+    setupPush: function(email) {
   		//Set the global pull to off
   		innerThis.pull = false;
+  		var thisEmail = email;
   	
   		if(typeof(PushNotification) == 'undefined') { 
 			alert("Sorry, your app is not configured to connect to system notifications.");
@@ -589,13 +598,22 @@ var app = {
                 	
                 	
                 	var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=&devicetype=" + phonePlatform;
+                	if(thisEmail) {
+						url = url + "&email=" + encodeURIComponent(thisEmail);
+                	}
                 	innerThis.myWindowOpen(url, '_system');
+                	
+                	
+                	
                 } else {
                 
                  	//Otherwise login with the known logged userId
                  	var phonePlatform = innerThis.getPlatform();
                  	
                	 	var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform;  //e.g. https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
+               	 	if(thisEmail) {
+						url = url + "&email=" + encodeURIComponent(thisEmail);
+                	}
 					 innerThis.get(url, function(url, resp) {
 						//Registered OK
 					
@@ -698,7 +716,7 @@ var app = {
          	 } 
          	          	 
          	singleClick = true;      
-        	innerThis.setupPull();
+        	innerThis.setupPull(email);
         	$('#login-popup').hide();
 		}
    		   		
