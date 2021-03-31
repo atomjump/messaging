@@ -424,7 +424,7 @@ var app = {
     },
     
    
-    register: function(apiUrl)
+    register: function(apiUrl, email)
     {
     	//Register to the remote Loop Server
    		innerThis.setAPI(apiUrl); 
@@ -437,6 +437,9 @@ var app = {
 			var platform = phonePlatform;
 		
 			var url = api + "plugins/notifications/register.php?id=" + id + "&devicetype=" + platform;
+			if(email) {
+				url = url + "&email=" + email;
+			}
 
 			innerThis.myWindowOpen(url, '_system');
 			
@@ -470,8 +473,10 @@ var app = {
     	//Login to the remote Loop Server
    		innerThis.setAPI(apiUrl);
    		
+   		
+   		
    		if(user) {
-   	
+   			var email = user;
 			$.ajax({
 				type       : "POST",
 				url        : api + "confirm.php",
@@ -498,7 +503,7 @@ var app = {
 								localStorage.setItem("loggedUser",userId);
 								
 								if(innerThis) {	
-									innerThis.register(apiUrl);		//register this phone
+									innerThis.register(apiUrl, email);		//register this phone
 								} else {					
 									app.register(apiUrl);		//register this phone
 								}
