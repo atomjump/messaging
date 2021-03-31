@@ -766,9 +766,6 @@ var app = {
 								
 								$('#login-popup').hide();
 								
-								//Give a warning about logging into the browser, since we haven't
-								//actually checked/paired with it.
-								app.warningBrowserOpen('gotoforum', function() {});
 						
 							} else {
 								navigator.notification.alert("Sorry, we detected a user, but this version of AtomJump Messaging Server does not support app logins.");
