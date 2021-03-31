@@ -116,9 +116,14 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 	
 	        <div id="inner-popup">
 			
-			<p style="text-align:right;">	
-				<span style="padding-right: 20px;"><ons-button style="background-color: #cc99cc; color: white;" href="javascript" onclick="return app.logout();">Log Out</ons-button></span>
-			</p>
+			
+			
+			<div>
+				<div style="float: left;"><span style="padding-left: 20px;"><ons-button style="background-color: #cc99cc; color: white;" href="javascript" onclick="$('#login-popup').show(); $('#close-new-server').show(); return false;"><ons-icon icon="md-plus" ></ons-icon> Add Server</ons-button></span></div>
+				<div style="float: right;"><span style="padding-right: 20px;"><ons-button style="background-color: #cc99cc; color: white;" href="javascript" onclick="return app.logout();"><ons-icon icon="ion-log-out" ></ons-icon> Log Out</ons-button></span></div>
+			</div>
+			<div style="clear: both;"></div>
+			
 			
 			<p style="text-align:center; margin-top:70px;">	
 				<span style="vertical-align: top; padding: 10px; padding-top:30px;" class="big-text">AtomJump</span><br/><a href="javascript:" onclick="app.myWindowOpen(encodeURI('https://atomjump.com/'), '_system')"><img  src="icon-Small@3x.png" style="padding 10px;"></a><br/><span id='registered' style="display: none;"><small>Listening for Messages</small></span>
@@ -160,7 +165,11 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
          <div id="login-popup" style="display:none;">
         	<div class="inner-popup">
         		
-        		<span><a href="javascript:" onclick="app.myWindowOpen(encodeURI('https://atomjump.com/'), '_system')"><img  src="icon-Small@3x.png" style="padding 10px; vertical-align: top;" width="24" height="24"></a> <span class="big-text" >AtomJump Messaging</span></span><br/>
+        		<div>
+        			<div style="float: left;"><span><a href="javascript:" onclick="app.myWindowOpen(encodeURI('https://atomjump.com/'), '_system')"><img  src="icon-Small@3x.png" style="padding 10px; vertical-align: top;" width="24" height="24"></a> <span class="big-text" >AtomJump Messaging</span></span></div>
+        			<div style="float: right;"><span id="close-new-server" style="display: none;"><ons-button style="background-color: #cc99cc; color: white;" href="javascript:" onclick="$('#login-popup').hide(); $('#close-new-server').hide(); return false;"><ons-icon icon='md-close'></ons-icon></ons-button></span></div>
+        		</div>
+        		<div style="clear: both;"></div>
         		
         		
         		<ons-list style="padding-top: 20px;">
@@ -183,7 +192,7 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 					</ons-list-item>
 					<ons-list-item expandable>
 					  
-					   <span style="width:100%;" onclick="$('.expandable-content').hide(); $(this).parent().find('.expandable-content').slideToggle()"><b>(Or)</b>&nbsp;&nbsp;Login to the App</span>
+					   <span style="width:100%;" onclick="$('.expandable-content').hide(); $(this).parent().find('.expandable-content').slideToggle()"><b>(Or)</b>&nbsp;&nbsp;Login </span>
 					  
 					  <div class="expandable-content" style="display: none; width: 100%;">
 					  	
@@ -203,11 +212,11 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 								<input style="padding:5px; display: none;" id="private-server" type="url" placeholder="Private Server URL" size="26" class="resizedTextbox">
 							</p>
 							<p>
-								<ons-button style="background-color: #7c5599; color: white;" modifier="large" onclick="app.login($('#user').val(), $('#password').val(), $('#private-server').val());">Login</ons-button>
+								<ons-button style="background-color: #7c5599; color: white;" modifier="large" onclick="app.login($('#user').val(), $('#password').val(), $('#private-server').val());"><ons-icon icon='md-sign-in' size="20px" fixed-width="true"></ons-icon> Login</ons-button>
 							</p>
 				
 							<p>
-								<a class="small-text" href="javascript:" onclick="return app.clearPass($('#user').val(), $('#private-server').val());">Reset Password</a>
+								<a class="small-text" href="javascript:" onclick="return app.clearPass($('#user').val(), $('#private-server').val());">Reset Password</a>&nbsp;<span id="password-wait" style="display: none;"><img src="img/ajax-loader.gif" width="16" height="16"></span>
 							</p>
 							<p>
 								<a class="small-text" href="javascript:" onclick="$('#private-server').show(); return false;">Private Server</a>

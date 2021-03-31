@@ -732,7 +732,7 @@ var app = {
    		
    		
    		if(user) {
-   	
+   			var email = user;
 			$.ajax({
 				type       : "POST",
 				url        : api + "confirm.php",
@@ -805,18 +805,27 @@ var app = {
 
 	clearPass: function(email, apiUrl) {
 		
-		innerThis.setAPI(apiUrl);
+		$('#password-wait').show();
+		if(app) {
+			app.setAPI(apiUrl);
+		} else {
+			innerThis.setAPI(apiUrl);
+		}
 		
 	   	$.ajax({
 			type       : "POST",
 			url        : api + "clear-pass-phone.php",
 			crossDomain: true,
 			data       : { 'email': email },
+			dataType   : 'jsonp',
 			success    : function(response) {
+				$('#password-wait').hide();
 				navigator.notification.alert(response);
 			},
-			error      : function() {
-				navigator.notification.alert('Sorry we cannot connect to your AtomJump Messaging Server. Please try again later.');                  
+			error      : function(xhr, status, error) {
+				$('#password-wait').hide();
+				var errorMessage = xhr.status + ': ' + xhr.statusText
+				navigator.notification.alert('Sorry we cannot reset your password. Please try again later. Error: ' + errorMessage);                 
 			}
 	   });     	
 
@@ -965,7 +974,7 @@ var app = {
         _this.pull = false; 		//Assume nothing, Android connection
         
     	userId = localStorage.getItem("loggedUser");
-		localStorage.removeItem("registrationId");
+    	//This should not be in here or it will attempt to register again immediately: localStorage.removeItem("registrationId");
 		localStorage.removeItem("loggedUser");
 		$('#user').val('');
 		$('#password').val('');
