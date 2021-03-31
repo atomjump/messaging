@@ -703,10 +703,7 @@ var app = {
 			if(userId) {
 				//We are logged in within the app as a user
 				var url = api + "plugins/notifications/register.php?id=&userid=" + userId;  //e.g. https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
-				this.get(url, function(url, resp) {
-					//Registered OK
-			
-				});
+				_this.myWindowOpen(url, '_system');
 				
 				userId = null;
 		
