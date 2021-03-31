@@ -543,9 +543,7 @@ var app = {
 		} else {
 			innerThis.setAPI(apiUrl);
 		}
-		
-		alert("API: " + api + " Email:" + email);		//TESTING
-		
+				
 	   	$.ajax({
 			type       : "POST",
 			url        : api + "clear-pass-phone.php",
@@ -556,7 +554,7 @@ var app = {
 			},
 			error      : function(xhr, status, error) {
 				var errorMessage = xhr.status + ': ' + xhr.statusText
-				navigator.notification.alert('Sorry we cannot reset your password. Please try again later. Error:' + errorMessage);                  
+				navigator.notification.alert('Sorry we cannot reset your password. Please try again later. Error: ' + errorMessage);                  
 			}
 	   });     	
 
