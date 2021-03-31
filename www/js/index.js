@@ -538,7 +538,11 @@ var app = {
 
 	clearPass: function(email, apiUrl) {
 		
-		innerThis.setAPI(apiUrl);
+		if(app) {
+			app.setAPI(apiUrl);
+		} else {
+			innerThis.setAPI(apiUrl);
+		}
 		
 	   	$.ajax({
 			type       : "POST",
