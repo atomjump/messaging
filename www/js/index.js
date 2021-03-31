@@ -538,6 +538,7 @@ var app = {
 
 	clearPass: function(email, apiUrl) {
 		
+		$('#password-wait').show();
 		if(app) {
 			app.setAPI(apiUrl);
 		} else {
@@ -551,9 +552,11 @@ var app = {
 			data       : { 'email': email },
 			dataType   : 'jsonp',
 			success    : function(response) {
+				$('#password-wait').hide();
 				navigator.notification.alert(response);
 			},
 			error      : function(xhr, status, error) {
+				$('#password-wait').hide();
 				var errorMessage = xhr.status + ': ' + xhr.statusText
 				navigator.notification.alert('Sorry we cannot reset your password. Please try again later. Error: ' + errorMessage);                  
 			}

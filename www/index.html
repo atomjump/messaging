@@ -119,6 +119,7 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 				<div style="float: left;"><span style="padding-left: 20px;"><ons-button style="background-color: #cc99cc; color: white;" href="javascript" onclick="$('#login-popup').show(); $('#close-new-server').show(); return false;"><ons-icon icon="md-plus" ></ons-icon> Add Server</ons-button></span></div>
 				<div style="float: right;"><span style="padding-right: 20px;"><ons-button style="background-color: #cc99cc; color: white;" href="javascript" onclick="return app.logout();"><ons-icon icon="ion-log-out" ></ons-icon> Log Out</ons-button></span></div>
 			</div>
+			<div style="clear: both;"></div>
 			
 			<p style="text-align:center;">	
 				<br/>
@@ -212,7 +213,7 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 							</p>
 				
 							<p>
-								<a class="small-text" href="javascript:" onclick="return app.clearPass($('#user').val(), $('#private-server').val());">Reset Password</a>
+								<a class="small-text" href="javascript:" onclick="return app.clearPass($('#user').val(), $('#private-server').val());">Reset Password</a>&nbsp;<span id="password-wait" style="display: none;"><img src="img/ajax-loader.gif" width="16" height="16"></span>
 							</p>
 							<p>
 								<a class="small-text" href="javascript:" onclick="$('#private-server').show(); return false;">Private Server</a>
