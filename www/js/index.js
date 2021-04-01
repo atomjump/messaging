@@ -54,7 +54,7 @@ var app = {
         
         //The timer to call a pull request
         this.pollingCaller = null;
-        this.pull = false;   			//Switch to true if notifications are coming via a pull method (AtomJump's own), rather than push
+        this.setPull(false);   			//Switch to true if notifications are coming via a pull method (AtomJump's own), rather than push
 		this.pollInterval = 30000;		//For publications, use 30000 (i.e. 30 second check interval) by default.
 
     },
@@ -410,7 +410,7 @@ var app = {
 						which returns the pool server write script e.g.
 						https://medimage-nz1.atomjump.com/write/HMEcfQQCufJmRPMX4C
 						*/
-						innerThis.pull = true;		//Set the global pull
+						innerThis.setPull(true);		//Set the global pull
 	
 						var oldRegId = localStorage.getItem('registrationId');
 					
@@ -548,7 +548,7 @@ var app = {
     
     setupPush: function(email) {
   		//Set the global pull to off
-  		innerThis.pull = false;
+  		innerThis.setPull(false);
   		var thisEmail = email;
   	
   		if(typeof(PushNotification) == 'undefined') { 
@@ -651,7 +651,7 @@ var app = {
 			platform = device.platform;
 		}
 		
-		if(innerThis.pull == true) {
+		if(innerThis.getPull() == true) {
 			//Switch over to the cross-platform AtomJump platform
 			platform = "AtomJump";	
 		}
@@ -912,9 +912,10 @@ var app = {
     factoryReset: function() {
         //We have connected to a server OK
         var _this = this;
-        _this.pull = false;
         
-    		navigator.notification.confirm(
+        
+        
+    	navigator.notification.confirm(
 	    		'Are you sure? All your saved forums and other settings will be cleared.',  // message
 	    		function(buttonIndex) {
 	    			if(buttonIndex == 1) {
@@ -925,11 +926,13 @@ var app = {
 						localStorage.removeItem("settings");
 						localStorage.removeItem("api");
 						localStorage.removeItem("gotoforum");
+						localStorage.removeItem("pull");
 						$('#user').val('');
 						$('#password').val('');
 						$('#private-server').val('');
 						$('#pair-private-server').val('');
 						$('#registered').hide();
+						_this.setPull(false);
 						
 						//Deregister on the database - by sending a blank id (which gets set as a null on the server). Disassociates phone from user.
 						if(userId) {
@@ -964,11 +967,32 @@ var app = {
     },
     
 
+	setPull: function(value) {
+		
+		localStorage.setItem('pull', value);
+		if(innerThis) {
+			innerThis.pull = value; 
+		} else {
+			if(app) {
+				app.pull = value;
+			} else {
+				this.pull = value;
+			}
+		}
+		return;
+	},
+	
+	getPull: function() {
+	
+		return localStorage.getItem('pull');
+	}
+
     logout: function() {
         //We have connected to a server OK
         var _this = this;
         
-        _this.pull = false; 		//Assume nothing, Android connection
+        _this.setPull(false); 		//Assume nothing, Android connection
+        
         
     	userId = localStorage.getItem("loggedUser");
     	//This should not be in here or it will attempt to register again immediately: localStorage.removeItem("registrationId");
