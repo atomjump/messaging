@@ -651,7 +651,15 @@ var app = {
 			platform = device.platform;
 		}
 		
-		if(innerThis.getPull() == true) {
+		
+		if(innerThis && innerThis.getPull() == true) {
+			//Switch over to the cross-platform AtomJump platform
+			platform = "AtomJump";	
+		}
+		
+		alert("Getting platform:" + innerThis.getPull());
+		
+		if(app && app.getPull() == true) {
 			//Switch over to the cross-platform AtomJump platform
 			platform = "AtomJump";	
 		}
@@ -983,8 +991,9 @@ var app = {
 	},
 	
 	getPull: function() {
-	
-		return localStorage.getItem('pull');
+		var ret = localStorage.getItem('pull');
+		alert("Getting pull:" + ret);		//TESTING
+		return ret;
 	},
 
     logout: function() {
