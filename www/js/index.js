@@ -86,7 +86,7 @@ var app = {
           if(userId) {
         	//Yep, we have a logged in user
         	$('#login-popup').hide();
-        	app.setupPull();
+        	app.setupPull(null);
         	return;		
         
           } else {
@@ -99,7 +99,7 @@ var app = {
           
           if(oldRegId) {
           		$('#login-popup').hide();	
-         		app.setupPull();
+         		app.setupPull(null);
           }
           
           
@@ -386,7 +386,7 @@ var app = {
     	}    	
     },
     
-    setupPull: function() {
+    setupPull: function(email) {
     
     	innerThis = this;
     	//Pull from an AtomJump notification system
@@ -416,6 +416,9 @@ var app = {
     		alert("Sorry, you will need to be signed in to a server before starting to listen.");
     		return;    		
     	} else {
+     	
+     	
+     	var thisEmail = email;
      	
     		//Check the server if we have pull available
 			$.ajax({
@@ -494,7 +497,9 @@ var app = {
 									//Have tapped a single server pairing - will not have a known userid
 									//so we need to let the browser use it's own cookies.
 									var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=&devicetype=" + phonePlatform;
-									
+									if(thisEmail) {
+										url = url + "&email=" + encodeURIComponent(thisEmail);
+									}
 									
 									
 									openSuccess = app.myWindowOpen(encodeURI(url), '_blank');
@@ -512,7 +517,9 @@ var app = {
 									var phonePlatform = innerThis.getPlatform();
 									
 									var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform;  //e.g. 								https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
-									
+									if(thisEmail) {
+										url = url + "&email=" + encodeURIComponent(thisEmail);
+									}
 				
 									openSuccess = app.myWindowOpen(encodeURI(url), '_blank');
 									app.startPolling(null, false, 10);		//After 7 seconds it will check and remove this button below
@@ -728,7 +735,7 @@ var app = {
          	 } 
          	          	 
          	singleClick = true;      
-        	innerThis.setupPull();
+        	innerThis.setupPull(email);
         	$('#login-popup').hide();
 		}
    		   		
