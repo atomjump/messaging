@@ -985,7 +985,7 @@ var app = {
 	getPull: function() {
 	
 		return localStorage.getItem('pull');
-	}
+	},
 
     logout: function() {
         //We have connected to a server OK
