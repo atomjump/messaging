@@ -996,8 +996,6 @@ var app = {
         //We have connected to a server OK
         var _this = this;
         
-        _this.setPull(false); 		//Assume nothing, Android connection
-        
         
     	userId = localStorage.getItem("loggedUser");
     	//This should not be in here or it will attempt to register again immediately: localStorage.removeItem("registrationId");
