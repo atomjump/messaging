@@ -164,7 +164,7 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 	        <div id="inner-popup">
 	        
 	        	
-			<div>
+			<div style="margin-top: 20px;">
 				<div style="float: left;"><span style="padding-left: 20px;"><ons-button style="background-color: #cc99cc; color: white;" href="javascript" onclick="$('#login-popup').show(); $('#close-new-server').show(); return false;"><ons-icon icon="md-plus" ></ons-icon> Add Server</ons-button></span></div>
 				<div style="float: right;"><span style="padding-right: 20px;"><ons-button style="background-color: #cc99cc; color: white;" href="javascript" onclick="return app.logout();"><ons-icon icon="ion-log-out" ></ons-icon> Log Out</ons-button></span></div>
 			</div>
@@ -214,10 +214,15 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 				<div class="inner-popup">
 				
 					 <div id="header">
-						<div style="float: left;"><span><a href="javascript:" onclick="app.myWindowOpen(encodeURI('https://atomjump.com/'), '_system')"><img  src="icon-Small@3x.png" style="padding 10px; vertical-align: top;" width="24" height="24"></a> <span class="big-text" >AtomJump Messaging</span></span></div>
-						<div style="text-align:right; float: right;">	
-							<a href="javascript:" onclick="$('#add-to-home').toggle(); $('#ios-guide').hide(); $('#android-guide').hide(); $('#desktop-guide').hide(); " style="color: #555; padding:10px;" alt="Add to Home"><ons-icon icon='md-bookmark' class='list__item__icon'></ons-icon>Install</a>
+						<div style="float: left;"><span><a href="javascript:" onclick="app.myWindowOpen(encodeURI('https://atomjump.com/'), '_system')"><img  src="icon-Small@3x.png" style="padding 10px; vertical-align: top;" width="24" height="24"></a> <span class="big-text" >AtomJump Messaging</span></span><br/></div>
+						<div style="text-align:right; float: right;">
+							<span>
+								<a href="javascript:" onclick="$('#add-to-home').toggle(); $('#ios-guide').hide(); $('#android-guide').hide(); $('#desktop-guide').hide(); " style="color: #555; padding:10px;" alt="Add to Home"><ons-icon icon='md-bookmark' class='list__item__icon'></ons-icon>Install</a>
+							</span>
+							<span><span id="close-new-server" style="display: none;"><ons-button style="background-color: #cc99cc; color: white;" href="javascript:" onclick="$('#login-popup').hide(); $('#close-new-server').hide(); return false;"><ons-icon icon='md-close'></ons-icon></ons-button></span></span>
 						</div>
+						
+						<div style="clear: both;"></div>
 						<div id="add-to-home" style="display:none;">
 							<small>Add app to your Homescreen<br/><a class='button' style='margin:4px;' onclick="$('#ios-guide').toggle(); $('#android-guide').hide(); $('#desktop-guide').hide();" href='javascript:'>iOS Guide</a>&nbsp;<a class='button' style='margin:4px;'onclick="$('#android-guide').toggle(); $('#ios-guide').hide(); $('#desktop-guide').hide();" href='javascript:'>Android Guide</a>&nbsp;<a class='button' style='margin:4px;' onclick="$('#desktop-guide').toggle(); $('#ios-guide').hide(); $('#android-guide').hide();" href='javascript:'>Desktop Guide</a></small><br/><br/>
 						</div>
@@ -237,7 +242,7 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 					</div>
 					<div style="clear: both;"></div>
 				
-					<span ><a href="javascript:" onclick="app.myWindowOpen(encodeURI('https://atomjump.com/'), '_system')"><img  src="icon-Small@3x.png" style="padding 10px; vertical-align: top;" width="24" height="24"></a> <span class="big-text" >AtomJump Messaging</span></span><br/>
+					<!--<span ><a href="javascript:" onclick="app.myWindowOpen(encodeURI('https://atomjump.com/'), '_system')"><img  src="icon-Small@3x.png" style="padding 10px; vertical-align: top;" width="24" height="24"></a> <span class="big-text" >AtomJump Messaging</span></span>--><br/>
 				
 				
 					<ons-list style="padding-top: 20px;">
