@@ -164,8 +164,9 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 	        <div id="inner-popup">
 	        
 	        	
-			<div style="text-align:right; float: right; margin-top:10px;">	
-				<span style="padding-right: 20px; "><ons-button style="background-color: #cc99cc; color: white;" href="javascript" onclick="return app.logout();">Log Out</ons-button></span>
+			<div>
+				<div style="float: left;"><span style="padding-left: 20px;"><ons-button style="background-color: #cc99cc; color: white;" href="javascript" onclick="$('#login-popup').show(); $('#close-new-server').show(); return false;"><ons-icon icon="md-plus" ></ons-icon> Add Server</ons-button></span></div>
+				<div style="float: right;"><span style="padding-right: 20px;"><ons-button style="background-color: #cc99cc; color: white;" href="javascript" onclick="return app.logout();"><ons-icon icon="ion-log-out" ></ons-icon> Log Out</ons-button></span></div>
 			</div>
 			
 
@@ -213,8 +214,7 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 				<div class="inner-popup">
 				
 					 <div id="header">
-						<div style="text-align:left; float: left;">
-						</div>	
+						<div style="float: left;"><span><a href="javascript:" onclick="app.myWindowOpen(encodeURI('https://atomjump.com/'), '_system')"><img  src="icon-Small@3x.png" style="padding 10px; vertical-align: top;" width="24" height="24"></a> <span class="big-text" >AtomJump Messaging</span></span></div>
 						<div style="text-align:right; float: right;">	
 							<a href="javascript:" onclick="$('#add-to-home').toggle(); $('#ios-guide').hide(); $('#android-guide').hide(); $('#desktop-guide').hide(); " style="color: #555; padding:10px;" alt="Add to Home"><ons-icon icon='md-bookmark' class='list__item__icon'></ons-icon>Install</a>
 						</div>
@@ -235,6 +235,7 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 						<div id="desktop-guide" style="display:none;">Click the <img src="img/firefox-drag-desktop.png"> or <img src="img/chrome-desktop-drag.png"> or <img src="img/lock.png"> style icon in the address bar, to the left of the address, and depending on the browser, drag this onto your desktop. <a href="https://www.hellotech.com/guide/for/how-to-create-a-desktop-shortcut-to-a-website">More Details</a><br/><br/>In Edge on Windows, use <img src="img/edge-menu.png" width="30" height="20"> > "Apps" > "Install this site as an app".<br/><br/><small><strong>Why?</strong> You can run this app in a background tab within your desktop browser and get an audible beep when a new message arrives, from any of your subscribed forums. The tab should be highlighted, too.</small><br/><br/>
 						</div>
 					</div>
+					<div style="clear: both;"></div>
 				
 					<span ><a href="javascript:" onclick="app.myWindowOpen(encodeURI('https://atomjump.com/'), '_system')"><img  src="icon-Small@3x.png" style="padding 10px; vertical-align: top;" width="24" height="24"></a> <span class="big-text" >AtomJump Messaging</span></span><br/>
 				
@@ -245,7 +246,7 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 						  <span style="width :100%;" onclick="$('.expandable-content').hide(); $(this).parent().find('.expandable-content').slideToggle();">&nbsp;&nbsp;Pair with AtomJump.com</span>
 						  <div class="expandable-content" style="width: 100%;">
 								<p style="text-align:center;">
-								<ons-button style="background-color: #7c5599; color: white;" modifier="large--cta" onclick="soundEffect.play(); app.register(defaultApi);"><ons-icon icon='md-link'></ons-icon>&nbsp;&nbsp;AtomJump.com</ons-button>
+								<ons-button style="background-color: #7c5599; color: white;" modifier="large--cta" onclick="soundEffect.play(); app.register(defaultApi, null);"><ons-icon icon='md-link'></ons-icon>&nbsp;&nbsp;AtomJump.com</ons-button>
 								</p>
 							</div>
 						</ons-list-item>
@@ -253,13 +254,13 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 						  <span style="width :100%;" onclick="$('.expandable-content').hide(); $(this).parent().find('.expandable-content').slideToggle();"><b>(Or)</b>&nbsp;&nbsp;Pair with a Private Server</span>
 						  <div class="expandable-content" style="display: none; width: 100%;">
 							<p style="text-align:center;"><input style="padding:5px;" id="pair-private-server" type="url" placeholder="Paste In Here http://" size="26" class="resizedTextbox"><br/><br/>
-								<ons-button style="background-color: #7c5599; color: white;" modifier="large--cta" onclick="soundEffect.play(); app.register($('#pair-private-server').val());"><ons-icon icon='md-link'></ons-icon>&nbsp;&nbsp;Pair with your Private Server</ons-button>
+								<ons-button style="background-color: #7c5599; color: white;" modifier="large--cta" onclick="soundEffect.play(); app.register($('#pair-private-server').val(), null);"><ons-icon icon='md-link'></ons-icon>&nbsp;&nbsp;Pair with your Private Server</ons-button>
 							</p>
 						  </div>
 						</ons-list-item>
 						<ons-list-item expandable>
 					  
-						   <span style="width:100%;" onclick="$('.expandable-content').hide(); $(this).parent().find('.expandable-content').slideToggle()"><b>(Or)</b>&nbsp;&nbsp;Login to the App</span>
+						   <span style="width:100%;" onclick="$('.expandable-content').hide(); $(this).parent().find('.expandable-content').slideToggle()"><b>(Or)</b>&nbsp;&nbsp;Login</span>
 					  
 						  <div class="expandable-content" style="display: none; width: 100%;">
 						
@@ -279,11 +280,11 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 									<input style="padding:5px; display: none;" id="private-server" type="url" placeholder="Private Server URL" size="26" class="resizedTextbox">
 								</p>
 								<p>
-									<ons-button style="background-color: #7c5599; color: white;" modifier="large" onclick="app.login($('#user').val(), $('#password').val(), $('#private-server').val());">Login</ons-button>
+								<ons-button style="background-color: #7c5599; color: white;" modifier="large" onclick="app.login($('#user').val(), $('#password').val(), $('#private-server').val());"><ons-icon icon='md-sign-in' size="20px" fixed-width="true"></ons-icon> Login</ons-button>
 								</p>
 				
 								<p>
-									<a class="small-text" href="javascript:" onclick="return app.clearPass($('#user').val(), $('#private-server').val());">Reset Password</a>
+								<a class="small-text" href="javascript:" onclick="return app.clearPass($('#user').val(), $('#private-server').val());">Reset Password</a>&nbsp;<span id="password-wait" style="display: none;"><img src="img/ajax-loader.gif" width="16" height="16"></span>
 								</p>
 								<p>
 									<a class="small-text" href="javascript:" onclick="$('#private-server').show(); return false;">Private Server</a>

@@ -689,7 +689,7 @@ var app = {
     },
     
    
-    register: function(apiUrl)
+    register: function(apiUrl, email)
     {
     	//Register to the remote Loop Server
    		innerThis.setAPI(apiUrl); 
@@ -703,6 +703,9 @@ var app = {
 			var platform = phonePlatform;
 		
 			var url = api + "plugins/notifications/register.php?id=" + id + "&devicetype=" + platform;
+			if(email) {
+				url = url + "&email=" + encodeURIComponent(email);
+			}
 
 			innerThis.myWindowOpen(url, '_blank');
 			
@@ -741,7 +744,7 @@ var app = {
    		
    		
    		if(user) {
-   	
+   			var email = user;
 			$.ajax({
 				type       : "POST",
 				url        : api + "confirm.php",
@@ -767,7 +770,11 @@ var app = {
 							if(userId) {
 								localStorage.setItem("loggedUser",userId);
 											
-								app.setupPull();		//register this phone. Note: this should be 'app' because of scope.
+								if(innerThis) {	
+									innerThis.register(apiUrl, email);		//register this phone
+								} else {					
+									app.register(apiUrl, email);		//register this phone
+								}
 								$('#login-popup').hide();
 						
 							} else {
@@ -805,18 +812,27 @@ var app = {
 
 	clearPass: function(email, apiUrl) {
 		
-		innerThis.setAPI(apiUrl);
+		$('#password-wait').show();
+		if(app) {
+			app.setAPI(apiUrl);
+		} else {
+			innerThis.setAPI(apiUrl);
+		}
 		
 	   	$.ajax({
 			type       : "POST",
 			url        : api + "clear-pass-phone.php",
 			crossDomain: true,
 			data       : { 'email': email },
+			dataType   : 'jsonp',
 			success    : function(response) {
+				$('#password-wait').hide();
 				navigator.notification.alert(response);
 			},
-			error      : function() {
-				navigator.notification.alert('Sorry we cannot connect to your AtomJump Messaging Server. Please try again later.');                  
+			error      : function(xhr, status, error) {
+				$('#password-wait').hide();
+				var errorMessage = xhr.status + ': ' + xhr.statusText
+				navigator.notification.alert('Sorry we cannot reset your password. Please try again later. Error: ' + errorMessage);                  
 			}
 	   });     	
 
@@ -920,7 +936,6 @@ var app = {
     factoryReset: function() {
         //We have connected to a server OK
         var _this = this;
-        _this.pull = false;
         
     		navigator.notification.confirm(
 	    		'Are you sure? All your saved forums and other settings will be cleared.',  // message
@@ -977,10 +992,9 @@ var app = {
         //We have connected to a server OK
         var _this = this;
         
-        _this.pull = false; 		//Assume nothing, iOS / AtomJump connection
-        
+       
     	userId = localStorage.getItem("loggedUser");
-		localStorage.removeItem("registrationId");
+		//This should not be in here or it will attempt to register again immediately: localStorage.removeItem("registrationId");
 		localStorage.removeItem("loggedUser");
 		$('#user').val('');
 		$('#password').val('');
@@ -1009,6 +1023,8 @@ var app = {
 				//This needs to open the browser, or the session won't logout
 				//This is not optional. It will not logout correctly.
 				_this.myWindowOpen(url, '_blank');
+				
+				userId = null;		//This may be a blank user string, so fully clear it off.
 			
 			}
 
