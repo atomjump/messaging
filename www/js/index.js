@@ -410,7 +410,7 @@ var app = {
 						which returns the pool server write script e.g.
 						https://medimage-nz1.atomjump.com/write/HMEcfQQCufJmRPMX4C
 						*/
-						innerThis.setPull(true);		//Set the global pull
+						innerThis.setPull("true");		//Set the global pull
 	
 						var oldRegId = localStorage.getItem('registrationId');
 					
@@ -548,7 +548,7 @@ var app = {
     
     setupPush: function(email) {
   		//Set the global pull to off
-  		innerThis.setPull(false);
+  		innerThis.setPull("false");
   		var thisEmail = email;
   	
   		if(typeof(PushNotification) == 'undefined') { 
@@ -651,15 +651,12 @@ var app = {
 			platform = device.platform;
 		}
 		
-		
-		if(innerThis && innerThis.getPull() == true) {
+		if(innerThis && innerThis.getPull() == "true") {
 			//Switch over to the cross-platform AtomJump platform
 			platform = "AtomJump";	
 		}
 		
-		alert("Getting platform:" + innerThis.getPull());
-		
-		if(app && app.getPull() == true) {
+		if(app && app.getPull() == "true") {
 			//Switch over to the cross-platform AtomJump platform
 			platform = "AtomJump";	
 		}
@@ -940,7 +937,7 @@ var app = {
 						$('#private-server').val('');
 						$('#pair-private-server').val('');
 						$('#registered').hide();
-						_this.setPull(false);
+						_this.setPull("false");
 						
 						//Deregister on the database - by sending a blank id (which gets set as a null on the server). Disassociates phone from user.
 						if(userId) {
@@ -992,7 +989,6 @@ var app = {
 	
 	getPull: function() {
 		var ret = localStorage.getItem('pull');
-		alert("Getting pull:" + ret);		//TESTING
 		return ret;
 	},
 
