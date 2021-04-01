@@ -496,7 +496,7 @@ var app = {
 								if(innerThis) {	
 									innerThis.register(apiUrl, email);		//register this phone
 								} else {					
-									app.register(apiUrl);		//register this phone
+									app.register(apiUrl, email);		//register this phone
 								}
 								$('#login-popup').hide();
 								
