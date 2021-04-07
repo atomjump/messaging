@@ -17,6 +17,7 @@
     "cordova-android": "^9.0.0",
     "cordova-browser": "^6.0.0",
     "cordova-ios": "^6.2.0",
+    "cordova-plugin-add-swift-support": "^2.0.2",
     "cordova-plugin-badge": "^0.8.8",
     "cordova-plugin-cleartext": "^1.0.0",
     "cordova-plugin-compat": "^1.2.0",
@@ -26,7 +27,7 @@
     "cordova-plugin-file-transfer": "^1.7.1",
     "cordova-plugin-globalization": "^1.0.5",
     "cordova-plugin-inappbrowser": "^4.1.0",
-    "cordova-plugin-insomnia": "^4.3.0",
+    "cordova-plugin-insomnia": "git+https://github.com/tombolaltd/cordova-plugin-insomnia.git",
     "cordova-plugin-local-notification": "^0.9.0-beta.2",
     "cordova-plugin-multidex": "^0.1.4",
     "cordova-plugin-networkinterface": "^2.0.0",
@@ -49,7 +50,8 @@
     },
     "platforms": [
       "browser",
-      "ios"
+      "ios",
+      "android"
     ]
   }
 }

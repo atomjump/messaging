@@ -442,6 +442,9 @@ var app = {
 								useAtomJump = true;		//Force use of AtomJump messages
 							}
 							
+							
+							
+							
 							if((resp.supports.atomjump == true)&&(resp.supports.android == true)&&(canUseAndroidNative == true)) {
 								 //Give the user a choice
 								if(confirm("The service you are connecting to allows immediate Android notifications. AtomJump notifications use slightly more battery power, and can take a few more seconds to pop up, but they use peer-reviewable software, and do not share data with Google. Do you wish to use AtomJump notifications, instead?")) {
