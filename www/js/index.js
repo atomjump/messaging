@@ -334,6 +334,11 @@ var app = {
     
 	runPoll: function() {
 		//This is run from the regular checks, and allows for a return callback
+		
+		if(window && window.plugins && window.plugins.insomnia) {
+			window.plugins.insomnia.keepAwake();
+		}
+		
 		app.poll(function(runAgain) {
 			if(runAgain == true) {
 				app.runPoll();
