@@ -3651,8 +3651,8 @@ ons-range[disabled] .range {
   background-color: #fff;
 }
 .list__item:first-child {
-  -webkit-box-shadow: inset 0px 1px 0px 0px #ddd;
-  box-shadow: inset 0px 1px 0px 0px #ddd;
+  -webkit-box-shadow: inset 0px 1px 0px 0px #CCC;	 /* TESTING OUT ddd */
+  box-shadow: inset 0px 1px 0px 0px #CCC;  /* TESTING OUT ddd */
   margin-top: 0;
 }
 .list__item_active:active {
