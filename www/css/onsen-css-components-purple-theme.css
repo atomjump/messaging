@@ -3682,11 +3682,8 @@ ons-range[disabled] .range {
   background-image: none;
 }
 .list--noborder .list__item:first-child {
-  /* TESTING OUT -webkit-box-shadow: none;
-  box-shadow: none; */
-  
-  -webkit-box-shadow: inset 0px 1px 0px 0px #CCC;	 /* TESTING IN */
-  box-shadow: inset 0px 1px 0px 0px #CCC;  /* TESTING IN */
+  -webkit-box-shadow: none;
+  box-shadow: none;
 }
 /* topdoc
   name: Category List Header
