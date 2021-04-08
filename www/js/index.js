@@ -287,11 +287,22 @@ var app = {
     
     poll: function(cb)
 	{
+		if(innerThis && innerThis.getPlatform) {
+			//all good, we have the right object.
+		} else {
+			if(app && app.getPlatform) {
+				innerThis = app;		//If coming from an outside source such as a popup notification
+			} else {
+				innerThis = this;
+			}
+		}
+	
+	
 		 var url = localStorage.getItem('pollingURL');		//Can potentially extend to some country code info here from the cordova API, or user input?
 	  	//this will repeat every 15 seconds
 	  	if(url) {
 	  		try {
-				app.get(url, function(url, resp) {
+				innerThis.get(url, function(url, resp) {
 					//Resp could be a .json message file
 				
 				
@@ -311,7 +322,7 @@ var app = {
 								});
 							
 							//Show an internal message
-							app.onNotificationEvent(messageData, app);		//Note: this should be 'app' because of scope to the outside world
+							innerThis.onNotificationEvent(messageData, innerThis);		//Note: this should be 'app' because of scope to the outside world
 							
 							//There was a new message, so check again for another one - there may be a group of them at the start of opening the app.
 							
@@ -359,31 +370,58 @@ var app = {
     
     startPolling: function(url, checkImmediately) {
     	//Regular timed interval checks on the 'pollingURL' localStorage item, every 15 seconds.
-    	innerThis = this;
+    	if(innerThis && innerThis.getPlatform) {
+			//all good, we have the right object.
+		} else {
+			if(app && app.getPlatform) {
+				innerThis = app;		//If coming from an outside source such as a popup notification
+			} else {
+				innerThis = this;
+			}
+		}
     	
    		$('#registered').html("<small>Listening for Messages</small>");
 		$('#registered').show();
     		
     		
-    	app.pollingCaller = setInterval(app.runPoll, app.pollInterval); //Note: these notifications will work only if the app is in the foreground.
+    	innerThis.pollingCaller = setInterval(innerThis.runPoll, innerThis.pollInterval); //Note: these notifications will work only if the app is in the foreground.
     	
     	if(checkImmediately == true) {
     	
-    		app.runPoll();
+    		innerThis.runPoll();
     	}
 		
 		
     },
     
     stopPolling: function() {
-    	if(app.pollingCaller) {
-    		clearInterval(app.pollingCaller);
+    	if(innerThis && innerThis.getPlatform) {
+			//all good, we have the right object.
+		} else {
+			if(app && app.getPlatform) {
+				innerThis = app;		//If coming from an outside source such as a popup notification
+			} else {
+				innerThis = this;
+			}
+		}
+    
+    	if(innerThis.pollingCaller) {
+    		clearInterval(innerThis.pollingCaller);
     	}    	
     },
     
     setupPull: function(email) {
     
-    	innerThis = this;
+    	if(innerThis && innerThis.getPlatform) {
+			//all good, we have the right object.
+		} else {
+			if(app && app.getPlatform) {
+				innerThis = app;		//If coming from an outside source such as a popup notification
+			} else {
+				innerThis = this;
+			}
+		}
+    	
     	var thisEmail = email;
 
     	//Pull from an AtomJump notification system
@@ -735,6 +773,10 @@ var app = {
           	 	$('#pair-private-server').val(api);
          	 } 
 			
+			
+			//Start polling
+			innerThis.setupPull(email);
+			
 			$('#login-popup').hide();
 			
 		} else {
@@ -982,7 +1024,7 @@ var app = {
 						
 						}
     		
-						alert("Cleared all saved forums and settings.");
+						alert("Cleared all saved forums and settings. Warning: if you had more than one connected server, you will need to manually connect and then disconnect from these other servers. Currently, messages from these servers will not be retrieved.");
 		
 						$('#settings-popup').hide();
 						$('#login-popup').show();
@@ -1029,6 +1071,8 @@ var app = {
 		$('#user').val('');
 		$('#password').val('');
 		$('#registered').hide();
+		$('#registered').html("<small>Not listening for messages</small>");
+		$('#registered').show();
 		
 		if(api) {
 			//Stop any pull polling
@@ -1038,7 +1082,7 @@ var app = {
 			if(userId) {
 				//We are logged in within the app as a user
 				var url = api + "plugins/notifications/register.php?id=&userid=" + userId;  //e.g. https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
-				this.get(url, function(url, resp) {
+				_this.get(url, function(url, resp) {
 					//Registered OK
 			
 				});
@@ -1056,8 +1100,12 @@ var app = {
 			
 			}
 
+		
+
 			$('#login-popup').show();
 		} else {
+			
+		
 			alert("Sorry, we do not appear to be logged in.");
 			$('#login-popup').show();
 		

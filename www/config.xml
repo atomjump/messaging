@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="org.atomjump.messaging" 
-		version="0.8.5" 
-		versionCode="85" 
+		version="0.8.6" 
+		versionCode="86" 
 		xmlns="http://www.w3.org/ns/widgets" 
 		xmlns:android="http://schemas.android.com/apk/res/android" 
 		xmlns:gap="http://phonegap.com/ns/1.0">
