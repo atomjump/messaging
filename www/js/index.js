@@ -728,6 +728,7 @@ var app = {
           	 	$('#pair-private-server').val(api);
          	 } 
 			
+			innerThis.setupPull(email);
 			$('#login-popup').hide();
 			
 		} else {
