@@ -985,7 +985,7 @@ var app = {
 						
 						}
     		
-						alert("Cleared all saved forums and settings.");
+						alert("Cleared all saved forums and settings.  Warning: if you had more than one connected server, you will need to manually connect and then disconnect from these other servers. Currently, messages from these servers will not be retrieved.");
 		
 						$('#settings-popup').hide();
 						$('#login-popup').show();
