@@ -111,19 +111,21 @@ var app = {
 		var finalData = {};
 		
 		
+		
 		if(innerThis && innerThis.getPlatform) {
 			//all good, we have the right object.
+			var localThis = innerThis;
 		} else {
 			if(app && app.getPlatform) {
-				innerThis = app;		//If coming from an outside source such as a popup notification
+				var localThis = app;		//If coming from an outside source such as a popup notification
 			} else {
-				innerThis = thisApp;
+				var localThis = thisApp;
 			}
 		}
 		 
 		 
 		//See https://github.com/phonegap/phonegap-plugin-push/blob/master/docs/API.md
-		var platform = innerThis.getPlatform();
+		var platform = localThis.getPlatform();
 		if(platform == 'iOS') {
 			if(data.additionalData && data.additionalData.data && data.additionalData.data.image) {
 				finalData.image = data.additionalData.data.image;
@@ -198,26 +200,26 @@ var app = {
 		var keepListening = "Close this page to keep listening.";		//Default message at the bottom
 		
 		for(var cnt = 0; cnt < innerThis.currentForums.length; cnt++) {
-			if(innerThis.currentForums[cnt].url == finalData.observeUrl) {
+			if(localThis.currentForums[cnt].url == finalData.observeUrl) {
 				//Yes, a new message for the same forum
 				
 				foundExisting = true;
 				
 				//Prevent duplicates for the count
-				if(finalData.message != innerThis.currentForums[cnt].lastMsg) {
+				if(finalData.message != localThis.currentForums[cnt].lastMsg) {
 					
 					//Found an existing entry - add one more message to the count
 					
 					foundNum = cnt;
-					var msgCnt = innerThis.currentForums[cnt].msgCnt;
+					var msgCnt = localThis.currentForums[cnt].msgCnt;
 					var msgWord = "messages";
 					if(msgCnt == 1) msgWord = "message";
 					displayMessageCnt = "<br/><br/>+" + msgCnt + " other " + msgWord + "</br>";
-					innerThis.currentForums[cnt].msgCnt = innerThis.currentForums[cnt].msgCnt + 1;
-					innerThis.currentForums[cnt].lastMsg = finalData.message;		//Prevent future duplicates
+					localThis.currentForums[cnt].msgCnt = localThis.currentForums[cnt].msgCnt + 1;
+					localThis.currentForums[cnt].lastMsg = finalData.message;		//Prevent future duplicates
 					
-					containerElement = innerThis.currentForums[cnt].containerElement;
-					displayElement = innerThis.currentForums[cnt].displayElement;
+					containerElement = localThis.currentForums[cnt].containerElement;
+					displayElement = localThis.currentForums[cnt].displayElement;
 				} else {
 					return;	//Exit the display early on a duplicate. There is no need to update the message display
 				}
@@ -232,7 +234,7 @@ var app = {
 	    if(foundExisting == false) {
 	    	//Create a new forum
 	    	
-	    	var forumCnt = innerThis.currentForums.length;
+	    	var forumCnt = localThis.currentForums.length;
 	    	foundNum = forumCnt;
 	    	containerElement = 'aj-HTML-alert-' + forumCnt;
 	    	displayElement = 'aj-HTML-alert-inner-' + forumCnt;
@@ -245,7 +247,7 @@ var app = {
 					"msgCnt": 1,
 					"lastMsg": finalData.message
 			};
-			innerThis.currentForums.push(newEntry);
+			localThis.currentForums.push(newEntry);
 			//Insert the visual element into the HTML container
 			/*<div id="aj-HTML-alert-0" class="aj-HTML-alert" style="display:none;">
 				<div id="aj-HTML-alert-inner-0" class="inner-popup"></div>
@@ -285,24 +287,17 @@ var app = {
     },
     
     
-    poll: function(cb)
+    poll: function(thisCb)
 	{
-		if(innerThis && innerThis.getPlatform) {
-			//all good, we have the right object.
-		} else {
-			if(app && app.getPlatform) {
-				innerThis = app;		//If coming from an outside source such as a popup notification
-			} else {
-				innerThis = this;
-			}
-		}
 	
+							
 	
 		 var url = localStorage.getItem('pollingURL');		//Can potentially extend to some country code info here from the cordova API, or user input?
 	  	//this will repeat every 15 seconds
 	  	if(url) {
 	  		try {
-				innerThis.get(url, function(url, resp) {
+	  			
+				app.get(url, function(url, resp) {
 					//Resp could be a .json message file
 				
 				
@@ -311,8 +306,10 @@ var app = {
 					//Call onNotificationEvent(parsedJSON);
 					if(resp != "none") {
 						try {
+							
 							var msg = JSON.parse(resp);
 							var messageData = msg.data;
+						
 						
 							//Do a self notification alert if we're in the background. See https://github.com/katzer/cordova-plugin-local-notifications
 								cordova.plugins.notification.local.schedule({
@@ -322,12 +319,14 @@ var app = {
 								});
 							
 							//Show an internal message
-							innerThis.onNotificationEvent(messageData, innerThis);		//Note: this should be 'app' because of scope to the outside world
+							app.onNotificationEvent(messageData, app);		//Note: this should be 'app' because of scope to the outside world							
 							
 							//There was a new message, so check again for another one - there may be a group of them at the start of opening the app.
 							
 							
-							cb(true);							
+							thisCb(true);	
+							
+							
 							return;
 							
 						
@@ -335,7 +334,7 @@ var app = {
 							//Show that there is a problem listening to messages.
 							$('#registered').html("<small style='color:#8F3850;'>Waiting for a Connection..</small>");
 							$('#registered').show();
-							cb(false);
+							thisCb(false);
 							return;
 						}	  				
 					}
@@ -344,11 +343,14 @@ var app = {
 				//Show that there is a problem listening to messages.
 				$('#registered').html("<small style='color:#8F3850;'>Waiting for a Connection..</small>");
 				$('#registered').show();
+				
+				thisCb(false);			
+				return;
 			
 			}
 	  	} else {
 	  		//No URL
-	  		cb(false);
+	  		thisCb(false);
 	  		return;
 	  	}
 	},
@@ -360,7 +362,9 @@ var app = {
 			window.plugins.insomnia.keepAwake();
 		}
 		
+		
 		app.poll(function(runAgain) {
+	
 			if(runAgain == true) {
 				app.runPoll();
 			}
@@ -518,7 +522,7 @@ var app = {
 				
 									//Start up regular checks
 									localStorage.setItem('pollingURL', pollingURL);
-									innerThis.startPolling(pollingURL);
+									innerThis.startPolling(pollingURL, false);
 				
 				   
 									$('#registered').html("<small>Listening for Messages</small>");
@@ -590,7 +594,7 @@ var app = {
 				error      : function() {
 					//Use push instead.
 					
-					//Potentially a legacy server with a 404 returned - attempt to use push anyway.
+					//Potentially a legacy server with a 404 returned - attempt to use push if we haven't done already.
 					innerThis.setupPush(null);
 					return;        
 				}
@@ -604,28 +608,29 @@ var app = {
     
     setupPush: function(email) {
   		//Set the global pull to off
-  		innerThis.setPull("false");
-  		var thisEmail = email;
-  	
-  		if(typeof(PushNotification) == 'undefined') { 
+  		
+		innerThis.setPull("false");
+		var thisEmail = email;
+
+		if(typeof(PushNotification) == 'undefined') { 
 			alert("Sorry, your app is not configured to connect to system notifications.");
 			return;					
 		} else {
-  	
-  	
+
+
 			var push = PushNotification.init({
 				"android": {},
-      			"browser": {
-        			"pushServiceURL": 'http://push.api.phonegap.com/v1/push'
-      			},
+				"browser": {
+					"pushServiceURL": 'http://push.api.phonegap.com/v1/push'
+				},
 				"ios": {
-				    "alert": true,
+					"alert": true,
 					"sound": true,
 					"vibration": true
 				},
 				"windows": {}
 			});
-			
+		
 			//Perhaps also?: ,	"badge": true
 
 		}
@@ -774,8 +779,15 @@ var app = {
          	 } 
 			
 			
-			//Start polling
-			innerThis.setupPull(email);
+			//If using AtomJump messaging start polling
+			if(innerThis.getPull() == 'true') {
+				var pollingURL = localStorage.getItem('pollingURL');
+				innerThis.startPolling(pollingURL, false);
+			} else {
+				//Android messages, should already be running.
+				$('#registered').html("<small>Listening for Messages</small>");
+            	$('#registered').show();
+			}
 			
 			$('#login-popup').hide();
 			
@@ -904,20 +916,21 @@ var app = {
 
 
    get: function(url, cb) {
-        var request = new XMLHttpRequest();
+        
+        var request = new XMLHttpRequest();   
         request.open("GET", url, true);
-
-		
+        
         request.onreadystatechange = function() {
             if (request.readyState == 4) {
 
                 if (request.status == 200 || request.status == 0) {
-
+	
                     cb(url, request.responseText);   // -> request.responseText <- is a result
                 }
             }
         }
         request.send();
+             
     },
 
 
