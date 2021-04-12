@@ -374,25 +374,16 @@ var app = {
     
     startPolling: function(url, checkImmediately) {
     	//Regular timed interval checks on the 'pollingURL' localStorage item, every 15 seconds.
-    	if(innerThis && innerThis.getPlatform) {
-			//all good, we have the right object.
-		} else {
-			if(app && app.getPlatform) {
-				innerThis = app;		//If coming from an outside source such as a popup notification
-			} else {
-				innerThis = this;
-			}
-		}
     	
    		$('#registered').html("<small>Listening for Messages</small>");
 		$('#registered').show();
     		
     		
-    	innerThis.pollingCaller = setInterval(innerThis.runPoll, innerThis.pollInterval); //Note: these notifications will work only if the app is in the foreground.
+    	innerThis.pollingCaller = setInterval(app.runPoll, app.pollInterval); //Note: these notifications will work only if the app is in the foreground.
     	
     	if(checkImmediately == true) {
     	
-    		innerThis.runPoll();
+    		app.runPoll();
     	}
 		
 		
