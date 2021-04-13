@@ -1,7 +1,7 @@
 {
   "name": "org.atomjump.messaging",
   "displayName": "AtomJump Messaging",
-  "version": "0.8.9",
+  "version": "0.9.0",
   "description": "Shortcuts to any AtomJump messaging page, and notifications of new messages.",
   "main": "index.js",
   "scripts": {
@@ -53,5 +53,6 @@
       "ios",
       "android"
     ]
-  }
+  },
+  "dependencies": {}
 }

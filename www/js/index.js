@@ -64,7 +64,29 @@ var app = {
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
+        document.addEventListener('resume', this.onResume, false);
+        document.addEventListener('pause', this.onPause, false);
     },
+    
+    onResume: function() {
+    	//App has resumed
+    },
+    
+    onPause: function() {
+    	//App gone into background - let the user know via a local alert that their
+    	//app will not be listening
+    	if(app && app.getPull() == "true") {
+			cordova.plugins.notification.local.schedule({
+				title: "AtomJump Messaging Paused",
+				text: "To return to listening, tap this message.",
+				sound: false,
+				vibrate: false,
+				foreground: true
+			});
+		}
+    },
+    
+    
     // deviceready Event Handler
     //
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
@@ -101,9 +123,6 @@ var app = {
           		$('#login-popup').hide();	
          		app.setupPull(null);
           }
-          
-          
-         
           
     },
     
@@ -297,16 +316,15 @@ var app = {
 	  	if(url) {
 	  		try {
 	  			
+	  			
 				app.get(url, function(url, resp) {
 					//Resp could be a .json message file
-				
-				
 					$('#registered').html("<small>Listening for Messages</small>");
 				
 					//Call onNotificationEvent(parsedJSON);
 					if(resp != "none") {
 						try {
-							
+							//Move us back to the foreground							
 							var msg = JSON.parse(resp);
 							var messageData = msg.data;
 						
@@ -323,7 +341,7 @@ var app = {
 							
 							//There was a new message, so check again for another one - there may be a group of them at the start of opening the app.
 							
-							
+								
 							thisCb(true);	
 							
 							
@@ -355,39 +373,54 @@ var app = {
 	  	}
 	},
     
-	runPoll: function() {
+	runPoll: function(thisApp) {
 		//This is run from the regular checks, and allows for a return callback
+		
+		
 		
 		if(window && window.plugins && window.plugins.insomnia) {
 			window.plugins.insomnia.keepAwake();
+			
 		}
 		
-		
-		app.poll(function(runAgain) {
 	
+		
+		thisApp.poll(function(runAgain) {
+		
 			if(runAgain == true) {
-				app.runPoll();
+				thisApp.runPoll(thisApp);
 			}
 		});
 	
 	},
     
     startPolling: function(url, checkImmediately) {
-    	//Regular timed interval checks on the 'pollingURL' localStorage item, every 15 seconds.
-    	
+    	//Regular timed interval checks on the 'pollingURL' localStorage item, every 15 seconds.		
+			
    		$('#registered').html("<small>Listening for Messages</small>");
 		$('#registered').show();
-    		
-    		
-    	innerThis.pollingCaller = setInterval(app.runPoll, app.pollInterval); //Note: these notifications will work only if the app is in the foreground.
-    	
-    	if(checkImmediately == true) {
-    	
-    		app.runPoll();
-    	}
 		
+   
+    	
+		if(!app) {
+			var thisApp = innerThis;
+		} else {
+			var thisApp = app;
+		}
+    	
+		thisApp.pollingCaller = setInterval(function() {
+			thisApp.runPoll(thisApp);
+		}, app.pollInterval); //Note: these notifications will work only if the app is in the foreground.
+	
+		if(checkImmediately && checkImmediately == true) {
+	
+			thisApp.runPoll(thisApp);
+			
+		}
+    	
 		
     },
+    
     
     stopPolling: function() {
     	if(innerThis && innerThis.getPlatform) {
@@ -482,7 +515,7 @@ var app = {
 								 //Give the user a choice
 								if(confirm("The service you are connecting to allows immediate Android notifications. AtomJump notifications use slightly more battery power, and can take a few more seconds to pop up, but they use peer-reviewable software, and do not share data with Google. Do you wish to use AtomJump notifications, instead?")) {
 									useAtomJump = true;
-									localStorage.getItem('registrationId');
+									//localStorage.getItem('registrationId'); 
 								}
 							
 							}
@@ -513,7 +546,7 @@ var app = {
 				
 									//Start up regular checks
 									localStorage.setItem('pollingURL', pollingURL);
-									innerThis.startPolling(pollingURL, false);
+									//OLD POS:innerThis.startPolling(pollingURL, false);
 				
 				   
 									$('#registered').html("<small>Listening for Messages</small>");
@@ -553,6 +586,10 @@ var app = {
 				
 										});
 									}
+									
+									//Start polling background
+									app.startPolling(pollingURL, false);		//Or innerThis?
+									
 		
 								});		//End of get
 							
@@ -574,7 +611,7 @@ var app = {
 						
 							//Start polling AtomJump immediately - an existing registration
 							var pollingURL = localStorage.getItem('pollingURL');
-							innerThis.startPolling(pollingURL, true);		//true: is 1st check immediately
+							app.startPolling(pollingURL, true);		//true: is 1st check immediately		Note: used to be startPolling  innerThis.startPolling
 						}
 						
 					} else {
@@ -773,7 +810,7 @@ var app = {
 			//If using AtomJump messaging start polling
 			if(innerThis.getPull() == 'true') {
 				var pollingURL = localStorage.getItem('pollingURL');
-				innerThis.startPolling(pollingURL, false);
+				innerThis.startPolling(pollingURL, false);		//Used to be startPolling
 			} else {
 				//Android messages, should already be running.
 				$('#registered').html("<small>Listening for Messages</small>");
