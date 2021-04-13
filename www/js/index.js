@@ -81,7 +81,8 @@ var app = {
 				text: "To return to listening, tap this message.",
 				sound: false,
 				vibrate: false,
-				foreground: true
+				foreground: true,
+				smallIcon: ""
 			});
 		}
     },
