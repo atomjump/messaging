@@ -72,9 +72,15 @@
   },
   {
    "src": "\/windows-icon-256x256.png",
-   "sizes": "300x300",
+   "sizes": "256x256",
    "type": "image\/png",
    "density": "4.0"
+  },
+  {
+   "src": "\/windows-icon-24x24.png",
+   "sizes": "24x24",
+   "type": "image\/png",
+   "density": "1.0"
   },
   {
    "src": "\/windows-icon-300x300.png",
