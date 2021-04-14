@@ -2,6 +2,7 @@
  "name": "AtomJump Streaming",
  "short_name": "AtomJump Streaming",
  "display": "standalone",
+ "background_color": "#fff",
  "icons": [
   {
    "src": "\/android-icon-36x36.png",
