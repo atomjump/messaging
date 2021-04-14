@@ -64,6 +64,12 @@
    "density": "3.0"
   },
   {
+   "src": "\/windows-icon-94x94.png",
+   "sizes": "94x94",
+   "type": "image\/png",
+   "density": "3.0"
+  },
+  {
    "src": "\/windows-icon-300x300.png",
    "sizes": "300x300",
    "type": "image\/png",
