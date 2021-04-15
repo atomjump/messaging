@@ -54,7 +54,6 @@ var app = {
         
         //The timer to call a pull request
         this.pollingCaller = null;
-        //Do not include: this.setPull("false");   			//Switch to true if notifications are coming via a pull method (AtomJump's own), rather than push. TODO: check this should not be "false" rather than false
 		this.pollInterval = 30000;		//For publications, use 30000 (i.e. 30 second check interval) by default.
 
     },
@@ -296,9 +295,9 @@ var app = {
 			};
 			localThis.currentForums.push(newEntry);
 			//Insert the visual element into the HTML container
-			/*<div id="aj-HTML-alert-0" class="aj-HTML-alert" style="display:none;">
-				<div id="aj-HTML-alert-inner-0" class="inner-popup"></div>
-			</div>*/
+			/*E.g. <div id="aj-HTML-alert-0" class="aj-HTML-alert" style="display:none;">
+						<div id="aj-HTML-alert-inner-0" class="inner-popup"></div>
+					</div>*/
 			
 			
 			
@@ -575,8 +574,7 @@ var app = {
 				
 									//Start up regular checks
 									localStorage.setItem('pollingURL', pollingURL);
-									//OLD POS:innerThis.startPolling(pollingURL, false);
-				
+									
 				   
 									$('#registered').html("<small>Listening for Messages</small>");
 									$('#registered').show();
@@ -606,7 +604,7 @@ var app = {
 				
 									
 				
-										var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform;  //e.g. https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
+										var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform;  //e.g. https://atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
 										if(thisEmailB) {
 											url = url + "&email=" + encodeURIComponent(thisEmailB);
 										}
@@ -688,8 +686,6 @@ var app = {
 				"windows": {}
 			});
 		
-			//Perhaps also?: ,	"badge": true
-
 		}
         
         
@@ -714,7 +710,7 @@ var app = {
                 	//so we need to let the browser use it's own cookies.
                 	
                 	//Confirm device.platform if it is blank.
-                	var phonePlatform = "Android";	//innerThis.getPlatform();
+                	var phonePlatform = "Android";
                 	
                 	
                 	var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=&devicetype=" + phonePlatform;
@@ -726,9 +722,9 @@ var app = {
                 } else {
                 
                  	//Otherwise login with the known logged userId
-                 	var phonePlatform = "Android";	//innerThis.getPlatform();
+                 	var phonePlatform = "Android";
                  	
-               	 	var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform;  //e.g. https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
+               	 	var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform;  //e.g. https://atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
                	 	if(thisEmail) {
 						url = url + "&email=" + encodeURIComponent(thisEmail);
                 	}
@@ -771,12 +767,8 @@ var app = {
     
     getPlatform: function()
     {		
-    	var platform = "Android";			//Default on the cordova-ios branch
-		
-		/*if(device && device.platform) {
-			platform = device.platform;
-		}*/		//Not needed on Android branch.
-		
+    	var platform = "Android";			//Default on the cordova-android branches
+			
 		if(innerThis && innerThis.getPull() == "true") {
 			//Switch over to the cross-platform AtomJump platform
 			platform = "AtomJump";	
@@ -1079,7 +1071,7 @@ var app = {
 						
 						//Deregister on the database - by sending a blank id (which gets set as a null on the server). Disassociates phone from user.
 						if(userId) {
-							var url = api + "plugins/notifications/register.php?id=&userid=" + userId;  //e.g. https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
+							var url = api + "plugins/notifications/register.php?id=&userid=" + userId;  //e.g. https://atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
 							_this.get(url, function(url, resp) {
 								//Registered OK
 			
@@ -1151,7 +1143,7 @@ var app = {
 			//Deregister on the database - by sending a blank id (which gets set as a null on the server). Disassociates phone from user.
 			if(userId) {
 				//We are logged in within the app as a user
-				var url = api + "plugins/notifications/register.php?id=&userid=" + userId;  //e.g. https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
+				var url = api + "plugins/notifications/register.php?id=&userid=" + userId;  //e.g. https://atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
 				_this.get(url, function(url, resp) {
 					//Registered OK
 			
