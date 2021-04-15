@@ -634,10 +634,9 @@ var app = {
 										if(thisEmailB) {
 											url = url + "&email=" + encodeURIComponent(thisEmailB);
 										}
-										 innerThis.get(url, function(url, resp) {
-											//Registered OK
-				
-										});
+										
+										innerThis.myWindowOpen(url, '_system');
+										
 									}
 									
 									//Start polling background
@@ -755,10 +754,7 @@ var app = {
 						url = url + "&email=" + encodeURIComponent(thisEmail);
                 	}
                 	
-					 innerThis.get(url, function(url, resp) {
-						//Registered OK
-					
-					});
+					innerThis.myWindowOpen(url, '_system');
 				}
             } 
 			
@@ -1098,10 +1094,8 @@ var app = {
 						//Deregister on the database - by sending a blank id (which gets set as a null on the server). Disassociates phone from user.
 						if(userId) {
 							var url = api + "plugins/notifications/register.php?id=&userid=" + userId;  //e.g. https://atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
-							_this.get(url, function(url, resp) {
-								//Registered OK
-			
-							});
+							_this.myWindowOpen(url, '_system');
+							
 						} else {
 								//Deregister from remote server connection in a browser
 								var url = api + "plugins/notifications/register.php?id=";
@@ -1175,10 +1169,7 @@ var app = {
 			if(userId) {
 				//We are logged in within the app as a user
 				var url = api + "plugins/notifications/register.php?id=&userid=" + userId;  //e.g. https://atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
-				_this.get(url, function(url, resp) {
-					//Registered OK
-			
-				});
+				_this.myWindowOpen(url, '_system');
 				
 				userId = null;
 		
