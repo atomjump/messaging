@@ -54,7 +54,7 @@ var app = {
         
         //The timer to call a pull request
         this.pollingCaller = null;
-        this.setPull(false);   			//Switch to true if notifications are coming via a pull method (AtomJump's own), rather than push
+        this.setPull(false);   			//Switch to true if notifications are coming via a pull method (AtomJump's own), rather than push. TODO: check this should not be "false" rather than false
 		this.pollInterval = 30000;		//For publications, use 30000 (i.e. 30 second check interval) by default.
 
     },
@@ -75,16 +75,43 @@ var app = {
     onPause: function() {
     	//App gone into background - let the user know via a local alert that their
     	//app will not be listening
+    	    	
     	if(app && app.getPull() == "true") {
-			cordova.plugins.notification.local.schedule({
-				title: "AtomJump Messaging Paused",
-				text: "To return to listening, tap this message.",
-				sound: false,
-				vibrate: false,
-				foreground: true,
-				smallIcon: ""
-			});
+			setTimeout( function() {
+				cordova.plugins.lockInfo.isLocked(
+					function (isLocked) {
+						if (isLocked) {
+							console.log('Phone is locked.');
+							//Do not send ourselves a message at this time. It only
+							//sends the user back out of lock-down mode. 
+						
+						} else {
+							console.log('Phone is unlocked.');
+						
+							//Send a message in another 2 seconds - this delay allows for a screen logout to occur.
+							setTimeout( function() {
+								cordova.plugins.notification.local.schedule({
+									title: "AtomJump Messaging Paused",
+									text: "To return to listening, tap this message.",
+									foreground: true
+								});
+							}, 2000);
+						}
+					},
+					function(err) {
+							//Error
+							cordova.plugins.notification.local.schedule({
+								title: "AtomJump Messaging Paused",
+								text: "To return to listening, tap this message.",
+								foreground: true
+							});
+					}
+				);
+			}, 1000);
+		
 		}
+		
+		
     },
     
     
@@ -124,7 +151,7 @@ var app = {
           		$('#login-popup').hide();	
          		app.setupPull(null);
           }
-          
+
     },
     
     onNotificationEvent: function(data, thisApp) {
@@ -380,11 +407,8 @@ var app = {
 		
 		
 		if(window && window.plugins && window.plugins.insomnia) {
-			window.plugins.insomnia.keepAwake();
-			
+			//Do not use this - it keeps the screen awake, only. We currently do not need the screen to be on to still get messages: window.plugins.insomnia.keepAwake();
 		}
-		
-	
 		
 		thisApp.poll(function(runAgain) {
 		

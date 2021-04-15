@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="org.atomjump.messaging" 
-		version="0.9.0" 
-		versionCode="90" 
+		version="0.9.1" 
+		versionCode="91" 
 		xmlns="http://www.w3.org/ns/widgets" 
 		xmlns:android="http://schemas.android.com/apk/res/android" 
 		xmlns:gap="http://phonegap.com/ns/1.0">
@@ -33,7 +33,7 @@
    
     <preference name="android-build-tool" value="gradle" />
     
-    
+     
     
     <platform name="android">
         <preference name="permissions" value="none" />
@@ -83,6 +83,7 @@
     	<config-file parent="/manifest" mode="merge">
 		  <application android:usesCleartextTraffic="true" />
 		</config-file>  
+		
         
     </platform>
     <platform name="ios">
