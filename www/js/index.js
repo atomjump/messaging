@@ -54,7 +54,7 @@ var app = {
         
         //The timer to call a pull request
         this.pollingCaller = null;
-        this.setPull(false);   			//Switch to true if notifications are coming via a pull method (AtomJump's own), rather than push. TODO: check this should not be "false" rather than false
+        //Do not include: this.setPull("false");   			//Switch to true if notifications are coming via a pull method (AtomJump's own), rather than push. TODO: check this should not be "false" rather than false
 		this.pollInterval = 30000;		//For publications, use 30000 (i.e. 30 second check interval) by default.
 
     },
@@ -463,6 +463,10 @@ var app = {
     	}    	
     },
     
+    confirmAtomJump: function() {
+    	return confirm("The service you are connecting to allows immediate Android notifications. AtomJump notifications use slightly more battery power, and can take a few more seconds to pop up, but they use peer-reviewable software, and do not share data with Google. Do you wish to use AtomJump notifications, instead?");    
+    },
+    
     setupPull: function(email) {
     
     	if(innerThis && innerThis.getPlatform) {
@@ -538,7 +542,7 @@ var app = {
 							
 							if((resp.supports.atomjump == true)&&(resp.supports.android == true)&&(canUseAndroidNative == true)) {
 								 //Give the user a choice
-								if(confirm("The service you are connecting to allows immediate Android notifications. AtomJump notifications use slightly more battery power, and can take a few more seconds to pop up, but they use peer-reviewable software, and do not share data with Google. Do you wish to use AtomJump notifications, instead?")) {
+								if(innerThis.confirmAtomJump()) {
 									useAtomJump = true;
 									//localStorage.getItem('registrationId'); 
 								}
@@ -710,7 +714,7 @@ var app = {
                 	//so we need to let the browser use it's own cookies.
                 	
                 	//Confirm device.platform if it is blank.
-                	var phonePlatform = innerThis.getPlatform();
+                	var phonePlatform = "Android";	//innerThis.getPlatform();
                 	
                 	
                 	var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=&devicetype=" + phonePlatform;
@@ -722,7 +726,7 @@ var app = {
                 } else {
                 
                  	//Otherwise login with the known logged userId
-                 	var phonePlatform = innerThis.getPlatform();
+                 	var phonePlatform = "Android";	//innerThis.getPlatform();
                  	
                	 	var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform;  //e.g. https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
                	 	if(thisEmail) {
@@ -769,9 +773,9 @@ var app = {
     {		
     	var platform = "Android";			//Default on the cordova-ios branch
 		
-		if(device && device.platform) {
+		/*if(device && device.platform) {
 			platform = device.platform;
-		}
+		}*/		//Not needed on Android branch.
 		
 		if(innerThis && innerThis.getPull() == "true") {
 			//Switch over to the cross-platform AtomJump platform
