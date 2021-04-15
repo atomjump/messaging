@@ -78,41 +78,63 @@ var app = {
     onPause: function() {
     	//App gone into background - let the user know via a local alert that their
     	//app will not be listening
+    	
     	    	
     	if(app && app.getPull() == "true") {
-			setTimeout( function() {
-				cordova.plugins.lockInfo.isLocked(
-					function (isLocked) {
-						if (isLocked) {
-							console.log('Phone is locked.');
-							//Do not send ourselves a message at this time. It only
-							//sends the user back out of lock-down mode. 
+    	
+    		if(cordova && 
+    			cordova.plugins &&
+    			cordova.plugins.notification &&
+    			 cordova.plugins.notification.local) {
+    	
+				setTimeout( function() {
+					if(cordova && cordova.plugins && cordova.plugins.lockInfo) {
+						try {
+							cordova.plugins.lockInfo.isLocked(
+								function (isLocked) {
+									if (isLocked) {
+										//Phone is locked
+										//Do not send ourselves a message at this time. It only
+										//sends the user back out of lock-down mode. 
 						
-						} else {
-							console.log('Phone is unlocked.');
-						
-							//Send a message in another 2 seconds - this delay allows for a screen logout to occur.
-							setTimeout( function() {
-								cordova.plugins.notification.local.schedule({
-									title: "AtomJump Messaging Paused",
-									text: "To return to listening, tap this message.",
-									foreground: true
-								});
-							}, 2000);
-						}
-					},
-					function(err) {
-							//Error
+									} else {
+										//Phone is unlocked
+										//Send a message in another 2 seconds - this delay allows for a screen logout to occur.
+										setTimeout( function() {
+											
+											
+										
+											cordova.plugins.notification.local.schedule({
+													title: "AtomJump Messaging Paused",
+													text: "To return to listening, tap this message.",
+													foreground: true
+											});
+											
+										}, 2000);
+									}
+								},
+								function(err) {
+										//Error
+										cordova.plugins.notification.local.schedule({
+											title: "AtomJump Messaging Paused",
+											text: "To return to listening, tap this message.",
+											foreground: true
+										});
+								}
+							);
+						} catch(err) {
+							//Some problem with lockInfo - display the popup.
 							cordova.plugins.notification.local.schedule({
-								title: "AtomJump Messaging Paused",
-								text: "To return to listening, tap this message.",
-								foreground: true
-							});
-					}
-				);
-			}, 1000);
+											title: "AtomJump Messaging Paused",
+											text: "To return to listening, tap this message.",
+											foreground: true
+										});
+						}
+					}	//End of lockInfo exists
+				}, 1000);	//End of setTimeout
+			}	//End of cordova.plugins.notification.local
 		
-		}
+		}	//End of app.getPull true
 		
 		
     },
@@ -364,7 +386,7 @@ var app = {
 								cordova.plugins.notification.local.schedule({
 								title: messageData.additionalData.title,
 								text: messageData.message,
-									foreground: true
+								foreground: true
 								});
 							
 							//Show an internal message
@@ -1123,7 +1145,12 @@ var app = {
 	
 	getPull: function() {
 		var ret = localStorage.getItem('pull');
-		return ret;
+		if(ret) {
+			return ret;
+		} else {
+			//Include a default
+			return "false";
+		}
 	},
 
     logout: function() {
