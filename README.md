@@ -37,7 +37,7 @@ Branches and their descriptions:
 
 # Workarounds
 
-A temporary fix to build a different app for Samsung 9 phones (and potentially others), which seem to crash when notifications pop up, using the published release of 'cordova-plugin-local-notification'.
+A temporary fix to build a different app for Samsung S9 phones (and potentially others), which seem to crash when notifications pop up, using the published release of 'cordova-plugin-local-notification'.
 
 ```
 cordova plugin remove cordova-plugin-local-notification
