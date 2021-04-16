@@ -35,7 +35,19 @@ Branches and their descriptions:
 * browser-production   (use this for any production installations)
 
 
+# Workarounds
+
+A temporary fix to build a different app for Samsung 9 phones (and potentially others), which seem to crash when notifications pop up, using the published release of 'cordova-plugin-local-notification'.
+
+```
+cordova plugin remove cordova-plugin-local-notification
+cordova plugin add https://github.com/katzer/cordova-plugin-local-notifications.git
+```
+
+This workaround uses the latest cordova-plugin-local-notification development version, but note: it currently won't display the correct AtomJump logo on popups.
+
 
 # TODO
 
-* Editing the settings for each forum so that you can opt in to receive messages, and specify which time to receive them (and the timezone). In the mean time, we suggest logging out of your account to stop getting messages, and then logging back in when you want to start receiving them again. You will get them by email when you are logged off.
+* Editing the settings for each forum so that you can opt in to receive messages, and specify which time to receive them (and the timezone). In the mean time, we suggest logging out of your account to stop getting messages, and then logging back in when you want to start receiving them again. You will get them by email when you are logged off. Some more modern Android phones also support this as a part of their notification setup.
+
