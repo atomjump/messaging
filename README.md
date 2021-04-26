@@ -44,7 +44,13 @@ cordova plugin remove cordova-plugin-local-notification
 cordova plugin add https://github.com/katzer/cordova-plugin-local-notifications.git
 ```
 
-This workaround uses the latest cordova-plugin-local-notification development version, but note: it currently won't display the correct AtomJump logo on popups.
+This workaround uses the latest cordova-plugin-local-notification development version, but note: it currently won't display the correct AtomJump logo on popups. To return to the normal build:
+
+```
+cordova plugin remove cordova-plugin-local-notification
+cordova plugin add cordova-plugin-local-notification
+```
+
 
 
 # TODO
