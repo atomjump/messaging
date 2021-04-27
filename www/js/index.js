@@ -117,7 +117,6 @@ var app = {
 		//See https://github.com/phonegap/phonegap-plugin-push/blob/master/docs/API.md
 		var platform = innerThis.getPlatform();
 		if(platform == 'iOS') {
-			alert("Notification inner data:" + JSON.stringify(data));		//TESTING
 			if(data.additionalData && data.additionalData.data && data.additionalData.data.image) {
 				finalData.image = data.additionalData.data.image;
 				if(data.message) {
@@ -363,9 +362,7 @@ var app = {
         });
 
         push.on('notification', function(data) {
-            
-            alert("Notification raw data:" + JSON.stringify(data));		//TESTING
-            
+                        
 			//Else, try all options
 			if(app && app.getPlatform) {
 				app.onNotificationEvent(data, app);
