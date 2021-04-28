@@ -362,7 +362,10 @@ var app = {
         });
 
         push.on('notification', function(data) {
-                        
+                   
+            alert("Have entered the on notification event");	//TESTING    
+            alert("Data on notification as raw:" + data);	//TESTING    
+            alert("Data on notification as string:" + JSON.stringify(data));	//TESTING           
 			//Else, try all options
 			if(app && app.getPlatform) {
 				app.onNotificationEvent(data, app);
@@ -378,7 +381,15 @@ var app = {
 
             push.finish(function() {
 				console.log("processing of push data is finished");
-			});
+				}, 
+				function() {
+				  alert(
+					'something went wrong with push.finish for ID =',
+					data.additionalData.notId
+				  );
+				},
+				data.additionalData.notId
+			);
           
        });
     },
