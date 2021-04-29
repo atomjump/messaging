@@ -292,33 +292,34 @@ var app = {
  			var push = PushNotification.init({
 				"android": {},
       			"browser": {
-        			"pushServiceURL": 'http://push.api.phonegap.com/v1/push'
+        			"pushServiceURL": "http://push.api.phonegap.com/v1/push"
       			},
 				"ios": {
 				    "alert": true,
 					"sound": true,
 					"vibration": true,
 					"categories": {
-					  "invite": {
-						"yes": {
-						  callback: 'show',
-						  title: 'Accept',
-						  foreground: true,
-						  destructive: false
-						},
-						"no": {
-						  callback: 'show',
-						  title: 'Reject',
-						  foreground: true,
-						  destructive: false
-						},
-						"maybe": {
-						  callback: 'maybe',
-						  title: 'Maybe',
-						  foreground: true,
-						  destructive: false
-						}
-					  }
+						"invite": {
+							"yes": {
+							  "callback": "show",
+							  "title": "Accept",
+							  "foreground": true,
+							  "destructive": false
+							},
+							"no": {
+							  "callback": "notification",
+							  "title": "Reject",
+							  "foreground": true,
+							  "destructive": false
+							},
+							"maybe": {
+							  "callback": "notification",
+							  "title": "Maybe",
+							  "foreground": true,
+							  "destructive": false
+							}
+					   }
+					}
 				},
 				"windows": {}
 			});
