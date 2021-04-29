@@ -385,9 +385,6 @@ var app = {
 
         push.on('notification', function(data) {
                    
-            alert("Have entered the on notification event");	//TESTING    
-            alert("Data on notification as raw:" + data);	//TESTING    
-            alert("Data on notification as string:" + JSON.stringify(data));	//TESTING           
 			//Else, try all options
 			if(app && app.getPlatform) {
 				app.onNotificationEvent(data, app);
@@ -418,9 +415,6 @@ var app = {
        push.on('show', function(data) {
 			// do something with the notification data
 
-			alert("Have entered the show event");	//TESTING    
-            alert("Data on notification as raw:" + data);	//TESTING    
-            alert("Data on notification as string:" + JSON.stringify(data));	//TESTING           
 			//Else, try all options
 			if(app && app.getPlatform) {
 				app.onNotificationEvent(data, app);
