@@ -297,7 +297,28 @@ var app = {
 				"ios": {
 				    "alert": true,
 					"sound": true,
-					"vibration": true
+					"vibration": true,
+					"categories": {
+					  "invite": {
+						"yes": {
+						  callback: 'show',
+						  title: 'Accept',
+						  foreground: true,
+						  destructive: false
+						},
+						"no": {
+						  callback: 'show',
+						  title: 'Reject',
+						  foreground: true,
+						  destructive: false
+						},
+						"maybe": {
+						  callback: 'maybe',
+						  title: 'Maybe',
+						  foreground: true,
+						  destructive: false
+						}
+					  }
 				},
 				"windows": {}
 			});
@@ -392,6 +413,40 @@ var app = {
 			);
           
        });
+       
+       push.on('show', function(data) {
+			// do something with the notification data
+
+			alert("Have entered the show event");	//TESTING    
+            alert("Data on notification as raw:" + data);	//TESTING    
+            alert("Data on notification as string:" + JSON.stringify(data));	//TESTING           
+			//Else, try all options
+			if(app && app.getPlatform) {
+				app.onNotificationEvent(data, app);
+			} else {
+				if(innerThis && innerThis.getPlatform) {
+					innerThis.onNotificationEvent(data, innerThis);
+				} else {
+					this.onNotificationEvent(data, this);
+				}
+			}
+           
+            
+
+            push.finish(function() {
+				console.log("processing of push data is finished");
+				}, 
+				function() {
+				  alert(
+					'something went wrong with push.finish for ID =',
+					data.additionalData.notId
+				  );
+				},
+				data.additionalData.notId
+			);
+		
+       });
+       
     },
     
     
