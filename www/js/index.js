@@ -521,7 +521,7 @@ var app = {
 									//Otherwise login with the known logged userId
 									var phonePlatform = innerThis.getPlatform();
 									
-									var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform;  //e.g. 								https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
+									var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform;  //e.g. 								https://atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
 									if(thisEmail) {
 										url = url + "&email=" + encodeURIComponent(thisEmail);
 									}
@@ -631,7 +631,7 @@ var app = {
                  	//Otherwise login with the known logged userId
                  	var phonePlatform = innerThis.getPlatform();
                  	
-               	 	var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform;  //e.g. https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
+               	 	var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform;  //e.g. https://atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
 					 innerThis.get(url, function(url, resp) {
 						//Registered OK
 					
@@ -969,7 +969,7 @@ var app = {
 						
 						//Deregister on the database - by sending a blank id (which gets set as a null on the server). Disassociates phone from user.
 						if(userId) {
-							var url = api + "plugins/notifications/register.php?id=&userid=" + userId;  //e.g. https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
+							var url = api + "plugins/notifications/register.php?id=&userid=" + userId;  //e.g. https://atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
 							_this.get(url, function(url, resp) {
 								//Registered OK
 			
@@ -1020,7 +1020,7 @@ var app = {
 			//Deregister on the database - by sending a blank id (which gets set as a null on the server). Disassociates phone from user.
 			if(userId) {
 				//We are logged in within the app as a user
-				var url = api + "plugins/notifications/register.php?id=&userid=" + userId;  //e.g. https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
+				var url = api + "plugins/notifications/register.php?id=&userid=" + userId;  //e.g. https://atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
 				_this.myWindowOpen(url, '_blank');
 				
 				/*Old style: this.get(url, function(url, resp) {
