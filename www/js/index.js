@@ -489,7 +489,7 @@ var app = {
     },
     
     confirmAtomJump: function() {
-    	return confirm("The service you are connecting to allows immediate Android notifications. AtomJump notifications use slightly more battery power, and can take a few more seconds to pop up, but they use peer-reviewable software, and do not share data with Google. Do you wish to use AtomJump notifications, instead?");    
+    	return confirm("The service you are connecting to allows immediate Android notifications. AtomJump notifications require that you reopen the app to read messages, and can take a few more seconds to pop up, but they use peer-reviewable software, and do not share data with Google. Do you wish to use AtomJump notifications, instead?");    
     },
     
     setupPull: function(email) {

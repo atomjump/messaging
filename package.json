@@ -1,7 +1,7 @@
 {
   "name": "org.atomjump.messaging",
   "displayName": "AtomJump Messaging",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Shortcuts to any AtomJump messaging page, and notifications of new messages.",
   "main": "index.js",
   "scripts": {
@@ -27,7 +27,7 @@
     "cordova-plugin-file-transfer": "^1.7.1",
     "cordova-plugin-globalization": "^1.0.5",
     "cordova-plugin-inappbrowser": "^4.1.0",
-    "cordova-plugin-local-notification": "^0.9.0-beta.2",
+    "cordova-plugin-local-notification": "git+https://github.com/katzer/cordova-plugin-local-notifications.git",
     "cordova-plugin-lock-info": "0.0.2",
     "cordova-plugin-multidex": "^0.1.4",
     "cordova-plugin-networkinterface": "^2.0.0",
@@ -46,7 +46,9 @@
       "cordova-plugin-cleartext": {},
       "@havesource/cordova-plugin-push": {},
       "cordova-plugin-lock-info": {},
-      "cordova-plugin-local-notification": {}
+      "cordova-plugin-local-notification": {
+        "ANDROID_SUPPORT_V4_VERSION": "26.+"
+      }
     },
     "platforms": [
       "browser",
