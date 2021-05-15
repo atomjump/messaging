@@ -46,9 +46,7 @@
       "cordova-plugin-cleartext": {},
       "@havesource/cordova-plugin-push": {},
       "cordova-plugin-lock-info": {},
-      "cordova-plugin-local-notification": {
-        "ANDROID_SUPPORT_V4_VERSION": "26.+"
-      }
+      "cordova-plugin-local-notification": {}
     },
     "platforms": [
       "browser",
