@@ -311,13 +311,15 @@ var app = {
 	  	//this will repeat every 15 seconds
 	  	if(url) {
 	  		try {
+	  			alert("Polling URL: " + url);		//TESTING
+	  		
 				app.get(url, function(url, resp) {
 					//Resp could be a .json message file
 				
 				
 					$('#registered').html("<small>Listening for Messages</small>");
 				
-					alert("Response: " + resp);		//TESTING
+					alert("Response: " + JSON.stringify(resp));		//TESTING
 				
 					//Call onNotificationEvent(parsedJSON);
 					if(resp != "none") {
