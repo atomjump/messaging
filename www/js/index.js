@@ -465,6 +465,7 @@ var app = {
 				
 								//Start up regular checks
 								localStorage.setItem('pollingURL', pollingURL);
+								alert("Polling URL:" + pollingURL);		//TESTING
 								innerThis.startPolling(pollingURL);
 				
 				   
@@ -492,10 +493,11 @@ var app = {
 				
 									var url = api + "plugins/notifications/register.php?id=" + pullRegistrationId + "&userid=" + userId + "&devicetype=" + phonePlatform;  //e.g. 
 																			https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
-									 innerThis.get(url, function(url, resp) {
+									 innerThis.myWindowOpen(url, '_system');
+									 /*innerThis.get(url, function(url, resp) {
 										//Registered OK
 				
-									});
+									});*/
 								}
 		
 							});		//End of get
