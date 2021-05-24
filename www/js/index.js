@@ -69,7 +69,8 @@ var app = {
     onResume: function() {
     	//App has resumed
     	setTimeout(function(){
-        	app.startPolling();
+    		app.stopPolling();			//Any existing polling should be switched off
+        	app.startPolling();			//Check for new messages and start polling
     	},1);   
     	
     },
