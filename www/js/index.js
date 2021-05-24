@@ -69,7 +69,7 @@ var app = {
     onResume: function() {
     	//App has resumed
     	setTimeout(function(){
-        	alert("App has resumed. We have control");
+        	app.startPolling();
     	},1);   
     	
     },
@@ -102,6 +102,7 @@ var app = {
         	$('#login-popup').hide();	
         	setupPushAlready = true;
         	app.setupPush(null);
+        	app.setupPull(null);
         
           } else {
             //No logged user - show the login page
@@ -115,6 +116,7 @@ var app = {
           		$('#login-popup').hide();	
           		if(setupPushAlready == false) {
         			app.setupPush(null);
+        			app.setupPull(null);
         		}
           }
     },
@@ -299,6 +301,224 @@ var app = {
     
     
     },
+    
+    
+    
+    poll: function(thisCb)
+	{
+		 var url = localStorage.getItem('pollingURL');		//Can potentially extend to some country code info here from the cordova API, or user input?
+	  	//this will repeat every 15 seconds
+	  	if(url) {
+	  		try {
+				app.get(url, function(url, resp) {
+					//Resp could be a .json message file
+				
+				
+					$('#registered').html("<small>Listening for Messages</small>");
+				
+					//Call onNotificationEvent(parsedJSON);
+					if(resp != "none") {
+						try {
+							var msg = JSON.parse(resp);
+							var messageData = msg.data;
+													
+							//Do a self notification alert if we're in the background. See https://github.com/katzer/cordova-plugin-local-notifications
+							cordova.plugins.notification.local.schedule({
+								title: messageData.additionalData.title,
+								text: messageData.message,
+								foreground: true
+							});
+							
+							//Show an internal message
+							app.onNotificationEvent(messageData, app);		//Note: this should be 'app' because of scope to the outside world
+							
+							thisCb(true);			//Because we just got a message, run again to check for new messages
+							return;
+							
+						
+						} catch(err) {
+							//Show that there is a problem listening to messages.
+							$('#registered').html("<small style='color:#8F3850;'>Waiting for a Connection..</small>");
+							$('#registered').show();
+							thisCb(false);
+							return;
+						}	  				
+					}
+				});
+			} catch(err) {
+				//Show that there is a problem listening to messages.
+				$('#registered').html("<small style='color:#8F3850;'>Waiting for a Connection..<br/>(Checks every 15 sec)</small>");
+				$('#registered').show();
+				thisCb(false);
+				return;
+			}
+	  	} else {
+	  		//No URL
+	  		thisCb(false);
+	  		return;
+	  	}
+	},
+	
+	runPoll: function() {
+		//This is run from the regular checks, and allows for a return callback
+		app.poll(function(runAgain) {
+		
+			if(runAgain == true) {
+				app.runPoll();
+			}
+		});
+	
+	},
+    
+    startPolling: function() {
+    	//Regular timed interval checks on the 'pollingURL' localStorage item, every 15 seconds.
+    	innerThis = this;
+    	
+   		$('#registered').html("<small>Listening for Messages</small>");
+		$('#registered').show();
+		
+    		
+    	app.pollingCaller = setInterval(app.runPoll, app.pollInterval); //Note: these notifications will work only if the app is in the foreground.
+		
+		
+    },
+    
+    stopPolling: function() {
+    	if(app.pollingCaller) {
+    		clearInterval(app.pollingCaller);
+    	}    	
+    },
+    
+    setupPull: function() {
+    
+    	innerThis = this;
+    	//Pull from an AtomJump notification system
+    	//Works in a similar fashion to setupPush() below, but is cross-platform
+    	//and is based on regular polling of a URL for new messages.
+		
+    	
+    	
+    	if(!api) {
+    		alert("Sorry, you will need to be signed in to a server before starting to listen.");
+    		return;    		
+    	} else {
+    	
+    		//Check the server if we have pull available
+			$.ajax({
+				type       : "POST",
+				url        : api + "plugins/notifications/check-pull.php",
+				dataType: 'jsonp', // Notice! JSONP <-- P (lowercase)
+				crossDomain: true,
+				success    : function(resp) {
+					
+					if(resp && resp.response == "true") {						
+						//Use pull
+						
+						/*Example 	
+		
+						Step 1. App requests a registration event
+	
+						Pair from this PHP script e.g:
+						http://this.ajmessaging.url/api/plugins/notifications/genid.php?country=NZ
+	
+						which will return e.g.
+						2z2H HMEcfQQCufJmRPMX4C https://medimage-nz1.atomjump.com New%20Zealand 
+	
+	
+						If any other software needs it, we can request in the next couple of hours:
+	
+						https://medimage-pair.atomjump.com/med-genid.php?compare=2z2H
+	
+						which returns the pool server write script e.g.
+						https://medimage-nz1.atomjump.com/write/HMEcfQQCufJmRPMX4C
+						*/
+						innerThis.pull = true;		//Set the global pull
+		
+						var oldRegId = localStorage.getItem('pullRegistrationId');
+						
+						if (!oldRegId) {
+							//We need to generate a new registrationId
+		
+							var url = api + "plugins/notifications/genid.php?country=Default";		//Can potentially extend to some country code info here from the cordova API, or user input?
+							
+			
+							innerThis.get(url, function(url, resp) {
+								//Registered OK
+								//resp will now be e.g. "2z2H HMEcfQQCufJmRPMX4C https://medimage-nz1.atomjump.com New%20Zealand"
+																
+								var items = resp.split(" ");
+								var phonePlatform = "AtomJump";		//This is cross-platform
+								var pullRegistrationId = encodeURIComponent(items[2] + "/api/photo/#" + items[1]);
+								//Registration id will now be e.g. https://medimage-nz1.atomjump.com/api/photo/#HMEcfQQCufJmRPMX4C
+								//which is what our server will post new message .json files too.
+				
+								var pollingURL = items[2] + "/read/" + items[1];
+								//The pollingURL is what we will continue to check on
+				
+								//Start up regular checks
+								localStorage.setItem('pollingURL', pollingURL);
+								innerThis.startPolling(pollingURL);
+				
+				   
+								$('#registered').html("<small>Listening for Messages<br/>(Bring app to front)</small>");
+								$('#registered').show();
+				
+				
+								// Save the new registration ID on the phone
+								localStorage.setItem('pullRegistrationId', pullRegistrationId);
+								// Post registrationId to your app server as the value has changed
+								//Post to server software Loop Server API
+				
+								
+			
+								//Now open the browser, if the button has been set
+								if(singleClick == true) {
+									//Have tapped a single server pairing - will not have a known userid
+									//so we need to let the browser use it's own cookies.
+									var url = api + "plugins/notifications/register.php?id=" + pullRegistrationId + "&userid=&devicetype=" + phonePlatform;
+									innerThis.myWindowOpen(url, '_system');
+								} else {
+			
+									//Otherwise login with the known logged userId
+									var phonePlatform = innerThis.getPlatform();
+				
+									var url = api + "plugins/notifications/register.php?id=" + pullRegistrationId + "&userid=" + userId + "&devicetype=" + phonePlatform;  //e.g. 
+																			https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
+									 innerThis.get(url, function(url, resp) {
+										//Registered OK
+				
+									});
+								}
+		
+							});		//End of get
+						}
+						else {
+						
+							//Start polling
+							
+							var pollingURL = localStorage.getItem('pollingURL');
+							innerThis.startPolling(pollingURL);
+						}
+						
+								
+					
+					} else {
+						//The server does not support AtomJump messages - warn the user
+						alert("Warning: the messaging server you are connecting to does not support AtomJump notifications, which means that while you may still receive iPhone-native notifications, after you click on them, you will not be shown a convenient button leading to the forum.");				
+					}
+				},
+				error      : function() {
+					//Use push instead.
+					alert("Warning: the messaging server you are connecting to does not support AtomJump notifications, which means that while you may still receive iPhone-native notifications, after you click on them, you will not be shown a convenient button leading to the forum.");	
+					return;        
+				}
+			
+			});
+    	
+    		
+    	}
+    },
+    
     
     
     setupPush: function(email) {
@@ -534,8 +754,10 @@ var app = {
          	singleClick = true; 
          	if(app) {    
          		app.setupPush(email);
+         		app.setupPull(email);
          	} else {
          		innerThis.setupPush(email);
+         		innerThis.setupPull(email);
          	}
         	$('#login-popup').hide();
 		}
