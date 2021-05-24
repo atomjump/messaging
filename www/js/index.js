@@ -313,6 +313,22 @@ var app = {
 	  		try {
 	  			alert("Polling URL: " + url);		//TESTING
 	  		
+	  		
+	  			//dataType   : 'jsonp',
+	  			$.ajax({
+					type       : "POST",
+					url        : url,
+					crossDomain: true,
+					success    : function(response) {
+						alert("Response: " + JSON.stringify(resp));		//TESTING
+					},
+					error      : function(xhr, status, error) {
+						var errorMessage = xhr.status + ': ' + xhr.statusText
+						navigator.notification.alert('Sorry we cannot reset your password. Please try again later. Error: ' + errorMessage);                  
+					}
+			   });     	
+	  		
+	  		
 				app.get(url, function(url, resp) {
 					//Resp could be a .json message file
 				
