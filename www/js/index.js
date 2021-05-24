@@ -50,16 +50,15 @@ var app = {
         //from each forum too.
         this.currentForums = [];
 
+        //The timer to call a pull request
+        this.pollingCaller = null;
+		this.pollInterval = 30000;		//For publications, use 30000 (i.e. 30 second check interval) by default.
+
     },
     // Bind Event Listeners
     //
     // Bind any events that are required on startup. Common events are:
     // 'load', 'deviceready', 'offline', and 'online'.
-    bindEvents: function() {
-        document.addEventListener('deviceready', this.onDeviceReady, false);
-    },
-    
-    
     bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
         document.addEventListener('resume', this.onResume, false);
@@ -70,7 +69,8 @@ var app = {
     	//App has resumed
     	setTimeout(function(){
     		app.stopPolling();			//Any existing polling should be switched off
-        	app.startPolling();			//Check for new messages and start polling
+    		var pollingURL = localStorage.getItem('pollingURL');
+        	app.startPolling(pollingURL, true);			//Check for new messages and start polling immediately
     	},1);   
     	
     },
@@ -371,7 +371,7 @@ var app = {
 	
 	},
     
-    startPolling: function() {
+    startPolling: function(url, checkImmediately) {
     	//Regular timed interval checks on the 'pollingURL' localStorage item, every 15 seconds.
     	innerThis = this;
     	
@@ -381,7 +381,11 @@ var app = {
     		
     	app.pollingCaller = setInterval(app.runPoll, app.pollInterval); //Note: these notifications will work only if the app is in the foreground.
 		
-		
+		if(checkImmediately && checkImmediately == true) {
+	
+			app.runPoll(app);
+			
+		}
     },
     
     stopPolling: function() {
