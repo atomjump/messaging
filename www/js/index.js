@@ -317,12 +317,15 @@ var app = {
 				
 					$('#registered').html("<small>Listening for Messages</small>");
 				
+					alert("Response: " + resp);		//TESTING
+				
 					//Call onNotificationEvent(parsedJSON);
 					if(resp != "none") {
 						try {
 							var msg = JSON.parse(resp);
 							var messageData = msg.data;
 													
+							
 							//Do a self notification alert if we're in the background. See https://github.com/katzer/cordova-plugin-local-notifications
 							/*TEMPORARY OUT cordova.plugins.notification.local.schedule({
 								title: messageData.additionalData.title,
