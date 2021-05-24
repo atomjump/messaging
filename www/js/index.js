@@ -960,7 +960,10 @@ var app = {
 	    			if(buttonIndex == 1) {
 						localStorage.clear();
 						
+						var oldRegistrationId = localStorage.getItem("registrationId");
+						var oldPullRegistrationId = localStorage.getItem("pullRegistrationId");
 						localStorage.removeItem("registrationId");
+						localStorage.removeItem("pullRegistrationId");
 						localStorage.removeItem("loggedUser");
 						localStorage.removeItem("settings");
 						localStorage.removeItem("api");
@@ -971,20 +974,36 @@ var app = {
 						$('#pair-private-server').val('');
 						$('#registered').hide();
 						
-						//Deregister on the database - by sending a blank id (which gets set as a null on the server). Disassociates phone from user.
+						//Deregister on the database for Push. Disassociates phone from user.
 						if(userId) {
-							var url = api + "plugins/notifications/register.php?id=&userid=" + userId;  //e.g. https://atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
+							var url = api + "plugins/notifications/register.php?id=" + oldRegistrationId + "&userid=" + userId + "&action=remove";  //e.g. https://atomjump.com/api/plugins/notifications/register.php?id=test&userid=3&action=remove
 							_this.get(url, function(url, resp) {
 								//Registered OK
 			
 							});
 						} else {
 								//Deregister from remote server connection in a browser
-								var url = api + "plugins/notifications/register.php?id=";
+								var url = api + "plugins/notifications/register.php?id=" + oldRegistrationId + "&action=remove";
 
 								myWindowOpen(url, '_system');
 						
 						}
+						
+						//Now deregister on the database for Pull. Disassociates phone from user.
+						if(userId) {
+							var url = api + "plugins/notifications/register.php?id=" + oldPullRegistrationId + "&userid=" + userId + "&action=remove";  //e.g. https://atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
+							_this.get(url, function(url, resp) {
+								//Registered OK
+			
+							});
+						} else {
+								//Deregister from remote server connection in a browser
+								var url = api + "plugins/notifications/register.php?id=" + oldPullRegistrationId  + "&action=remove";
+
+								myWindowOpen(url, '_system');
+						
+						}
+						
     		
 						alert("Cleared all saved forums and settings. Warning: if you had more than one connected server, you will need to manually connect and then disconnect from these other servers. Currently, messages from these servers will not be retrieved.");
 		
@@ -1013,10 +1032,15 @@ var app = {
 		
 		if(api) {
 		
-			//Deregister on the database - by sending a blank id (which gets set as a null on the server). Disassociates phone from user.
+			//Deregister on the database. Disassociates phone from user.
+			
+			var registrationId = localStorage.getItem("registrationId");
+			var pullRegistrationId = localStorage.getItem("pullRegistrationId");
+			
+			//Handle Push case first
 			if(userId) {
 				//We are logged in within the app as a user
-				var url = api + "plugins/notifications/register.php?id=&userid=" + userId;  //e.g. https://atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
+				var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=" + userId + "&action=remove";  //e.g. https://atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
 				_this.myWindowOpen(url, '_system');
 				
 				userId = null;
@@ -1024,7 +1048,26 @@ var app = {
 			} else {
 				//We are registered only on the server, which knows our userid as a session value
 				//Deregister from remote server connection in a browser
-				var url = api + "plugins/notifications/register.php?id=";
+				var url = api + "plugins/notifications/register.php?id=" + registrationId + "&action=remove";
+
+				_this.myWindowOpen(url, '_system');
+				
+				userId = null;		//This may be a blank user string, so fully clear it off.
+			
+			}
+			
+			//Now do the same for the Pull case
+			if(userId) {
+				//We are logged in within the app as a user
+				var url = api + "plugins/notifications/register.php?id=" + pullRegistrationId + "&userid=" + userId + "&action=remove";  //e.g. https://atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
+				_this.myWindowOpen(url, '_system');
+				
+				userId = null;
+		
+			} else {
+				//We are registered only on the server, which knows our userid as a session value
+				//Deregister from remote server connection in a browser
+				var url = api + "plugins/notifications/register.php?id=" + pullRegistrationId + "&action=remove";
 
 				_this.myWindowOpen(url, '_system');
 				
