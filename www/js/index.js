@@ -322,53 +322,63 @@ var app = {
 					crossDomain: true,
 					dataType   : 'jsonp',
 					success    : function(response) {
+						//Resp could be a .json message file
 						alert("Response: " + JSON.stringify(response));		//TESTING
+						var resp = response;
+						
+						
+						$('#registered').html("<small>Listening for Messages</small>");
+				
+						//alert("Response: " + JSON.stringify(resp));		//TESTING
+				
+						//Call onNotificationEvent(parsedJSON);
+						if(resp != "none") {
+							try {
+								var msg = JSON.parse(resp);
+								var messageData = msg.data;
+													
+							
+								//Do a self notification alert if we're in the background. See https://github.com/katzer/cordova-plugin-local-notifications
+								/*TEMPORARY OUT cordova.plugins.notification.local.schedule({
+									title: messageData.additionalData.title,
+									text: messageData.message,
+									foreground: true
+								}); */
+							
+								//Show an internal message
+								app.onNotificationEvent(messageData, app);		//Note: this should be 'app' because of scope to the outside world
+							
+								thisCb(true);			//Because we just got a message, run again to check for new messages
+								return;
+							
+						
+							} catch(err) {
+								//Show that there is a problem listening to messages.
+								$('#registered').html("<small style='color:#8F3850;'>Waiting for a Connection..</small>");
+								$('#registered').show();
+								thisCb(false);
+								return;
+							}	  				
+						}
+						
+						
 					},
 					error      : function(xhr, status, error) {
-						var errorMessage = xhr.status + ': ' + xhr.statusText + ' :' + error;
-						navigator.notification.alert('Sorry we contact the polling URL. Error: ' + errorMessage);  		//TESTING                
+						//var errorMessage = xhr.status + ': ' + xhr.statusText + ' :' + error;
+						//navigator.notification.alert('Sorry we contact the polling URL. Error: ' + errorMessage);  		//TESTING  
+						//Show that there is a problem listening to messages.
+						$('#registered').html("<small style='color:#8F3850;'>Waiting for a Connection..<br/>(Checks every 15 sec)</small>");
+						$('#registered').show();              
 					}
 			   });     	
 	  		
 	  		
-				app.get(url, function(url, resp) {
-					//Resp could be a .json message file
+				/* OLD WAY app.get(url, function(url, resp) {
+					
 				
 				
-					$('#registered').html("<small>Listening for Messages</small>");
-				
-					alert("Response: " + JSON.stringify(resp));		//TESTING
-				
-					//Call onNotificationEvent(parsedJSON);
-					if(resp != "none") {
-						try {
-							var msg = JSON.parse(resp);
-							var messageData = msg.data;
-													
-							
-							//Do a self notification alert if we're in the background. See https://github.com/katzer/cordova-plugin-local-notifications
-							/*TEMPORARY OUT cordova.plugins.notification.local.schedule({
-								title: messageData.additionalData.title,
-								text: messageData.message,
-								foreground: true
-							}); */
-							
-							//Show an internal message
-							app.onNotificationEvent(messageData, app);		//Note: this should be 'app' because of scope to the outside world
-							
-							thisCb(true);			//Because we just got a message, run again to check for new messages
-							return;
-							
-						
-						} catch(err) {
-							//Show that there is a problem listening to messages.
-							$('#registered').html("<small style='color:#8F3850;'>Waiting for a Connection..</small>");
-							$('#registered').show();
-							thisCb(false);
-							return;
-						}	  				
-					}
-				});
+					
+				}); */
 			} catch(err) {
 				//Show that there is a problem listening to messages.
 				$('#registered').html("<small style='color:#8F3850;'>Waiting for a Connection..<br/>(Checks every 15 sec)</small>");
