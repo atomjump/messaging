@@ -324,11 +324,11 @@ var app = {
 							var messageData = msg.data;
 													
 							//Do a self notification alert if we're in the background. See https://github.com/katzer/cordova-plugin-local-notifications
-							cordova.plugins.notification.local.schedule({
+							/*TEMPORARY OUT cordova.plugins.notification.local.schedule({
 								title: messageData.additionalData.title,
 								text: messageData.message,
 								foreground: true
-							});
+							}); */
 							
 							//Show an internal message
 							app.onNotificationEvent(messageData, app);		//Note: this should be 'app' because of scope to the outside world
