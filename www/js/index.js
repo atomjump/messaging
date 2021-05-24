@@ -314,16 +314,18 @@ var app = {
 	  			alert("Polling URL: " + url);		//TESTING
 	  		
 	  		
-	  			//dataType   : 'jsonp',
-	  			//crossDomain: true,
+	  			//
+	  			//
 	  			$.ajax({
 					type       : "POST",
 					url        : url,
+					crossDomain: true,
+					dataType   : 'jsonp',
 					success    : function(response) {
-						alert("Response: " + JSON.stringify(resp));		//TESTING
+						alert("Response: " + JSON.stringify(response));		//TESTING
 					},
 					error      : function(xhr, status, error) {
-						var errorMessage = xhr.status + ': ' + xhr.statusText
+						var errorMessage = xhr.status + ': ' + xhr.statusText + ' :' + error;
 						navigator.notification.alert('Sorry we contact the polling URL. Error: ' + errorMessage);  		//TESTING                
 					}
 			   });     	
