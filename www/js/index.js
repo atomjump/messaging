@@ -58,6 +58,26 @@ var app = {
     bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
     },
+    
+    
+    bindEvents: function() {
+        document.addEventListener('deviceready', this.onDeviceReady, false);
+        document.addEventListener('resume', this.onResume, false);
+        document.addEventListener('pause', this.onPause, false);
+    },
+    
+    onResume: function() {
+    	//App has resumed
+    	setTimeout(function(){
+        	alert("App has resumed. We have control");
+    	},1);   
+    	
+    },
+    
+    onPause: function() {
+    	//App gone into background
+    },
+    
     // deviceready Event Handler
     //
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
