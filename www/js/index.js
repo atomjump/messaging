@@ -469,7 +469,7 @@ var app = {
 						
 						alert("oldRegId" + oldRegId);	//TESTING
 						
-						if (!oldRegId || oldRegId != 'null') {
+						if (!oldRegId) {
 							//We need to generate a new registrationId
 		
 							var url = api + "plugins/notifications/genid.php?country=Default";		//Can potentially extend to some country code info here from the cordova API, or user input?
@@ -483,7 +483,7 @@ var app = {
 								
 									alert("Response: " + JSON.stringify(response));		//TESTING
 						
-									var resp = response;
+									var resp = decodeURIComponent(response);
 									//Registered OK
 									//resp will now be e.g. "2z2H HMEcfQQCufJmRPMX4C https://medimage-nz1.atomjump.com New%20Zealand"
 																
