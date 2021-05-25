@@ -414,6 +414,7 @@ var app = {
     
     setupPull: function(email) {
     
+    	alert("Setting up pull");		//TESTING
     	innerThis = this;
     	//Pull from an AtomJump notification system
     	//Works in a similar fashion to setupPush() below, but is cross-platform
@@ -575,7 +576,7 @@ var app = {
   		if(typeof(PushNotification) == 'undefined') { 
 			alert("iOS notifications do not exist from this server, sorry. We will attempt to configure AtomJump notifications (which require the app to be opened each time you check for messages).");
 			 //But configure the dual AtomJump messaging account
-            app.setUpPull();
+            innerThis.setUpPull();
 			return;					
 		} else {
  			var push = PushNotification.init({
@@ -629,7 +630,7 @@ var app = {
                 
                 
                 //Now configure the dual AtomJump messaging account
-                app.setUpPull();
+                innerThis.setUpPull();
                 
             } 
 			
@@ -640,7 +641,7 @@ var app = {
             alert("push error = " + e.message);
             
             //But configure the dual AtomJump messaging account
-            app.setUpPull();
+            innerThis.setUpPull();
         });
 
         push.on('notification', function(data) {
