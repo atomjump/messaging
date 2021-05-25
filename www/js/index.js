@@ -419,7 +419,6 @@ var app = {
     
     setupPull: function(email) {
     
-    	//alert("Setting up pull");		//TESTING
     	innerThis = this;
     	//Pull from an AtomJump notification system
     	//Works in a similar fashion to setupPush() below, but is cross-platform
@@ -440,9 +439,7 @@ var app = {
 				dataType: 'jsonp', // Notice! JSONP <-- P (lowercase)
 				crossDomain: true,
 				success    : function(resp) {
-					
-					//alert("Checked pull");		//TESTING
-					
+										
 					if(resp && resp.response == "true") {						
 						//Use pull
 						
@@ -469,16 +466,13 @@ var app = {
 						
 		
 						var oldRegId = localStorage.getItem('pullRegistrationId');
-						//alert("Old AtomJump reg ID:" + oldRegId);	//TESTING
 						var innerEmail = thisEmail;
 							
 						if (!oldRegId) {
 							//We need to generate a new registrationId
 		
 							var url = api + "plugins/notifications/genid.php?country=Default";		//Can potentially extend to some country code info here from the cordova API, or user input?
-							
-							//alert("New AJ ID being generated");		//TESTING
-							
+														
 							$.ajax({
 								type       : "POST",
 								url        : url,
@@ -496,8 +490,7 @@ var app = {
 									var pullRegistrationId = encodeURIComponent(items[2] + "/api/photo/#" + items[1]);
 									//Registration id will now be e.g. https://medimage-nz1.atomjump.com/api/photo/#HMEcfQQCufJmRPMX4C
 									//which is what our server will post new message .json files too.
-									//alert("New AtomJump reg ID:" + pullRegistrationId);	//TESTING
-				
+	
 				
 									var pollingURL = items[2] + "/read/" + items[1];
 									//The pollingURL is what we will continue to check on
@@ -514,7 +507,6 @@ var app = {
 									// Save the new registration ID on the phone
 									localStorage.setItem('pullRegistrationId', pullRegistrationId);
 									// Post registrationId to your app server as the value has changed
-									//alert("New AJ ID was generated");		//TESTING
 									
 									//Post to server software Loop Server API
 				
@@ -548,8 +540,6 @@ var app = {
 							alert("Warning: the messaging server you are connecting to does not support AtomJump notifications, which means that while you may still receive iPhone-native notifications, after you click on them, you will not be shown the more convenient button leading to the forum.");	
 						
 							//But pair the iPhone version
-							//alert("About to run reg");	//TESTING
-							//alert("About to run reg - this email:" + thisEmail);	//TESTING
 							innerThis.registration("add", thisEmail);
 							
 						} else {
@@ -658,7 +648,7 @@ var app = {
             alert("push error = " + e.message);
             
              // Save new registration ID
-            //localStorage.setItem('registrationId', "TESTID");		//TESTING on simulator - remove this line!
+            //For future test use: localStorage.setItem('registrationId', "TESTID");		//When testing on simulator - remove this line!
             
             //But configure the dual AtomJump messaging account
             innerThis.setupPull();
@@ -770,8 +760,6 @@ var app = {
    		
    		if(pushId) {	
 			
-			//alert("About to run reg in register()");	//TESTING
-			//alert("About to run reg in register() email: " + email);	//TESTING
 			if(pullId) {
 				//Have a pullId already
 				myThis.registration("add", email);
@@ -984,13 +972,9 @@ var app = {
 			
 	myWindowOpen: function(url, style, options) {
 		//Recommend using style = '_system' for Safari browser
-		//alert("In window open");		//TESTING
-		//if(cordova) {
-		//	alert("cordova exists");		//TESTING
-		//}
 		var inAppBrowserRef = cordova.InAppBrowser.open(url, style, options);
 	
-		//inAppBrowserRef.addEventListener('loaderror', loadErrorCallBack);
+		//For future use: inAppBrowserRef.addEventListener('loaderror', loadErrorCallBack);
 	},
 	
 	
@@ -1023,13 +1007,9 @@ var app = {
 	    		'Are you sure? All your saved forums and other settings will be cleared.',  // message
 	    		function(buttonIndex) {
 	    			if(buttonIndex == 1) {
-						_this.registration("remove");
+						_this.registration("remove");		//Will also remove registrationId, pullRegistrationId after use.
 						
 						localStorage.clear();
-					
-						
-						localStorage.removeItem("registrationId");
-						localStorage.removeItem("pullRegistrationId");
 						localStorage.removeItem("loggedUser");
 						localStorage.removeItem("settings");
 						localStorage.removeItem("api");
@@ -1063,8 +1043,7 @@ var app = {
     registration: function(action, email) {
     	//Action should be "add" or "remove"
     	//Email is optional
-    	//alert("Inside registration()");	//TESTING
-    	var iOSregistrationId = localStorage.getItem("registrationId");
+     	var iOSregistrationId = localStorage.getItem("registrationId");
 		var pullRegistrationId = localStorage.getItem("pullRegistrationId");
 
 		var fullRegistrationId = "";
@@ -1089,28 +1068,17 @@ var app = {
 		if(email) {
 			url = url + "&email=" + encodeURIComponent(email);
 		}
+	
 		
-		//alert("Pairing URL: " + url);		//TESTING
-		
-		/*if(innerThis && innerThis.getPlatform) {
-			//all good, we have the right object.
-			var myThis = innerThis
-		} else {
-			if(app && app.getPlatform) {
-				var myThis = app;		//If coming from an outside source such as a popup notification
-			} else {
-				var myThis = this;
-			}
-		}*/
+		if(action == "remove") {
+			//Before we open this window we need to remove these entries. Otherwise, going back to 
+			//app will assume we have this data, and will re-register 
+			localStorage.removeItem("registrationId");
+			localStorage.removeItem("pullRegistrationId");
+		}
 		
 		
-		
-			innerThis.myWindowOpen(url, '_system');
-		//} else {
-		//	alert("Error: Sorry, there was a problem opening another window.");
-		//}
-		
-		//alert("After window open");		//TESTING
+		innerThis.myWindowOpen(url, '_system');
     	return;
     
     },
@@ -1131,8 +1099,7 @@ var app = {
 			_this.registration("remove");
 			
 			userId = null;		//This may be a blank user string, so fully clear it off.		
-			localStorage.removeItem("registrationId");
-			localStorage.removeItem("pullRegistrationId");
+			
 
 
 			$('#login-popup').show();
