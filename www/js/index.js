@@ -68,9 +68,14 @@ var app = {
     onResume: function() {
     	//App has resumed
     	setTimeout(function(){
-    		app.stopPolling();			//Any existing polling should be switched off
-    		var pollingURL = localStorage.getItem('pollingURL');
-        	app.startPolling(pollingURL, true);			//Check for new messages and start polling immediately
+    		var pullReg = localStorage.getItem('pullRegistrationId');
+    		
+    		if(pullReg) {			//We don't want to inadvertantly open it before we actually 
+    								//have a connection.
+				app.stopPolling();			//Any existing polling should be switched off
+				var pollingURL = localStorage.getItem('pollingURL');
+				app.startPolling(pollingURL, true);			//Check for new messages and start polling immediately
+			}
     	},1);   
     	
     },
@@ -414,7 +419,7 @@ var app = {
     
     setupPull: function(email) {
     
-    	alert("Setting up pull");		//TESTING
+    	//alert("Setting up pull");		//TESTING
     	innerThis = this;
     	//Pull from an AtomJump notification system
     	//Works in a similar fashion to setupPush() below, but is cross-platform
@@ -436,7 +441,7 @@ var app = {
 				crossDomain: true,
 				success    : function(resp) {
 					
-					alert("Checked pull");		//TESTING
+					//alert("Checked pull");		//TESTING
 					
 					if(resp && resp.response == "true") {						
 						//Use pull
@@ -464,7 +469,7 @@ var app = {
 						
 		
 						var oldRegId = localStorage.getItem('pullRegistrationId');
-						alert("Old AtomJump reg ID:" + oldRegId);	//TESTING
+						//alert("Old AtomJump reg ID:" + oldRegId);	//TESTING
 						var innerEmail = thisEmail;
 							
 						if (!oldRegId) {
@@ -472,7 +477,7 @@ var app = {
 		
 							var url = api + "plugins/notifications/genid.php?country=Default";		//Can potentially extend to some country code info here from the cordova API, or user input?
 							
-							alert("New AJ ID being generated");		//TESTING
+							//alert("New AJ ID being generated");		//TESTING
 							
 							$.ajax({
 								type       : "POST",
@@ -491,7 +496,7 @@ var app = {
 									var pullRegistrationId = encodeURIComponent(items[2] + "/api/photo/#" + items[1]);
 									//Registration id will now be e.g. https://medimage-nz1.atomjump.com/api/photo/#HMEcfQQCufJmRPMX4C
 									//which is what our server will post new message .json files too.
-									alert("New AtomJump reg ID:" + pullRegistrationId);	//TESTING
+									//alert("New AtomJump reg ID:" + pullRegistrationId);	//TESTING
 				
 				
 									var pollingURL = items[2] + "/read/" + items[1];
@@ -509,7 +514,7 @@ var app = {
 									// Save the new registration ID on the phone
 									localStorage.setItem('pullRegistrationId', pullRegistrationId);
 									// Post registrationId to your app server as the value has changed
-									alert("New AJ ID was generated");		//TESTING
+									//alert("New AJ ID was generated");		//TESTING
 									
 									//Post to server software Loop Server API
 				
@@ -543,8 +548,8 @@ var app = {
 							alert("Warning: the messaging server you are connecting to does not support AtomJump notifications, which means that while you may still receive iPhone-native notifications, after you click on them, you will not be shown the more convenient button leading to the forum.");	
 						
 							//But pair the iPhone version
-							alert("About to run reg");	//TESTING
-							alert("About to run reg - this email:" + thisEmail);	//TESTING
+							//alert("About to run reg");	//TESTING
+							//alert("About to run reg - this email:" + thisEmail);	//TESTING
 							innerThis.registration("add", thisEmail);
 							
 						} else {
@@ -765,8 +770,8 @@ var app = {
    		
    		if(pushId) {	
 			
-			alert("About to run reg in register()");	//TESTING
-			alert("About to run reg in register() email: " + email);	//TESTING
+			//alert("About to run reg in register()");	//TESTING
+			//alert("About to run reg in register() email: " + email);	//TESTING
 			if(pullId) {
 				//Have a pullId already
 				myThis.registration("add", email);
@@ -979,10 +984,10 @@ var app = {
 			
 	myWindowOpen: function(url, style, options) {
 		//Recommend using style = '_system' for Safari browser
-		alert("In window open");		//TESTING
-		if(cordova) {
-			alert("cordova exists");		//TESTING
-		}
+		//alert("In window open");		//TESTING
+		//if(cordova) {
+		//	alert("cordova exists");		//TESTING
+		//}
 		var inAppBrowserRef = cordova.InAppBrowser.open(url, style, options);
 	
 		//inAppBrowserRef.addEventListener('loaderror', loadErrorCallBack);
@@ -1058,7 +1063,7 @@ var app = {
     registration: function(action, email) {
     	//Action should be "add" or "remove"
     	//Email is optional
-    	alert("Inside registration()");	//TESTING
+    	//alert("Inside registration()");	//TESTING
     	var iOSregistrationId = localStorage.getItem("registrationId");
 		var pullRegistrationId = localStorage.getItem("pullRegistrationId");
 
@@ -1085,7 +1090,7 @@ var app = {
 			url = url + "&email=" + encodeURIComponent(email);
 		}
 		
-		alert("Pairing URL: " + url);		//TESTING
+		//alert("Pairing URL: " + url);		//TESTING
 		
 		/*if(innerThis && innerThis.getPlatform) {
 			//all good, we have the right object.
@@ -1105,7 +1110,7 @@ var app = {
 		//	alert("Error: Sorry, there was a problem opening another window.");
 		//}
 		
-		alert("After window open");		//TESTING
+		//alert("After window open");		//TESTING
     	return;
     
     },
