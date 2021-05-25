@@ -122,7 +122,7 @@ var app = {
           }
     },
     
-    onNotificationEvent: function(data, thisApp) {
+    onNotificationEvent: function(data, thisApp, platform) {
 		console.log('notification event');
 		var finalData = {};
 		
@@ -138,7 +138,6 @@ var app = {
 		
 		 
 		//See https://github.com/phonegap/phonegap-plugin-push/blob/master/docs/API.md
-		var platform = innerThis.getPlatform();
 		if(platform == 'iOS') {
 			if(data.additionalData && data.additionalData.data && data.additionalData.data.image) {
 				finalData.image = data.additionalData.data.image;
@@ -311,11 +310,7 @@ var app = {
 	  	//this will repeat every 15 seconds
 	  	if(url) {
 	  		try {
-	  			alert("Polling URL: " + url);		//TESTING
-	  		
-	  		
-	  			//
-	  			//
+	  			
 	  			$.ajax({
 					type       : "POST",
 					url        : url,
@@ -346,7 +341,7 @@ var app = {
 								}); */
 							
 								//Show an internal message
-								app.onNotificationEvent(messageData, app);		//Note: this should be 'app' because of scope to the outside world
+								app.onNotificationEvent(messageData, app, "AtomJump");		//Note: this should be 'app' because of scope to the outside world
 							
 								thisCb(true);			//Because we just got a message, run again to check for new messages
 								return;
@@ -667,12 +662,12 @@ var app = {
                    
 			//Else, try all options
 			if(app && app.getPlatform) {
-				app.onNotificationEvent(data, app);
+				app.onNotificationEvent(data, app, "iOS");
 			} else {
 				if(innerThis && innerThis.getPlatform) {
-					innerThis.onNotificationEvent(data, innerThis);
+					innerThis.onNotificationEvent(data, innerThis, "iOS");
 				} else {
-					this.onNotificationEvent(data, this);
+					this.onNotificationEvent(data, this, "iOS");
 				}
 			}
            
@@ -697,12 +692,12 @@ var app = {
 
 			//Else, try all options
 			if(app && app.getPlatform) {
-				app.onNotificationEvent(data, app);
+				app.onNotificationEvent(data, app, "iOS");
 			} else {
 				if(innerThis && innerThis.getPlatform) {
-					innerThis.onNotificationEvent(data, innerThis);
+					innerThis.onNotificationEvent(data, innerThis, "iOS");
 				} else {
-					this.onNotificationEvent(data, this);
+					this.onNotificationEvent(data, this, "iOS");
 				}
 			}
            
