@@ -653,7 +653,7 @@ var app = {
             alert("push error = " + e.message);
             
              // Save new registration ID
-            localStorage.setItem('registrationId', "TESTID");		//TESTING on simulator - remove this line!
+            //localStorage.setItem('registrationId', "TESTID");		//TESTING on simulator - remove this line!
             
             //But configure the dual AtomJump messaging account
             innerThis.setupPull();
@@ -982,7 +982,6 @@ var app = {
 		alert("In window open");		//TESTING
 		if(cordova) {
 			alert("cordova exists");		//TESTING
-			alert("In window open");		//TESTING
 		}
 		var inAppBrowserRef = cordova.InAppBrowser.open(url, style, options);
 	
@@ -991,7 +990,7 @@ var app = {
 	
 	
 	loadErrorCallBack: function(params) {
-
+		//Future option:
 		$('#status-message').text("");
 
 		var scriptErrorMesssage =
