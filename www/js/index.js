@@ -52,7 +52,7 @@ var app = {
 
         //The timer to call a pull request
         this.pollingCaller = null;
-		this.pollInterval = 15000; //TESTING 		//For publications, use 30000 (i.e. 30 second check interval) by default.
+		this.pollInterval = 30000;  		//For publications, use 30000 (i.e. 30 second check interval) by default.
 
     },
     // Bind Event Listeners
@@ -414,7 +414,7 @@ var app = {
     
     setupPull: function(email) {
     
-    	alert("Setting up pull");		//TESTING
+    	//alert("Setting up pull");		//TESTING
     	innerThis = this;
     	//Pull from an AtomJump notification system
     	//Works in a similar fashion to setupPush() below, but is cross-platform
@@ -459,7 +459,7 @@ var app = {
 						innerThis.pull = true;		//Set the global pull
 		
 						var oldRegId = localStorage.getItem('pullRegistrationId');
-						alert("Old AtomJump reg ID:" + oldRegId);	//TESTING
+						//alert("Old AtomJump reg ID:" + oldRegId);	//TESTING
 							
 						if (!oldRegId) {
 							//We need to generate a new registrationId
@@ -483,7 +483,7 @@ var app = {
 									var pullRegistrationId = encodeURIComponent(items[2] + "/api/photo/#" + items[1]);
 									//Registration id will now be e.g. https://medimage-nz1.atomjump.com/api/photo/#HMEcfQQCufJmRPMX4C
 									//which is what our server will post new message .json files too.
-									alert("New AtomJump reg ID:" + pullRegistrationId);	//TESTING
+									//alert("New AtomJump reg ID:" + pullRegistrationId);	//TESTING
 				
 				
 									var pollingURL = items[2] + "/read/" + items[1];
