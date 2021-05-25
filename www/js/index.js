@@ -980,10 +980,31 @@ var app = {
 	myWindowOpen: function(url, style, options) {
 		//Recommend using style = '_system' for Safari browser
 		alert("In window open");		//TESTING
-		cordova.InAppBrowser.open(url, style, options);
+		if(cordova) {
+			alert("cordova exists");		//TESTING
+			alert("In window open");		//TESTING
+		}
+		inAppBrowserRef = cordova.InAppBrowser.open(url, style, options);
 	
-	
+		inAppBrowserRef.addEventListener('loaderror', loadErrorCallBack);
 	},
+	
+	
+	function loadErrorCallBack(params) {
+
+		$('#status-message').text("");
+
+		var scriptErrorMesssage =
+		   "alert('Sorry we cannot open that page. Message from the server is : "
+		   + params.message + "');"
+
+		inAppBrowserRef.executeScript({ code: scriptErrorMesssage }, executeScriptCallBack);
+
+		inAppBrowserRef.close();
+
+		inAppBrowserRef = undefined;
+
+	}
 
 
 
@@ -1060,7 +1081,7 @@ var app = {
 			}
 		}
 		
-		var url = api + "plugins/notifications/register.php?id=" + fullRegistrationId + "&devicetype=" + phonePlatform + "&action=" + action;  //e.g.																			https://atomjump.com/api/plugins/notifications/register.php?id=test&devicetype=AtomJump&action=remove
+		var url = api + "plugins/notifications/register.php?id=" + encodeURIComponent(fullRegistrationId) + "&devicetype=" + encodeURIComponent(phonePlatform) + "&action=" + action;  //e.g.																			https://atomjump.com/api/plugins/notifications/register.php?id=test&devicetype=AtomJump&action=remove
 		if(email) {
 			url = url + "&email=" + encodeURIComponent(email);
 		}
