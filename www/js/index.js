@@ -1034,7 +1034,23 @@ var app = {
 		if(email) {
 			url = url + "&email=" + encodeURIComponent(email);
 		}
-		innerThis.myWindowOpen(url, '_system');
+		
+		
+		if(innerThis && innerThis.getPlatform) {
+			//all good, we have the right object.
+		} else {
+			if(app && app.getPlatform) {
+				innerThis = app;		//If coming from an outside source such as a popup notification
+			} else {
+				innerThis = this;
+			}
+		}
+		
+		if(innerThis.myWindowOpen) {
+			innerThis.myWindowOpen(url, '_system');
+		} else {
+			alert("Error: Sorry, there was a problem opening another window.");
+		}
     	return;
     
     },
