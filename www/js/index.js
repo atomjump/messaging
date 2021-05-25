@@ -1066,7 +1066,7 @@ var app = {
 		
 		alert("Pairing URL: " + url);		//TESTING
 		
-		if(innerThis && innerThis.getPlatform) {
+		/*if(innerThis && innerThis.getPlatform) {
 			//all good, we have the right object.
 			var myThis = innerThis
 		} else {
@@ -1075,13 +1075,14 @@ var app = {
 			} else {
 				var myThis = this;
 			}
-		}
+		}*/
 		
-		if(myThis.myWindowOpen) {
-			myThis.myWindowOpen(url, '_system');
-		} else {
-			alert("Error: Sorry, there was a problem opening another window.");
-		}
+		
+		
+			app.myWindowOpen(url, '_system');
+		//} else {
+		//	alert("Error: Sorry, there was a problem opening another window.");
+		//}
     	return;
     
     },
