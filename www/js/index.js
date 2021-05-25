@@ -535,6 +535,8 @@ var app = {
 							alert("Warning: the messaging server you are connecting to does not support AtomJump notifications, which means that while you may still receive iPhone-native notifications, after you click on them, you will not be shown the more convenient button leading to the forum.");	
 						
 							//But pair the iPhone version
+							alert("About to run reg");	//TESTING
+							alert("About to run reg - this email:" + thisEmail);	//TESTING
 							innerThis.registration("add", thisEmail);
 							
 						} else {
@@ -744,6 +746,8 @@ var app = {
    		
    		if(id) {	
 			
+			alert("About to run reg in register()");	//TESTING
+			alert("About to run reg in register() email: " + email);	//TESTING
 			innerThis.registration("add", email);
 			
 			
@@ -1012,6 +1016,7 @@ var app = {
     registration: function(action, email) {
     	//Action should be "add" or "remove"
     	//Email is optional
+    	alert("Inside registration()");	//TESTING
     	var iOSregistrationId = localStorage.getItem("registrationId");
 		var pullRegistrationId = localStorage.getItem("pullRegistrationId");
 
