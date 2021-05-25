@@ -994,6 +994,9 @@ var app = {
 						
 						var oldRegistrationId = localStorage.getItem("registrationId");
 						var oldPullRegistrationId = localStorage.getItem("pullRegistrationId");
+						if(oldRegistrationId == "null") registrationId = "";
+						if(oldPullRegistrationId == "null") pullRegistrationId = "";
+						
 						localStorage.removeItem("registrationId");
 						localStorage.removeItem("pullRegistrationId");
 						localStorage.removeItem("loggedUser");
@@ -1068,6 +1071,9 @@ var app = {
 			
 			var registrationId = localStorage.getItem("registrationId");
 			var pullRegistrationId = localStorage.getItem("pullRegistrationId");
+			if(registrationId == "null") registrationId = "";
+			if(pullRegistrationId == "null") pullRegistrationId = "";
+			
 			
 			//Handle Push case first
 			if(userId) {
