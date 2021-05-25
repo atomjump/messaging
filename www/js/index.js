@@ -467,7 +467,9 @@ var app = {
 		
 						var oldRegId = localStorage.getItem('pullRegistrationId');
 						
-						if (!oldRegId) {
+						alert("oldRegId" + oldRegId);	//TESTING
+						
+						if (!oldRegId || oldRegId != 'null') {
 							//We need to generate a new registrationId
 		
 							var url = api + "plugins/notifications/genid.php?country=Default";		//Can potentially extend to some country code info here from the cordova API, or user input?
