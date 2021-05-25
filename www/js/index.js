@@ -52,7 +52,7 @@ var app = {
 
         //The timer to call a pull request
         this.pollingCaller = null;
-		this.pollInterval = 15000;//TEMPORARY TESTING 30000;		//For publications, use 30000 (i.e. 30 second check interval) by default.
+		this.pollInterval = 30000;		//For publications, use 30000 (i.e. 30 second check interval) by default.
 
     },
     // Bind Event Listeners
@@ -318,14 +318,12 @@ var app = {
 					dataType   : 'jsonp',
 					success    : function(response) {
 						//Resp could be a .json message file
-						alert("Response: " + JSON.stringify(response));		//TESTING
 						var resp = response;
 						
 						
 						$('#registered').html("<small>Listening for Messages</small>");
 				
-						//alert("Response: " + JSON.stringify(resp));		//TESTING
-				
+					
 						//Call onNotificationEvent(parsedJSON);
 						if(resp != "none") {
 							try {
@@ -360,7 +358,7 @@ var app = {
 					},
 					error      : function(xhr, status, error) {
 						//var errorMessage = xhr.status + ': ' + xhr.statusText + ' :' + error;
-						//navigator.notification.alert('Sorry we contact the polling URL. Error: ' + errorMessage);  		//TESTING  
+						 
 						//Show that there is a problem listening to messages.
 						$('#registered').html("<small style='color:#8F3850;'>Waiting for a Connection..<br/>(Checks every 15 sec)</small>");
 						$('#registered').show();              
@@ -490,7 +488,6 @@ var app = {
 				
 								//Start up regular checks
 								localStorage.setItem('pollingURL', pollingURL);
-								alert("Polling URL:" + pollingURL);		//TESTING
 								innerThis.startPolling(pollingURL, true);
 				
 				   
