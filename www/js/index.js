@@ -1068,16 +1068,17 @@ var app = {
 		
 		if(innerThis && innerThis.getPlatform) {
 			//all good, we have the right object.
+			var myThis = innerThis
 		} else {
 			if(app && app.getPlatform) {
-				innerThis = app;		//If coming from an outside source such as a popup notification
+				var myThis = app;		//If coming from an outside source such as a popup notification
 			} else {
-				innerThis = this;
+				var myThis = this;
 			}
 		}
 		
-		if(innerThis.myWindowOpen) {
-			innerThis.myWindowOpen(url, '_system');
+		if(myThis.myWindowOpen) {
+			myThis.myWindowOpen(url, '_system');
 		} else {
 			alert("Error: Sorry, there was a problem opening another window.");
 		}
