@@ -472,57 +472,68 @@ var app = {
 		
 							var url = api + "plugins/notifications/genid.php?country=Default";		//Can potentially extend to some country code info here from the cordova API, or user input?
 							
-			
-							innerThis.get(url, function(url, resp) {
-								//Registered OK
-								//resp will now be e.g. "2z2H HMEcfQQCufJmRPMX4C https://medimage-nz1.atomjump.com New%20Zealand"
+							$.ajax({
+								type       : "POST",
+								url        : url,
+								crossDomain: true,
+								dataType   : 'jsonp',
+								success    : function(response) {
+								
+									alert("Response: " + JSON.stringify(response));		//TESTING
+						
+									var resp = response;
+									//Registered OK
+									//resp will now be e.g. "2z2H HMEcfQQCufJmRPMX4C https://medimage-nz1.atomjump.com New%20Zealand"
 																
-								var items = resp.split(" ");
-								var phonePlatform = "AtomJump";		//This is cross-platform
-								var pullRegistrationId = encodeURIComponent(items[2] + "/api/photo/#" + items[1]);
-								//Registration id will now be e.g. https://medimage-nz1.atomjump.com/api/photo/#HMEcfQQCufJmRPMX4C
-								//which is what our server will post new message .json files too.
+									var items = resp.split(" ");
+									var phonePlatform = "AtomJump";		//This is cross-platform
+									var pullRegistrationId = encodeURIComponent(items[2] + "/api/photo/#" + items[1]);
+									//Registration id will now be e.g. https://medimage-nz1.atomjump.com/api/photo/#HMEcfQQCufJmRPMX4C
+									//which is what our server will post new message .json files too.
 				
-								var pollingURL = items[2] + "/read/" + items[1];
-								//The pollingURL is what we will continue to check on
+									var pollingURL = items[2] + "/read/" + items[1];
+									//The pollingURL is what we will continue to check on
 				
-								//Start up regular checks
-								localStorage.setItem('pollingURL', pollingURL);
-								innerThis.startPolling(pollingURL, true);
+									//Start up regular checks
+									localStorage.setItem('pollingURL', pollingURL);
+									innerThis.startPolling(pollingURL, true);
 				
 				   
-								$('#registered').html("<small>Listening for Messages<br/>(Bring app to front)</small>");
-								$('#registered').show();
+									$('#registered').html("<small>Listening for Messages<br/>(Bring app to front)</small>");
+									$('#registered').show();
 				
 				
-								// Save the new registration ID on the phone
-								localStorage.setItem('pullRegistrationId', pullRegistrationId);
-								// Post registrationId to your app server as the value has changed
-								//Post to server software Loop Server API
+									// Save the new registration ID on the phone
+									localStorage.setItem('pullRegistrationId', pullRegistrationId);
+									// Post registrationId to your app server as the value has changed
+									//Post to server software Loop Server API
 				
 								
 			
-								//Now open the browser, if the button has been set
-								if(singleClick == true) {
-									//Have tapped a single server pairing - will not have a known userid
-									//so we need to let the browser use it's own cookies.
-									var url = api + "plugins/notifications/register.php?id=" + pullRegistrationId + "&userid=&devicetype=" + phonePlatform;
-									innerThis.myWindowOpen(url, '_system');
-								} else {
+									//Now open the browser, if the button has been set
+									if(singleClick == true) {
+										//Have tapped a single server pairing - will not have a known userid
+										//so we need to let the browser use it's own cookies.
+										var url = api + "plugins/notifications/register.php?id=" + pullRegistrationId + "&userid=&devicetype=" + phonePlatform;
+										innerThis.myWindowOpen(url, '_system');
+									} else {
 			
-									//Otherwise login with the known logged userId
-									var phonePlatform = innerThis.getPlatform();
+										//Otherwise login with the known logged userId
+										var phonePlatform = innerThis.getPlatform();
 				
-									var url = api + "plugins/notifications/register.php?id=" + pullRegistrationId + "&userid=" + userId + "&devicetype=" + phonePlatform;  //e.g. 
-																			https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
-									 innerThis.myWindowOpen(url, '_system');
-									 /*innerThis.get(url, function(url, resp) {
-										//Registered OK
-				
-									});*/
-								}
+										var url = api + "plugins/notifications/register.php?id=" + pullRegistrationId + "&userid=" + userId + "&devicetype=" + phonePlatform;  //e.g. 
+																				https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
+										 innerThis.myWindowOpen(url, '_system');
+										
+									}
 		
-							});		//End of get
+								},	//End of success
+								error  : function(xhr, status, error) {
+									var errorMessage = xhr.status + ': ' + xhr.statusText + ' :' + error;
+									alert("Sorry there was a problem generating a pairing with your server. Please try again later.");  		      
+								}
+						   });  
+			
 						}
 						else {
 						
