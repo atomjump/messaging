@@ -1087,6 +1087,9 @@ var app = {
 			_this.registration("remove");
 			
 			userId = null;		//This may be a blank user string, so fully clear it off.		
+			localStorage.removeItem("registrationId");
+			localStorage.removeItem("pullRegistrationId");
+
 
 			$('#login-popup').show();
 		} else {
