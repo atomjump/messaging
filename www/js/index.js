@@ -420,6 +420,7 @@ var app = {
     	//Works in a similar fashion to setupPush() below, but is cross-platform
     	//and is based on regular polling of a URL for new messages.
 		
+		var thisEmail = email;
     	
     	
     	if(!api) {
@@ -460,6 +461,7 @@ var app = {
 		
 						var oldRegId = localStorage.getItem('pullRegistrationId');
 						//alert("Old AtomJump reg ID:" + oldRegId);	//TESTING
+						var innerEmail = thisEmail;
 							
 						if (!oldRegId) {
 							//We need to generate a new registrationId
@@ -503,7 +505,7 @@ var app = {
 									// Post registrationId to your app server as the value has changed
 									//Post to server software Loop Server API
 				
-									innerThis.registration("add", email);
+									innerThis.registration("add", innerEmail);
 									
 		
 		
@@ -533,7 +535,7 @@ var app = {
 							alert("Warning: the messaging server you are connecting to does not support AtomJump notifications, which means that while you may still receive iPhone-native notifications, after you click on them, you will not be shown the more convenient button leading to the forum.");	
 						
 							//But pair the iPhone version
-							innerThis.registration("add", email);
+							innerThis.registration("add", thisEmail);
 							
 						} else {
 							//Server doesn't support AtomJump messages and we weren't successfully
@@ -552,7 +554,7 @@ var app = {
 					
 						alert("Warning: we could not determine whether the server supports AtomJump messages, which means that while you may still receive iPhone-native notifications, after you click on them, you will not be shown a convenient button leading to the forum.");	
 
-						innerThis.registration("add", email);
+						innerThis.registration("add", thisEmail);
 					
 					} else {
 						alert("Error: Sorry there was a problem trying to register for iOS messages.");
