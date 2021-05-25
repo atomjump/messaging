@@ -422,7 +422,7 @@ var app = {
 		
 		var thisEmail = email;
     	
-    	alert("Setting up pull");		//TESTING
+    	//alert("Setting up pull");		//TESTING
     	
     	if(!api) {
     		alert("Sorry, you will need to be signed in to a server before starting to listen.");
@@ -437,7 +437,7 @@ var app = {
 				crossDomain: true,
 				success    : function(resp) {
 					
-					alert("Checked pull");		//TESTING
+					//alert("Checked pull");		//TESTING
 					
 					if(resp && resp.response == "true") {						
 						//Use pull
@@ -473,7 +473,7 @@ var app = {
 		
 							var url = api + "plugins/notifications/genid.php?country=Default";		//Can potentially extend to some country code info here from the cordova API, or user input?
 							
-							alert("New AJ ID being generated");		//TESTING
+							//alert("New AJ ID being generated");		//TESTING
 							
 							$.ajax({
 								type       : "POST",
@@ -510,7 +510,7 @@ var app = {
 									// Save the new registration ID on the phone
 									localStorage.setItem('pullRegistrationId', pullRegistrationId);
 									// Post registrationId to your app server as the value has changed
-									alert("New AJ ID was generated");		//TESTING
+									//alert("New AJ ID was generated");		//TESTING
 									
 									//Post to server software Loop Server API
 				
@@ -544,8 +544,8 @@ var app = {
 							alert("Warning: the messaging server you are connecting to does not support AtomJump notifications, which means that while you may still receive iPhone-native notifications, after you click on them, you will not be shown the more convenient button leading to the forum.");	
 						
 							//But pair the iPhone version
-							alert("About to run reg");	//TESTING
-							alert("About to run reg - this email:" + thisEmail);	//TESTING
+							//alert("About to run reg");	//TESTING
+							//alert("About to run reg - this email:" + thisEmail);	//TESTING
 							innerThis.registration("add", thisEmail);
 							
 						} else {
@@ -755,8 +755,8 @@ var app = {
    		
    		if(id) {	
 			
-			alert("About to run reg in register()");	//TESTING
-			alert("About to run reg in register() email: " + email);	//TESTING
+			//alert("About to run reg in register()");	//TESTING
+			//alert("About to run reg in register() email: " + email);	//TESTING
 			innerThis.registration("add", email);
 			
 			
@@ -1025,7 +1025,7 @@ var app = {
     registration: function(action, email) {
     	//Action should be "add" or "remove"
     	//Email is optional
-    	alert("Inside registration()");	//TESTING
+    	//alert("Inside registration()");	//TESTING
     	var iOSregistrationId = localStorage.getItem("registrationId");
 		var pullRegistrationId = localStorage.getItem("pullRegistrationId");
 
