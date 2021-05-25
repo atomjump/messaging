@@ -984,13 +984,13 @@ var app = {
 			alert("cordova exists");		//TESTING
 			alert("In window open");		//TESTING
 		}
-		inAppBrowserRef = cordova.InAppBrowser.open(url, style, options);
+		var inAppBrowserRef = cordova.InAppBrowser.open(url, style, options);
 	
-		inAppBrowserRef.addEventListener('loaderror', loadErrorCallBack);
+		//inAppBrowserRef.addEventListener('loaderror', loadErrorCallBack);
 	},
 	
 	
-	function loadErrorCallBack(params) {
+	loadErrorCallBack: function(params) {
 
 		$('#status-message').text("");
 
@@ -1004,7 +1004,7 @@ var app = {
 
 		inAppBrowserRef = undefined;
 
-	}
+	},
 
 
 
