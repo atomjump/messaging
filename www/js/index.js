@@ -422,6 +422,7 @@ var app = {
 		
 		var thisEmail = email;
     	
+    	alert("Setting up pull");		//TESTING
     	
     	if(!api) {
     		alert("Sorry, you will need to be signed in to a server before starting to listen.");
@@ -435,6 +436,8 @@ var app = {
 				dataType: 'jsonp', // Notice! JSONP <-- P (lowercase)
 				crossDomain: true,
 				success    : function(resp) {
+					
+					alert("Checked pull");		//TESTING
 					
 					if(resp && resp.response == "true") {						
 						//Use pull
@@ -459,6 +462,8 @@ var app = {
 						*/
 						innerThis.pull = true;		//Set the global pull
 		
+						
+		
 						var oldRegId = localStorage.getItem('pullRegistrationId');
 						//alert("Old AtomJump reg ID:" + oldRegId);	//TESTING
 						var innerEmail = thisEmail;
@@ -467,6 +472,8 @@ var app = {
 							//We need to generate a new registrationId
 		
 							var url = api + "plugins/notifications/genid.php?country=Default";		//Can potentially extend to some country code info here from the cordova API, or user input?
+							
+							alert("New AJ ID being generated");		//TESTING
 							
 							$.ajax({
 								type       : "POST",
@@ -503,6 +510,8 @@ var app = {
 									// Save the new registration ID on the phone
 									localStorage.setItem('pullRegistrationId', pullRegistrationId);
 									// Post registrationId to your app server as the value has changed
+									alert("New AJ ID was generated");		//TESTING
+									
 									//Post to server software Loop Server API
 				
 									innerThis.registration("add", innerEmail);
