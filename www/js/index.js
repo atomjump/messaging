@@ -414,7 +414,7 @@ var app = {
     
     setupPull: function(email) {
     
-    	//alert("Setting up pull");		//TESTING
+    	alert("Setting up pull");		//TESTING
     	innerThis = this;
     	//Pull from an AtomJump notification system
     	//Works in a similar fashion to setupPush() below, but is cross-platform
@@ -422,7 +422,6 @@ var app = {
 		
 		var thisEmail = email;
     	
-    	//alert("Setting up pull");		//TESTING
     	
     	if(!api) {
     		alert("Sorry, you will need to be signed in to a server before starting to listen.");
@@ -437,7 +436,7 @@ var app = {
 				crossDomain: true,
 				success    : function(resp) {
 					
-					//alert("Checked pull");		//TESTING
+					alert("Checked pull");		//TESTING
 					
 					if(resp && resp.response == "true") {						
 						//Use pull
@@ -465,7 +464,7 @@ var app = {
 						
 		
 						var oldRegId = localStorage.getItem('pullRegistrationId');
-						//alert("Old AtomJump reg ID:" + oldRegId);	//TESTING
+						alert("Old AtomJump reg ID:" + oldRegId);	//TESTING
 						var innerEmail = thisEmail;
 							
 						if (!oldRegId) {
@@ -473,7 +472,7 @@ var app = {
 		
 							var url = api + "plugins/notifications/genid.php?country=Default";		//Can potentially extend to some country code info here from the cordova API, or user input?
 							
-							//alert("New AJ ID being generated");		//TESTING
+							alert("New AJ ID being generated");		//TESTING
 							
 							$.ajax({
 								type       : "POST",
@@ -492,7 +491,7 @@ var app = {
 									var pullRegistrationId = encodeURIComponent(items[2] + "/api/photo/#" + items[1]);
 									//Registration id will now be e.g. https://medimage-nz1.atomjump.com/api/photo/#HMEcfQQCufJmRPMX4C
 									//which is what our server will post new message .json files too.
-									//alert("New AtomJump reg ID:" + pullRegistrationId);	//TESTING
+									alert("New AtomJump reg ID:" + pullRegistrationId);	//TESTING
 				
 				
 									var pollingURL = items[2] + "/read/" + items[1];
@@ -510,7 +509,7 @@ var app = {
 									// Save the new registration ID on the phone
 									localStorage.setItem('pullRegistrationId', pullRegistrationId);
 									// Post registrationId to your app server as the value has changed
-									//alert("New AJ ID was generated");		//TESTING
+									alert("New AJ ID was generated");		//TESTING
 									
 									//Post to server software Loop Server API
 				
@@ -544,8 +543,8 @@ var app = {
 							alert("Warning: the messaging server you are connecting to does not support AtomJump notifications, which means that while you may still receive iPhone-native notifications, after you click on them, you will not be shown the more convenient button leading to the forum.");	
 						
 							//But pair the iPhone version
-							//alert("About to run reg");	//TESTING
-							//alert("About to run reg - this email:" + thisEmail);	//TESTING
+							alert("About to run reg");	//TESTING
+							alert("About to run reg - this email:" + thisEmail);	//TESTING
 							innerThis.registration("add", thisEmail);
 							
 						} else {
@@ -653,6 +652,9 @@ var app = {
         push.on('error', function(e) {
             alert("push error = " + e.message);
             
+             // Save new registration ID
+            localStorage.setItem('registrationId', "TESTID");		//TESTING on simulator - remove this line!
+            
             //But configure the dual AtomJump messaging account
             innerThis.setupPull();
         });
@@ -748,16 +750,30 @@ var app = {
    
     register: function(apiUrl, email)
     {
+    	if(app) {
+    		var myThis = app;
+    	} else {
+    		var myThis = innerThis;
+    	}
+    	
     	//Register to the remote Loop Server
-   		innerThis.setAPI(apiUrl); 
+   		myThis.setAPI(apiUrl); 
    		
-   		var id = localStorage.getItem('registrationId');
    		
-   		if(id) {	
+   		var pushId = localStorage.getItem('registrationId');
+   		var pullId = localStorage.getItem('pullRegistrationId');
+   		
+   		if(pushId) {	
 			
-			//alert("About to run reg in register()");	//TESTING
-			//alert("About to run reg in register() email: " + email);	//TESTING
-			innerThis.registration("add", email);
+			alert("About to run reg in register()");	//TESTING
+			alert("About to run reg in register() email: " + email);	//TESTING
+			if(pullId) {
+				//Have a pullId already
+				myThis.registration("add", email);
+			} else {
+				//Will need to set up the pull now
+				myThis.setupPull(email);
+			}
 			
 			
 			var settingApi = localStorage.getItem("api");
@@ -781,11 +797,7 @@ var app = {
          	 } 
          	          	 
          	singleClick = true; 
-         	if(app) {    
-         		app.setupPush(email);		//Also sets up pull afterwards
-         	} else {
-         		innerThis.setupPush(email);		//Also sets up pull afterwards
-         	}
+         	myThis.setupPush(email);		//Also sets up pull afterwards
         	$('#login-popup').hide();
 		}
    		   		
@@ -1025,7 +1037,7 @@ var app = {
     registration: function(action, email) {
     	//Action should be "add" or "remove"
     	//Email is optional
-    	//alert("Inside registration()");	//TESTING
+    	alert("Inside registration()");	//TESTING
     	var iOSregistrationId = localStorage.getItem("registrationId");
 		var pullRegistrationId = localStorage.getItem("pullRegistrationId");
 
