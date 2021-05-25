@@ -979,6 +979,7 @@ var app = {
 			
 	myWindowOpen: function(url, style, options) {
 		//Recommend using style = '_system' for Safari browser
+		alert("In window open");		//TESTING
 		cordova.InAppBrowser.open(url, style, options);
 	
 	
