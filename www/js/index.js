@@ -1083,6 +1083,8 @@ var app = {
 		//} else {
 		//	alert("Error: Sorry, there was a problem opening another window.");
 		//}
+		
+		alert("After window open");		//TESTING
     	return;
     
     },
