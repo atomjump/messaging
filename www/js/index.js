@@ -52,7 +52,7 @@ var app = {
 
         //The timer to call a pull request
         this.pollingCaller = null;
-		this.pollInterval = 30000;		//For publications, use 30000 (i.e. 30 second check interval) by default.
+		this.pollInterval = 15000; //TESTING 		//For publications, use 30000 (i.e. 30 second check interval) by default.
 
     },
     // Bind Event Listeners
@@ -364,12 +364,6 @@ var app = {
 			   });     	
 	  		
 	  		
-				/* OLD WAY app.get(url, function(url, resp) {
-					
-				
-				
-					
-				}); */
 			} catch(err) {
 				//Show that there is a problem listening to messages.
 				$('#registered').html("<small style='color:#8F3850;'>Waiting for a Connection..<br/>(Checks every 15 sec)</small>");
@@ -464,7 +458,7 @@ var app = {
 						innerThis.pull = true;		//Set the global pull
 		
 						var oldRegId = localStorage.getItem('pullRegistrationId');
-						
+						alert("Old AtomJump reg ID:" + oldRegId);	//TESTING
 							
 						if (!oldRegId) {
 							//We need to generate a new registrationId
@@ -488,6 +482,8 @@ var app = {
 									var pullRegistrationId = encodeURIComponent(items[2] + "/api/photo/#" + items[1]);
 									//Registration id will now be e.g. https://medimage-nz1.atomjump.com/api/photo/#HMEcfQQCufJmRPMX4C
 									//which is what our server will post new message .json files too.
+									alert("New AtomJump reg ID:" + pullRegistrationId);	//TESTING
+				
 				
 									var pollingURL = items[2] + "/read/" + items[1];
 									//The pollingURL is what we will continue to check on
@@ -577,7 +573,9 @@ var app = {
   		var thisEmail = email;
   	
   		if(typeof(PushNotification) == 'undefined') { 
-			alert("PushNotification does not exist sorry");
+			alert("iOS notifications do not exist from this server, sorry. We will attempt to configure AtomJump notifications (which require the app to be opened each time you check for messages).");
+			 //But configure the dual AtomJump messaging account
+            app.setUpPull();
 			return;					
 		} else {
  			var push = PushNotification.init({
@@ -614,8 +612,6 @@ var app = {
 				},
 				"windows": {}
 			});
-			
-			//Perhaps also?: ,	"badge": true
 
 		}
         
@@ -635,46 +631,6 @@ var app = {
                 //Now configure the dual AtomJump messaging account
                 app.setUpPull();
                 
-                // Post registrationId to your app server as the value has changed
-                     
-                
-                //Post to server software Loop Server API
-                
-                
-                
-                
-                /* Old way:
-                //Now open the browser, if the button has been set
-                if(singleClick == true) {
-                	//Have tapped a single server pairing - will not have a known userid
-                	//so we need to let the browser use it's own cookies.
-                	
-                	//Confirm device.platform if it is blank.
-                	var phonePlatform = innerThis.getPlatform();
-                	
-                	
-                	var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=&devicetype=" + phonePlatform;
-                	if(thisEmail) {
-						url = url + "&email=" + encodeURIComponent(thisEmail);
-					}
-                	
-                	innerThis.myWindowOpen(url, '_system');
-                } else {
-                
-                 	//Otherwise login with the known logged userId
-                 	var phonePlatform = innerThis.getPlatform();
-                 	
-               	 	var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform;  //e.g. https://atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
-               	 	if(thisEmail) {
-						url = url + "&email=" + encodeURIComponent(thisEmail);
-					}
-               	 	
-                	 	
-					 innerThis.get(url, function(url, resp) {
-						//Registered OK
-					
-					});
-				}*/
             } 
 			
              
@@ -682,6 +638,9 @@ var app = {
 
         push.on('error', function(e) {
             alert("push error = " + e.message);
+            
+            //But configure the dual AtomJump messaging account
+            app.setUpPull();
         });
 
         push.on('notification', function(data) {
