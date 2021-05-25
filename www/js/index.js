@@ -1079,7 +1079,7 @@ var app = {
 		
 		
 		
-			app.myWindowOpen(url, '_system');
+			innerThis.myWindowOpen(url, '_system');
 		//} else {
 		//	alert("Error: Sorry, there was a problem opening another window.");
 		//}
