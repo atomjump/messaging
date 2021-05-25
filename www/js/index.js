@@ -1042,9 +1042,10 @@ var app = {
 		var pullRegistrationId = localStorage.getItem("pullRegistrationId");
 
 		var fullRegistrationId = "";
+		var phonePlatform = "";
 		if(pullRegistrationId) {
-			var fullRegistrationId = pullRegistrationId;
-			var phonePlatform = "AtomJump";
+			fullRegistrationId = pullRegistrationId;
+			phonePlatform = "AtomJump";
 			if(iOSregistrationId) {
 				//Have a native iPhone reg also
 				phonePlatform = "AtomJump|iOS";
@@ -1063,6 +1064,7 @@ var app = {
 			url = url + "&email=" + encodeURIComponent(email);
 		}
 		
+		alert("Pairing URL: " + url);		//TESTING
 		
 		if(innerThis && innerThis.getPlatform) {
 			//all good, we have the right object.
