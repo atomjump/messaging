@@ -102,8 +102,7 @@ var app = {
         	//Yep, we have a logged in user
         	$('#login-popup').hide();	
         	setupPushAlready = true;
-        	app.setupPush(null);
-        	app.setupPull(null);
+        	app.setupPush(null);	//Also sets up pull afterwards
         
           } else {
             //No logged user - show the login page
@@ -116,8 +115,7 @@ var app = {
           if(oldRegId) {
           		$('#login-popup').hide();	
           		if(setupPushAlready == false) {
-        			app.setupPush(null);
-        			app.setupPull(null);
+        			app.setupPush(null);	//Also sets up pull afterwards
         		}
           }
     },
@@ -467,8 +465,7 @@ var app = {
 		
 						var oldRegId = localStorage.getItem('pullRegistrationId');
 						
-						alert("oldRegId" + oldRegId);	//TESTING
-						
+							
 						if (!oldRegId) {
 							//We need to generate a new registrationId
 		
@@ -481,8 +478,7 @@ var app = {
 								dataType   : 'jsonp',
 								success    : function(response) {
 								
-									alert("Response: " + JSON.stringify(response));		//TESTING
-						
+									
 									var resp = decodeURIComponent(response);
 									//Registered OK
 									//resp will now be e.g. "2z2H HMEcfQQCufJmRPMX4C https://medimage-nz1.atomjump.com New%20Zealand"
@@ -511,12 +507,23 @@ var app = {
 									//Post to server software Loop Server API
 				
 								
+									//Otherwise login with the known logged userId
+									var fullRegistrationId = pullRegistrationId;
+									var iOSregistrationId = localStorage.getItem('registrationId');
+									if(iOSregistrationId) {
+										//Have a native iPhone reg also
+										phonePlatform = "AtomJump|iOS";
+										fullRegistrationId = pullRegistrationId + "|" + iOSregistrationId;
+									}
+			
+									var url = api + "plugins/notifications/register.php?id=" + fullRegistrationId + "&userid=" + userId + "&devicetype=" + phonePlatform;  //e.g.																			https://atomjump.com/api/plugins/notifications/register.php?id=test&devicetype=AtomJump
+									innerThis.myWindowOpen(url, '_system');
 			
 									//Now open the browser, if the button has been set
-									if(singleClick == true) {
+									/*if(singleClick == true) {
 										//Have tapped a single server pairing - will not have a known userid
 										//so we need to let the browser use it's own cookies.
-										var url = api + "plugins/notifications/register.php?id=" + pullRegistrationId + "&userid=&devicetype=" + phonePlatform;
+										var url = api + "plugins/notifications/register.php?id=" + pullRegistrationId + "|" + registrationId + "&userid=&devicetype=" + phonePlatform;
 										innerThis.myWindowOpen(url, '_system');
 									} else {
 			
@@ -527,7 +534,7 @@ var app = {
 																				https://staging.atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
 										 innerThis.myWindowOpen(url, '_system');
 										
-									}
+									}*/
 		
 								},	//End of success
 								error  : function(xhr, status, error) {
@@ -549,12 +556,40 @@ var app = {
 					
 					} else {
 						//The server does not support AtomJump messages - warn the user
-						alert("Warning: the messaging server you are connecting to does not support AtomJump notifications, which means that while you may still receive iPhone-native notifications, after you click on them, you will not be shown a convenient button leading to the forum.");				
+						var iOSregistrationId = localStorage.getItem('registrationId');
+						if(iOSregistrationId) {
+						
+							alert("Warning: the messaging server you are connecting to does not support AtomJump notifications, which means that while you may still receive iPhone-native notifications, after you click on them, you will not be shown the more convenient button leading to the forum.");	
+						
+							//But pair the iPhone version
+							var phonePlatform = 'iOS';
+							var url = api + "plugins/notifications/register.php?id=" + iOSregistrationId + "&devicetype=iOS";
+							innerThis.myWindowOpen(url, '_system');
+							
+						} else {
+							//Server doesn't support AtomJump messages and we weren't successfully
+							//registered for iOS messages. Warn user
+							alert("Error: Sorry there was a problem trying to register for iOS messages.");
+						
+						}
 					}
 				},
 				error      : function() {
 					//Use push instead.
-					alert("Warning: the messaging server you are connecting to does not support AtomJump notifications, which means that while you may still receive iPhone-native notifications, after you click on them, you will not be shown a convenient button leading to the forum.");	
+					var iOSregistrationId = localStorage.getItem('registrationId');
+					if(iOSregistrationId) {
+					
+						alert("Warning: we could not determine whether the server supports AtomJump messages, which means that while you may still receive iPhone-native notifications, after you click on them, you will not be shown a convenient button leading to the forum.");	
+
+						//But pair with the iPhone version
+						var phonePlatform = 'iOS';
+						var url = api + "plugins/notifications/register.php?id=" + iOSregistrationId + "&devicetype=" + phonePlatform;
+						innerThis.myWindowOpen(url, '_system');
+					
+					} else {
+						alert("Error: Sorry there was a problem trying to register for iOS messages.");
+					
+					}
 					return;        
 				}
 			
@@ -624,10 +659,20 @@ var app = {
                 
                 // Save new registration ID
                 localStorage.setItem('registrationId', data.registrationId);
+                
+                
+                //Now configure the dual AtomJump messaging account
+                app.setUpPull();
+                
                 // Post registrationId to your app server as the value has changed
+                     
+                
                 //Post to server software Loop Server API
                 
                 
+                
+                
+                /* Old way:
                 //Now open the browser, if the button has been set
                 if(singleClick == true) {
                 	//Have tapped a single server pairing - will not have a known userid
@@ -658,7 +703,7 @@ var app = {
 						//Registered OK
 					
 					});
-				}
+				}*/
             } 
 			
              
@@ -798,11 +843,9 @@ var app = {
          	          	 
          	singleClick = true; 
          	if(app) {    
-         		app.setupPush(email);
-         		app.setupPull(email);
+         		app.setupPush(email);		//Also sets up pull afterwards
          	} else {
-         		innerThis.setupPush(email);
-         		innerThis.setupPull(email);
+         		innerThis.setupPush(email);		//Also sets up pull afterwards
          	}
         	$('#login-popup').hide();
 		}
@@ -1003,12 +1046,10 @@ var app = {
 	    		'Are you sure? All your saved forums and other settings will be cleared.',  // message
 	    		function(buttonIndex) {
 	    			if(buttonIndex == 1) {
-						localStorage.clear();
+						_this.deregister();
 						
-						var oldRegistrationId = localStorage.getItem("registrationId");
-						var oldPullRegistrationId = localStorage.getItem("pullRegistrationId");
-						if(oldRegistrationId == "null") registrationId = "";
-						if(oldPullRegistrationId == "null") pullRegistrationId = "";
+						localStorage.clear();
+					
 						
 						localStorage.removeItem("registrationId");
 						localStorage.removeItem("pullRegistrationId");
@@ -1021,36 +1062,6 @@ var app = {
 						$('#private-server').val('');
 						$('#pair-private-server').val('');
 						$('#registered').hide();
-						
-						//Deregister on the database for Push. Disassociates phone from user.
-						if(userId) {
-							var url = api + "plugins/notifications/register.php?id=" + oldRegistrationId + "&userid=" + userId + "&action=remove";  //e.g. https://atomjump.com/api/plugins/notifications/register.php?id=test&userid=3&action=remove
-							_this.get(url, function(url, resp) {
-								//Registered OK
-			
-							});
-						} else {
-								//Deregister from remote server connection in a browser
-								var url = api + "plugins/notifications/register.php?id=" + oldRegistrationId + "&action=remove";
-
-								myWindowOpen(url, '_system');
-						
-						}
-						
-						//Now deregister on the database for Pull. Disassociates phone from user.
-						if(userId) {
-							var url = api + "plugins/notifications/register.php?id=" + oldPullRegistrationId + "&userid=" + userId + "&action=remove";  //e.g. https://atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
-							_this.get(url, function(url, resp) {
-								//Registered OK
-			
-							});
-						} else {
-								//Deregister from remote server connection in a browser
-								var url = api + "plugins/notifications/register.php?id=" + oldPullRegistrationId  + "&action=remove";
-
-								myWindowOpen(url, '_system');
-						
-						}
 						
     		
 						alert("Cleared all saved forums and settings. Warning: if you had more than one connected server, you will need to manually connect and then disconnect from these other servers. Currently, messages from these servers will not be retrieved.");
@@ -1068,6 +1079,34 @@ var app = {
 		return false;
     },
     
+    
+    deregister: function() {
+    	var iOSregistrationId = localStorage.getItem("registrationId");
+		var pullRegistrationId = localStorage.getItem("pullRegistrationId");
+
+		var fullRegistrationId = "";
+		if(pullRegistrationId) {
+			var fullRegistrationId = pullRegistrationId;
+			var phonePlatform = "AtomJump";
+			if(iOSregistrationId) {
+				//Have a native iPhone reg also
+				phonePlatform = "AtomJump|iOS";
+				fullRegistrationId = pullRegistrationId + "|" + iOSregistrationId;
+			}
+		} else {
+			//iOS only
+			if(iOSregistrationId) {
+				phonePlatform = "iOS";
+				fullRegistrationId = iOSregistrationId;
+			}
+		}
+		
+		var url = api + "plugins/notifications/register.php?id=" + fullRegistrationId + "&devicetype=" + phonePlatform + "&action=remove";  //e.g.																			https://atomjump.com/api/plugins/notifications/register.php?id=test&devicetype=AtomJump&action=remove
+		innerThis.myWindowOpen(url, '_system');
+    	return;
+    
+    },
+    
 
     logout: function() {
         //We have connected to a server OK
@@ -1081,50 +1120,9 @@ var app = {
 		if(api) {
 		
 			//Deregister on the database. Disassociates phone from user.
+			_this.deregister();
 			
-			var registrationId = localStorage.getItem("registrationId");
-			var pullRegistrationId = localStorage.getItem("pullRegistrationId");
-			if(registrationId == "null") registrationId = "";
-			if(pullRegistrationId == "null") pullRegistrationId = "";
-			
-			
-			//Handle Push case first
-			if(userId) {
-				//We are logged in within the app as a user
-				var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=" + userId + "&action=remove";  //e.g. https://atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
-				_this.myWindowOpen(url, '_system');
-				
-				userId = null;
-		
-			} else {
-				//We are registered only on the server, which knows our userid as a session value
-				//Deregister from remote server connection in a browser
-				var url = api + "plugins/notifications/register.php?id=" + registrationId + "&action=remove";
-
-				_this.myWindowOpen(url, '_system');
-				
-				userId = null;		//This may be a blank user string, so fully clear it off.
-			
-			}
-			
-			//Now do the same for the Pull case
-			if(userId) {
-				//We are logged in within the app as a user
-				var url = api + "plugins/notifications/register.php?id=" + pullRegistrationId + "&userid=" + userId + "&action=remove";  //e.g. https://atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
-				_this.myWindowOpen(url, '_system');
-				
-				userId = null;
-		
-			} else {
-				//We are registered only on the server, which knows our userid as a session value
-				//Deregister from remote server connection in a browser
-				var url = api + "plugins/notifications/register.php?id=" + pullRegistrationId + "&action=remove";
-
-				_this.myWindowOpen(url, '_system');
-				
-				userId = null;		//This may be a blank user string, so fully clear it off.
-			
-			}
+			userId = null;		//This may be a blank user string, so fully clear it off.		
 
 			$('#login-popup').show();
 		} else {
