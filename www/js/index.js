@@ -70,7 +70,6 @@ var app = {
     	setTimeout(function(){
     		var pullReg = localStorage.getItem('pullRegistrationId');
     		
-    		alert("regID = " + pullReg);			//TESTING
     		
     		if(pullReg) {			//We don't want to open it before we actually 
     								//have a connection.
@@ -420,9 +419,7 @@ var app = {
     },
     
     setupPull: function(email) {
-    	
-    	alert("setup pull called");		//TESTING
-    	
+    	   	
     	innerThis = this;
     	//Pull from an AtomJump notification system
     	//Works in a similar fashion to setupPush() below, but is cross-platform
@@ -630,33 +627,27 @@ var app = {
         
         push.on('registration', function(data) {
             
-            //Typically called after the first load event 
-            //However it is also called when the screen is revisited.
-            //Note: immediately after a manual 'release', this event will be called as we go back 
-            //to the main screen, and the pullRegistration will no longer exist. However,
-            //we don't want to auto-run the Pull Setup again. The user needs to 
+            //Typically called after the first load event, but will also be called (with the same
+            //registrationId 
+           
             
             var oldRegId = localStorage.getItem('registrationId');
             $('#registered').show();
-            if(oldRegId !== data.registrationId) {
+            if(oldRegId !== data.registrationId) {	
+            
+             //Note: immediately after a manual 'release', this event will be called as we go back 
+            //to the main screen, and the pullRegistration will no longer exist. However,
+            //we don't want to auto-run the Pull Setup again. The user needs to 
                 
                 
-                // Save new registration ID
-                localStorage.setItem('registrationId', data.registrationId);
-                
-                
-                var oldPollingURL = localStorage.getItem('pollingURL');
-                var oldPullRegId = localStorage.getItem('pullRegistrationId');
-                
-                
-                if(!oldPollingURL) {
-                	//Indicating this is the 1st time we are running this, and not just after
-                	//a 'release' event.
-					if(!oldPullRegId) {
-						//Now configure the dual AtomJump messaging account
-						alert("Setup pull from push registration event");		//TESTING
-						innerThis.setupPull();
-					}
+               // Save new registration ID
+               localStorage.setItem('registrationId', data.registrationId);
+   
+                var oldPullRegId = localStorage.getItem('pullRegistrationId');             
+				if(!oldPullRegId) {
+					//Now configure the dual AtomJump messaging account
+					innerThis.setupPull();
+					
                 }
             } 
 			
@@ -672,7 +663,6 @@ var app = {
             var oldPullRegId = localStorage.getItem('pullRegistrationId');
             if(!oldPullRegId) {
             	//But configure the dual AtomJump messaging account
-            	alert("Setup pull from push error event"); //TESTING
             	innerThis.setupPull();
             }
         });
@@ -797,7 +787,6 @@ var app = {
 				app.startPolling(pollingURL, true);			//Check for new messages and start 
 			} else {
 				//Will need to set up the pull now
-				alert("setup pull from register() function");		//TESTING 
 				myThis.setupPull(email);
 			}
 			
@@ -1102,26 +1091,8 @@ var app = {
 			url = url + "&email=" + encodeURIComponent(email);
 		}
 	
-		
-		if(action == "remove") {
-			//Before we open this window we need to remove these entries. Otherwise, going back to 
-			//app will assume we have this data, and will re-register 
-			localStorage.removeItem("registrationId");
-			localStorage.removeItem("pullRegistrationId");
-			//Pause a little to ensure change is made
-			setTimeout(function(){
-				var pullRegistrationId = localStorage.getItem("registrationId");		//TESTING
-				alert("pull regID = " + pullRegistrationId);			//TESTING
-				
-				innerThis.myWindowOpen(url, '_system');
-			
-			}, 500);
-		} else {
-		
-		
-			innerThis.myWindowOpen(url, '_system');
-		}
-    	return;
+		innerThis.myWindowOpen(url, '_system');
+		return;
     
     },
     
