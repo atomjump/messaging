@@ -573,6 +573,8 @@ var app = {
 					
 					} else {
 						alert("Error: Sorry there was a problem trying to register for iOS messages.");
+						//Register with AtomJump messages
+						innerThis.registration("add", thisEmail);
 					
 					}
 					return;        
@@ -640,6 +642,7 @@ var app = {
             //registrationId) after the screen is opened again. In the latter case, we don't want 
             //to send off
            
+            alert("Registration event");		//TESTING
             
             var oldRegId = localStorage.getItem('registrationId');
             $('#registered').show();
@@ -656,6 +659,7 @@ var app = {
             	//a, when screen is reopened
             	//b, when we are pairing when we already have a known reg ID - in this case
             	//      we still want to do a final visual registration
+            	alert("New Pairing:" + innerThis.newPairing);		//TESTING
             	if(innerThis.newPairing == true) {
             		innerThis.sendCombinedPushPull(thisEmail);
             	}
@@ -1045,6 +1049,9 @@ var app = {
     
     
     registration: function(action, email) {
+    	//Registers our pairing code with the remote AtomJump messaging server. 
+    	//Opens a browser window
+    	
     	//Action should be "add" or "remove"
     	//Email is optional
      	var iOSregistrationId = localStorage.getItem("registrationId");
