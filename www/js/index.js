@@ -418,6 +418,11 @@ var app = {
     	}    	
     },
     
+    sendCombinedPushPull: function(email) {
+    	//Called after setting up push, and pull
+    	innerThis.setupPull(email);
+    },
+    
     setupPull: function(email) {
     	   	
     	innerThis = this;
@@ -588,8 +593,8 @@ var app = {
   	
   		if(typeof(PushNotification) == 'undefined') { 
 			alert("iOS notifications do not exist from this server, sorry. We will attempt to configure AtomJump notifications (which require the app to be opened each time you check for messages).");
-			 //But configure the dual AtomJump messaging account
-            innerThis.setupPull();    
+			innerThis.sendCombinedPushPull(thisEmail);		//Is ready to use - in a blank state
+			  
 			return;					
 		} else {
  			var push = PushNotification.init({
@@ -648,13 +653,12 @@ var app = {
                // Save new registration ID
                localStorage.setItem('registrationId', data.registrationId);
    
-                var oldPullRegId = localStorage.getItem('pullRegistrationId');             
-				if(!oldPullRegId) {
-					//Now configure the dual AtomJump messaging account
-					innerThis.setupPull();
+                //Now configure the dual AtomJump messaging account
+				innerThis.sendCombinedPushPull(thisEmail);
 					
-                }
-            } 
+            } else {
+            	innerThis.sendCombinedPushPull(thisEmail);		//Is ready to use
+            }
 			
              
         });
@@ -665,11 +669,7 @@ var app = {
              // Save new registration ID
             //For future test use: localStorage.setItem('registrationId', "TESTID");		//When testing on simulator - remove this line!
             
-            var oldPullRegId = localStorage.getItem('pullRegistrationId');
-            if(!oldPullRegId) {
-            	//But configure the dual AtomJump messaging account
-            	innerThis.setupPull();
-            }
+            innerThis.sendCombinedPushPull(thisEmail);		//Is ready to use - in a blank state
         });
 
         push.on('notification', function(data) {
@@ -769,6 +769,7 @@ var app = {
    
     register: function(apiUrl, email)
     {
+    	//A pairing button has been clicked
     	if(app) {
     		var myThis = app;
     	} else {
@@ -777,49 +778,20 @@ var app = {
     	
     	//Register to the remote Loop Server
    		myThis.setAPI(apiUrl); 
+ 		
    		
-   		
-   		var pushId = localStorage.getItem('registrationId');
-   		var pullId = localStorage.getItem('pullRegistrationId');
-   		
-   		if(pushId) {	
-			
-			if(pullId) {
-				//Have a pullId already
-				//Start up the polling
-				app.stopPolling();			//Any existing polling should be switched off
-				var pollingURL = localStorage.getItem('pollingURL');
-				app.startPolling(pollingURL, true);			//Check for new messages and start 
-			} else {
-				//Will need to set up the pull now
-				myThis.setupPull(email);
-			}
-			
-			
-			var settingApi = localStorage.getItem("api");
-         	 if(settingApi) {
-          		 api = settingApi;
-          	 	$('#private-server').val(api);
-          	 	$('#pair-private-server').val(api);
-         	 } 
-			
-			//Note: no setupPush here again, since we already have a registration id.
-			
-			$('#login-popup').hide();
-			
-		} else {
 			 
-			 var settingApi = localStorage.getItem("api");
-         	 if(settingApi) {
-          		 api = settingApi;
-          	 	$('#private-server').val(api);
-          	 	$('#pair-private-server').val(api);
-         	 } 
-         	          	 
-         	singleClick = true; 
-         	myThis.setupPush(email);		//Also sets up pull afterwards
-        	$('#login-popup').hide();
-		}
+		 var settingApi = localStorage.getItem("api");
+		 if(settingApi) {
+			 api = settingApi;
+			$('#private-server').val(api);
+			$('#pair-private-server').val(api);
+		 } 
+					 
+		singleClick = true; 
+		myThis.setupPush(email);		//Also sets up pull afterwards
+		$('#login-popup').hide();
+
    		   		
    	},
     
