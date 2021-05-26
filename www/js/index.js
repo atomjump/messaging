@@ -587,7 +587,7 @@ var app = {
   		if(typeof(PushNotification) == 'undefined') { 
 			alert("iOS notifications do not exist from this server, sorry. We will attempt to configure AtomJump notifications (which require the app to be opened each time you check for messages).");
 			 //But configure the dual AtomJump messaging account
-            innerThis.setupPull();
+            innerThis.setupPull();    
 			return;					
 		} else {
  			var push = PushNotification.init({
@@ -630,6 +630,11 @@ var app = {
         
         push.on('registration', function(data) {
             
+            //Typically called after the first load event 
+            //However it is also called when the screen is revisited.
+            //Note: immediately after a manual 'release', this event will be called as we go back 
+            //to the main screen, and the pullRegistration will no longer exist. However,
+            //we don't want to auto-run the Pull Setup again. The user needs to 
             
             var oldRegId = localStorage.getItem('registrationId');
             $('#registered').show();
@@ -640,14 +645,19 @@ var app = {
                 localStorage.setItem('registrationId', data.registrationId);
                 
                 
+                var oldPollingURL = localStorage.getItem('pollingURL');
                 var oldPullRegId = localStorage.getItem('pullRegistrationId');
                 
-                if(!oldPullRegId) {
-                	//Now configure the dual AtomJump messaging account
-                	alert("Setup pull from push registration event");
-                	innerThis.setupPull();
-                }
                 
+                if(!oldPollingURL) {
+                	//Indicating this is the 1st time we are running this, and not just after
+                	//a 'release' event.
+					if(!oldPullRegId) {
+						//Now configure the dual AtomJump messaging account
+						alert("Setup pull from push registration event");		//TESTING
+						innerThis.setupPull();
+					}
+                }
             } 
 			
              
@@ -662,7 +672,7 @@ var app = {
             var oldPullRegId = localStorage.getItem('pullRegistrationId');
             if(!oldPullRegId) {
             	//But configure the dual AtomJump messaging account
-            	alert("Setup pull from push error event");
+            	alert("Setup pull from push error event"); //TESTING
             	innerThis.setupPull();
             }
         });
