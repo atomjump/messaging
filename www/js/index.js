@@ -420,7 +420,11 @@ var app = {
     },
     
     sendCombinedPushPull: function(email) {
+    	
     	//Called after setting up push, and pull
+		innerThis.newPairing = false;		//Return this to it's original state - now that
+											//the registration event has happened.
+
     	innerThis.setupPull(email);
     },
     
@@ -805,7 +809,6 @@ var app = {
 										//we deal with setting up the pull afterwards, and
 										//send the visual pairing reques
 		myThis.setupPush(email);		//Also sets up pull afterwards
-		innerThis.newPairing = false;
 		$('#login-popup').hide();
 
    		   		
