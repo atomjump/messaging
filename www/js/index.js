@@ -573,7 +573,7 @@ var app = {
 				innerThis.startPolling(pollingURL);
 				
 				//Do the visual pairing
-				innerThis.registration("add", innerEmail);
+				innerThis.registration("add", thisEmail);
 
     		
     		}
