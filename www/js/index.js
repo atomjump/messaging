@@ -76,7 +76,7 @@ var app = {
 				var pollingURL = localStorage.getItem('pollingURL');
 				app.startPolling(pollingURL, true);			//Check for new messages and start polling immediately
 			}
-    	},1);   
+    	},10);   
     	
     },
     
