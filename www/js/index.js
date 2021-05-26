@@ -525,10 +525,13 @@ var app = {
 						}
 						else {
 						
-							//Start polling
+							
 							
 							var pollingURL = localStorage.getItem('pollingURL');
 							innerThis.startPolling(pollingURL);
+							
+							//Reregister with server, and start polling
+							innerThis.registration("add", innerEmail);
 						}
 						
 								
