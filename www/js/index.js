@@ -636,17 +636,13 @@ var app = {
         push.on('registration', function(data) {
             
             //Typically called after the first load event, but will also be called (with the same
-            //registrationId 
+            //registrationId) after the screen is opened again. In the latter case, we don't want 
+            //to send off
            
             
             var oldRegId = localStorage.getItem('registrationId');
             $('#registered').show();
             if(oldRegId !== data.registrationId) {	
-            
-             //Note: immediately after a manual 'release', this event will be called as we go back 
-            //to the main screen, and the pullRegistration will no longer exist. However,
-            //we don't want to auto-run the Pull Setup again. The user needs to 
-                
                 
                // Save new registration ID
                localStorage.setItem('registrationId', data.registrationId);
@@ -654,8 +650,6 @@ var app = {
                 //Now configure the dual AtomJump messaging account
 				innerThis.sendCombinedPushPull(thisEmail);
 					
-            } else {
-            	innerThis.sendCombinedPushPull(thisEmail);		//Is ready to use
             }
 			
              
