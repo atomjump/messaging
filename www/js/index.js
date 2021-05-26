@@ -473,9 +473,7 @@ var app = {
 		
 						var oldRegId = localStorage.getItem('pullRegistrationId');
 						var innerEmail = thisEmail;
-						
-						alert("oldRegId: " + JSON.stringify(oldRegId));	//TESTING
-							
+													
 						if (!oldRegId) {
 							//We need to generate a new registrationId
 		
