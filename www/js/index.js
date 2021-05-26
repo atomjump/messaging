@@ -439,148 +439,146 @@ var app = {
     		return;    		
     	} else {
     	
-    		//Check the server if we have pull available
-			$.ajax({
-				type       : "POST",
-				url        : api + "plugins/notifications/check-pull.php",
-				dataType: 'jsonp', // Notice! JSONP <-- P (lowercase)
-				crossDomain: true,
-				success    : function(resp) {
+    		var oldRegId = localStorage.getItem('pullRegistrationId');										
+			if (!oldRegId) {
+				//We need to generate a new pull registrationId
+    			//Check the server if we have pull available
+				$.ajax({
+					type       : "POST",
+					url        : api + "plugins/notifications/check-pull.php",
+					dataType: 'jsonp', // Notice! JSONP <-- P (lowercase)
+					crossDomain: true,
+					success    : function(resp) {
 										
-					if(resp && resp.response == "true") {						
-						//Use pull
+						if(resp && resp.response == "true") {						
+							//Use pull
 						
-						/*Example 	
+							/*Example 	
 		
-						Step 1. App requests a registration event
+							Step 1. App requests a registration event
 	
-						Pair from this PHP script e.g:
-						http://this.ajmessaging.url/api/plugins/notifications/genid.php?country=NZ
+							Pair from this PHP script e.g:
+							http://this.ajmessaging.url/api/plugins/notifications/genid.php?country=NZ
 	
-						which will return e.g.
-						2z2H HMEcfQQCufJmRPMX4C https://medimage-nz1.atomjump.com New%20Zealand 
+							which will return e.g.
+							2z2H HMEcfQQCufJmRPMX4C https://medimage-nz1.atomjump.com New%20Zealand 
 	
 	
-						If any other software needs it, we can request in the next couple of hours:
+							If any other software needs it, we can request in the next couple of hours:
 	
-						https://medimage-pair.atomjump.com/med-genid.php?compare=2z2H
+							https://medimage-pair.atomjump.com/med-genid.php?compare=2z2H
 	
-						which returns the pool server write script e.g.
-						https://medimage-nz1.atomjump.com/write/HMEcfQQCufJmRPMX4C
-						*/
-						innerThis.pull = true;		//Set the global pull
+							which returns the pool server write script e.g.
+							https://medimage-nz1.atomjump.com/write/HMEcfQQCufJmRPMX4C
+							*/
+							innerThis.pull = true;		//Set the global pull
 		
 						
 		
-						var oldRegId = localStorage.getItem('pullRegistrationId');
-						var innerEmail = thisEmail;
-													
-						if (!oldRegId) {
 							//We need to generate a new registrationId
-		
 							var url = api + "plugins/notifications/genid.php?country=Default";		//Can potentially extend to some country code info here from the cordova API, or user input?
-														
+													
 							$.ajax({
 								type       : "POST",
 								url        : url,
 								crossDomain: true,
 								dataType   : 'jsonp',
 								success    : function(response) {
+							
 								
-									
 									var resp = decodeURIComponent(response);
 									//Registered OK
 									//resp will now be e.g. "2z2H HMEcfQQCufJmRPMX4C https://medimage-nz1.atomjump.com New%20Zealand"
-																
+															
 									var items = resp.split(" ");
 									var phonePlatform = "AtomJump";		//This is cross-platform
 									var pullRegistrationId = encodeURIComponent(items[2] + "/api/photo/#" + items[1]);
 									//Registration id will now be e.g. https://medimage-nz1.atomjump.com/api/photo/#HMEcfQQCufJmRPMX4C
 									//which is what our server will post new message .json files too.
-	
-				
+
+			
 									var pollingURL = items[2] + "/read/" + items[1];
 									//The pollingURL is what we will continue to check on
-				
+			
 									//Start up regular checks
 									localStorage.setItem('pollingURL', pollingURL);
 									innerThis.startPolling(pollingURL, true);
-				
-				   
+			
+			   
 									$('#registered').html("<small>Listening for Messages<br/>(Bring app to front)</small>");
 									$('#registered').show();
-				
-				
+			
+			
 									// Save the new registration ID on the phone
 									localStorage.setItem('pullRegistrationId', pullRegistrationId);
 									// Post registrationId to your app server as the value has changed
-									
+								
 									//Post to server software Loop Server API
-				
 									innerThis.registration("add", innerEmail);
-									
-		
-		
+								
+	
+	
 								},	//End of success
 								error  : function(xhr, status, error) {
 									var errorMessage = xhr.status + ': ' + xhr.statusText + ' :' + error;
 									alert("Sorry there was a problem generating a pairing with your server. Please try again later.");  		      
 								}
-						   });  
+						   });  //End of new reg AJAX post
 			
-						}
-						else {
-						
-							
-							
-							var pollingURL = localStorage.getItem('pollingURL');
-							innerThis.startPolling(pollingURL);
-							
-							//Reregister with server, and start polling
-							innerThis.registration("add", innerEmail);
-						}
+
 						
 								
 					
-					} else {
-						//The server does not support AtomJump messages - warn the user
+						} else {
+							//The server does not support AtomJump messages - warn the user
+							var iOSregistrationId = localStorage.getItem('registrationId');
+							if(iOSregistrationId) {
+						
+								alert("Warning: the messaging server you are connecting to does not support AtomJump notifications, which means that while you may still receive iPhone-native notifications, after you click on them, you will not be shown the more convenient button leading to the forum.");	
+						
+								//But pair the iPhone version
+								innerThis.registration("add", thisEmail);
+							
+							} else {
+								//Server doesn't support AtomJump messages and we weren't successfully
+								//registered for iOS messages. Warn user
+								alert("Error: Sorry there was a problem trying to register for iOS messages.");
+						
+							}
+						}
+					},
+					error      : function() {
+						//Use push instead.
 						var iOSregistrationId = localStorage.getItem('registrationId');
 						if(iOSregistrationId) {
-						
-							alert("Warning: the messaging server you are connecting to does not support AtomJump notifications, which means that while you may still receive iPhone-native notifications, after you click on them, you will not be shown the more convenient button leading to the forum.");	
-						
-							//But pair the iPhone version
-							innerThis.registration("add", thisEmail);
-							
-						} else {
-							//Server doesn't support AtomJump messages and we weren't successfully
-							//registered for iOS messages. Warn user
-							alert("Error: Sorry there was a problem trying to register for iOS messages.");
-						
-						}
-					}
-				},
-				error      : function() {
-					//Use push instead.
 					
-					
-					var iOSregistrationId = localStorage.getItem('registrationId');
-					if(iOSregistrationId) {
-					
-						alert("Warning: we could not determine whether the server supports AtomJump messages, which means that while you may still receive iPhone-native notifications, after you click on them, you will not be shown a convenient button leading to the forum.");	
+							alert("Warning: we could not determine whether the server supports AtomJump messages, which means that while you may still receive iPhone-native notifications, after you click on them, you will not be shown a convenient button leading to the forum.");	
 
-						innerThis.registration("add", thisEmail);
+							innerThis.registration("add", thisEmail);
 					
-					} else {
-						alert("Error: Sorry there was a problem trying to register for iOS messages.");
-						//Register with AtomJump messages
-						innerThis.registration("add", thisEmail);
+						} else {
+							alert("Error: Sorry there was a problem trying to register for iOS messages.");
+							//Register with AtomJump messages
+							innerThis.registration("add", thisEmail);
 					
+						}
+						return;        
 					}
-					return;        
-				}
 			
-			});
+				});	
+    	
+    		} else {
+				//An existing pull registration - start polling and do the visual pair								
+				var pollingURL = localStorage.getItem('pollingURL');
+				innerThis.startPolling(pollingURL);
+				
+				//Do the visual pairing
+				innerThis.registration("add", innerEmail);
+
+    		
+    		}
+    	
+    		
     	
     		
     	}
