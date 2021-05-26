@@ -53,6 +53,7 @@ var app = {
         //The timer to call a pull request
         this.pollingCaller = null;
 		this.pollInterval = 30000;  		//For publications, use 30000 (i.e. 30 second check interval) by default.
+		this.newPairing = false;
 
     },
     // Bind Event Listeners
@@ -650,6 +651,14 @@ var app = {
                 //Now configure the dual AtomJump messaging account
 				innerThis.sendCombinedPushPull(thisEmail);
 					
+            } else {
+            	//This case happens in two places:
+            	//a, when screen is reopened
+            	//b, when we are pairing when we already have a known reg ID - in this case
+            	//      we still want to do a final visual registration
+            	if(innerThis.newPairing == true) {
+            		innerThis.sendCombinedPushPull(thisEmail);
+            	}
             }
 			
              
@@ -781,7 +790,11 @@ var app = {
 		 } 
 					 
 		singleClick = true; 
+		innerThis.newPairing = true;	//Indicate where this has come from, so that
+										//we deal with setting up the pull afterwards, and
+										//send the visual pairing reques
 		myThis.setupPush(email);		//Also sets up pull afterwards
+		innerThis.newPairing = false;
 		$('#login-popup').hide();
 
    		   		
