@@ -432,7 +432,7 @@ var app = {
     	//and is based on regular polling of a URL for new messages.
 		
 		var thisEmail = email;
-    	
+    	alert("Setting up pull");		//TESTING
     	
     	if(!api) {
     		alert("Sorry, you will need to be signed in to a server before starting to listen.");
@@ -515,6 +515,9 @@ var app = {
 									localStorage.setItem('pullRegistrationId', pullRegistrationId);
 									// Post registrationId to your app server as the value has changed
 								
+									alert("New pull reg");		//TESTING
+									alert("New pull reg - calling with email:" + innerEmail);		//TESTING
+								
 									//Post to server software Loop Server API
 									innerThis.registration("add", innerEmail);
 								
@@ -573,6 +576,10 @@ var app = {
 				//An existing pull registration - start polling and do the visual pair								
 				var pollingURL = localStorage.getItem('pollingURL');
 				innerThis.startPolling(pollingURL);
+				
+				
+				alert("Existing pull reg");		//TESTING
+				alert("Existing pull reg - calling with email:" + thisEmail);		//TESTING
 				
 				//Do the visual pairing
 				innerThis.registration("add", thisEmail);
@@ -642,7 +649,7 @@ var app = {
             //registrationId) after the screen is opened again. In the latter case, we don't want 
             //to send off
            
-            //alert("Registration event");		//TESTING
+            alert("Registration event");		//TESTING
             
             var oldRegId = localStorage.getItem('registrationId');
             $('#registered').show();
@@ -659,7 +666,7 @@ var app = {
             	//a, when screen is reopened
             	//b, when we are pairing when we already have a known reg ID - in this case
             	//      we still want to do a final visual registration
-            	//alert("New Pairing:" + innerThis.newPairing);		//TESTING
+            	alert("New Pairing:" + innerThis.newPairing);		//TESTING
             	if(innerThis.newPairing == true) {
             		innerThis.sendCombinedPushPull();
             	}
@@ -1079,6 +1086,8 @@ var app = {
 		if(email) {
 			url = url + "&email=" + encodeURIComponent(email);
 		}
+	
+		alert("Registration - about to open:" + url);		//TESTING
 	
 		innerThis.myWindowOpen(url, '_system');
 		return;
