@@ -90,7 +90,6 @@ var app = {
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
           
-          alert("onDeviceReady called");		//TESTING
           app.receivedEvent('deviceready');
           var settingApi = localStorage.getItem("api");
           if(settingApi) {
@@ -763,7 +762,10 @@ var app = {
 			
 			if(pullId) {
 				//Have a pullId already
-				myThis.registration("add", email);
+				//Start up the polling
+				app.stopPolling();			//Any existing polling should be switched off
+				var pollingURL = localStorage.getItem('pollingURL');
+				app.startPolling(pollingURL, true);			//Check for new messages and start 
 			} else {
 				//Will need to set up the pull now
 				myThis.setupPull(email);
