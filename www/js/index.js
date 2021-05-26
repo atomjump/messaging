@@ -70,7 +70,7 @@ var app = {
     	setTimeout(function(){
     		var pullReg = localStorage.getItem('pullRegistrationId');
     		
-    		if(pullReg) {			//We don't want to inadvertantly open it before we actually 
+    		if(pullReg) {			//We don't want to open it before we actually 
     								//have a connection.
 				app.stopPolling();			//Any existing polling should be switched off
 				var pollingURL = localStorage.getItem('pollingURL');
@@ -90,6 +90,7 @@ var app = {
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
           
+          alert("onDeviceReady called");		//TESTING
           app.receivedEvent('deviceready');
           var settingApi = localStorage.getItem("api");
           if(settingApi) {
@@ -1075,10 +1076,16 @@ var app = {
 			//app will assume we have this data, and will re-register 
 			localStorage.removeItem("registrationId");
 			localStorage.removeItem("pullRegistrationId");
+			//Pause a little to ensure change is made
+			setTimeout(function(){
+				innerThis.myWindowOpen(url, '_system');
+			
+			}, 150);
+		} else {
+		
+		
+			innerThis.myWindowOpen(url, '_system');
 		}
-		
-		
-		innerThis.myWindowOpen(url, '_system');
     	return;
     
     },
