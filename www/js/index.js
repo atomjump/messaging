@@ -70,6 +70,8 @@ var app = {
     	setTimeout(function(){
     		var pullReg = localStorage.getItem('pullRegistrationId');
     		
+    		alert("regID = " + pullReg);			//TESTING
+    		
     		if(pullReg) {			//We don't want to open it before we actually 
     								//have a connection.
 				app.stopPolling();			//Any existing polling should be switched off
@@ -418,7 +420,9 @@ var app = {
     },
     
     setupPull: function(email) {
-    
+    	
+    	alert("setup pull called");		//TESTING
+    	
     	innerThis = this;
     	//Pull from an AtomJump notification system
     	//Works in a similar fashion to setupPush() below, but is cross-platform
@@ -636,8 +640,13 @@ var app = {
                 localStorage.setItem('registrationId', data.registrationId);
                 
                 
-                //Now configure the dual AtomJump messaging account
-                innerThis.setupPull();
+                var oldPullRegId = localStorage.getItem('pullRegistrationId');
+                
+                if(!oldPullRegId) {
+                	//Now configure the dual AtomJump messaging account
+                	alert("Setup pull from push registration event");
+                	innerThis.setupPull();
+                }
                 
             } 
 			
@@ -650,14 +659,21 @@ var app = {
              // Save new registration ID
             //For future test use: localStorage.setItem('registrationId', "TESTID");		//When testing on simulator - remove this line!
             
-            //But configure the dual AtomJump messaging account
-            innerThis.setupPull();
+            var oldPullRegId = localStorage.getItem('pullRegistrationId');
+            if(!oldPullRegId) {
+            	//But configure the dual AtomJump messaging account
+            	alert("Setup pull from push error event");
+            	innerThis.setupPull();
+            }
         });
 
         push.on('notification', function(data) {
-                   
+            
+            //This event is no longer firing, so we don't want to double up on
+            //the notifications displayed within the app. This is why we are using
+            //AtomJump pull messages, alongside the push ones.  
 			//Else, try all options
-			if(app && app.getPlatform) {
+			/*if(app && app.getPlatform) {
 				app.onNotificationEvent(data, app, "iOS");
 			} else {
 				if(innerThis && innerThis.getPlatform) {
@@ -665,7 +681,7 @@ var app = {
 				} else {
 					this.onNotificationEvent(data, this, "iOS");
 				}
-			}
+			}*/
            
             
 
@@ -686,8 +702,11 @@ var app = {
        push.on('show', function(data) {
 			// do something with the notification data
 
+			//This event is no longer firing, so we don't want to double up on
+            //the notifications displayed within the app. This is why we are using
+            //AtomJump pull messages, alongside the push ones.  
 			//Else, try all options
-			if(app && app.getPlatform) {
+			/*if(app && app.getPlatform) {
 				app.onNotificationEvent(data, app, "iOS");
 			} else {
 				if(innerThis && innerThis.getPlatform) {
@@ -695,7 +714,7 @@ var app = {
 				} else {
 					this.onNotificationEvent(data, this, "iOS");
 				}
-			}
+			}*/
            
             
 
@@ -768,6 +787,7 @@ var app = {
 				app.startPolling(pollingURL, true);			//Check for new messages and start 
 			} else {
 				//Will need to set up the pull now
+				alert("setup pull from register() function");		//TESTING 
 				myThis.setupPull(email);
 			}
 			
@@ -1080,9 +1100,12 @@ var app = {
 			localStorage.removeItem("pullRegistrationId");
 			//Pause a little to ensure change is made
 			setTimeout(function(){
+				var pullRegistrationId = localStorage.getItem("registrationId");		//TESTING
+				alert("pull regID = " + pullRegistrationId);			//TESTING
+				
 				innerThis.myWindowOpen(url, '_system');
 			
-			}, 150);
+			}, 500);
 		} else {
 		
 		
