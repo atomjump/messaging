@@ -472,7 +472,9 @@ var app = {
 							https://medimage-nz1.atomjump.com/write/HMEcfQQCufJmRPMX4C
 							*/
 							innerThis.pull = true;		//Set the global pull
-		
+							
+							
+							var innerEmail = thisEmail;
 						
 		
 							//We need to generate a new registrationId
@@ -640,7 +642,7 @@ var app = {
             //registrationId) after the screen is opened again. In the latter case, we don't want 
             //to send off
            
-            alert("Registration event");		//TESTING
+            //alert("Registration event");		//TESTING
             
             var oldRegId = localStorage.getItem('registrationId');
             $('#registered').show();
@@ -650,16 +652,16 @@ var app = {
                localStorage.setItem('registrationId', data.registrationId);
    
                 //Now configure the dual AtomJump messaging account
-				innerThis.sendCombinedPushPull(thisEmail);
+				innerThis.sendCombinedPushPull();
 					
             } else {
             	//This case happens in two places:
             	//a, when screen is reopened
             	//b, when we are pairing when we already have a known reg ID - in this case
             	//      we still want to do a final visual registration
-            	alert("New Pairing:" + innerThis.newPairing);		//TESTING
+            	//alert("New Pairing:" + innerThis.newPairing);		//TESTING
             	if(innerThis.newPairing == true) {
-            		innerThis.sendCombinedPushPull(thisEmail);
+            		innerThis.sendCombinedPushPull();
             	}
             }
 			
