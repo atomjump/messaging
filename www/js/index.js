@@ -397,25 +397,7 @@ var app = {
     	//Pull from an AtomJump notification system
     	//Works in a similar fashion to setupPush() below, but is cross-platform
     	//and is based on regular polling of a URL for new messages.
-    	
-		/*May be an option?: cordova.plugins.notification.local.hasPermission(function (granted) {
-			if(granted == true) {
-				 //Carry on - we have permission to show notifications
-		 
-			} else {
-				//Not granted - request permission
-				cordova.plugins.notification.local.registerPermission(function (granted) {
-					 if(granted == false) {
-						alert("AtomJump Messaging will use the device's own notification system instead.");
-						//Use push instead.
-						innerThis.setupPush();		
-						return;    
-					 }
-				});
-			}
-		});*/
-		
-    	
+    	    	
     	
     	if(!api) {
     		alert("Sorry, you will need to be signed in to a server before starting to listen.");
@@ -501,7 +483,7 @@ var app = {
 								if(singleClick == true) {
 									//Have tapped a single server pairing - will not have a known userid
 									//so we need to let the browser use it's own cookies.
-									var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=&devicetype=" + phonePlatform;
+									var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=&devicetype=" + phonePlatform + "&action=add";
 									if(thisEmail) {
 										url = url + "&email=" + encodeURIComponent(thisEmail);
 									}
@@ -521,7 +503,7 @@ var app = {
 									//Otherwise login with the known logged userId
 									var phonePlatform = innerThis.getPlatform();
 									
-									var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform;  //e.g. 								https://atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
+									var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform + "&action=add";  //e.g. 								https://atomjump.com/api/plugins/notifications/register.php?id=test&userid=3&action=add
 									if(thisEmail) {
 										url = url + "&email=" + encodeURIComponent(thisEmail);
 									}
@@ -624,14 +606,14 @@ var app = {
                 	var phonePlatform = innerThis.getPlatform();
                 	
                 	
-                	var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=&devicetype=" + phonePlatform;
+                	var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=&devicetype=" + phonePlatform + "&action=add";
                 	innerThis.myWindowOpen(url, '_blank');
                 } else {
                 
                  	//Otherwise login with the known logged userId
                  	var phonePlatform = innerThis.getPlatform();
                  	
-               	 	var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform;  //e.g. https://atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
+               	 	var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform + "&action=add";  //e.g. https://atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
 					 innerThis.get(url, function(url, resp) {
 						//Registered OK
 					
@@ -953,9 +935,7 @@ var app = {
     		navigator.notification.confirm(
 	    		'Are you sure? All your saved forums and other settings will be cleared.',  // message
 	    		function(buttonIndex) {
-	    			if(buttonIndex == 1) {
-						localStorage.clear();
-						
+	    			if(buttonIndex == 1) {					
 						
 						localStorage.removeItem("loggedUser");
 						localStorage.removeItem("settings");
@@ -978,7 +958,7 @@ var app = {
 				
 						userId = null;
 						
-						
+						localStorage.clear();
     		
 						alert("Cleared all saved forums and settings.  Warning: if you had more than one connected server, you will need to manually connect and then disconnect from these other servers. Currently, messages from these servers will not be retrieved.");
 		
