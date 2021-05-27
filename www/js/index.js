@@ -617,7 +617,7 @@ var app = {
 									if(singleClick == true) {
 										//Have tapped a single server pairing - will not have a known userid
 										//so we need to let the browser use it's own cookies.
-										var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=&devicetype=" + phonePlatform;
+										var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=&devicetype=" + phonePlatform + "&action=add";
 										if(thisEmailB) {
 											url = url + "&email=" + encodeURIComponent(thisEmailB);
 										}
@@ -630,7 +630,7 @@ var app = {
 				
 									
 				
-										var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform;  //e.g. https://atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
+										var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform + "&action=add";  //e.g. https://atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
 										if(thisEmailB) {
 											url = url + "&email=" + encodeURIComponent(thisEmailB);
 										}
@@ -738,7 +738,7 @@ var app = {
                 	var phonePlatform = "Android";
                 	
                 	
-                	var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=&devicetype=" + phonePlatform;
+                	var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=&devicetype=" + phonePlatform + "&action=add";
                 	if(thisEmail) {
 						url = url + "&email=" + encodeURIComponent(thisEmail);
                 	}
@@ -749,7 +749,7 @@ var app = {
                  	//Otherwise login with the known logged userId
                  	var phonePlatform = "Android";
                  	
-               	 	var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform;  //e.g. https://atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
+               	 	var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform + "&action=add";  //e.g. https://atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
                	 	if(thisEmail) {
 						url = url + "&email=" + encodeURIComponent(thisEmail);
                 	}
@@ -836,7 +836,7 @@ var app = {
 			var phonePlatform = innerThis.getPlatform();
 			var platform = phonePlatform;
 		
-			var url = api + "plugins/notifications/register.php?id=" + id + "&devicetype=" + platform;
+			var url = api + "plugins/notifications/register.php?id=" + id + "&devicetype=" + platform + "&action=add";
 			if(email) {
 				url = url + "&email=" + encodeURIComponent(email);
 			}
@@ -1092,6 +1092,17 @@ var app = {
 						_this.setPull("false");
 						
 						//Deregister on the database - by sending a blank id (which gets set as a null on the server). Disassociates phone from user.
+						
+						
+						var registrationId = localStorage.getItem("registrationId");
+						var phonePlatform = _this.getPlatform();
+			
+						var url = api + "plugins/notifications/register.php?id=" + encodeURIComponent(registrationId) + "&devicetype=" + encodeURIComponent(phonePlatform) + "&action=remove";  //e.g.																			https://atomjump.com/api/plugins/notifications/register.php?id=test&devicetype=AtomJump&action=remove
+						_this.myWindowOpen(url, '_system');
+				
+						userId = null;
+						
+						/*OLD way TESTING out
 						if(userId) {
 							var url = api + "plugins/notifications/register.php?id=&userid=" + userId;  //e.g. https://atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
 							_this.myWindowOpen(url, '_system');
@@ -1104,7 +1115,7 @@ var app = {
 								//This is not optional. It will not logout correctly otherwise.
 								_this.myWindowOpen(url, '_system');
 						
-						}
+						}*/
     		
 						alert("Cleared all saved forums and settings. Warning: if you had more than one connected server, you will need to manually connect and then disconnect from these other servers. Currently, messages from these servers will not be retrieved.");
 		
@@ -1166,9 +1177,20 @@ var app = {
 			_this.stopPolling();
 		
 			//Deregister on the database - by sending a blank id (which gets set as a null on the server). Disassociates phone from user.
+			
+			var registrationId = localStorage.getItem("registrationId");
+			var phonePlatform = _this.getPlatform();
+			
+			var url = api + "plugins/notifications/register.php?id=" + encodeURIComponent(registrationId) + "&devicetype=" + encodeURIComponent(phonePlatform) + "&action=remove";  //e.g.																			https://atomjump.com/api/plugins/notifications/register.php?id=test&devicetype=AtomJump&action=remove
+			_this.myWindowOpen(url, '_system');
+				
+			userId = null;
+			
+			/* OLD way TESTING out
 			if(userId) {
 				//We are logged in within the app as a user
 				var url = api + "plugins/notifications/register.php?id=&userid=" + userId;  //e.g. https://atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
+				var url = api + "plugins/notifications/register.php?id=" + encodeURIComponent(registrationId) + "&devicetype=" + encodeURIComponent(phonePlatform) + "&action=remove";  //e.g.																			https://atomjump.com/api/plugins/notifications/register.php?id=test&devicetype=AtomJump&action=remove
 				_this.myWindowOpen(url, '_system');
 				
 				userId = null;
@@ -1182,7 +1204,7 @@ var app = {
 				//This is not optional. It will not logout correctly otherwise.
 				_this.myWindowOpen(url, '_system');
 			
-			}
+			}*/
 
 		
 
