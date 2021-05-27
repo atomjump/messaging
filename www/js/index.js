@@ -1076,9 +1076,9 @@ var app = {
 	    		'Are you sure? All your saved forums and other settings will be cleared.',  // message
 	    		function(buttonIndex) {
 	    			if(buttonIndex == 1) {
-						localStorage.clear();
 						
-						localStorage.removeItem("registrationId");
+						
+						
 						localStorage.removeItem("loggedUser");
 						localStorage.removeItem("settings");
 						localStorage.removeItem("api");
@@ -1095,6 +1095,7 @@ var app = {
 						
 						
 						var registrationId = localStorage.getItem("registrationId");
+						localStorage.removeItem("registrationId");
 						var phonePlatform = _this.getPlatform();
 			
 						var url = api + "plugins/notifications/register.php?id=" + encodeURIComponent(registrationId) + "&devicetype=" + encodeURIComponent(phonePlatform) + "&action=remove";  //e.g.																			https://atomjump.com/api/plugins/notifications/register.php?id=test&devicetype=AtomJump&action=remove
@@ -1102,20 +1103,7 @@ var app = {
 				
 						userId = null;
 						
-						/*OLD way TESTING out
-						if(userId) {
-							var url = api + "plugins/notifications/register.php?id=&userid=" + userId;  //e.g. https://atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
-							_this.myWindowOpen(url, '_system');
-							
-						} else {
-								//Deregister from remote server connection in a browser
-								var url = api + "plugins/notifications/register.php?id=";
-
-								//This needs to open the browser, or the session won't logout
-								//This is not optional. It will not logout correctly otherwise.
-								_this.myWindowOpen(url, '_system');
-						
-						}*/
+						localStorage.clear();
     		
 						alert("Cleared all saved forums and settings. Warning: if you had more than one connected server, you will need to manually connect and then disconnect from these other servers. Currently, messages from these servers will not be retrieved.");
 		
@@ -1185,28 +1173,6 @@ var app = {
 			_this.myWindowOpen(url, '_system');
 				
 			userId = null;
-			
-			/* OLD way TESTING out
-			if(userId) {
-				//We are logged in within the app as a user
-				var url = api + "plugins/notifications/register.php?id=&userid=" + userId;  //e.g. https://atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
-				var url = api + "plugins/notifications/register.php?id=" + encodeURIComponent(registrationId) + "&devicetype=" + encodeURIComponent(phonePlatform) + "&action=remove";  //e.g.																			https://atomjump.com/api/plugins/notifications/register.php?id=test&devicetype=AtomJump&action=remove
-				_this.myWindowOpen(url, '_system');
-				
-				userId = null;
-		
-			} else {
-				//We are registered only on the server, which knows our userid as a session value
-				//Deregister from remote server connection in a browser
-				var url = api + "plugins/notifications/register.php?id=";
-
-				//This needs to open the browser, or the session won't logout
-				//This is not optional. It will not logout correctly otherwise.
-				_this.myWindowOpen(url, '_system');
-			
-			}*/
-
-		
 
 			$('#login-popup').show();
 		} else {
