@@ -956,7 +956,7 @@ var app = {
 	    			if(buttonIndex == 1) {
 						localStorage.clear();
 						
-						localStorage.removeItem("registrationId");
+						
 						localStorage.removeItem("loggedUser");
 						localStorage.removeItem("settings");
 						localStorage.removeItem("api");
@@ -968,22 +968,17 @@ var app = {
 						$('#registered').hide();
 						
 						//Deregister on the database - by sending a blank id (which gets set as a null on the server). Disassociates phone from user.
-						if(userId) {
-							var url = api + "plugins/notifications/register.php?id=&userid=" + userId;  //e.g. https://atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
-							_this.get(url, function(url, resp) {
-								//Registered OK
-			
-							});
-						} else {
-								//Deregister from remote server connection in a browser
-								
-								var url = api + "plugins/notifications/register.php?id=";
-
-			
-								//This is not optional. It will not logout correctly.
-								_this.myWindowOpen(url, '_blank');
 						
-						}
+						var registrationId = localStorage.getItem("registrationId");
+						localStorage.removeItem("registrationId");
+						var phonePlatform = _this.getPlatform();
+			
+						var url = api + "plugins/notifications/register.php?id=" + encodeURIComponent(registrationId) + "&devicetype=" + encodeURIComponent(phonePlatform) + "&action=remove";  //e.g.																			https://atomjump.com/api/plugins/notifications/register.php?id=test&devicetype=AtomJump&action=remove
+						_this.myWindowOpen(url, '_blank');
+				
+						userId = null;
+						
+						
     		
 						alert("Cleared all saved forums and settings.  Warning: if you had more than one connected server, you will need to manually connect and then disconnect from these other servers. Currently, messages from these servers will not be retrieved.");
 		
@@ -1018,30 +1013,14 @@ var app = {
 			_this.stopPolling();
 		
 			//Deregister on the database - by sending a blank id (which gets set as a null on the server). Disassociates phone from user.
-			if(userId) {
-				//We are logged in within the app as a user
-				var url = api + "plugins/notifications/register.php?id=&userid=" + userId;  //e.g. https://atomjump.com/api/plugins/notifications/register.php?id=test&userid=3
-				_this.myWindowOpen(url, '_blank');
-				
-				/*Old style: this.get(url, function(url, resp) {
-					//Registered OK
 			
-				});*/
-				
-				userId = null;
-		
-			} else {
-				//We are registered only on the server, which knows our userid as a session value
-				//Deregister from remote server connection in a browser
-				var url = api + "plugins/notifications/register.php?id=";
-
-				//This needs to open the browser, or the session won't logout
-				//This is not optional. It will not logout correctly.
-				_this.myWindowOpen(url, '_blank');
-				
-				userId = null;		//This may be a blank user string, so fully clear it off.
+			var registrationId = localStorage.getItem("registrationId");
+			var phonePlatform = _this.getPlatform();
 			
-			}
+			var url = api + "plugins/notifications/register.php?id=" + encodeURIComponent(registrationId) + "&devicetype=" + encodeURIComponent(phonePlatform) + "&action=remove";  //e.g.																			https://atomjump.com/api/plugins/notifications/register.php?id=test&devicetype=AtomJump&action=remove
+			_this.myWindowOpen(url, '_blank');
+				
+			userId = null;
 
 			$('#login-popup').show();
 		} else {
