@@ -161,7 +161,12 @@ var app = {
           if(userId) {
         	//Yep, we have a logged in user
         	$('#login-popup').hide();
-        	app.setupPull(null);
+        	
+        	if(app && app.getPull() == "true") {
+        		app.setupPull(null);
+        	} else {
+        		app.setupPush(null);
+        	}
         	return;		
         
           } else {
@@ -173,8 +178,15 @@ var app = {
           var oldRegId = localStorage.getItem('registrationId');
           
           if(oldRegId) {
+          		
           		$('#login-popup').hide();	
+          		
+          	
+         	if(app && app.getPull() == "true") {
          		app.setupPull(null);
+        	} else {
+        		app.setupPush(null);
+        	}
           }
 
     },
@@ -547,7 +559,9 @@ var app = {
 						*/
 						innerThis.setPull("true");		//Set the global pull
 	
+	
 						var oldRegId = localStorage.getItem('registrationId');
+					
 					
 						if (!oldRegId) {
 						
@@ -689,6 +703,15 @@ var app = {
     setupPush: function(email) {
   		//Set the global pull to off
   		
+  		if(innerThis && innerThis.getPlatform) {
+			//all good, we have the right object.
+		} else {
+			if(app && app.getPlatform) {
+				innerThis = app;		//If coming from an outside source such as a popup notification
+			} else {
+				innerThis = this;
+			}
+		}
 		innerThis.setPull("false");
 		var thisEmail = email;
 
