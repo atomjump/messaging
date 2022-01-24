@@ -393,7 +393,7 @@ var app = {
     
     validPairingId: function(id) {
     	//Either 18 (MedImage) or 20 (Messaging) characters is the current standard
-		if((items[1].length >= 18)&&(items[1].length <= 21)) {
+		if((id.length >= 18)&&(id.length <= 21)) {
 			return true;
 		} else {
 			return false;
