@@ -391,6 +391,15 @@ var app = {
     	}    	
     },
     
+    validPairingId: function(id) {
+    	//Either 18 (MedImage) or 20 (Messaging) characters is the current standard
+		if((items[1].length >= 18)&&(items[1].length <= 21)) {
+			return true;
+		} else {
+			return false;
+		}
+    },
+    
     setupPull: function(email) {
     
     	innerThis = this;
@@ -460,61 +469,69 @@ var app = {
 								var registrationId = encodeURIComponent(items[2] + "/api/photo/#" + items[1]);
 								//Registration id will now be e.g. https://medimage-nz1.atomjump.com/api/photo/#HMEcfQQCufJmRPMX4C
 								//which is what our server will post new message .json files too.
-				
-								var pollingURL = items[2] + "/read/" + items[1];
-								//The pollingURL is what we will continue to check on
-				
-								//Start up regular checks
-								localStorage.setItem('pollingURL', pollingURL);
 								
+								//Check items[1] is a valid code:
+								if(innerThis.validPairingId(items[1])) {
+									var pollingURL = items[2] + "/read/" + items[1];
+									//The pollingURL is what we will continue to check on
 				
-				   
-								
-				
-				
-								// Save the new registration ID on the phone
-								localStorage.setItem('registrationId', registrationId);
-								// Post registrationId to your app server as the value has changed
-								//Post to server software Loop Server API
-				
-								
-			
-								//Now open the browser, if the button has been set
-								if(singleClick == true) {
-									//Have tapped a single server pairing - will not have a known userid
-									//so we need to let the browser use it's own cookies.
-									var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=&devicetype=" + phonePlatform + "&action=add";
-									if(thisEmail) {
-										url = url + "&email=" + encodeURIComponent(thisEmail);
-									}
+									//Start up regular checks
+									localStorage.setItem('pollingURL', pollingURL);
 									
+					
+					   
 									
-									openSuccess = app.myWindowOpen(encodeURI(url), '_blank');
-									app.startPolling(null, false, 10);		//After 5 seconds it will check and remove this button below
+					
+					
+									// Save the new registration ID on the phone
+									localStorage.setItem('registrationId', registrationId);
+									// Post registrationId to your app server as the value has changed
+									//Post to server software Loop Server API
+					
+									
+				
+									//Now open the browser, if the button has been set
+									if(singleClick == true) {
+										//Have tapped a single server pairing - will not have a known userid
+										//so we need to let the browser use it's own cookies.
+										var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=&devicetype=" + phonePlatform + "&action=add";
+										if(thisEmail) {
+											url = url + "&email=" + encodeURIComponent(thisEmail);
+										}
+										
+										
+										openSuccess = app.myWindowOpen(encodeURI(url), '_blank');
+										app.startPolling(null, false, 10);		//After 5 seconds it will check and remove this button below
 
-									//Likely on iPhones, create a 2nd clickable button that will start up the new page, just in-case
-									$('#registered').html("<small><a class='button' href='" + url + "' target='_blank'>Complete Pairing</a><br/>(Tap if you are seeing this)</small>");
-									$('#registered').show();
-																			
+										//Likely on iPhones, create a 2nd clickable button that will start up the new page, just in-case
+										$('#registered').html("<small><a class='button' href='" + url + "' target='_blank'>Complete Pairing</a><br/>(Tap if you are seeing this)</small>");
+										$('#registered').show();
+																				
+										
+										
+									} else {
+				
+										//Otherwise login with the known logged userId
+										var phonePlatform = innerThis.getPlatform();
+										
+										var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform + "&action=add";  //e.g. 								https://atomjump.com/api/plugins/notifications/register.php?id=test&userid=3&action=add
+										if(thisEmail) {
+											url = url + "&email=" + encodeURIComponent(thisEmail);
+										}
+					
+										openSuccess = app.myWindowOpen(encodeURI(url), '_blank');
+										app.startPolling(null, false, 10);		//After 7 seconds it will check and remove this button below
+
+										//Likely on iPhones, create a 2nd clickable button that will start up the new page, just in-case
+										$('#registered').html("<small><a class='button' href='" + url + "' target='_blank'>Complete Pairing</a><br/>(Tap if you are seeing this)</small>");
+										$('#registered').show();
 									
-									
+										
+									}
 								} else {
-			
-									//Otherwise login with the known logged userId
-									var phonePlatform = innerThis.getPlatform();
-									
-									var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform + "&action=add";  //e.g. 								https://atomjump.com/api/plugins/notifications/register.php?id=test&userid=3&action=add
-									if(thisEmail) {
-										url = url + "&email=" + encodeURIComponent(thisEmail);
-									}
-				
-									openSuccess = app.myWindowOpen(encodeURI(url), '_blank');
-									app.startPolling(null, false, 10);		//After 7 seconds it will check and remove this button below
-
-									//Likely on iPhones, create a 2nd clickable button that will start up the new page, just in-case
-									$('#registered').html("<small><a class='button' href='" + url + "' target='_blank'>Complete Pairing</a><br/>(Tap if you are seeing this)</small>");
-									$('#registered').show();
-								
+									//There was an incorrect pairing ID passed back
+									//Use push instead.
+									alert("Warning: the pairing has failed (with an incorrect identifier returned). Please try again.");
 									
 								}
 		
