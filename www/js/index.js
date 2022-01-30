@@ -507,7 +507,7 @@ var app = {
 										$('#registered').show();
 																
 									
-										alert("Setting up dereg button");		//TESTING
+										
 										var url = api + "plugins/notifications/register.php?id=" + encodeURIComponent(registrationId) + "&devicetype=" + encodeURIComponent(phonePlatform) + "&action=remove";  //e.g.																			https://atomjump.com/api/plugins/notifications/register.php?id=test&devicetype=AtomJump&action=remove
 										$('#deregister-button').attr("href", url);
 										
@@ -533,7 +533,7 @@ var app = {
 										$('#registered').show();
 										
 										
-										alert("Setting up dereg button");		//TESTING
+										
 										var url = api + "plugins/notifications/register.php?id=" + encodeURIComponent(registrationId) + "&devicetype=" + encodeURIComponent(phonePlatform) + "&action=remove";  //e.g.																			https://atomjump.com/api/plugins/notifications/register.php?id=test&devicetype=AtomJump&action=remove
 										$('#deregister-button').attr("href", url);
 									
@@ -555,7 +555,7 @@ var app = {
 							var pollingURL = localStorage.getItem('pollingURL');
 							innerThis.startPolling(pollingURL, true);		//true: is 1st check immediately
 							
-							alert("Setting up dereg button");		//TESTING
+							
 							var phonePlatform = innerThis.getPlatform();
 							var url = api + "plugins/notifications/register.php?id=" + encodeURIComponent(oldRegId) + "&devicetype=" + encodeURIComponent(phonePlatform) + "&action=remove";  //e.g.																			https://atomjump.com/api/plugins/notifications/register.php?id=test&devicetype=AtomJump&action=remove
 							$('#deregister-button').attr("href", url);
