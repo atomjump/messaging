@@ -85,7 +85,7 @@ var app = {
           if(userId) {
         	//Yep, we have a logged in user
         	$('#login-popup').hide();
-        	app.setupPull(null);
+        	app.setupPull(null, true);
         	return;		
         
           } else {
@@ -98,7 +98,7 @@ var app = {
           
           if(oldRegId) {
           		$('#login-popup').hide();	
-         		app.setupPull(null);
+         		app.setupPull(null, true);
           }
           
           
@@ -417,9 +417,6 @@ var app = {
      	
      	var thisEmail = email;
     
-    	if(!checkImmediately) {
-    		var checkImmediately = true;
-    	}
      	
     		//Check the server if we have pull available
 			$.ajax({
