@@ -351,11 +351,9 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 			
            jQuery(document).ready(function(){
  				jQuery( "#deregister-button").click(function() {
- 				
- 					alert("Clicked dereg");
- 					
+					
  					app.logout();
- 					return true;
+ 					return true;		//Allow the link to happen also
  				});
  				
  				
