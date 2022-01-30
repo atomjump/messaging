@@ -76,7 +76,6 @@ var app = {
           if(settingApi) {
           	 api = settingApi;
           	 $('#private-server').val(api);
-          	 $('#pair-private-server').val(api);
           }
           
           
@@ -702,8 +701,22 @@ var app = {
    
     register: function(apiUrl, email)
     {
+    	//Check if apiURL is a word - in which case we are an xyz.atomjump.com group page.
+    	var response = innerThis.getForumName(apiUrl);	
+     	//Returns:  {
+		//		"forumTitle": forumTitle,
+		//		"forumName": forumName,
+		//		"url": url,
+		//		"registerUrl": registerUrl
+		//	}
+    
     	//Register to the remote Loop Server
-   		innerThis.setAPI(apiUrl); 
+    	innerThis.setAPI(response.registerUrl); 
+   		
+   		//addShortcut input settings.forumTitle
+    	//      			settings.forumName
+    	//     				settings.url		(visual link)
+  		innerThis.addShortcut(response);
    		
    		var id = localStorage.getItem('registrationId');
    		
@@ -717,15 +730,15 @@ var app = {
 			if(email) {
 				url = url + "&email=" + encodeURIComponent(email);
 			}
-
+			
+	
 			innerThis.myWindowOpen(url, '_blank');
 			
 			var settingApi = localStorage.getItem("api");
          	 if(settingApi) {
           		 api = settingApi;
           	 	$('#private-server').val(api);
-          	 	$('#pair-private-server').val(api);
-         	 } 
+          	 } 
 			
 			innerThis.setupPull(email);
 			$('#login-popup').hide();
@@ -736,8 +749,9 @@ var app = {
          	 if(settingApi) {
           		 api = settingApi;
           	 	$('#private-server').val(api);
-          	 	$('#pair-private-server').val(api);
-         	 } 
+        	 } 
+         	   
+         	   
          	          	 
          	singleClick = true;      
         	innerThis.setupPull(email);
@@ -1173,6 +1187,7 @@ var app = {
     
     ellipse: function(str, max){
     	//Chop out a string
+    	if(!str) return str;
    		var newstr; 
    		if(str.length > (max - 3)) { 
    			var cutAt = max/2;
@@ -1199,6 +1214,163 @@ var app = {
     			
     		}
     		$('#forum-list').html(prepList);
+    },
+    
+    
+    getForumName: function(newForumName) {
+    
+    	   	var origStr = newForumName;
+    	   	var registerUrl = origStr;			//Assume this is a registration URL
+   			var atomjumpAPIInput = false;
+   			
+   			//Special case "https://atomjump.com/api"	which is our main atomjump.com link
+   			if(newForumName == "https://atomjump.com/api/") {
+   				var url = "https://atomjump.com/";
+   				var forumTitle = "atomjump.com";
+   				var forumName = "homepage-com";			//No subdomain - specialcase code  	
+   			} else {
+   			
+   			
+	   			//Check if it is a url starting with http
+				if(origStr.substring(0,4) == "http") {
+					var url = origStr;
+					var forumTitle = origStr.replace("https://", "");		//Get rid of http visually
+					forumTitle = forumTitle.replace("http://","");   				
+					var forumName = origStr;
+				} else {
+	   			
+	   				var subdomainVer = true;		//Assume this is a subdomain
+	   			
+					//Check if it is URL with dots
+					if(origStr.indexOf(".") !== -1) {
+						
+						//Special case: "test.atomjump.com"
+						if((origStr.indexOf(".atomjump.com") !== -1)||
+							(origStr.indexOf(".ajmp.co") !== -1)) {
+							subdomainVer = true;
+							origStr = origStr.replace(".atomjump.com", "");
+							origStr = origStr.replace(".ajmp.co", "");
+							
+							//Check a special case API page
+							if(origStr.indexOf("/api/") !== -1) {
+	   							//It is an api atomjump page
+	   							atomjumpAPIInput = true;
+	   						}
+							
+							
+						} else {
+							//So this is a generic URL e.g. "mycompany.com/link"
+							//By default append 'http' at the start of the URL. Most sites
+							//will convert this into https.
+							var url = "http://" + origStr;
+							subdomainVer = false;		//Use directly.
+							var forumTitle = origStr;
+							var forumName = origStr;
+						}
+					} 
+					
+					
+					if(subdomainVer == true) {
+						//An atomjump.com subdomain
+						if(atomjumpAPIInput == true) {
+							var subdomain = origStr.replace(/\/api\//g, '');		//Remove the /api/
+							subdomain = subdomain.replace(/\s+/g, '');  			//remove spaces
+						
+						} else {
+						
+							var subdomain = origStr.replace(/\s+/g, '');  //remove spaces
+						}
+						subdomain = subdomain.replace(/[^a-z0-9\-]/gi, '');	//keep letters and numbers only (and hyphens)
+						
+						if(subdomain == origStr) {
+							//Straightforward redirect
+							var url = 'https://' + subdomain + '.atomjump.com/go/';
+						} else {
+							var url = 'https://' + subdomain + '.atomjump.com/?orig_query=' + encodeURIComponent(origStr + '&autostart=true');
+							
+						}
+						
+						registerUrl = 'https://' + subdomain + '.atomjump.com/api/';
+					
+						var forumTitle = subdomain + '@';
+						var forumName = subdomain;
+					}
+				}
+			}
+			
+			var forumDetails = {
+				"forumTitle": forumTitle,
+				"forumName": forumName,
+				"url": url,
+				"registerUrl": registerUrl
+			}
+			
+			return forumDetails;
+    
+    },
+    
+    
+    addShortcut: function(inputSettings) {
+    		//Input settings.forumTitle
+    		//      settings.forumName
+    		//      settings.url		(visual link)
+    
+    		var settings = app.getArrayLocalStorage("settings");
+    
+    		//Create a new entry - which will be blank to begin with
+   			var newSetting = { 
+   				"forum": inputSettings.forumTitle,		//Display version of group name
+   				"api": api,
+   				"rawForumHeader": rawForumHeader,
+   				"rawForumName": inputSettings.forumName,
+   				"url" : inputSettings.url				//Button links to
+   			};
+   			
+   			
+  			
+   			//Special cases
+   			//if(newSetting.url == "https://atomjump.com/api/") {
+   			//	newSetting.forum = "atomjump.com";
+   			//	newSetting.url = "https://atomjump.com";
+   			//}
+   			
+   			//if(newForumName == 'atomjump') {
+   			//	newSetting.url = "https://atomjump.com/go/";
+   			//}
+   			
+   			if((settings)&&(settings.length)) {
+   				//Check if we are writing over the existing entries
+   				var writeOver = false;
+   				for(cnt = 0; cnt< settings.length; cnt++) {
+   					if((settings[cnt].rawForumName) && (settings[cnt].rawForumName == newSetting.rawForumName)) {
+   						writeOver = true;
+   						settings[cnt] = newSetting;
+   					}
+   					
+   				}
+   				
+   			
+    			if(writeOver == false) {
+    				settings.push(newSetting);  //Save back to the array
+    			}
+   			
+   			
+   			
+   			} else {
+   				//Creating an array for the first time
+   				var settings = [];
+   				settings.push(newSetting);  //Save back to the array
+   			} 
+
+    		
+    		//Save back to the persistent settings
+    		app.setArrayLocalStorage("settings", settings);
+    		
+    		
+    		//Reset the display with the new forum
+    		app.displayForumNames();   
+    
+    		return;
     },
     
     

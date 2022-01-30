@@ -171,8 +171,8 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 	        
 	        	
 			<div style="margin-top: 8px;">
-				<div style="float: left;"><span style="padding-left: 20px;"><ons-button style="background-color: #cc99cc; color: white;" href="javascript" onclick="$('#login-popup').show(); $('#close-new-server').show(); return false;"><ons-icon icon="md-plus" ></ons-icon> Add Pairing</ons-button></span></div>
-				<div style="float: right;"><span style="padding-right: 20px;"><ons-button style="background-color: #cc99cc; color: white;" href="javascript" onclick="return app.logout();"><ons-icon icon="fa-unlink" ></ons-icon> Release</ons-button></span></div>
+				<div style="float: left;"><span style="padding-left: 20px;"><ons-button style="background-color: #cc99cc; color: white;" href="javascript" onclick="$('#login-popup').show(); $('#close-new-server').show(); return false;"><ons-icon icon="md-plus" ></ons-icon> Register</ons-button></span></div>
+				<div style="float: right;"><span style="padding-right: 20px;"><ons-button style="background-color: #cc99cc; color: white;" href="javascript" onclick="return app.logout();"><ons-icon icon="fa-unlink" ></ons-icon> Deregister</ons-button></span></div>
 			</div>
 			
 
@@ -186,10 +186,10 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 			
 				
 				
-				<p id="totop" style="text-align:center; margin-top: 10px; padding-top:10px;">
+				<!--<p id="totop" style="text-align:center; margin-top: 10px; padding-top:10px;">
 					<input id="srch" name="orig_query" type="text" size="9" class="resizedTextbox" placeholder="Message about..">
 					<a id="click-url" href="https://atomjump.com" target="_blank" style="display: none;"><span>Link to remote site</span></a>
-				</p>	
+				</p>-->	
 				
 			
 			
@@ -257,7 +257,7 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 					<ons-list style="padding-top: 20px;">
 					 <ons-list-header>Please Choose:</ons-list-header>
 						<ons-list-item expandable>
-						  <span style="width :100%;" onclick="$('.expandable-content').hide(); $(this).parent().find('.expandable-content').slideToggle();">&nbsp;&nbsp;Pair with AtomJump.com</span>
+						  <span style="width :100%;" onclick="$('.expandable-content').hide(); $(this).parent().find('.expandable-content').slideToggle();">&nbsp;&nbsp;Register with AtomJump.com core</span>
 						  <div class="expandable-content" style="width: 100%;">
 								<p style="text-align:center;">
 								<ons-button style="background-color: #7c5599; color: white;" modifier="large--cta" onclick="soundEffect.play(); app.register(defaultApi, null);"><ons-icon icon='md-link'></ons-icon>&nbsp;&nbsp;AtomJump.com</ons-button>
@@ -265,10 +265,10 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 							</div>
 						</ons-list-item>
 						<ons-list-item expandable >
-						  <span style="width :100%;" onclick="$('.expandable-content').hide(); $(this).parent().find('.expandable-content').slideToggle();"><b>(Or)</b>&nbsp;&nbsp;Pair with a Private Server</span>
+						  <span style="width :100%;" onclick="$('.expandable-content').hide(); $(this).parent().find('.expandable-content').slideToggle();"><b>(Or)</b>&nbsp;&nbsp;Register on an AtomJump group, or a Private Server</span>
 						  <div class="expandable-content" style="display: none; width: 100%;">
-							<p style="text-align:center;"><input style="padding:5px;" id="pair-private-server" type="url" placeholder="Paste In Here http://" size="26" class="resizedTextbox"><br/><br/>
-								<ons-button style="background-color: #7c5599; color: white;" modifier="large--cta" onclick="soundEffect.play(); app.register($('#pair-private-server').val(), null);"><ons-icon icon='md-link'></ons-icon>&nbsp;&nbsp;Pair with your Private Server</ons-button>
+							<p style="text-align:center;"><input style="padding:5px;" id="pair-private-server" type="url" placeholder="Enter group or URL" size="26" class="resizedTextbox"><br/><br/>
+								<ons-button style="background-color: #7c5599; color: white;" modifier="large--cta" onclick="soundEffect.play(); app.register($('#pair-private-server').val(), null);"><ons-icon icon='md-link'></ons-icon>&nbsp;&nbsp;Register</ons-button>
 							</p>
 						  </div>
 						</ons-list-item>
@@ -351,7 +351,7 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 			
            jQuery(document).ready(function(){
  				
-		     	jQuery( "#srch" ).autocomplete({
+		     	jQuery( "#pair-private-server" ).autocomplete({
 		     		source: "https://atomjump.com/search-suggest.php",
 					minLength: 1,//search after one characters
 					position: { my: "left bottom", at: "left top", collision: "flip" },
@@ -360,15 +360,15 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 				        var myId = ui.item.id;
 				        if (typeof myId === 'string' || myId instanceof String) {  
 				          	//Special case - create a private group
-				          	jQuery('#srch').val(" "); 
+				          	jQuery('#pair-private-server').val(" "); 
 				          	var domain = myId.toLowerCase();
 				          	//Straightforward redirect
-								app.myWindowOpen(encodeURI('https://atomjump.com/wp/introduction/?prefdomain=' + domain + '#private'), '_blank');
+							//	app.myWindowOpen(encodeURI('https://atomjump.com/wp/introduction/?prefdomain=' + domain + '#private'), '_blank');
 							return false;
 				        } else {
 				          	//Run the domain in the browser
-							jQuery('#srch').val(ui.item.value);
-							newDomain("srch");
+							//jQuery('#srch').val(ui.item.value);
+							//newDomain("srch");
 				        }
 					},
 					response: function( event, ui ) {
@@ -382,7 +382,7 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 								}
 							} else {
 								//Have got no response so far from the network.
-								searchedTerm = jQuery('#srch').val();
+								searchedTerm = jQuery('#pair-private-server').val();
 
 								if(ui.content && ui.content.length <= 0) {
 									ui.content.push(
