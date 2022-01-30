@@ -401,7 +401,7 @@ var app = {
 		}
     },
     
-    setupPull: function(email) {
+    setupPull: function(email, checkImmediately) {
     
     	innerThis = this;
     	//Pull from an AtomJump notification system
@@ -416,6 +416,10 @@ var app = {
      	
      	
      	var thisEmail = email;
+    
+    	if(!checkImmediately) {
+    		var checkImmediately = true;
+    	}
      	
     		//Check the server if we have pull available
 			$.ajax({
@@ -556,9 +560,10 @@ var app = {
 							//Already have a registration Id. Start polling
 							
 							var pollingURL = localStorage.getItem('pollingURL');
-							innerThis.startPolling(pollingURL, true, 10);		//true: 1st check immediately
+							innerThis.startPolling(pollingURL, checkImmediately, 10);		//true: 1st check immediately
 							
 							
+							//Set the dereg button
 							var phonePlatform = innerThis.getPlatform();
 							var url = api + "plugins/notifications/register.php?id=" + encodeURIComponent(oldRegId) + "&devicetype=" + encodeURIComponent(phonePlatform) + "&action=remove";  //e.g.																			https://atomjump.com/api/plugins/notifications/register.php?id=test&devicetype=AtomJump&action=remove
 							$('#deregister-button').attr("href", url);
@@ -778,7 +783,7 @@ var app = {
           	 } 
 			
 			innerThis.stopPolling();		//Give some time for the 'Complete Registration' button above to show
-			innerThis.setupPull(email);
+			innerThis.setupPull(email, false);
 			$('#login-popup').hide();
 			
 		} else {
@@ -798,7 +803,7 @@ var app = {
          	          	 
          	singleClick = true;      
          	innerThis.stopPolling();		//Give some time for the 'Complete Registration' button above to show
-        	innerThis.setupPull(email);
+        	innerThis.setupPull(email, false);
         	$('#login-popup').hide();
 		}
    		   		
