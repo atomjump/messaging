@@ -366,8 +366,10 @@ var app = {
     	//Regular timed interval checks on the 'pollingURL' localStorage item, every 15 seconds.
     	innerThis = this;
     	
-   		$('#registered').html("<small>Listening for Messages<br/>(Bring app to front)</small>");
-		$('#registered').show();
+    	if(!checkAfterSeconds) {
+   			$('#registered').html("<small>Listening for Messages<br/>(Bring app to front)</small>");
+			$('#registered').show();
+		}
 		
     		
     	app.pollingCaller = setInterval(app.runPoll, app.pollInterval); //Note: these notifications will work only if the app is in the foreground.
@@ -554,7 +556,7 @@ var app = {
 							//Already have a registration Id. Start polling
 							
 							var pollingURL = localStorage.getItem('pollingURL');
-							innerThis.startPolling(pollingURL, true);		//true: is 1st check immediately
+							innerThis.startPolling(pollingURL, true, 10);		//true: 1st check immediately
 							
 							
 							var phonePlatform = innerThis.getPlatform();
