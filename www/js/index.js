@@ -503,7 +503,7 @@ var app = {
 										app.startPolling(null, false, 10);		//After 5 seconds it will check and remove this button below
 
 										//Likely on iPhones, create a 2nd clickable button that will start up the new page, just in-case
-										$('#registered').html("<small><a class='button' href='" + url + "' target='_blank'>Complete Pairing</a><br/>(Tap if you are seeing this)</small>");
+										$('#registered').html("<small><a class='button' href='" + url + "' target='_blank'>Complete Registration</a><br/>(Tap if you are seeing this)</small>");
 										$('#registered').show();
 																				
 										
@@ -522,7 +522,7 @@ var app = {
 										app.startPolling(null, false, 10);		//After 7 seconds it will check and remove this button below
 
 										//Likely on iPhones, create a 2nd clickable button that will start up the new page, just in-case
-										$('#registered').html("<small><a class='button' href='" + url + "' target='_blank'>Complete Pairing</a><br/>(Tap if you are seeing this)</small>");
+										$('#registered').html("<small><a class='button' href='" + url + "' target='_blank'>Complete Registration</a><br/>(Tap if you are seeing this)</small>");
 										$('#registered').show();
 									
 										
@@ -530,7 +530,7 @@ var app = {
 								} else {
 									//There was an incorrect pairing ID passed back
 									//Use push instead.
-									alert("Warning: the pairing has failed (with an incorrect identifier returned). Please try again.");
+									alert("Warning: the registration has failed (with an incorrect identifier returned). Please try again.");
 									
 								}
 		
@@ -553,6 +553,7 @@ var app = {
 				},
 				error      : function() {
 					//Use push instead.
+					
 					innerThis.setupPush();
 					return;        
 				}
@@ -936,6 +937,13 @@ var app = {
 			
 	myWindowOpen: function(myUrl, style) {
 		//Recommend using style = '_blank' for Safari browser to open a new page
+		
+		if (navigator.userAgent.indexOf("Firefox") != -1) {
+			//A firefox desktop browser, just do a window.open
+			window.open(myUrl, style);
+			return;
+		}
+		
 		
 		var isSafari = navigator.vendor && navigator.vendor.indexOf('Apple') > -1 &&
                navigator.userAgent &&
