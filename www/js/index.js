@@ -505,6 +505,13 @@ var app = {
 										//Likely on iPhones, create a 2nd clickable button that will start up the new page, just in-case
 										$('#registered').html("<small><a class='button' href='" + url + "' target='_blank'>Complete Registration</a><br/>(Tap if you are seeing this)</small>");
 										$('#registered').show();
+																
+									
+										alert("Setting up dereg button");		//TESTING
+										var url = api + "plugins/notifications/register.php?id=" + encodeURIComponent(registrationId) + "&devicetype=" + encodeURIComponent(phonePlatform) + "&action=remove";  //e.g.																			https://atomjump.com/api/plugins/notifications/register.php?id=test&devicetype=AtomJump&action=remove
+										$('#deregister-button').attr("href", url);
+										
+						
 																				
 										
 										
@@ -524,6 +531,11 @@ var app = {
 										//Likely on iPhones, create a 2nd clickable button that will start up the new page, just in-case
 										$('#registered').html("<small><a class='button' href='" + url + "' target='_blank'>Complete Registration</a><br/>(Tap if you are seeing this)</small>");
 										$('#registered').show();
+										
+										
+										alert("Setting up dereg button");		//TESTING
+										var url = api + "plugins/notifications/register.php?id=" + encodeURIComponent(registrationId) + "&devicetype=" + encodeURIComponent(phonePlatform) + "&action=remove";  //e.g.																			https://atomjump.com/api/plugins/notifications/register.php?id=test&devicetype=AtomJump&action=remove
+										$('#deregister-button').attr("href", url);
 									
 										
 									}
@@ -538,10 +550,16 @@ var app = {
 						}
 						else {
 						
-							//Start polling
+							//Already have a registration Id. Start polling
 							
 							var pollingURL = localStorage.getItem('pollingURL');
 							innerThis.startPolling(pollingURL, true);		//true: is 1st check immediately
+							
+							alert("Setting up dereg button");		//TESTING
+							var phonePlatform = innerThis.getPlatform();
+							var url = api + "plugins/notifications/register.php?id=" + encodeURIComponent(oldRegId) + "&devicetype=" + encodeURIComponent(phonePlatform) + "&action=remove";  //e.g.																			https://atomjump.com/api/plugins/notifications/register.php?id=test&devicetype=AtomJump&action=remove
+							$('#deregister-button').attr("href", url);
+							
 						}
 						
 								
@@ -1036,8 +1054,10 @@ var app = {
 			var registrationId = localStorage.getItem("registrationId");
 			var phonePlatform = _this.getPlatform();
 			
+			/* The button itself should already be set to open this 
 			var url = api + "plugins/notifications/register.php?id=" + encodeURIComponent(registrationId) + "&devicetype=" + encodeURIComponent(phonePlatform) + "&action=remove";  //e.g.																			https://atomjump.com/api/plugins/notifications/register.php?id=test&devicetype=AtomJump&action=remove
 			_this.myWindowOpen(url, '_blank');
+			*/	
 				
 			userId = null;
 

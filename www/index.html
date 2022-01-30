@@ -172,7 +172,7 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 	        	
 			<div style="margin-top: 8px;">
 				<div style="float: left;"><span style="padding-left: 20px;"><ons-button style="background-color: #cc99cc; color: white;" href="javascript" onclick="$('#login-popup').show(); $('#close-new-server').show(); return false;"><ons-icon icon="md-plus" ></ons-icon> Register</ons-button></span></div>
-				<div style="float: right;"><span style="padding-right: 20px;"><ons-button style="background-color: #cc99cc; color: white;" href="javascript" onclick="return app.logout();"><ons-icon icon="fa-unlink" ></ons-icon> Deregister</ons-button></span></div>
+				<div style="float: right;"><span style="padding-right: 20px;"><a href="javascript" id="deregister-button" target="_blank"><ons-button style="background-color: #cc99cc; color: white;" ><ons-icon icon="fa-unlink" ></ons-icon> Deregister</ons-button></a></span></div>
 			</div>
 			
 
@@ -350,6 +350,14 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
           		
 			
            jQuery(document).ready(function(){
+ 				jQuery( "#deregister-button").click(function() {
+ 				
+ 					alert("Clicked dereg");
+ 					
+ 					app.logout();
+ 					return true;
+ 				});
+ 				
  				
 		     	jQuery( "#pair-private-server" ).autocomplete({
 		     		source: "https://atomjump.com/search-suggest.php",
