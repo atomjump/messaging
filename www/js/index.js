@@ -500,6 +500,7 @@ var app = {
 										
 										
 										openSuccess = app.myWindowOpen(encodeURI(url), '_blank');
+										app.stopPolling();
 										app.startPolling(null, false, 10);		//After 5 seconds it will check and remove this button below
 
 										//Likely on iPhones, create a 2nd clickable button that will start up the new page, just in-case
@@ -774,6 +775,7 @@ var app = {
           	 	$('#private-server').val(api);
           	 } 
 			
+			innerThis.stopPolling();		//Give some time for the 'Complete Registration' button above to show
 			innerThis.setupPull(email);
 			$('#login-popup').hide();
 			
