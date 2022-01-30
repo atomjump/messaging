@@ -643,6 +643,12 @@ var app = {
                 	
                 	var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=&devicetype=" + phonePlatform + "&action=add";
                 	innerThis.myWindowOpen(url, '_blank');
+                	
+                	//Likely on iPhones, create a 2nd clickable button that will start up the new page, just in-case
+					$('#registered').html("<small><a class='button' href='" + url + "' target='_blank'>Complete Registration</a><br/>(Tap if you are seeing this)</small>");
+					$('#registered').show();
+                	
+                	
                 } else {
                 
                  	//Otherwise login with the known logged userId
@@ -653,6 +659,11 @@ var app = {
 						//Registered OK
 					
 					});
+					
+					//Likely on iPhones, create a 2nd clickable button that will start up the new page, just in-case
+					$('#registered').html("<small><a class='button' href='" + url + "' target='_blank'>Complete Registration</a><br/>(Tap if you are seeing this)</small>");
+					$('#registered').show();
+					
 				}
             } 
 			
