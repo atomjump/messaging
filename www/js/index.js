@@ -1282,12 +1282,50 @@ var app = {
    			} else {
    			
    			
-	   			//Check if it is a url starting with http
+	   			//Check if it is a url starting with http or https
 				if(origStr.substring(0,4) == "http") {
 					var url = origStr;
 					var forumTitle = origStr.replace("https://", "");		//Get rid of http visually
 					forumTitle = forumTitle.replace("http://","");   				
-					var forumName = origStr;
+					
+					
+					
+					if((forumTitle.indexOf(".atomjump.com") !== -1)||
+							(forumTitle.indexOf(".ajmp.co") !== -1)) {
+							subdomainVer = true;
+							forumTitle = forumTitle.replace(".atomjump.com", "");
+							forumTitle = forumTitle.replace(".ajmp.co", "");
+							
+							
+							//Check a special case API page
+							if(forumTitle.indexOf("/api/") !== -1) {
+								forumTitle = forumTitle.replace("/api/", "");
+	   							//It is an api atomjump page
+	   							
+	   						}
+	   						
+	   						var subdomain = forumTitle.replace(/\s+/g, '');  //remove spaces
+							subdomain = subdomain.replace(/[^a-z0-9\-]/gi, '');	//keep letters and numbers only (and hyphens)
+						
+							if(subdomain == forumTitle) {
+								//Straightforward redirect
+								var url = 'https://' + subdomain + '.atomjump.com/go/';
+							} else {
+								var url = 'https://' + subdomain + '.atomjump.com/?orig_query=' + encodeURIComponent(origStr + '&autostart=true');
+							}
+							
+							registerUrl = 'https://' + subdomain + '.atomjump.com/api/';
+						
+							forumTitle = subdomain + '@';
+							var forumName = subdomain;
+	   						
+	   						
+	   				} else {
+	   			
+	   					var forumName = origStr;
+	   				}
+					
+					
 				} else {
 	   			
 	   				var subdomainVer = true;		//Assume this is a subdomain
@@ -1301,12 +1339,6 @@ var app = {
 							subdomainVer = true;
 							origStr = origStr.replace(".atomjump.com", "");
 							origStr = origStr.replace(".ajmp.co", "");
-							
-							//Check a special case API page
-							if(origStr.indexOf("/api/") !== -1) {
-	   							//It is an api atomjump page
-	   							atomjumpAPIInput = true;
-	   						}
 							
 							
 						} else {
@@ -1323,14 +1355,8 @@ var app = {
 					
 					if(subdomainVer == true) {
 						//An atomjump.com subdomain
-						if(atomjumpAPIInput == true) {
-							var subdomain = origStr.replace(/\/api\//g, '');		//Remove the /api/
-							subdomain = subdomain.replace(/\s+/g, '');  			//remove spaces
 						
-						} else {
-						
-							var subdomain = origStr.replace(/\s+/g, '');  //remove spaces
-						}
+						var subdomain = origStr.replace(/\s+/g, '');  //remove spaces
 						subdomain = subdomain.replace(/[^a-z0-9\-]/gi, '');	//keep letters and numbers only (and hyphens)
 						
 						if(subdomain == origStr) {
@@ -1425,7 +1451,7 @@ var app = {
     },
     
     
-    
+    //TODO: ensure this function uses the two getForumName() and addShortcut() functions rather than all in-one.
     saveForum: function(newForumName) {
         	
       
