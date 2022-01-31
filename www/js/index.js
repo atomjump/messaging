@@ -791,10 +791,6 @@ var app = {
           	 	$('#private-server').val(api);
         	 } 
         	 
-        	 
-        	//Likely on iPhones, create a 2nd clickable button that will start up the new page, just in-case
-			$('#registered').html("<small><a class='button' href='" + url + "' target='_blank'>Complete Registration</a><br/>(Tap if you are seeing this)</small>");
-			$('#registered').show(); 
          	   
          	   
          	          	 
