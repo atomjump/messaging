@@ -76,7 +76,6 @@ var app = {
           if(settingApi) {
           	 api = settingApi;
           	 $('#private-server').val(api);
-          	 $('#pair-private-server').val(api);
           }
           
           
@@ -86,7 +85,7 @@ var app = {
           if(userId) {
         	//Yep, we have a logged in user
         	$('#login-popup').hide();
-        	app.setupPull(null);
+        	app.setupPull(null, true);
         	return;		
         
           } else {
@@ -99,7 +98,7 @@ var app = {
           
           if(oldRegId) {
           		$('#login-popup').hide();	
-         		app.setupPull(null);
+         		app.setupPull(null, true);
           }
           
           
@@ -367,8 +366,10 @@ var app = {
     	//Regular timed interval checks on the 'pollingURL' localStorage item, every 15 seconds.
     	innerThis = this;
     	
-   		$('#registered').html("<small>Listening for Messages<br/>(Bring app to front)</small>");
-		$('#registered').show();
+    	if(!checkAfterSeconds) {
+   			$('#registered').html("<small>Listening for Messages<br/>(Bring app to front)</small>");
+			$('#registered').show();
+		}
 		
     		
     	app.pollingCaller = setInterval(app.runPoll, app.pollInterval); //Note: these notifications will work only if the app is in the foreground.
@@ -391,7 +392,16 @@ var app = {
     	}    	
     },
     
-    setupPull: function(email) {
+    validPairingId: function(id) {
+    	//Either 18 (MedImage) or 20 (Messaging) characters is the current standard
+		if((id.length >= 18)&&(id.length <= 21)) {
+			return true;
+		} else {
+			return false;
+		}
+    },
+    
+    setupPull: function(email, checkImmediately) {
     
     	innerThis = this;
     	//Pull from an AtomJump notification system
@@ -406,6 +416,7 @@ var app = {
      	
      	
      	var thisEmail = email;
+    
      	
     		//Check the server if we have pull available
 			$.ajax({
@@ -460,61 +471,82 @@ var app = {
 								var registrationId = encodeURIComponent(items[2] + "/api/photo/#" + items[1]);
 								//Registration id will now be e.g. https://medimage-nz1.atomjump.com/api/photo/#HMEcfQQCufJmRPMX4C
 								//which is what our server will post new message .json files too.
-				
-								var pollingURL = items[2] + "/read/" + items[1];
-								//The pollingURL is what we will continue to check on
-				
-								//Start up regular checks
-								localStorage.setItem('pollingURL', pollingURL);
 								
+								//Check items[1] is a valid code:
+								if(innerThis.validPairingId(items[1])) {
+									var pollingURL = items[2] + "/read/" + items[1];
+									//The pollingURL is what we will continue to check on
 				
-				   
-								
-				
-				
-								// Save the new registration ID on the phone
-								localStorage.setItem('registrationId', registrationId);
-								// Post registrationId to your app server as the value has changed
-								//Post to server software Loop Server API
-				
-								
-			
-								//Now open the browser, if the button has been set
-								if(singleClick == true) {
-									//Have tapped a single server pairing - will not have a known userid
-									//so we need to let the browser use it's own cookies.
-									var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=&devicetype=" + phonePlatform + "&action=add";
-									if(thisEmail) {
-										url = url + "&email=" + encodeURIComponent(thisEmail);
-									}
+									//Start up regular checks
+									localStorage.setItem('pollingURL', pollingURL);
 									
+					
+					   
 									
-									openSuccess = app.myWindowOpen(encodeURI(url), '_blank');
-									app.startPolling(null, false, 10);		//After 5 seconds it will check and remove this button below
+					
+					
+									// Save the new registration ID on the phone
+									localStorage.setItem('registrationId', registrationId);
+									// Post registrationId to your app server as the value has changed
+									//Post to server software Loop Server API
+					
+									
+				
+									//Now open the browser, if the button has been set
+									if(singleClick == true) {
+										//Have tapped a single server pairing - will not have a known userid
+										//so we need to let the browser use it's own cookies.
+										var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=&devicetype=" + phonePlatform + "&action=add";
+										if(thisEmail) {
+											url = url + "&email=" + encodeURIComponent(thisEmail);
+										}
+										
+										
+										openSuccess = app.myWindowOpen(encodeURI(url), '_blank');
+										app.stopPolling();
+										app.startPolling(null, false, 10);		//After 5 seconds it will check and remove this button below
 
-									//Likely on iPhones, create a 2nd clickable button that will start up the new page, just in-case
-									$('#registered').html("<small><a class='button' href='" + url + "' target='_blank'>Complete Pairing</a><br/>(Tap if you are seeing this)</small>");
-									$('#registered').show();
-																			
+										//Likely on iPhones, create a 2nd clickable button that will start up the new page, just in-case
+										$('#registered').html("<small><a class='button' href='" + url + "' target='_blank'>Complete Registration</a><br/>(Tap if you are seeing this)</small>");
+										$('#registered').show();
+																
 									
+										
+										var url = api + "plugins/notifications/register.php?id=" + encodeURIComponent(registrationId) + "&devicetype=" + encodeURIComponent(phonePlatform) + "&action=remove";  //e.g.																			https://atomjump.com/api/plugins/notifications/register.php?id=test&devicetype=AtomJump&action=remove
+										$('#deregister-button').attr("href", url);
+										
+						
+																				
+										
+										
+									} else {
+				
+										//Otherwise login with the known logged userId
+										var phonePlatform = innerThis.getPlatform();
+										
+										var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform + "&action=add";  //e.g. 								https://atomjump.com/api/plugins/notifications/register.php?id=test&userid=3&action=add
+										if(thisEmail) {
+											url = url + "&email=" + encodeURIComponent(thisEmail);
+										}
+					
+										openSuccess = app.myWindowOpen(encodeURI(url), '_blank');
+										app.startPolling(null, false, 10);		//After 7 seconds it will check and remove this button below
+
+										//Likely on iPhones, create a 2nd clickable button that will start up the new page, just in-case
+										$('#registered').html("<small><a class='button' href='" + url + "' target='_blank'>Complete Registration</a><br/>(Tap if you are seeing this)</small>");
+										$('#registered').show();
+										
+										
+										
+										var url = api + "plugins/notifications/register.php?id=" + encodeURIComponent(registrationId) + "&devicetype=" + encodeURIComponent(phonePlatform) + "&action=remove";  //e.g.																			https://atomjump.com/api/plugins/notifications/register.php?id=test&devicetype=AtomJump&action=remove
+										$('#deregister-button').attr("href", url);
 									
+										
+									}
 								} else {
-			
-									//Otherwise login with the known logged userId
-									var phonePlatform = innerThis.getPlatform();
-									
-									var url = api + "plugins/notifications/register.php?id=" + registrationId + "&userid=" + userId + "&devicetype=" + phonePlatform + "&action=add";  //e.g. 								https://atomjump.com/api/plugins/notifications/register.php?id=test&userid=3&action=add
-									if(thisEmail) {
-										url = url + "&email=" + encodeURIComponent(thisEmail);
-									}
-				
-									openSuccess = app.myWindowOpen(encodeURI(url), '_blank');
-									app.startPolling(null, false, 10);		//After 7 seconds it will check and remove this button below
-
-									//Likely on iPhones, create a 2nd clickable button that will start up the new page, just in-case
-									$('#registered').html("<small><a class='button' href='" + url + "' target='_blank'>Complete Pairing</a><br/>(Tap if you are seeing this)</small>");
-									$('#registered').show();
-								
+									//There was an incorrect pairing ID passed back
+									//Use push instead.
+									alert("Warning: the registration has failed (with an incorrect identifier returned). Please try again.");
 									
 								}
 		
@@ -522,10 +554,17 @@ var app = {
 						}
 						else {
 						
-							//Start polling
+							//Already have a registration Id. Start polling
 							
 							var pollingURL = localStorage.getItem('pollingURL');
-							innerThis.startPolling(pollingURL, true);		//true: is 1st check immediately
+							innerThis.startPolling(pollingURL, checkImmediately, 10);		//true: 1st check immediately
+							
+							
+							//Set the dereg button
+							var phonePlatform = innerThis.getPlatform();
+							var url = api + "plugins/notifications/register.php?id=" + encodeURIComponent(oldRegId) + "&devicetype=" + encodeURIComponent(phonePlatform) + "&action=remove";  //e.g.																			https://atomjump.com/api/plugins/notifications/register.php?id=test&devicetype=AtomJump&action=remove
+							$('#deregister-button').attr("href", url);
+							
 						}
 						
 								
@@ -537,6 +576,7 @@ var app = {
 				},
 				error      : function() {
 					//Use push instead.
+					
 					innerThis.setupPush();
 					return;        
 				}
@@ -608,6 +648,12 @@ var app = {
                 	
                 	var url = api + "plugins/notifications/register.php?id=" + data.registrationId + "&userid=&devicetype=" + phonePlatform + "&action=add";
                 	innerThis.myWindowOpen(url, '_blank');
+                	
+                	//Likely on iPhones, create a 2nd clickable button that will start up the new page, just in-case
+					$('#registered').html("<small><a class='button' href='" + url + "' target='_blank'>Complete Registration</a><br/>(Tap if you are seeing this)</small>");
+					$('#registered').show();
+                	
+                	
                 } else {
                 
                  	//Otherwise login with the known logged userId
@@ -618,6 +664,11 @@ var app = {
 						//Registered OK
 					
 					});
+					
+					//Likely on iPhones, create a 2nd clickable button that will start up the new page, just in-case
+					$('#registered').html("<small><a class='button' href='" + url + "' target='_blank'>Complete Registration</a><br/>(Tap if you are seeing this)</small>");
+					$('#registered').show();
+					
 				}
             } 
 			
@@ -685,8 +736,22 @@ var app = {
    
     register: function(apiUrl, email)
     {
+    	//Check if apiURL is a word - in which case we are an xyz.atomjump.com group page.
+    	var response = innerThis.getForumName(apiUrl);	
+     	//Returns:  {
+		//		"forumTitle": forumTitle,
+		//		"forumName": forumName,
+		//		"url": url,
+		//		"registerUrl": registerUrl
+		//	}
+    
     	//Register to the remote Loop Server
-   		innerThis.setAPI(apiUrl); 
+    	innerThis.setAPI(response.registerUrl); 
+   		
+   		//addShortcut input settings.forumTitle
+    	//      			settings.forumName
+    	//     				settings.url		(visual link)
+  		innerThis.addShortcut(response);
    		
    		var id = localStorage.getItem('registrationId');
    		
@@ -700,17 +765,22 @@ var app = {
 			if(email) {
 				url = url + "&email=" + encodeURIComponent(email);
 			}
-
+			
+	
 			innerThis.myWindowOpen(url, '_blank');
+			
+			//Likely on iPhones, create a 2nd clickable button that will start up the new page, just in-case
+			$('#registered').html("<small><a class='button' href='" + url + "' target='_blank'>Complete Registration</a><br/>(Tap if you are seeing this)</small>");
+			$('#registered').show();
 			
 			var settingApi = localStorage.getItem("api");
          	 if(settingApi) {
           		 api = settingApi;
           	 	$('#private-server').val(api);
-          	 	$('#pair-private-server').val(api);
-         	 } 
+          	 } 
 			
-			innerThis.setupPull(email);
+			innerThis.stopPolling();		//Give some time for the 'Complete Registration' button above to show
+			innerThis.setupPull(email, false);
 			$('#login-popup').hide();
 			
 		} else {
@@ -719,11 +789,18 @@ var app = {
          	 if(settingApi) {
           		 api = settingApi;
           	 	$('#private-server').val(api);
-          	 	$('#pair-private-server').val(api);
-         	 } 
+        	 } 
+        	 
+        	 
+        	//Likely on iPhones, create a 2nd clickable button that will start up the new page, just in-case
+			$('#registered').html("<small><a class='button' href='" + url + "' target='_blank'>Complete Registration</a><br/>(Tap if you are seeing this)</small>");
+			$('#registered').show(); 
+         	   
+         	   
          	          	 
          	singleClick = true;      
-        	innerThis.setupPull(email);
+         	innerThis.stopPolling();		//Give some time for the 'Complete Registration' button above to show
+        	innerThis.setupPull(email, false);
         	$('#login-popup').hide();
 		}
    		   		
@@ -906,6 +983,13 @@ var app = {
 	myWindowOpen: function(myUrl, style) {
 		//Recommend using style = '_blank' for Safari browser to open a new page
 		
+		if (navigator.userAgent.indexOf("Firefox") != -1) {
+			//A firefox desktop browser, just do a window.open
+			window.open(myUrl, style);
+			return;
+		}
+		
+		
 		var isSafari = navigator.vendor && navigator.vendor.indexOf('Apple') > -1 &&
                navigator.userAgent &&
                navigator.userAgent.indexOf('CriOS') == -1 &&
@@ -997,8 +1081,10 @@ var app = {
 			var registrationId = localStorage.getItem("registrationId");
 			var phonePlatform = _this.getPlatform();
 			
+			/* The button itself should already be set to open this 
 			var url = api + "plugins/notifications/register.php?id=" + encodeURIComponent(registrationId) + "&devicetype=" + encodeURIComponent(phonePlatform) + "&action=remove";  //e.g.																			https://atomjump.com/api/plugins/notifications/register.php?id=test&devicetype=AtomJump&action=remove
 			_this.myWindowOpen(url, '_blank');
+			*/	
 				
 			userId = null;
 
@@ -1156,6 +1242,7 @@ var app = {
     
     ellipse: function(str, max){
     	//Chop out a string
+    	if(!str) return str;
    		var newstr; 
    		if(str.length > (max - 3)) { 
    			var cutAt = max/2;
@@ -1182,6 +1269,163 @@ var app = {
     			
     		}
     		$('#forum-list').html(prepList);
+    },
+    
+    
+    getForumName: function(newForumName) {
+    
+    	   	var origStr = newForumName;
+    	   	var registerUrl = origStr;			//Assume this is a registration URL
+   			var atomjumpAPIInput = false;
+   			
+   			//Special case "https://atomjump.com/api"	which is our main atomjump.com link
+   			if(newForumName == "https://atomjump.com/api/") {
+   				var url = "https://atomjump.com/";
+   				var forumTitle = "atomjump.com";
+   				var forumName = "homepage-com";			//No subdomain - specialcase code  	
+   			} else {
+   			
+   			
+	   			//Check if it is a url starting with http
+				if(origStr.substring(0,4) == "http") {
+					var url = origStr;
+					var forumTitle = origStr.replace("https://", "");		//Get rid of http visually
+					forumTitle = forumTitle.replace("http://","");   				
+					var forumName = origStr;
+				} else {
+	   			
+	   				var subdomainVer = true;		//Assume this is a subdomain
+	   			
+					//Check if it is URL with dots
+					if(origStr.indexOf(".") !== -1) {
+						
+						//Special case: "test.atomjump.com"
+						if((origStr.indexOf(".atomjump.com") !== -1)||
+							(origStr.indexOf(".ajmp.co") !== -1)) {
+							subdomainVer = true;
+							origStr = origStr.replace(".atomjump.com", "");
+							origStr = origStr.replace(".ajmp.co", "");
+							
+							//Check a special case API page
+							if(origStr.indexOf("/api/") !== -1) {
+	   							//It is an api atomjump page
+	   							atomjumpAPIInput = true;
+	   						}
+							
+							
+						} else {
+							//So this is a generic URL e.g. "mycompany.com/link"
+							//By default append 'http' at the start of the URL. Most sites
+							//will convert this into https.
+							var url = "http://" + origStr;
+							subdomainVer = false;		//Use directly.
+							var forumTitle = origStr;
+							var forumName = origStr;
+						}
+					} 
+					
+					
+					if(subdomainVer == true) {
+						//An atomjump.com subdomain
+						if(atomjumpAPIInput == true) {
+							var subdomain = origStr.replace(/\/api\//g, '');		//Remove the /api/
+							subdomain = subdomain.replace(/\s+/g, '');  			//remove spaces
+						
+						} else {
+						
+							var subdomain = origStr.replace(/\s+/g, '');  //remove spaces
+						}
+						subdomain = subdomain.replace(/[^a-z0-9\-]/gi, '');	//keep letters and numbers only (and hyphens)
+						
+						if(subdomain == origStr) {
+							//Straightforward redirect
+							var url = 'https://' + subdomain + '.atomjump.com/go/';
+						} else {
+							var url = 'https://' + subdomain + '.atomjump.com/?orig_query=' + encodeURIComponent(origStr + '&autostart=true');
+							
+						}
+						
+						registerUrl = 'https://' + subdomain + '.atomjump.com/api/';
+					
+						var forumTitle = subdomain + '@';
+						var forumName = subdomain;
+					}
+				}
+			}
+			
+			var forumDetails = {
+				"forumTitle": forumTitle,
+				"forumName": forumName,
+				"url": url,
+				"registerUrl": registerUrl
+			}
+			
+			return forumDetails;
+    
+    },
+    
+    
+    addShortcut: function(inputSettings) {
+    		//Input settings.forumTitle
+    		//      settings.forumName
+    		//      settings.url		(visual link)
+    
+    		var settings = app.getArrayLocalStorage("settings");
+    
+    		//Create a new entry - which will be blank to begin with
+   			var newSetting = { 
+   				"forum": inputSettings.forumTitle,		//Display version of group name
+   				"api": api,
+   				"rawForumHeader": rawForumHeader,
+   				"rawForumName": inputSettings.forumName,
+   				"url" : inputSettings.url				//Button links to
+   			};
+   			
+   			
+  			
+   			//Special cases
+   			//if(newSetting.url == "https://atomjump.com/api/") {
+   			//	newSetting.forum = "atomjump.com";
+   			//	newSetting.url = "https://atomjump.com";
+   			//}
+   			
+   			//if(newForumName == 'atomjump') {
+   			//	newSetting.url = "https://atomjump.com/go/";
+   			//}
+   			
+   			if((settings)&&(settings.length)) {
+   				//Check if we are writing over the existing entries
+   				var writeOver = false;
+   				for(cnt = 0; cnt< settings.length; cnt++) {
+   					if((settings[cnt].rawForumName) && (settings[cnt].rawForumName == newSetting.rawForumName)) {
+   						writeOver = true;
+   						settings[cnt] = newSetting;
+   					}
+   					
+   				}
+   				
+   			
+    			if(writeOver == false) {
+    				settings.push(newSetting);  //Save back to the array
+    			}
+   			
+   			
+   			
+   			} else {
+   				//Creating an array for the first time
+   				var settings = [];
+   				settings.push(newSetting);  //Save back to the array
+   			} 
+
+    		
+    		//Save back to the persistent settings
+    		app.setArrayLocalStorage("settings", settings);
+    		
+    		
+    		//Reset the display with the new forum
+    		app.displayForumNames();   
+    
+    		return;
     },
     
     
