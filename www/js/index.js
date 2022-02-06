@@ -56,6 +56,8 @@ var app = {
         this.pollingCaller = null;
         this.pull = false;   			//Switch to true if notifications are coming via a pull method (AtomJump's own), rather than push
 		this.pollInterval = 30000;		//For publications, use 30000 (i.e. 30 second check interval) by default.
+		
+		this.showPreregister = false;	//Show pregistered details
 
     },
     // Bind Event Listeners
@@ -84,7 +86,11 @@ var app = {
         
           if(userId) {
         	//Yep, we have a logged in user
-        	$('#login-popup').hide();
+        	if(this.showPreregister == true) {
+        		//Don't autohide when we have a preregistered page
+        	} else {
+        		$('#login-popup').hide();
+        	}
         	app.setupPull(null, true);
         	return;		
         
@@ -97,7 +103,11 @@ var app = {
           var oldRegId = localStorage.getItem('registrationId');
           
           if(oldRegId) {
-          		$('#login-popup').hide();	
+          		if(this.showPreregister == true) {
+        			//Don't autohide when we have a preregistered page
+        		} else {
+          			$('#login-popup').hide();
+          		}	
          		app.setupPull(null, true);
           }
           

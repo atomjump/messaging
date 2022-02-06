@@ -422,10 +422,11 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
             var urlParams = new URLSearchParams(queryString);
 			var register = urlParams.get('register');
 			showPreregister();
+			
 			if(register) {
-				setTimeout(function() {				
-					showPreregister();
-				}, 2000);
+				app.showPreregister = false;
+			} else {
+				app.showPreregister = true;
 			}
             
         </script>
