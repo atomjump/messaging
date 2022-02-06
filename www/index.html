@@ -369,7 +369,7 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 				          	jQuery('#pair-private-server').val(" "); 
 				          	var domain = myId.toLowerCase();
 				          	//Straightforward redirect
-							//	app.myWindowOpen(encodeURI('https://atomjump.com/wp/introduction/?prefdomain=' + domain + '#private'), '_blank');
+								app.myWindowOpen(encodeURI('https://atomjump.com/wp/introduction/?prefdomain=' + domain + '#private'), '_blank');
 							return false;
 				        } else {
 				          	//Run the domain in the browser
@@ -395,7 +395,8 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 										{label:"Arts", value:"arts"},
 										{label:"Animation", value:"animation"},
 										{label:"Anime", value:"anime"},
-										{label: searchedTerm, value: searchedTerm}									
+										{label: searchedTerm, value: searchedTerm},
+										{label:"Create a PRIVATE room '" + searchedTerm + "'", value:searchedTerm, id:searchedTerm}									
 									  );  //Can remove this line for iOS builds to remove commercial angle: ,{label:"Create a PRIVATE room '" + searchedTerm + "'", value:searchedTerm, id:searchedTerm}
 										
 								}
