@@ -258,7 +258,7 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 					 <ons-list-header>Please Choose:</ons-list-header>
 						<ons-list-item expandable>
 						  <span style="width :100%;" onclick="$('.expandable-content').hide(); $(this).parent().find('.expandable-content').slideToggle();">&nbsp;&nbsp;Register with AtomJump.com core</span>
-						  <div class="expandable-content" style="width: 100%;">
+						  <div id="atomjumpcomRegister" class="expandable-content" style="width: 100%;">
 								<p style="text-align:center;">
 								<ons-button style="background-color: #7c5599; color: white;" modifier="large--cta" onclick="soundEffect.play(); app.register(defaultApi, null);"><ons-icon icon='md-link'></ons-icon>&nbsp;&nbsp;AtomJump.com</ons-button>
 								</p>
@@ -409,7 +409,7 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 			});   
             
             
-            //Get current URL - potentially prefill the new page
+            //Get current URL - potentially prefill the new register page
             var queryString = window.location.search;
             var urlParams = new URLSearchParams(queryString);
 			var register = urlParams.get('register');
@@ -418,6 +418,7 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 				$('#login-popup').show(); 
 				$('#close-new-server').show();
 				$('#prefillRegister').slideToggle();
+				$('#atomjumpcomRegister').slideToggle();
 			}
             
         </script>
