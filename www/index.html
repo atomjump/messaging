@@ -266,7 +266,7 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 						</ons-list-item>
 						<ons-list-item expandable >
 						  <span style="width :100%;" onclick="$('.expandable-content').hide(); $(this).parent().find('.expandable-content').slideToggle();"><b>(Or)</b>&nbsp;&nbsp;Register on an AtomJump group, or a Private Server</span>
-						  <div class="expandable-content" style="display: none; width: 100%;">
+						  <div id="prefillRegister" class="expandable-content" style="display: none; width: 100%;">
 							<p style="text-align:center;"><input style="padding:5px;" id="pair-private-server" type="url" placeholder="Enter group or URL" size="26" class="resizedTextbox"><br/><br/>
 								<ons-button style="background-color: #7c5599; color: white;" modifier="large--cta" onclick="soundEffect.play(); app.register($('#pair-private-server').val(), null);"><ons-icon icon='md-link'></ons-icon>&nbsp;&nbsp;Register</ons-button>
 							</p>
@@ -417,6 +417,7 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 				jQuery('#pair-private-server').val(register);
 				$('#login-popup').show(); 
 				$('#close-new-server').show();
+				$('#prefillRegister').slideToggle();
 			}
             
         </script>
