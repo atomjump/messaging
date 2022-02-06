@@ -414,11 +414,14 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
             var urlParams = new URLSearchParams(queryString);
 			var register = urlParams.get('register');
 			if(register) {
-				jQuery('#pair-private-server').val(register);
-				$('#login-popup').show(); 
-				$('#close-new-server').show();
-				$('#prefillRegister').slideDown();
-				$('#atomjumpcomRegister').slideUp();
+				setTimeout(function() {
+				
+					jQuery('#pair-private-server').val(register);
+					$('#login-popup').show(); 
+					$('#close-new-server').show();
+					$('#prefillRegister').slideDown();
+					$('#atomjumpcomRegister').slideUp();
+				}, 2000);
 			}
             
         </script>
