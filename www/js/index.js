@@ -791,7 +791,10 @@ var app = {
 			
 			innerThis.stopPolling();		//Give some time for the 'Complete Registration' button above to show
 			innerThis.setupPull(email, false);
-			$('#login-popup').hide();
+			if(this.showPreregister == true) {
+			} else {
+				$('#login-popup').hide();
+			}
 			
 		} else {
 			 //Need to setup a registration
