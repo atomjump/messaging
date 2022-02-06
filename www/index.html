@@ -408,19 +408,23 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 				
 			});   
             
+            function showPreregister() {
+            	jQuery('#pair-private-server').val(register);
+				$('#login-popup').show(); 
+				$('#close-new-server').show();
+				$('#prefillRegister').slideDown();
+				$('#atomjumpcomRegister').slideUp();
+            
+            }
             
             //Get current URL - potentially prefill the new register page
             var queryString = window.location.search;
             var urlParams = new URLSearchParams(queryString);
 			var register = urlParams.get('register');
+			showPreregister();
 			if(register) {
-				setTimeout(function() {
-				
-					jQuery('#pair-private-server').val(register);
-					$('#login-popup').show(); 
-					$('#close-new-server').show();
-					$('#prefillRegister').slideDown();
-					$('#atomjumpcomRegister').slideUp();
+				setTimeout(function() {				
+					showPreregister();
 				}, 2000);
 			}
             
