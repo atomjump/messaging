@@ -86,7 +86,7 @@ var app = {
         
           if(userId) {
         	//Yep, we have a logged in user
-        	if(this.showPreregister == true) {
+        	if(app.showPreregister == true) {
         		//Don't autohide when we have a preregistered page
         	} else {
         		$('#login-popup').hide();
@@ -103,7 +103,7 @@ var app = {
           var oldRegId = localStorage.getItem('registrationId');
           
           if(oldRegId) {
-          		if(this.showPreregister == true) {
+          		if(app.showPreregister == true) {
         			//Don't autohide when we have a preregistered page
         		} else {
           			$('#login-popup').hide();
@@ -791,7 +791,7 @@ var app = {
 			
 			innerThis.stopPolling();		//Give some time for the 'Complete Registration' button above to show
 			innerThis.setupPull(email, false);
-			if(this.showPreregister == true) {
+			if(innerThis.showPreregister == true) {
 			} else {
 				$('#login-popup').hide();
 			}
