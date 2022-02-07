@@ -369,6 +369,8 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 				          	//Special case - create a private group
 				   
 				          	var domain = myId.toLowerCase();
+				          	domain = domain.replace(/\s+/g, '');
+							domain = domain.replace(/[^a-z0-9\-]/gi, '');
 				          	jQuery('#pair-private-server').val(domain); 
 				          	
 				          	//Straightforward redirect
@@ -384,9 +386,7 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 								
 							return false;
 				        } else {
-				          	//Run the domain in the browser
-							//jQuery('#srch').val(ui.item.value);
-							//newDomain("srch");
+				          	//A normal search term - no need to action
 				        }
 					},
 					response: function( event, ui ) {
