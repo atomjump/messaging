@@ -367,8 +367,10 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 				        var myId = ui.item.id;
 				        if (typeof myId === 'string' || myId instanceof String) {  
 				          	//Special case - create a private group
-				          	jQuery('#pair-private-server').val(domain); 
+				   
 				          	var domain = myId.toLowerCase();
+				          	jQuery('#pair-private-server').val(domain); 
+				          	
 				          	//Straightforward redirect
 				          		var url = encodeURI('https://atomjump.com/wp/introduction/?prefdomain=' + domain + '#private');
 								app.myWindowOpen(url, '_blank');		//Try to open immediately
