@@ -347,6 +347,31 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
            
            soundEffect.src = 'ping.mp3';
            
+           
+           function getHostnameFromRegex(url) {
+			  //Courtesy https://stackoverflow.com/questions/8498592/extract-hostname-name-from-string
+			  // run against regex
+			  const matches = url.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i);
+			  // extract hostname (will be null if no match is found)
+			  return matches && matches[1];
+			}
+		
+			function setOriginDomain(domain) {
+				//Scenarios:
+				//1. We are at https://subdomain.domain.com    Messaging is at https://domain.com
+				//2. We are at https://subdomain.domain.co.nz  Messaging is at https://domain.co.nz
+				//2. We are at https://domain.com              Messaging is at https://subdomain.domain.com
+							
+				//Now set the origin domain https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy
+				document.domain = domain;			//Get the domain from the 'server' for cross-domain security
+							
+			
+			}
+			
+			//Special case atomjump for drop down selection
+			if(getHostnameFromRegex(window.location).includes("atomjump.com")) {
+				setOriginDomain("atomjump.com");		//Allow calls to raw atomjump.com
+			}
             
           		
 			
