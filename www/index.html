@@ -348,14 +348,7 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
            soundEffect.src = 'ping.mp3';
            
            
-           function getHostnameFromRegex(url) {
-			  //Courtesy https://stackoverflow.com/questions/8498592/extract-hostname-name-from-string
-			  // run against regex
-			  const matches = url.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i);
-			  // extract hostname (will be null if no match is found)
-			  return matches && matches[1];
-			}
-		
+ 		
 			function setOriginDomain(domain) {
 				//Scenarios:
 				//1. We are at https://subdomain.domain.com    Messaging is at https://domain.com
@@ -369,7 +362,7 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 			}
 			
 			//Special case atomjump for drop down selection
-			var hostname = getHostnameFromRegex(window.location);
+			var hostname = location.hostname;
 			alert("Hostname: " + hostname);	//TESTING
 			if(hostname.includes("atomjump.com")) {
 				alert("Yes, setting origin to atomjump.com");	//TESTING
