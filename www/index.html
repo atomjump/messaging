@@ -102,6 +102,10 @@
 			   a:active {
 				  text-decoration: none;
 				}
+				
+			  .highlighted {
+			  	 background-color: #eeddee;
+			  }
     	</style>
    	
  	    <script>
@@ -149,6 +153,92 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 			}
 
 			var ref;
+			
+			
+			function checkPlatform() {
+				var platform = "Desktop";	//Assume this to begin with
+				
+				var isiOSLike = navigator.platform.match(/(iPhone|iPod|iPad)/i) ? true:false;				
+				if(isiOSLike) platform = "iOS";
+				
+				var userAgent = navigator.userAgent.toLowerCase();
+				var android = userAgent.indexOf("android") > -1;
+				if(android) platform = "Android";
+						
+				return platform;
+
+			}
+			
+			
+			var platformGuideIndex = {
+				"iOS": "ios-guide",
+				"Android": "android-guide",
+				"Desktop": "desktop-guide"           
+			};
+			
+			var platformButtonIndex = {
+				"iOS": "ios-button",
+				"Android": "android-button",
+				"Desktop": "desktop-button"           
+			};
+			
+			function selectGuide(detectedPlatform) {
+			
+				//Show the relevant text block
+				jQuery("#" + platformGuideIndex[detectedPlatform]).toggle();
+				if(detectedPlatform != "iOS") {
+					$('#ios-guide').hide(); 
+				}
+				if(detectedPlatform != "Android") {
+					$('#android-guide').hide(); 
+				}
+				if(detectedPlatform != "Desktop") {
+					$('#desktop-guide').hide();
+				}
+			
+				if(jQuery("#" + platformButtonIndex[detectedPlatform]).hasClass("highlighted")) {
+					jQuery("#" + platformButtonIndex[detectedPlatform]).removeClass("highlighted");
+				} else {
+					jQuery("#" + platformButtonIndex[detectedPlatform]).addClass("highlighted");
+				}
+				
+				if(detectedPlatform != "iOS") {
+					$('#ios-button').removeClass("highlighted");
+				}
+				if(detectedPlatform != "Android") {
+					$('#android-button').removeClass("highlighted"); 
+				}
+				if(detectedPlatform != "Desktop") {
+					$('#desktop-button').removeClass("highlighted");
+				}
+				
+				
+				
+			}
+			
+			function showDefaultPlatform() {
+				//Decide on active class based on platform used:
+				$('#ios-guide').hide(); 
+				$('#android-guide').hide(); 
+				$('#desktop-guide').hide();
+				$('#ios-button').removeClass("highlighted");
+				$('#android-button').removeClass("highlighted"); 
+				$('#desktop-button').removeClass("highlighted");
+				
+				if($('#add-to-home').is(":hidden")) {
+					$('#add-to-home').show(); 
+					var detectedPlatform = checkPlatform();
+			
+					selectGuide(detectedPlatform);
+				} else {
+					//Leave everything unhighlighted
+					$('#add-to-home').hide(); 
+				}
+				
+				
+				
+				return false;
+			}
 	    </script>
 	
 
@@ -227,7 +317,7 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 						<div style="float: left;"><span><a href="javascript:" onclick="app.myWindowOpen(encodeURI('https://atomjump.com/'), '_system')"><img  src="img/icon-trans-87.png" style="padding 10px; vertical-align: top;" width="24" height="24"></a> <span class="big-text" >AtomJump Messaging</span></span><br/></div>
 						<div style="text-align:right; float: right;">
 							<span>
-								<a href="javascript:" onclick="$('#add-to-home').toggle(); $('#ios-guide').hide(); $('#android-guide').hide(); $('#desktop-guide').hide(); " style="color: #555; padding:10px;" alt="Add to Home"><ons-icon icon='md-bookmark' class='list__item__icon'></ons-icon>Install</a>
+								<a href="javascript:" onclick="showDefaultPlatform(); " style="color: #555; padding:10px;" alt="Add to Home"><ons-icon icon='md-bookmark' class='list__item__icon'></ons-icon>Install</a>
 							</span>
 							<span><span id="close-new-server" style="display: none;"><ons-button style="background-color: #cc99cc; color: white;" href="javascript:" onclick="$('#login-popup').hide(); $('#close-new-server').hide(); return false;"><ons-icon icon='md-close'></ons-icon></ons-button></span></span>
 						</div>
@@ -235,7 +325,7 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 						<div style="clear: both;"></div>
 						<br/>
 						<div id="add-to-home" style="display:none;">
-							<small>Add app to your Homescreen<br/><a class='button' style='margin:4px;' onclick="$('#ios-guide').toggle(); $('#android-guide').hide(); $('#desktop-guide').hide();" href='javascript:'>iOS Guide</a>&nbsp;<a class='button' style='margin:4px;'onclick="$('#android-guide').toggle(); $('#ios-guide').hide(); $('#desktop-guide').hide();" href='javascript:'>Android Guide</a>&nbsp;<a class='button' style='margin:4px;' onclick="$('#desktop-guide').toggle(); $('#ios-guide').hide(); $('#android-guide').hide();" href='javascript:'>Desktop Guide</a></small><br/><br/>
+							<small>Add app to your Homescreen<br/><a id="ios-button" class='button' style='margin:4px;' onclick="return selectGuide('iOS');" href='javascript:'>iOS Guide</a>&nbsp;<a id="android-button" class='button' style='margin:4px;' onclick="return selectGuide('Android');" href='javascript:'>Android Guide</a>&nbsp;<a id="desktop-button" class='button' style='margin:4px;' onclick="return selectGuide('Desktop');" href='javascript:'>Desktop Guide</a></small><br/><br/>
 						</div>
 						<div id="ios-guide" style="display:none;">Tap <img src="img/safari-add.png" width="25" height="30">, usually along the bottom of the screen, then swipe up, and tap 'Add to Home Screen'. <a href="javascript:" onclick="$('#ios-more-info').toggle();">More Info</a><br/><br/>
 							<div id="ios-more-info" style="display:none;">
