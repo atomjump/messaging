@@ -14,10 +14,8 @@
     </author>
     <content src="index.html" />
     <access origin="*" />
-    
-    
-	<allow-navigation href="*"/>
-    
+    <allow-intent href="*" />
+    <allow-navigation href="*" />
 
     
     <platform name="android">
