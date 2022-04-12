@@ -149,6 +149,12 @@
    "density": "4.0"
   },
   {
+   "src": "android-icon-256x256.png",
+   "sizes": "256x256",
+   "type": "image\/png",
+   "density": "4.0"
+  },
+  {
    "src": "windows-icon-24x24.png",
    "sizes": "24x24",
    "type": "image\/png",
@@ -180,7 +186,7 @@
    "purpose": "maskable"
   },
   {
-   "src": "windows-icon-256x256.png",
+   "src": "android-icon-256x256.png",
    "sizes": "256x256",
    "type": "image\/png",
    "density": "4.0",
