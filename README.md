@@ -1,7 +1,7 @@
 <img src="https://atomjump.com/images/logo80.png">
 
 # messaging
-AtomJump Messaging app: shortcuts and popup notifications to AtomJump Loop.
+AtomJump Messaging app: shortcuts and popup notifications to AtomJump Messaging.
 
 See:
 https://src.atomjump.com/atomjump/loop
@@ -11,8 +11,8 @@ https://src.atomjump.com/atomjump/loop-server
 
 # Requirements
 
-* AtomJump Loop Server >= 0.9.0
-* 'Notifications' plugin for Loop Server (see https://src.atomjump.com/atomjump/notifications)
+* AtomJump Messaging Server >= 0.9.0
+* 'Notifications' plugin for Messaging Server (see https://src.atomjump.com/atomjump/notifications)
 
 
 # Building
