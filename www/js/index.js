@@ -30,6 +30,37 @@ var	androidAppLink = "https://play.google.com/store/apps/details?id=org.atomjump
 
 
 
+function myTrim(x)
+{
+	return x.replace(/^\s+|\s+$/gm,'');
+}
+
+function getCookie(cname)
+{
+	var name = cname + "=";
+	var ca = document.cookie.split(';');
+	for(var i=0; i<ca.length; i++)
+	{
+		var c = myTrim(decodeURIComponent(ca[i]));// ie8 didn't support .trim();
+		if (c.indexOf(name)==0) return c.substring(name.length,c.length);
+	}
+	return "";
+}
+
+
+function cookieOffset()
+{
+  //Should output: Thu,31-Dec-2020 00:00:00 GMT
+  var cdate = new Date;
+  var expirydate=new Date();
+  expirydate.setTime(expirydate.getTime()+(365*3*60*60*24*1000));	//3 years, although 2 years may be the limit on some browsers
+  var write = expirydate.toGMTString();
+  
+  return write;
+}
+
+
+
 
 var app = {
 
@@ -74,7 +105,7 @@ var app = {
     onDeviceReady: function() {
           
           app.receivedEvent('deviceready');
-          var settingApi = localStorage.getItem("api");
+          var settingApi = innerThis.localStorageGetItem("api");
           if(settingApi) {
           	 api = settingApi;
           	 $('#private-server').val(api);
@@ -82,7 +113,7 @@ var app = {
           
           
           
-          userId = localStorage.getItem('loggedUser');
+          userId = innerThis.localStorageGetItem('loggedUser');
         
           if(userId) {
         	//Yep, we have a logged in user
@@ -100,7 +131,7 @@ var app = {
           
           }
           
-          var oldRegId = localStorage.getItem('registrationId');
+          var oldRegId = innerThis.localStorageGetItem('registrationId');
           
           if(oldRegId) {
           		if(app.showPreregister == true) {
@@ -298,7 +329,7 @@ var app = {
     
     poll: function(cb)
 	{
-		 var url = localStorage.getItem('pollingURL');		//Can potentially extend to some country code info here from the cordova API, or user input?
+		 var url = innerThis.localStorageGetItem('pollingURL');		//Can potentially extend to some country code info here from the cordova API, or user input?
 
 		//this will repeat every 15 seconds
 	  	if(url) {
@@ -462,7 +493,7 @@ var app = {
 						*/
 						innerThis.pull = true;		//Set the global pull
 		
-						var oldRegId = localStorage.getItem('registrationId');
+						var oldRegId = innerThis.localStorageGetItem('registrationId');
 						
 						if (!oldRegId) {
 							//We need to generate a new registrationId
@@ -488,7 +519,7 @@ var app = {
 									//The pollingURL is what we will continue to check on
 				
 									//Start up regular checks
-									localStorage.setItem('pollingURL', pollingURL);
+									innerThis.localStorageSetItem('pollingURL', pollingURL);
 									
 					
 					   
@@ -496,7 +527,7 @@ var app = {
 					
 					
 									// Save the new registration ID on the phone
-									localStorage.setItem('registrationId', registrationId);
+									innerThis.localStorageSetItem('registrationId', registrationId);
 									// Post registrationId to your app server as the value has changed
 									//Post to server software Loop Server API
 					
@@ -566,7 +597,7 @@ var app = {
 						
 							//Already have a registration Id. Start polling
 							
-							var pollingURL = localStorage.getItem('pollingURL');
+							var pollingURL = innerThis.localStorageGetItem('pollingURL');
 							innerThis.startPolling(pollingURL, checkImmediately, 10);		//true: 1st check immediately
 							
 							
@@ -635,14 +666,14 @@ var app = {
         push.on('registration', function(data) {
             
            
-            var oldRegId = localStorage.getItem('registrationId');
+            var oldRegId = innerThis.localStorageGetItem('registrationId');
             $('#registered').html("<small>Listening for Messages</small>");
             $('#registered').show();
             if (oldRegId !== data.registrationId) {
                 
                 
                 // Save new registration ID
-                localStorage.setItem('registrationId', data.registrationId);
+                innerThis.localStorageSetItem('registrationId', data.registrationId);
                 // Post registrationId to your app server as the value has changed
                 //Post to server software Loop Server API
                 
@@ -734,11 +765,11 @@ var app = {
    		    	apiUrl = apiUrl + "/";
    		    }
    			api = apiUrl;
-   			localStorage.setItem("api",api);
+   			innerThis.localStorageSetItem("api",api);
    		} else {
    			//A blank apiUrl has been entered
    			api = defaultApi;
-   			localStorage.setItem("api",api);
+   			innerThis.localStorageSetItem("api",api);
    		}
     
     },
@@ -763,7 +794,7 @@ var app = {
     	//     				settings.url		(visual link)
   		innerThis.addShortcut(response);
    		
-   		var id = localStorage.getItem('registrationId');
+   		var id = innerThis.localStorageGetItem('registrationId');
    		
 
    		if(id) {
@@ -783,7 +814,7 @@ var app = {
 			$('#registered').html("<small><a class='button' href='" + url + "' target='_blank'>Complete Registration</a><br/>(Tap if you are seeing this)</small>");
 			$('#registered').show();
 			
-			var settingApi = localStorage.getItem("api");
+			var settingApi = innerThis.localStorageGetItem("api");
          	 if(settingApi) {
           		 api = settingApi;
           	 	$('#private-server').val(api);
@@ -795,7 +826,7 @@ var app = {
 			
 		} else {
 			 //Need to setup a registration
-			 var settingApi = localStorage.getItem("api");
+			 var settingApi = innerThis.localStorageGetItem("api");
          	 if(settingApi) {
           		 api = settingApi;
           	 	$('#private-server').val(api);
@@ -846,7 +877,7 @@ var app = {
 						
 						
 							if(userId) {
-								localStorage.setItem("loggedUser",userId);
+								innerThis.localStorageSetItem("loggedUser",userId);
 											
 								if(innerThis) {	
 									innerThis.register(apiUrl, email);		//register this phone
@@ -947,7 +978,7 @@ var app = {
     
     warningBrowserOpen: function(place, cb) {
     	//This function will include a warning message a certain number of times until
-    	var item = localStorage.getItem(place);
+    	var item = innerThis.localStorageGetItem(place);
     	if(item) {
     		var count = parseInt(item) + 1;
     	} else {
@@ -955,7 +986,7 @@ var app = {
     		var count = 0; 
     	}
     	   	
-    	localStorage.setItem(place, count);
+    	innerThis.localStorageSetItem(place, count);
     	
     	switch(place)
     	{
@@ -1027,10 +1058,10 @@ var app = {
 	    		function(buttonIndex) {
 	    			if(buttonIndex == 1) {					
 						
-						localStorage.removeItem("loggedUser");
-						localStorage.removeItem("settings");
-						localStorage.removeItem("api");
-						localStorage.removeItem("gotoforum");
+						innerThis.localStorageRemoveItem("loggedUser");
+						innerThis.localStorageRemoveItem("settings");
+						innerThis.localStorageRemoveItem("api");
+						innerThis.localStorageRemoveItem("gotoforum");
 						$('#user').val('');
 						$('#password').val('');
 						$('#private-server').val('');
@@ -1039,8 +1070,8 @@ var app = {
 						
 						//Deregister on the database - by sending a blank id (which gets set as a null on the server). Disassociates phone from user.
 						
-						var registrationId = localStorage.getItem("registrationId");
-						localStorage.removeItem("registrationId");
+						var registrationId = innerThis.localStorageGetItem("registrationId");
+						innerThis.localStorageRemoveItem("registrationId");
 						var phonePlatform = _this.getPlatform();
 			
 						var url = api + "plugins/notifications/register.php?id=" + encodeURIComponent(registrationId) + "&devicetype=" + encodeURIComponent(phonePlatform) + "&action=remove";  //e.g.																			https://atomjump.com/api/plugins/notifications/register.php?id=test&devicetype=AtomJump&action=remove
@@ -1048,7 +1079,7 @@ var app = {
 				
 						userId = null;
 						
-						localStorage.clear();
+						innerThis.localStorageClear();
     		
 						alert("Cleared all saved forums and settings.  Warning: if you had more than one connected server, you will need to manually connect and then disconnect from these other servers. Currently, messages from these servers will not be retrieved.");
 		
@@ -1071,9 +1102,9 @@ var app = {
         var _this = this;
         
        
-    	userId = localStorage.getItem("loggedUser");
-		//This should not be in here or it will attempt to register again immediately: localStorage.removeItem("registrationId");
-		localStorage.removeItem("loggedUser");
+    	userId = innerThis.localStorageGetItem("loggedUser");
+		//This should not be in here or it will attempt to register again immediately: innerThis.localStorageRemoveItem("registrationId");
+		innerThis.localStorageRemoveItem("loggedUser");
 		$('#user').val('');
 		$('#password').val('');
 		$('#registered').hide();
@@ -1084,7 +1115,7 @@ var app = {
 		
 			//Deregister on the database - by sending a blank id (which gets set as a null on the server). Disassociates phone from user.
 			
-			var registrationId = localStorage.getItem("registrationId");
+			var registrationId = innerThis.localStorageGetItem("registrationId");
 			var phonePlatform = _this.getPlatform();
 			
 			/* The button itself should already be set to open this 
@@ -1572,13 +1603,13 @@ var app = {
     //Array storage for app permanent settings (see http://inflagrantedelicto.memoryspiral.com/2013/05/phonegap-saving-arrays-in-local-storage/)
     setArrayLocalStorage: function(mykey, myobj) {
     	var str = JSON.stringify(myobj);
-    	var ret = localStorage.setItem(mykey, str);
+    	var ret = innerThis.localStorageSetItem(mykey, str);
 	    return ret;
     },
     
     getArrayLocalStorage: function(mykey) {
 
-    	var item = localStorage.getItem(mykey);
+    	var item = innerThis.localStorageGetItem(mykey);
     	if(item) {
     		var retItem = JSON.parse(item);
     	} else {
@@ -1588,6 +1619,55 @@ var app = {
     }
 
 
+   //A-Syncronous usage of cookies instead of localStorage, because Safari is limited to 7 days
+	localStorageGetItem: function(mykey) {
+	
+		return getCookie(mykey);	
+	},
+	
+	
+    
+	localStorageSetItem: function(mykey, value) {
+		document.cookie = mykey + '=' + encodeURIComponent(value) + '; path=/; expires=' + cookieOffset() + ';';
+	},
+    
+	localStorageRemoveItem: function(mykey) {
+    	 document.cookie = mykey + '=; Max-Age=-99999999;';  
+	},
+    
+	localStorageClear: function() {
+		//Note: this won't remove different paths
+		var c = document.cookie.split("; ");
+ 		for (i in c) {
+  			document.cookie =/^[^=]+/.exec(c[i])[0]+"=;expires=Thu, 01 Jan 1970 00:00:00 GMT"; 
+  		}  
+
+    },
+    
+    checkTransitioningData: function() {
+    	var transitioned = null;
+    	   	
+    	transitioned = glbThis.localStorageGetItem("tr");
+    	if(!transitioned) {
+    		//We haven't dealt with this before
+    		if(localStorage.getItem("registrationId")) {
+    			//We have some form of localStorage data already stored. Transfer old storage into new method i.e. cookies
+				var items = [ "pollingURL", "gotoforum", "api", "loggedUser", "registrationId", "settings"];
+				for(var cnt=0; cnt < items.length; cnt++) {
+				
+					var item = localStorage.getItem(items[cnt]);
+					if(item) {
+						innerThis.localStorageSetItem(items[cnt], item);
+					}
+				}
+				
+				innerThis.clear();	//Clear it all out
+				glbThis.localStorageSetItem("tr", "1");	//But leave a note to say it has been transitioned
+			} else {
+				glbThis.localStorageSetItem("tr", "1");	//But leave a note to say it has been transitioned
+			}
+    	} 
+    }
 
 
 
