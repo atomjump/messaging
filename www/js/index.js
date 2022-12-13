@@ -394,9 +394,9 @@ var app = {
 	runPoll: function() {
 		//This is run from the regular checks, and allows for a return callback
 		
-		if(window && window.plugins && window.plugins.insomnia) {
+		/*if(window && window.plugins && window.plugins.insomnia) {
 			window.plugins.insomnia.keepAwake();
-		}
+		}*/
 		
 		app.poll(function(runAgain) {
 			if(runAgain == true) {
@@ -1650,7 +1650,7 @@ var app = {
     checkTransitioningData: function() {
     	var transitioned = null;
     	   	
-    	transitioned = glbThis.localStorageGetItem("tr");
+    	transitioned = innerThis.localStorageGetItem("tr");
     	if(!transitioned) {
     		//We haven't dealt with this before
     		if(localStorage.getItem("registrationId")) {
