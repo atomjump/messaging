@@ -71,9 +71,12 @@ var app = {
 
         this.bindEvents();  
         
-        
-        
         innerThis = this;
+        
+        //Check if we are still transitioning any data over from localStorage to cookies
+    	this.checkTransitioningData();	
+
+        
         
         //Set display name
         this.displayForumNames();
