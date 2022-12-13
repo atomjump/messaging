@@ -105,7 +105,7 @@ var app = {
     onDeviceReady: function() {
           
           app.receivedEvent('deviceready');
-          var settingApi = innerThis.localStorageGetItem("api");
+          var settingApi = app.localStorageGetItem("api");
           if(settingApi) {
           	 api = settingApi;
           	 $('#private-server').val(api);
@@ -113,7 +113,7 @@ var app = {
           
           
           
-          userId = innerThis.localStorageGetItem('loggedUser');
+          userId = app.localStorageGetItem('loggedUser');
         
           if(userId) {
         	//Yep, we have a logged in user
@@ -131,7 +131,7 @@ var app = {
           
           }
           
-          var oldRegId = innerThis.localStorageGetItem('registrationId');
+          var oldRegId = app.localStorageGetItem('registrationId');
           
           if(oldRegId) {
           		if(app.showPreregister == true) {
@@ -329,7 +329,7 @@ var app = {
     
     poll: function(cb)
 	{
-		 var url = innerThis.localStorageGetItem('pollingURL');		//Can potentially extend to some country code info here from the cordova API, or user input?
+		 var url = app.localStorageGetItem('pollingURL');		//Can potentially extend to some country code info here from the cordova API, or user input?
 
 		//this will repeat every 15 seconds
 	  	if(url) {
@@ -1058,10 +1058,10 @@ var app = {
 	    		function(buttonIndex) {
 	    			if(buttonIndex == 1) {					
 						
-						innerThis.localStorageRemoveItem("loggedUser");
-						innerThis.localStorageRemoveItem("settings");
-						innerThis.localStorageRemoveItem("api");
-						innerThis.localStorageRemoveItem("gotoforum");
+						_this.localStorageRemoveItem("loggedUser");
+						_this.localStorageRemoveItem("settings");
+						_this.localStorageRemoveItem("api");
+						_this.localStorageRemoveItem("gotoforum");
 						$('#user').val('');
 						$('#password').val('');
 						$('#private-server').val('');
@@ -1070,8 +1070,8 @@ var app = {
 						
 						//Deregister on the database - by sending a blank id (which gets set as a null on the server). Disassociates phone from user.
 						
-						var registrationId = innerThis.localStorageGetItem("registrationId");
-						innerThis.localStorageRemoveItem("registrationId");
+						var registrationId = _this.localStorageGetItem("registrationId");
+						_this.localStorageRemoveItem("registrationId");
 						var phonePlatform = _this.getPlatform();
 			
 						var url = api + "plugins/notifications/register.php?id=" + encodeURIComponent(registrationId) + "&devicetype=" + encodeURIComponent(phonePlatform) + "&action=remove";  //e.g.																			https://atomjump.com/api/plugins/notifications/register.php?id=test&devicetype=AtomJump&action=remove
@@ -1079,7 +1079,7 @@ var app = {
 				
 						userId = null;
 						
-						innerThis.localStorageClear();
+						_this.localStorageClear();
     		
 						alert("Cleared all saved forums and settings.  Warning: if you had more than one connected server, you will need to manually connect and then disconnect from these other servers. Currently, messages from these servers will not be retrieved.");
 		
@@ -1102,9 +1102,9 @@ var app = {
         var _this = this;
         
        
-    	userId = innerThis.localStorageGetItem("loggedUser");
+    	userId = _this.localStorageGetItem("loggedUser");
 		//This should not be in here or it will attempt to register again immediately: innerThis.localStorageRemoveItem("registrationId");
-		innerThis.localStorageRemoveItem("loggedUser");
+		_this.localStorageRemoveItem("loggedUser");
 		$('#user').val('');
 		$('#password').val('');
 		$('#registered').hide();
@@ -1115,7 +1115,7 @@ var app = {
 		
 			//Deregister on the database - by sending a blank id (which gets set as a null on the server). Disassociates phone from user.
 			
-			var registrationId = innerThis.localStorageGetItem("registrationId");
+			var registrationId = _this.localStorageGetItem("registrationId");
 			var phonePlatform = _this.getPlatform();
 			
 			/* The button itself should already be set to open this 
@@ -1616,7 +1616,7 @@ var app = {
     		var retItem = {};
     	}
 	    return retItem;
-    }
+    },
 
 
    //A-Syncronous usage of cookies instead of localStorage, because Safari is limited to 7 days
@@ -1662,9 +1662,9 @@ var app = {
 				}
 				
 				innerThis.clear();	//Clear it all out
-				glbThis.localStorageSetItem("tr", "1");	//But leave a note to say it has been transitioned
+				innerThis.localStorageSetItem("tr", "1");	//But leave a note to say it has been transitioned
 			} else {
-				glbThis.localStorageSetItem("tr", "1");	//But leave a note to say it has been transitioned
+				innerThis.localStorageSetItem("tr", "1");	//But leave a note to say it has been transitioned
 			}
     	} 
     }
