@@ -1660,7 +1660,7 @@ var app = {
 					}
 				}
 				
-				innerThis.clear();	//Clear it all out
+				localStorage.clear();	//Clear it all out
 				innerThis.localStorageSetItem("tr", "1");	//But leave a note to say it has been transitioned
 			} else {
 				innerThis.localStorageSetItem("tr", "1");	//But leave a note to say it has been transitioned
