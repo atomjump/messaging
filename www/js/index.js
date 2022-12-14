@@ -1647,6 +1647,7 @@ var app = {
     	var transitioned = null;
     	   	
     	transitioned = innerThis.localStorageGetItem("tr");
+    	
     	if(!transitioned) {
     		//We haven't dealt with this before
     		if(localStorage.getItem("registrationId")) {
