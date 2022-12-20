@@ -1627,7 +1627,7 @@ var app = {
 	
     
 	localStorageSetItem: function(mykey, value) {
-		document.cookie = mykey + '=' + encodeURIComponent(value) + '; path=/; expires=' + cookieOffset() + ';';
+		document.cookie = mykey + '=' + encodeURIComponent(value) + '; path=/; SameSite=Strict; expires=' + cookieOffset() + ';';
 	},
     
 	localStorageRemoveItem: function(mykey) {

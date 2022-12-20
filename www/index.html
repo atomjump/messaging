@@ -66,6 +66,91 @@
     	<link rel="stylesheet" type="text/css" href="css/ionicons/css/ionicons.css">
     	<link rel="stylesheet" type="text/css" href="css/material-design-iconic-font/css/material-design-iconic-font.css">
     	<link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
+    	
+    	
+    	    	<noscript>Sorry, 'JavaScript' is disabled in your browser. Please enabled JavaScript in your browser to be able to operate the MedImage app.</noscript>
+    	<script>
+    		//Run these cookie checks before any other .js scripts are included, and may fail
+    		//But keep the functionality up-to-date with index.js versions of the same functions
+    		    function myTrim(x)
+				{
+					return x.replace(/^\s+|\s+$/gm,'');
+				}
+
+				function getCookie(cname)
+				{
+					if(document && document.cookie) {
+						var name = cname + "=";
+						var ca = document.cookie.split(';');
+						for(var i=0; i<ca.length; i++)
+						{
+							var c = myTrim(decodeURIComponent(ca[i]));// ie8 didn't support .trim();
+							if (c.indexOf(name)==0) return c.substring(name.length,c.length);
+						}
+					}
+					return "";
+				}
+
+
+				function cookieOffset()
+				{
+				  //Should output: Thu,31-Dec-2020 00:00:00 GMT
+				  var cdate = new Date;
+				  var expirydate=new Date();
+				  expirydate.setTime(expirydate.getTime()+(365*3*60*60*24*1000));	//3 years, although 2 years may be the limit on some browsers
+				  var write = expirydate.toGMTString();
+				  
+				  return write;
+				}
+								
+    		    
+				function localStorageGetItem(mykey) {
+				
+					return getCookie(mykey);	
+				}
+	
+	
+    
+				function localStorageSetItem(mykey, value) {
+					document.cookie = mykey + '=' + encodeURIComponent(value) + '; path=/; SameSite=Strict; expires=' + cookieOffset() + ';';		//Note: strict means cookies only used by this site
+				}
+    	
+    	
+			   function checkLocalStorageEnabled() {
+					//Checks if local storage, currently cookie-based, existings and is working
+					
+					/*if(navigator.cookieEnabled) {
+						//Should be working
+					}*/
+
+					try {
+				 		localStorageSetItem("ce", "exists");
+				 		var item = localStorageGetItem("ce");
+					
+						if(!item) {
+							return false;
+						} else {
+							if(item === "exists") {
+								return true;
+							} else {
+								//Stored connections not being held correctly
+								return false;
+							}
+						}
+					} catch(err) {
+						//alert("Error with cookies " + err);
+						return false;
+					}
+				
+				}
+			
+				//Check if local storage exists, and provide a warning if not
+				var storageWorking = checkLocalStorageEnabled();
+				if(storageWorking === false) {
+					alert("Warning: Your browser needs '1st party cookies' to be enabled to be able to remember connections between visits. How to do this differs per browser, but look under your browser's Privacy Settings to correct this. You may also try a different browser.");        
+				}
+    	</script>
+    	
     	<script src="js/onsenui.js"></script> 
     	<script src="js/jquery-3.4.0.js"></script>
     	<script src="js/jquery-ui.js"></script><!-- Note, this must come after the jquery -->
