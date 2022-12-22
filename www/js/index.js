@@ -602,9 +602,9 @@ var app = {
   		innerThis.pull = false;
   	
   		if(typeof(PushNotification) == 'undefined') { 
-			if(confirm("Sorry, this site is configured to send system notifications in the background. For this you will need the full app from the app-store.")) {
-				$('#registered').html("<small><a class='button' href='" + iosAppLink + "' target='_blank' onclick=''>iOS app</a>&nbsp;<a class='button' href='" + androidAppLink + "' target='_blank' onclick=''>Android app</a></small>");
-				$('#registered').show();
+			if(confirm("Sorry, this site appears to be configured to send system notifications in the background. For this you would need the original app-store app, which has been depreciated.  Please try again, or contact the system admin of the site.")) {
+				//$('#registered').html("<small><a class='button' href='" + iosAppLink + "' target='_blank' onclick=''>iOS app</a>&nbsp;<a class='button' href='" + androidAppLink + "' target='_blank' onclick=''>Android app</a></small>");
+				//$('#registered').show();
     			//Assume iOS at this stage.
   	 			//Note: This doesn't work: window.open("https://itunes.apple.com/us/app/atomjump-messaging/id1153387200?ls=1&mt=8", "_system");
     			
