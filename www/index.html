@@ -129,41 +129,58 @@
 				}
     	
     	
-			   function checkLocalStorageEnabled() {
-					//Checks if local storage, currently cookie-based, existings and is working
-
-					try {
-				 		localStorageSetItem("ce", "exists");
-				 		var item = localStorageGetItem("ce");
-					
-						if(!item) {
-							return false;
-						} else {
-							if(item === "exists") {
-								return true;
-							} else {
-								//Stored connections not being held correctly
-								return false;
-							}
-						}
-					} catch(err) {
-						return false;
-					}
-				
-				}
-			
-				//Check if local storage exists, and provide a warning if not
-				var storageWorking = checkLocalStorageEnabled();
-				if(storageWorking === false) {
-					//Try again in half a second (sometimes browser can be still loading)
-					setTimeout(function() { 
-						
-						storageWorking = checkLocalStorageEnabled();
-						if(storageWorking === false) {
+    	
+    	   		   function reportStorage(storageWorking) {
+    		   		
+    		   			if(storageWorking === false) {
+				   	
 							alert("Warning: Your browser needs '1st party cookies' to be enabled to be able to remember connections between visits. How to do this differs per browser, but look under your browser's Privacy Settings to correct this. You may also try a different browser.");
-						} 
-					}, 2000);
-				}
+						}
+				   }
+			
+				   function checkLocalStorageEnabled() {
+						//Checks if local storage, currently cookie-based, existings and is working
+						
+						try {
+					 		localStorageSetItem("ce", "exists");
+					 		//Wait for a fraction of a second
+					 						 		
+					 		setTimeout(function() {
+					 			try {
+							 		var item = localStorageGetItem("ce");
+									
+									if(!item) {
+										reportStorage(false);
+										return false;
+									} else {
+										if(item === "exists") {
+											reportStorage(true);
+											return true;
+										} else {
+											//Stored connections not being held correctly
+											reportStorage(false);
+											return false;
+										}
+									}
+								} catch(err) {
+									reportStorage(false);
+									return false;
+								}
+							}, 10);
+						} catch(err) {
+							reportStorage(false);
+							return false;
+						}
+					
+					}
+					
+					
+					//Check if local storage exists, and provide a warning if not
+					setTimeout(function() {
+						checkLocalStorageEnabled();
+					}, 50);
+					
+			
     	</script>
     	
     	<script src="js/onsenui.js"></script> 
