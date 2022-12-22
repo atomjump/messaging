@@ -68,7 +68,7 @@
     	<link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
     	
     	
-    	    	<noscript>Sorry, 'JavaScript' is disabled in your browser. Please enabled JavaScript in your browser to be able to operate the MedImage app.</noscript>
+    	<noscript>Sorry, 'JavaScript' is disabled in your browser. Please enabled JavaScript in your browser to be able to operate the MedImage app.</noscript>
     	<script>
     		//Run these cookie checks before any other .js scripts are included, and may fail
     		//But keep the functionality up-to-date with index.js versions of the same functions
@@ -539,10 +539,21 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
         		<div id="settings"></div>
         		<p>
         			<ons-button style="background-color: #7c5599; color: white;" modifier="large" onclick="app.newForum();">Add a New Forum</ons-button>
+	        		
 	        	</p>
 	        	
 				<p>
-					<a class="small-text" href="javascript" onclick="return app.factoryReset();">Reset Factory Settings</a>
+					<div style="position: relative; float: right;">
+								<a class="small-text" target="_blank" href="http://atomjump.org">Version: 1.3.8<a/>
+					</div>
+					<span class="small-text" style="color: #aaa;">Note: This list is only retained for 2 years.</span>
+					<a style="color: #888;" class="small-text" href="javascript:" onclick="return app.showMyData();">Retain My Data</a><br/><br/>
+					<a class="small-text" href="javascript:" onclick="return app.factoryReset();">Reset Factory Settings</a>
+				</p>
+				<p id="show-my-data" style="display: none;">
+					<span class="small-text" style="color: #555;">Your AtomJump app data is stored in your local browser's 'cookies' for up to 2 years. Login details are stored separately in your browser's 'cookies' on the pages of the connected servers. You can copy and paste this central app data into a local file, for your reference (note: an import will be built in a future release).<br/></span><br/>
+					<b>Raw Data:</b><br/><textarea id="raw-data" rows="4" cols="50"></textarea><br/><br/>
+					<b>Readable Version:</b><br/><textarea id="human-data" rows="4" cols="50"></textarea>
 				</p>
 			</div>
         </div>

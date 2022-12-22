@@ -1636,6 +1636,15 @@ var app = {
 				localStorageSetItem("tr", "1");	//But leave a note to say it has been transitioned
 			}
     	} 
+    },
+    
+    
+    showMyData: function() {
+    	var myData = document.cookie;
+    	$('#raw-data').html(myData);
+    	$('#human-data').html(decodeURIComponent(myData));
+    	$('#show-my-data').show();
+    	return true;
     }
 
 
