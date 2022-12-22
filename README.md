@@ -26,3 +26,5 @@ On iOS, you will need distribution keys.
 
 * Make the drop-down links <a> tags so that they open the forum in a new browser window.
 * Editing the settings for each forum so that you can opt in to receive messages, and specify which time to receive them (and the timezone). In the mean time, we suggest logging out of your account to stop getting messages, and then logging back in when you want to start receiving them again. You will get them by email when you are logged off.
+* An automatic 'cookie refresh' for stored data when it is nearing it's two year expiration date.
+* An 'Show my data' link that shows the stored cookie data. And an 'Import my data' link.
