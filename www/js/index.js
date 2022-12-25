@@ -1615,19 +1615,55 @@ var app = {
     
     
     importCookies: function(newData) {
-    	newData = "tr=1; api=https%3A%2F%2Fatomjump.com%2Fapi%2F; settings=%5B%7B%22forum%22%3A%22atomjump.com%22%2C%22api%22%3A%22https%3A%2F%2Fatomjump.com%2Fapi%2F%22%2C%22rawForumHeader%22%3A%22ajps_%22%2C%22rawForumName%22%3A%22homepage-com%22%2C%22url%22%3A%22https%3A%2F%2Fatomjump.com%2F%22%7D%2C%7B%22forum%22%3A%22test%40%22%2C%22api%22%3A%22https%3A%2F%2Fatomjump.com%2Fapi%2F%22%2C%22rawForumHeader%22%3A%22ajps_%22%2C%22rawForumName%22%3A%22test%22%2C%22url%22%3A%22https%3A%2F%2Ftest.atomjump.com%2Fgo%2F%22%7D%5D; pollingURL=https%3A%2F%2Fmedimage-wrld.atomjump.com%2Fread%2FFCBYRVWSCv7b4umMEWU7; registrationId=https%253A%252F%252Fmedimage-wrld.atomjump.com%252Fapi%252Fphoto%252F%2523FCBYRVWSCv7b4umMEWU7; ce=exists";		//TESTING
-    	//Raw data example: tr=1; api=https%3A%2F%2Fatomjump.com%2Fapi%2F; settings=%5B%7B%22forum%22%3A%22atomjump.com%22%2C%22api%22%3A%22https%3A%2F%2Fatomjump.com%2Fapi%2F%22%2C%22rawForumHeader%22%3A%22ajps_%22%2C%22rawForumName%22%3A%22homepage-com%22%2C%22url%22%3A%22https%3A%2F%2Fatomjump.com%2F%22%7D%2C%7B%22forum%22%3A%22test%40%22%2C%22api%22%3A%22https%3A%2F%2Fatomjump.com%2Fapi%2F%22%2C%22rawForumHeader%22%3A%22ajps_%22%2C%22rawForumName%22%3A%22test%22%2C%22url%22%3A%22https%3A%2F%2Ftest.atomjump.com%2Fgo%2F%22%7D%5D; pollingURL=https%3A%2F%2Fmedimage-wrld.atomjump.com%2Fread%2FFCBYRVWSCv7b4umMENU7; registrationId=https%253A%252F%252Fmedimage-wrld.atomjump.com%252Fapi%252Fphoto%252F%2523FCBYRVWSCv7b4umMEWU7; ce=exists
-		
-		var ca = newData.split(';');
-		for(var i=0; i<ca.length; i++)
-		{
-			var valuePair = ca[i].split('=');
-			var cName = valuePair[0];
-			var cValue = valuePair[1];
-			if(cName && cValue) {
-				alert("cookie name=" + cName + " cookie value=" + cValue);
+	
+    	var newData = $('#import-raw-data').val();
+    	if(newData && newData != "") {
+			if(confirm("Warning: You are about to import your personal app data. Any existing app data will be replaced. Are you sure you want to continue?")) {
+			
+				//Raw data example: tr=1; api=https%3A%2F%2Fatomjump.com%2Fapi%2F; settings=%5B%7B%22forum%22%3A%22atomjump.com%22%2C%22api%22%3A%22https%3A%2F%2Fatomjump.com%2Fapi%2F%22%2C%22rawForumHeader%22%3A%22ajps_%22%2C%22rawForumName%22%3A%22homepage-com%22%2C%22url%22%3A%22https%3A%2F%2Fatomjump.com%2F%22%7D%2C%7B%22forum%22%3A%22test%40%22%2C%22api%22%3A%22https%3A%2F%2Fatomjump.com%2Fapi%2F%22%2C%22rawForumHeader%22%3A%22ajps_%22%2C%22rawForumName%22%3A%22test%22%2C%22url%22%3A%22https%3A%2F%2Ftest.atomjump.com%2Fgo%2F%22%7D%5D; pollingURL=https%3A%2F%2Fmedimage-wrld.atomjump.com%2Fread%2FFCBYRVWSCv7b4umMENU7; registrationId=https%253A%252F%252Fmedimage-wrld.atomjump.com%252Fapi%252Fphoto%252F%2523FCBYRVWSCv7b4umMEWU7; ce=exists
+				
+				//Readable data example:  tr=1; api=https://atomjump.com/api/; settings=[{"forum":"atomjump.com","api":"https://atomjump.com/api/","rawForumHeader":"ajps_","rawForumName":"homepage-com","url":"https://atomjump.com/"},{"forum":"test@","api":"https://atomjump.com/api/","rawForumHeader":"ajps_","rawForumName":"test","url":"https://test.atomjump.com/go/"}]; pollingURL=https://medimage-wrld.atomjump.com/read/FCBYRVWSCv7b4umMEWU7; registrationId=https%3A%2F%2Fmedimage-wrld.atomjump.com%2Fapi%2Fphoto%2F%23FCBYRVWSCv7b4umMEWU7; ce=exists
+				
+				var replaceCookies = confirm("Is this app and device a direct 1:1 replacement for your primary device? (Click Cancel if it is a new, secondary, device)");
+
+				
+				localStorageClear();		//Clear off any existing data
+				
+				var ca = newData.split(';');
+				for(var i=0; i<ca.length; i++)
+				{
+					var valuePair = ca[i].split('=');
+					var cName = myTrim(valuePair[0]);
+					var cValue = myTrim(valuePair[1]);
+					if(cName && cValue) {
+						if(replaceCookies === false) {
+							if(cName === "pollingURL") {
+								cValue = "";
+							}
+							if(cName === "registrationId") {
+								cValue = "";
+							}
+						}
+						if(cValue && cValue != "") {
+							localStorageSetItem(cName, decodeURIComponent(cValue));
+						}
+					}
+				}
+				
+				if(replaceCookies == true) {
+					alert("Your personal data has been imported successfully.");
+				} else {
+					alert("Your personal data has been imported successfully. You may need to now register this device.");
+				}
+				//Refresh the page
+				location.reload();
+				return false;
 			}
-		}
+		} else {
+			alert("Sorry, please copy and paste your raw data from your app's 'Settings' > 'Retain my data'.");
+			
+		}	
+		return true;
     	
     },
     
