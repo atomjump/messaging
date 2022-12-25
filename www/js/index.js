@@ -1672,7 +1672,7 @@ var app = {
     	var myData = document.cookie;
     	$('#raw-data').html(myData);
     	$('#human-data').html(decodeURIComponent(myData));
-    	$('#show-my-data').show();
+    	$('#show-my-data').toggle();
     	return true;
     }
 
