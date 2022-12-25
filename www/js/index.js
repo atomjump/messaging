@@ -1586,31 +1586,6 @@ var app = {
 	    return retItem;
     },
 
-
-   //A-Syncronous usage of cookies instead of localStorage, because Safari is limited to 7 days
-	localStorageGetItem: function(mykey) {
-	
-		return getCookie(mykey);	
-	},
-	
-	
-    
-	localStorageSetItem: function(mykey, value) {
-		document.cookie = mykey + '=' + encodeURIComponent(value) + '; path=/; SameSite=Strict; expires=' + cookieOffset() + ';';
-	},
-    
-	localStorageRemoveItem: function(mykey) {
-    	 document.cookie = mykey + '=; Max-Age=-99999999;';  
-	},
-    
-	localStorageClear: function() {
-		//Note: this won't remove different paths
-		var c = document.cookie.split("; ");
- 		for (i in c) {
-  			document.cookie =/^[^=]+/.exec(c[i])[0]+"=;expires=Thu, 01 Jan 1970 00:00:00 GMT"; 
-  		}  
-
-    },
     
     checkTransitioningData: function() {
     	var transitioned = null;
@@ -1636,6 +1611,24 @@ var app = {
 				localStorageSetItem("tr", "1");	//But leave a note to say it has been transitioned
 			}
     	} 
+    },
+    
+    
+    importCookies: function(newData) {
+    	newData = "tr=1; api=https%3A%2F%2Fatomjump.com%2Fapi%2F; settings=%5B%7B%22forum%22%3A%22atomjump.com%22%2C%22api%22%3A%22https%3A%2F%2Fatomjump.com%2Fapi%2F%22%2C%22rawForumHeader%22%3A%22ajps_%22%2C%22rawForumName%22%3A%22homepage-com%22%2C%22url%22%3A%22https%3A%2F%2Fatomjump.com%2F%22%7D%2C%7B%22forum%22%3A%22test%40%22%2C%22api%22%3A%22https%3A%2F%2Fatomjump.com%2Fapi%2F%22%2C%22rawForumHeader%22%3A%22ajps_%22%2C%22rawForumName%22%3A%22test%22%2C%22url%22%3A%22https%3A%2F%2Ftest.atomjump.com%2Fgo%2F%22%7D%5D; pollingURL=https%3A%2F%2Fmedimage-wrld.atomjump.com%2Fread%2FFCBYRVWSCv7b4umMEWU7; registrationId=https%253A%252F%252Fmedimage-wrld.atomjump.com%252Fapi%252Fphoto%252F%2523FCBYRVWSCv7b4umMEWU7; ce=exists";		//TESTING
+    	//Raw data example: tr=1; api=https%3A%2F%2Fatomjump.com%2Fapi%2F; settings=%5B%7B%22forum%22%3A%22atomjump.com%22%2C%22api%22%3A%22https%3A%2F%2Fatomjump.com%2Fapi%2F%22%2C%22rawForumHeader%22%3A%22ajps_%22%2C%22rawForumName%22%3A%22homepage-com%22%2C%22url%22%3A%22https%3A%2F%2Fatomjump.com%2F%22%7D%2C%7B%22forum%22%3A%22test%40%22%2C%22api%22%3A%22https%3A%2F%2Fatomjump.com%2Fapi%2F%22%2C%22rawForumHeader%22%3A%22ajps_%22%2C%22rawForumName%22%3A%22test%22%2C%22url%22%3A%22https%3A%2F%2Ftest.atomjump.com%2Fgo%2F%22%7D%5D; pollingURL=https%3A%2F%2Fmedimage-wrld.atomjump.com%2Fread%2FFCBYRVWSCv7b4umMENU7; registrationId=https%253A%252F%252Fmedimage-wrld.atomjump.com%252Fapi%252Fphoto%252F%2523FCBYRVWSCv7b4umMEWU7; ce=exists
+		
+		var ca = newData.split(';');
+		for(var i=0; i<ca.length; i++)
+		{
+			var valuePair = ca[i].split('=');
+			var cName = valuePair[0];
+			var cValue = valuePair[1];
+			if(cName && cValue) {
+				alert("cookie name=" + cName + " cookie value=" + cValue);
+			}
+		}
+    	
     },
     
     
