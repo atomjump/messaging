@@ -1651,9 +1651,9 @@ var app = {
 				}
 				
 				if(replaceCookies == true) {
-					alert("Your personal data has been imported successfully.");
+					alert("Your personal data has been imported successfully. If you are replacing another device or browser, please ensure it cannot be used in future: we recommend a 'Factory Reset' on the old device's AtomJump app to prevent data being split across different devices.");
 				} else {
-					alert("Your personal data has been imported successfully. You may need to now register this device.");
+					alert("Your personal data has been imported successfully. You may need to register this device, now, on each of your existing servers.");
 				}
 				//Refresh the page
 				location.reload();
