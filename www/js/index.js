@@ -45,6 +45,8 @@ var app = {
         //Check if we are still transitioning any data over from localStorage to cookies
     	this.checkTransitioningData();	
 
+		//Check if we are doing an annual refresh of the cookies
+		this.refreshCookies();
         
         
         //Set display name
@@ -1663,6 +1665,59 @@ var app = {
 			alert("Sorry, please copy and paste your raw data from your app's 'Settings' > 'Retain my data'.");
 			
 		}	
+		return true;
+    	
+    },
+    
+    
+    
+    refreshCookies: function() {
+	
+		//Call this on app initialization
+		//First check if we are beyond the date to refresh after
+    	var oldData = document.cookie;
+    	//Raw data example: tr=1; api=https%3A%2F%2Fatomjump.com%2Fapi%2F; settings=%5B%7B%22forum%22%3A%22atomjump.com%22%2C%22api%22%3A%22https%3A%2F%2Fatomjump.com%2Fapi%2F%22%2C%22rawForumHeader%22%3A%22ajps_%22%2C%22rawForumName%22%3A%22homepage-com%22%2C%22url%22%3A%22https%3A%2F%2Fatomjump.com%2F%22%7D%2C%7B%22forum%22%3A%22test%40%22%2C%22api%22%3A%22https%3A%2F%2Fatomjump.com%2Fapi%2F%22%2C%22rawForumHeader%22%3A%22ajps_%22%2C%22rawForumName%22%3A%22test%22%2C%22url%22%3A%22https%3A%2F%2Ftest.atomjump.com%2Fgo%2F%22%7D%5D; pollingURL=https%3A%2F%2Fmedimage-wrld.atomjump.com%2Fread%2FFCBYRVWSCv7b4umMENU7; registrationId=https%253A%252F%252Fmedimage-wrld.atomjump.com%252Fapi%252Fphoto%252F%2523FCBYRVWSCv7b4umMEWU7; ce=exists
+    	
+    	
+    	var refreshDate = localStorageGetItem("rf");	//But leave a note to say it has been transitioned
+    	if(refreshDate) {
+    		//Check if we are after the refresh date
+    		var dateToday = new Date();							
+			var dateRefreshDate = new Date(refreshDate);		//Text into date format
+
+    		if(dateToday > dateRefreshDate) {
+    			var replaceCookies = true;		//Yes, completely replace the existing ones
+				
+				localStorageClear();		//Clear off any existing data
+				
+				var ca = oldData.split(';');
+				for(var i=0; i<ca.length; i++)
+				{
+					var valuePair = ca[i].split('=');
+					var cName = myTrim(valuePair[0]);
+					var cValue = myTrim(valuePair[1]);
+					if(cName && cValue && cValue != "") {
+							localStorageSetItem(cName, decodeURIComponent(cValue));
+					}
+				}
+				
+				//Refresh the page
+				location.reload();
+				return false;
+    		} else {
+    			//Just wait, do nothing for now.
+    			return true;
+    		}
+    	
+    	
+    	} else {
+    		//No refresh date set. Set a cookie with the next refresh date a year from now.
+    		var dateRefreshDate = new Date(new Date().setFullYear(new Date().getFullYear() + 1));
+
+    		var refreshDate = dateRefreshDate.toString();	
+    		localStorageSetItem("rf", refreshDate);
+    	}
+    	
 		return true;
     	
     },
