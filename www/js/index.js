@@ -786,6 +786,9 @@ var app = {
 			
 			$('#registered-settings').html("<small><a class='button' href='" + url + "' target='_blank'>Complete Registration</a><br/>(Tap if you are seeing this)</small>");
 			$('#registered-settings').show();
+			setTimeout(function() {
+				$('#registered-settings').hide();
+			}, 10000);
 			
 			var settingApi = localStorageGetItem("api");
          	 if(settingApi) {
