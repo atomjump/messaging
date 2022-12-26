@@ -1152,7 +1152,7 @@ var app = {
 		
 	
 			for(var cnt = 0; cnt< settings.length; cnt++) {
-				prepList = prepList + "<ons-list-item>" + innerThis.ellipse(settings[cnt].forum, 27) + " <div class='right'><ons-icon icon='md-delete' class='list__item__icon' onclick='app.deleteForum(" + cnt + ");'></ons-icon></div></ons-list-item>";
+				prepList = prepList + "<ons-list-item>" + innerThis.ellipse(settings[cnt].forum, 27) + " <div class='right'><ons-icon icon='md-link' class='list__item__icon' onclick='app.register(" + settings[cnt].forum + ");'></ons-icon>&nbsp;&nbsp;<ons-icon icon='md-delete' class='list__item__icon' onclick='app.deleteForum(" + cnt + ");'></ons-icon></div></ons-list-item>";
 		
 			}
         } else {
