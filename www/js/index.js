@@ -784,6 +784,9 @@ var app = {
 			$('#registered').html("<small><a class='button' href='" + url + "' target='_blank'>Complete Registration</a><br/>(Tap if you are seeing this)</small>");
 			$('#registered').show();
 			
+			$('#registered-settings').html("<small><a class='button' href='" + url + "' target='_blank'>Complete Registration</a><br/>(Tap if you are seeing this)</small>");
+			$('#registered-settings').show();
+			
 			var settingApi = localStorageGetItem("api");
          	 if(settingApi) {
           		 api = settingApi;
