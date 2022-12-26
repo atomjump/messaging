@@ -1153,7 +1153,7 @@ var app = {
 	
 			for(var cnt = 0; cnt< settings.length; cnt++) {
 				var registerKey = settings[cnt].forum;
-				if(registerKey == "atomjump.com") {
+				if((registerKey == "atomjump.com") || (registerKey == "")) {
 					registerKey = defaultApi;
 				} else {
 					
