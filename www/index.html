@@ -522,7 +522,7 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 						  <span style="width :100%;" onclick="$('.expandable-content').hide(); $(this).parent().find('.expandable-content').slideToggle();"><b>(Or)</b>&nbsp;&nbsp;Import personal data</span>
 						  <div id="prefillRegister" class="expandable-content" style="display: none; width: 100%;">
 						  	
-							<p style="text-align:center;"><span class="small-text">Please paste your "Raw Data" below</span><br/><textarea style="padding:5px;" id="import-raw-data" rows="4" cols="40"></textarea><br/><span class="small-text">Export this data from 'Settings' > 'Retain My Data'</span>
+							<p style="text-align:center;"><span class="small-text">Please paste your "Raw Data" below</span><br/><textarea style="padding:5px;" id="import-raw-data" rows="4" cols="40"></textarea><br/><span class="small-text">Export this data from 'Settings' > 'Export My Data'</span>
 							
 								<br/><br/>
 								<p>
@@ -557,21 +557,17 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 	        	
 				<p>
 					<div style="position: relative; float: right;">
-								<a class="small-text" target="_blank" href="http://atomjump.org">Version: 1.4.0<a/>
+								<a class="small-text" target="_blank" href="http://atomjump.org">Version: 1.4.1<a/>
 					</div>
 					
 					
 					<a class="small-text" href="javascript:" onclick="return app.factoryReset();">Reset Factory Settings</a>
 				</p>
 				<p>
-					<span class="small-text" style="color: #aaa;">Note: This list is only retained for 2 years.</span><br/>
-					
+					<a style="color: #888;" class="small-text" href="javascript:" onclick="return app.showMyData();">Export My Data</a>
 				</p>
-				<p>
-					<a style="color: #888;" class="small-text" href="javascript:" onclick="return app.showMyData();">Retain My Data</a>
-				</p>
-				<p id="show-my-data" style="display: none;">
-					<span class="small-text" style="color: #555;">Your AtomJump app data is stored in your local browser's 'cookies' for up to 2 years. Login details are stored separately in your browser's 'cookies' on the pages of the connected servers, and on the servers themselves. You can copy and paste this central app data into a local file, which can then be imported with the 'Import Personal Data' option, to either refresh this device, or create a new secondary device.
+				<p id="show-my-data" style="display: none; background-color: rgb(238, 238, 238); opacity: 1.0; padding: 10px;">
+					<span class="small-text" style="color: #555;">Your AtomJump app data is stored in your local browser's 'cookies' for up to 2 years, and is annually refreshed if the app is being used. Login details are stored separately in your browser's 'cookies' on the pages of any registered AtomJump servers, and on the servers themselves. You can copy and paste this central app data into a local file, which can then be imported with the 'Import Personal Data' option, to either refresh this device, or create a new secondary device.
 					<br/><br/>Please store any data here in a <b>secure location</b>.<br/></span><br/>
 					<b>Raw Data:</b><br/><textarea id="raw-data" rows="4" cols="50"></textarea><br/><br/>
 					<b>Readable Version:</b><br/><textarea id="human-data" rows="4" cols="50"></textarea>
