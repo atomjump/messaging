@@ -1172,7 +1172,7 @@ var app = {
 				}
 				
 				if(hasRegister == true) {
-					var registerLink = "<ons-icon icon='md-link' class='list__item__icon' onclick='app.register(\"" + registerKey + "\", null);'></ons-icon>&nbsp;&nbsp;&nbsp;";
+					var registerLink = "<ons-icon icon='md-link' class='list__item__icon' onclick='app.register(\"" + registerKey + "\", null); window.location=\"#registered-settings\"'></ons-icon>&nbsp;&nbsp;&nbsp;";
 				} else {
 					var registerLink = "";
 				}
