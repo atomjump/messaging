@@ -1497,7 +1497,6 @@ var app = {
     },
     
     
-    //TODO: ensure this function uses the two getForumName() and addShortcut() functions rather than all in-one.
     saveForum: function(newForumName) {
         	
       
@@ -1506,112 +1505,10 @@ var app = {
    			
    			var origStr = newForumName;
    			
-   			//TODO - ah this is already in the getForumName function: Check it is one of these types of strings https://forumname.atomjump.com, https://forumname.atomjump.com/go/, https://forumname.atomjump.com/api/
-			//and if so, strip off the 'forumname' and use the normal atomjump.com process.
-   			
+ 			
    			var forumDetails = app.getForumName(origStr);
    			app.addShortcut(forumDetails);
-   			
-   			
-   			/*
-   			//Check if it is a url starting with http
-			if(origStr.substring(0,4) == "http") {
-			
-				
-			
-				var url = origStr;
-				var forumTitle = origStr.replace("https://", "");		//Get rid of http visually
-				forumTitle = forumTitle.replace("http://","");   				
-				var forumName = origStr;
-			} else {
-   			
-   				var subdomainVer = true;		//Assume this is a subdomain
-   			
-				//Check if it is URL with dots
-				if(origStr.indexOf(".") !== -1) {
-					
-					//Special case: "test.atomjump.com"
-					if((origStr.indexOf(".atomjump.com") !== -1)||
-						(origStr.indexOf(".ajmp.co") !== -1)) {
-						subdomainVer = true;
-						origStr = origStr.replace(".atomjump.com", "");
-						origStr = origStr.replace(".ajmp.co", "");
-					} else {
-						//So this is a generic URL e.g. "mycompany.com/link"
-						//By default append 'http' at the start of the URL. Most sites
-						//will convert this into https.
-						var url = "http://" + origStr;
-						subdomainVer = false;		//Use directly.
-						var forumTitle = origStr;
-						var forumName = origStr;
-					}
-				} 
-				
-				
-				if(subdomainVer == true) {
-					//An atomjump.com subdomain
-					var subdomain = origStr.replace(/\s+/g, '');  //remove spaces
-					subdomain = subdomain.replace(/[^a-z0-9\-]/gi, '');	//keep letters and numbers only (and hyphens)
-					if(subdomain == origStr) {
-						//Straightforward redirect
-						var url = 'https://' + subdomain + '.atomjump.com/go/';
-					} else {
-						var url = 'https://' + subdomain + '.atomjump.com/?orig_query=' + encodeURIComponent(origStr + '&autostart=true');
-						
-					}
-				
-					var forumTitle = subdomain + '@';
-					var forumName = subdomain;
-				}
-			}
-   			
-   			//Create a new entry - which will be blank to begin with
-   			var newSetting = { 
-   				"forum": forumTitle,		//As input by the user
-   				"api": api,
-   				"rawForumHeader": rawForumHeader,
-   				"rawForumName": forumName,
-   				"url" : url
-   			};
-   			
-   			
-   			//Special cases
-   			if(newForumName == 'atomjump') {
-   				newSetting.url = "https://atomjump.com/go/";
-   			}
-   			
-   			if((settings)&&(settings.length)) {
-   				//Check if we are writing over the existing entries
-   				var writeOver = false;
-   				for(cnt = 0; cnt< settings.length; cnt++) {
-   					if((settings[cnt].rawForumName) && (settings[cnt].rawForumName == forumName)) {
-   						writeOver = true;
-   						settings[cnt] = newSetting;
-   					}
-   					
-   				}
-   				
-   			
-    			if(writeOver == false) {
-    				settings.push(newSetting);  //Save back to the array
-    			}
-   			
-   			
-   			
-   			} else {
-   				//Creating an array for the first time
-   				var settings = [];
-   				settings.push(newSetting);  //Save back to the array
-   			} 
-			
-    		
-    		//Save back to the persistent settings
-    		app.setArrayLocalStorage("settings", settings);
-    		*/
-    		
-    		//Reset the display with the new forum
-    		//app.displayForumNames();
-    		
+   			    		
     		return;
     
     },
