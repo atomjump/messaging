@@ -1340,6 +1340,14 @@ var app = {
 	   							
 	   						}
 	   						
+	   						//Check a special case /go/ page
+							if(forumTitle.indexOf("/go/") !== -1) {
+								forumTitle = forumTitle.replace("/go/", "");
+	   							//It is an atomjump start page
+	   							
+	   						}
+	   						
+	   						
 	   						var subdomain = forumTitle.replace(/\s+/g, '');  //remove spaces
 							subdomain = subdomain.replace(/[^a-z0-9\-]/gi, '');	//keep letters and numbers only (and hyphens)
 						
@@ -1347,7 +1355,7 @@ var app = {
 								//Straightforward redirect
 								var url = 'https://' + subdomain + '.atomjump.com/go/';
 							} else {
-								var url = 'https://' + subdomain + '.atomjump.com/?orig_query=' + encodeURIComponent(origStr + '&autostart=true');
+								var url = 'https://' + subdomain + '.atomjump.com/?orig_query=' + encodeURIComponent(origStr) + '&autostart=true';
 							}
 							
 							registerUrl = 'https://' + subdomain + '.atomjump.com/api/';
@@ -1399,7 +1407,9 @@ var app = {
 							//Straightforward redirect
 							var url = 'https://' + subdomain + '.atomjump.com/go/';
 						} else {
-							var url = 'https://' + subdomain + '.atomjump.com/?orig_query=' + encodeURIComponent(origStr + '&autostart=true');
+							//Want:
+							//https://anothertest.atomjump.com/?orig_query=another%20test&autostart=true
+							var url = 'https://' + subdomain + '.atomjump.com/?orig_query=' + encodeURIComponent(origStr) + '&autostart=true';
 							
 						}
 						
@@ -1496,8 +1506,19 @@ var app = {
    			
    			var origStr = newForumName;
    			
+   			//TODO - ah this is already in the getForumName function: Check it is one of these types of strings https://forumname.atomjump.com, https://forumname.atomjump.com/go/, https://forumname.atomjump.com/api/
+			//and if so, strip off the 'forumname' and use the normal atomjump.com process.
+   			
+   			var forumDetails = app.getForumName(origStr);
+   			app.addShortcut(forumDetails);
+   			
+   			
+   			/*
    			//Check if it is a url starting with http
 			if(origStr.substring(0,4) == "http") {
+			
+				
+			
 				var url = origStr;
 				var forumTitle = origStr.replace("https://", "");		//Get rid of http visually
 				forumTitle = forumTitle.replace("http://","");   				
@@ -1582,14 +1603,14 @@ var app = {
    				var settings = [];
    				settings.push(newSetting);  //Save back to the array
    			} 
-
+			
     		
     		//Save back to the persistent settings
     		app.setArrayLocalStorage("settings", settings);
-    		
+    		*/
     		
     		//Reset the display with the new forum
-    		app.displayForumNames();
+    		//app.displayForumNames();
     		
     		return;
     
