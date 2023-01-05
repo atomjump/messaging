@@ -581,14 +581,16 @@ var app = {
 								
 					
 					} else {
-						//Use push instead.
-						innerThis.setupPush();					
+						
+						//False response from the check_pull request. Try the push method
+						innerThis.setupPush();	
 					}
 				},
 				error      : function() {
-					//Use push instead.
+					//Error from the check_pull request
 					
-					innerThis.setupPush();
+					$('#registered').html("<small style='color:#8F3850;'>No connection to the server. Please refresh the page later.</small>");
+					$('#registered').show();
 					return;        
 				}
 			
