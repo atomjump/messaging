@@ -311,9 +311,9 @@ var app = {
 				app.get(url, function(url, resp) {
 					//Resp could be a .json message file
 				
-				
-				
 					$('#registered').html("<small>Listening for Messages<br/>(Bring app to front)</small>");
+					$('#registered').show();
+				
 				
 					//Call onNotificationEvent(parsedJSON);
 					if(resp != "none") {
@@ -1320,6 +1320,7 @@ var app = {
    			
 	   			//Check if it is a url starting with http or https
 				if(origStr.substring(0,4) == "http") {
+					//Is an absolute URL
 					var url = origStr;
 					var forumTitle = origStr.replace("https://", "");		//Get rid of http visually
 					forumTitle = forumTitle.replace("http://","");   				
@@ -1328,6 +1329,7 @@ var app = {
 					
 					if((forumTitle.indexOf(".atomjump.com") !== -1)||
 							(forumTitle.indexOf(".ajmp.co") !== -1)) {
+							//Includes .atomjump.com or .ajmp.co
 							subdomainVer = true;
 							forumTitle = forumTitle.replace(".atomjump.com", "");
 							forumTitle = forumTitle.replace(".ajmp.co", "");
@@ -1365,19 +1367,19 @@ var app = {
 	   						
 	   						
 	   				} else {
-	   			
+	   					//Does not includes .atomjump.com or .ajmp.co. Use url as-is
 	   					var forumName = origStr;
 	   				}
 					
 					
 				} else {
-	   			
+	   				//Not an absolute URL starting with http or https
 	   				var subdomainVer = true;		//Assume this is a subdomain
 	   			
 					//Check if it is URL with dots
 					if(origStr.indexOf(".") !== -1) {
 						
-						//Special case: "test.atomjump.com"
+						//Special case: "test.atomjump.com" without https at the start
 						if((origStr.indexOf(".atomjump.com") !== -1)||
 							(origStr.indexOf(".ajmp.co") !== -1)) {
 							subdomainVer = true;
@@ -1386,7 +1388,7 @@ var app = {
 							
 							
 						} else {
-							//So this is a generic URL e.g. "mycompany.com/link"
+							//So this is a generic URL e.g. "mycompany.com/link" without https at the start
 							//By default append 'http' at the start of the URL. Most sites
 							//will convert this into https.
 							var url = "http://" + origStr;
@@ -1399,6 +1401,11 @@ var app = {
 					
 					if(subdomainVer == true) {
 						//An atomjump.com subdomain
+						
+						//Special case: text ends with '@'. We can safely remove this '@' to be just the subdomain 
+						if(origStr.indexOf("@") !== -1) {
+							origStr = origStr.replace("@", "");
+						}
 						
 						var subdomain = origStr.replace(/\s+/g, '');  //remove spaces
 						subdomain = subdomain.replace(/[^a-z0-9\-]/gi, '');	//keep letters and numbers only (and hyphens)
