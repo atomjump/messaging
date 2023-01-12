@@ -116,14 +116,14 @@
 				}
 				
 				function localStorageRemoveItem(mykey) {
-    	 			document.cookie = mykey + '=; Max-Age=-99999999;';  
+    	 			document.cookie = mykey + '=; SameSite=Strict; expires=Thu, 01 Jan 1970 00:00:00 GMT';  
 				}
     
 				function localStorageClear() {
 					//Note: this won't remove different paths
 					var c = document.cookie.split("; ");
 			 		for (i in c) {
-			  			document.cookie =/^[^=]+/.exec(c[i])[0]+"=;expires=Thu, 01 Jan 1970 00:00:00 GMT"; 
+			  			document.cookie =/^[^=]+/.exec(c[i])[0]+"=; SameSite=Strict; expires=Thu, 01 Jan 1970 00:00:00 GMT"; 
 			  		}  
 
 				}
@@ -563,7 +563,7 @@ app.myWindowOpen(encodeURI('https://' + str + '.atomjump.com/?orig_query=' + enc
 	        	
 				<p>
 					<div style="position: relative; float: right;">
-								<a class="small-text" target="_blank" href="http://atomjump.org">Version: 1.5.0<a/>
+								<a class="small-text" target="_blank" href="http://atomjump.org">Version: 1.5.1<a/>
 					</div>
 					
 					
