@@ -1160,26 +1160,28 @@ var app = {
 		
 	
 			for(var cnt = 0; cnt< settings.length; cnt++) {
-				var registerKey = settings[cnt].forum;
-				var hasRegister = true;
-				if((registerKey == "atomjump.com") || (registerKey == "") || (registerKey == "@")) {
-					registerKey = defaultApi;
-					hasRegister = true;
-				} else {
-					//If it is a URL, don't include a register link
-					if(registerKey.indexOf(".") > -1) {
-						//Most likely a URL - has a full-stop
-						hasRegister = false;
+				if(settings[cnt].forum) {
+					var registerKey = settings[cnt].forum;
+					var hasRegister = true;
+					if((registerKey == "atomjump.com") || (registerKey == "") || (registerKey == "@")) {
+						registerKey = defaultApi;
+						hasRegister = true;
+					} else {
+						//If it is a URL, don't include a register link
+						if(registerKey.indexOf(".") > -1) {
+							//Most likely a URL - has a full-stop
+							hasRegister = false;
+						}
 					}
+					
+					if(hasRegister == true) {
+						var registerLink = "<ons-icon icon='md-link' class='list__item__icon' onclick='app.register(\"" + registerKey + "\", null); window.location=\"#registered-settings\"'></ons-icon>&nbsp;&nbsp;&nbsp;";
+					} else {
+						var registerLink = "";
+					}
+					
+					prepList = prepList + "<ons-list-item>" + innerThis.ellipse(settings[cnt].forum, 27) + " <div class='right'>" + registerLink + "<ons-icon icon='md-delete' class='list__item__icon' onclick='app.deleteForum(" + cnt + ");'></ons-icon></div></ons-list-item>";
 				}
-				
-				if(hasRegister == true) {
-					var registerLink = "<ons-icon icon='md-link' class='list__item__icon' onclick='app.register(\"" + registerKey + "\", null); window.location=\"#registered-settings\"'></ons-icon>&nbsp;&nbsp;&nbsp;";
-				} else {
-					var registerLink = "";
-				}
-				
-				prepList = prepList + "<ons-list-item>" + innerThis.ellipse(settings[cnt].forum, 27) + " <div class='right'>" + registerLink + "<ons-icon icon='md-delete' class='list__item__icon' onclick='app.deleteForum(" + cnt + ");'></ons-icon></div></ons-list-item>";
 		
 			}
         } else {
