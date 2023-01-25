@@ -832,6 +832,9 @@ var app = {
    		
    		if(user) {
    			var email = user;
+   			
+   			$('#password-wait').show();
+   			
 			$.ajax({
 				type       : "POST",
 				url        : api + "confirm.php",
@@ -839,6 +842,8 @@ var app = {
 				data       : { 'email-opt': user, 'pd': pass },
 				dataType   : 'jsonp',
 				success    : function(response) {
+					$('#password-wait').hide();
+				
 					var res = response.split(",");
 					switch(res[0])
 					{
@@ -880,6 +885,7 @@ var app = {
 					}
 				},
 				error      : function() {
+					$('#password-wait').hide();
 					navigator.notification.alert('Sorry, we cannot connect to your AtomJump Messaging Server. Please try again later.');                  
 				}
 		   });  
