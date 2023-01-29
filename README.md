@@ -1,5 +1,7 @@
 <img src="https://atomjump.com/images/logo80.png">
 
+__WARNING: this project has now moved to https://src.atomjump.com/atomjump/messaging.git__
+
 # messaging
 AtomJump Messaging app: shortcuts and popup notifications to AtomJump Messaging.
 
